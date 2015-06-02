@@ -1,0 +1,76 @@
+# OSX
+.DS_Store
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+/bin/
+/env/
+/build/
+/develop-eggs/
+/dist/
+/downloads/
+/eggs/
+/lib/
+/lib64/
+/parts/
+/sdist/
+/var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+.env
+
+# Keys store
+keys/*
+
+# JS
+node_modules
+server/*.log
+
+# Editors
+.idea
+*.swp
+*.pyc
+*.sqlite3
+\.pyc$
+\.orig$
+\.sqlite3
+dump.rdb
+
+.tm_properties
+
+
+docker/private/*
+
+/src/assets/media
