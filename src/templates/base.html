@@ -1,10 +1,40 @@
 <html>
-    <head>
-        <title>Welcome to AlterPirce</title>
-    </head>
-    <body>
-        <h1>Hey! I'm Alterpice project base tempalte!</h1>
-        {% block content %}
-        {% endblock content %}
-    </body>
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,500italic,400italic,300italic,100italic&subset=cyrillic,cyrillic-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="/static/dist/css/main.css" media="all" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="left-column-block">
+        <a href="/" class="home"><img src="/static/dist/images/logo.svg" /></a>
+        <ul class="catalog-menu">
+            <li class="active"><a href="#">Все категории</a></li>
+            <li class="has-submenu"><a href="#">Электроника</a></li>
+            <li class="has-submenu"><a href="#">Компьютеры</a></li>
+            <li class="has-submenu"><a href="#">Бытовая техника</a></li>
+            <li class="has-submenu"><a href="#">Товары для здоровья</a></li>
+        </ul>
+    </div>
+    <div id="header-block">
+        <form id="catalog-search">
+            <input type="text" class="b_input_search" placeholder="Поиск среди более 6 000 000 товаров" />
+            <button type="submit"><i class="icon-search"></i></button>
+        </form>
+    </div>
+    {% block content %}Hello!{% endblock content %}
+    <div id="footer-block">
+        <ul>
+            <li><a href="#">Пользовательское соглашение</a></li>
+            <li><a href="#">Вход для интернет магазинов</a></li>
+            <li><a href="#">Контакты</a></li>
+        </ul>
+    </div>
+    <script src="/static/dist/js/main.js"
+    	data-main="{% if current_app %}{{ current_app }}{% else %}landing{% endif %}"
+    ></script>
+</body>
 </html>

@@ -1,0 +1,89 @@
+.typo_mh { /* MasterHead */
+    font-family: 'Roboto', sans-serif;
+    font-size: 36px;
+    font-weight: lighter;
+    color: rgba(24, 28, 39, 0.9);
+    &.typo_white {color: rgba(255, 255, 255, 1)}
+    &.typo_black {color: rgba(24, 28, 39, 0.9);}
+}
+.typo_sh { /* SubHead */
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    font-weight: lighter;
+    color: rgba(24, 28, 39, 0.9);
+    &.typo_white {color: rgba(255, 255, 255, 1)}
+    &.typo_black {color: rgba(24, 28, 39, 0.9);}
+}
+.typo_hl { /* HeadLine */
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    color: rgba(24, 28, 39, 0.9);
+    &.typo_white {color: rgba(255, 255, 255, 0.9)}
+    &.typo_black {color: rgba(24, 28, 39, 0.9);}
+}
+.typo_t { /* Title */
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: rgba(24, 28, 39, 0.8);
+    &.typo_white {color: rgba(255, 255, 255, 0.8)}
+    &.typo_black {color: rgba(24, 28, 39, 0.8);}
+}
+button, body, .typo_b { /* Body */
+    font: 300 15px/1.333333 'Roboto', sans-serif;
+    color: #4A4A4A;
+    &.typo_white {color: rgba(255, 255, 255, 0.8)}
+    &.typo_black {color: rgba(24, 28, 39, 0.8);}
+}
+input, textarea {
+    font: 300 15px/1.333333 'Roboto', sans-serif;
+    color: rgba(24, 28, 39, 0.8);
+}
+.typo_c { /* Caption */
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: rgba(24, 28, 39, 0.7);
+    &.typo_white {color: rgba(255, 255, 255, 0.5)}
+    &.typo_black {color: rgba(24, 28, 39, 0.8);}
+}
+.typo_black { /* Parent typo elems */
+    color: rgba(24, 28, 39, 0.8);
+    * { color: rgba(24, 28, 39, 0.8); }
+    .typo_mh { color: rgba(24, 28, 39, 0.9) }
+    .typo_sh { color: rgba(24, 28, 39, 0.9) }
+    .typo_hl { color: rgba(24, 28, 39, 0.9) }
+    .typo_t  { color: rgba(24, 28, 39, 0.8) }
+    .typo_b  { color: rgba(24, 28, 39, 0.8) }
+    .typo_c  { color: rgba(24, 28, 39, 0.8) }
+    .typo_white {
+        &:extend(.typo_white all);
+    }
+}
+.typo_white { /* Parent typo elems */
+    color: rgba(255, 255, 255, 0.8);
+    * { color: rgba(255, 255, 255, 0.8) }
+    .typo_mh { color: rgba(255, 255, 255, 1) }
+    .typo_sh { color: rgba(255, 255, 255, 1) }
+    .typo_hl { color: rgba(255, 255, 255, 0.9) }
+    .typo_t { color: rgba(255, 255, 255, 0.8) }
+    .typo_b { color: rgba(255, 255, 255, 0.8) }
+    .typo_c { color: rgba(255, 255, 255, 0.5) }
+    .typo_black {
+        &:extend(.typo_black all);
+    }
+}
+a {
+    text-decoration: none;
+    color: #0088CC;
+}
+.typo_red {
+    color: #FF927E;
+}
+// to_rm
+p.typo_some_class {
+    &:extend(.typo_c);
+    &:extend(.typo_c.typo_white);
+}
+p.typo_some_class1 {
+    &:extend(.typo_c);
+    &:extend(.typo_c.typo_black);
+}

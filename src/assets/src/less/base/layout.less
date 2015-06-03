@@ -1,0 +1,72 @@
+@bbg: #F5F5F5;
+html {
+    height: 100%;
+    width: 100%;
+    min-width: 980px;
+    //overflow: hidden;
+}
+body {
+    background: @bbg;
+    //overflow-x: hidden;
+    min-width: 970px;
+    width: 100%;
+    padding-left: 225px;
+    .hidden {
+        display: none;
+    }
+    .simplemodal-overlay {
+        background: rgba(24, 28, 39, 1);
+    }
+}
+.layout-aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100%;
+}
+.layout-aside-right {
+    &:extend(.layout-aside all);
+    left: auto;
+    right: 0;
+    width: 305px;
+}
+.layout-cabinet-wrapper {
+    .layout-center();
+}
+.layout-mm-wrapper {
+    position: relative;
+    .layout-center(100px, 0px);
+    &.m_goals {
+        height: 100%;
+        padding: 0;
+    }
+}
+.layout-component {
+    .layout-center(70px, 70px);
+}
+
+
+@card_width: 310px;
+@padding: 20px;
+.layout-center(@left: 100px, @right: 305px) {
+    margin: 0 @right 0 @left;
+    padding: @padding;
+    .wrap {
+        .clearfix();
+        margin: 0 auto;
+        .generate-layout(6);
+    }
+}
+.generate-layout(@n, @i: 1) when (@i =< @n) {
+    @width: (@card_width * @i + @padding * 2 + @left + @right);
+    @media (min-width: @width) {
+        width: @card_width * @i;
+    }
+    .generate-layout(@n, (@i + 1));
+}
+
+.block-wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
