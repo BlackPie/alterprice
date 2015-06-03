@@ -147,12 +147,13 @@ class Base(Configuration):
 
     INTERNAL_APPS = (
         'alterprice',
+        'apuser',
         'markup',  # TMP app
     )
 
     INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS
 
-    # AUTH_USER_MODEL = 'ecsuser.EcsUser'
+    AUTH_USER_MODEL = 'apuser.AlterPriceUser'
 
     REST_FRAMEWORK = {
         'DEFAULT_FILTER_BACKENDS': (
