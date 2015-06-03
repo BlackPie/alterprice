@@ -147,6 +147,7 @@ class Base(Configuration):
 
     INTERNAL_APPS = (
         'alterprice',
+        'markup',  # TMP app
     )
 
     INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS

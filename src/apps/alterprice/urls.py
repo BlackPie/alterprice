@@ -10,6 +10,9 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.IndexView.as_view(), name='index'),
 
+    # APPs
+    url(r'^markup/', include('markup.urls', namespace="markup")),
+
     # Aadmin urls
     url(r'^admin/', include(admin.site.urls)),
 )
