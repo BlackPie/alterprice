@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec -it $(./bin/docker-compose ps | grep web | awk '{print $1}') ./bin/django shell_plus

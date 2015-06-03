@@ -1,0 +1,104 @@
+db:
+  image: createdigitalspb/postgresql94:1.2
+  ports:
+   - "49432:5432"
+  links:
+   - logstash:logstash
+  env_file:
+   - ./docker/private/development/db.env
+
+  volumes_from:
+   - dbdata
+
+
+dbdata:
+  image: busybox
+  volumes:
+  - /data
+
+redis:
+  image: redis:2.8.19
+
+
+rabbitmq:
+  image: tutum/rabbitmq
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+  environment:
+    - RABBITMQ_PASS=rmqdevelopment
+
+
+elasticsearch:
+  image: createdigitalspb/elasticsearch:1.0
+  volumes:
+   - ./docker/config/elasticsearch:/opt/elasticsearch/config
+  volumes_from:
+   - elasticsearchdata
+
+
+elasticsearchdata:
+  image: busybox
+  volumes:
+  - /opt/elasticsearch/data
+  - /opt/elasticsearch/logs
+
+
+logstash:
+    image: createdigitalspb/logstash:1.0
+    links:
+        - elasticsearch
+    volumes:
+        - ./docker/config/logstash:/opt/conf
+        - ./docker/private/certs:/opt/certs
+    ports:
+        - "514:514"
+        - "5043:5043"
+        - "9292:9292"
+
+kibana:
+    image: createdigitalspb/kibana:1.0
+    links:
+        - elasticsearch
+    volumes:
+        - ./docker/config/kibana:/kibana/config
+    ports:
+        - "5601:5601"
+
+
+web:
+  build: .
+  ports:
+   - "49800:8000"
+  links:
+   - db:db
+   - logstash:logstash
+   - rabbitmq:rabbit
+   - redis:redis
+   - worker:worker
+  volumes:
+    - ./docker/config/forwarder:/opt/conf
+    - ./docker/private/certs:/opt/certs
+    - ./src:/project/src
+  env_file:
+   - ./docker/private/development/db.env
+  environment:
+   - DJANGO_CONFIGURATION=Development
+   - INSTANCE_TYPE=web
+   - RUN_DEVSERVER=True
+
+
+worker:
+  build: .
+  links:
+   - db:db
+   - rabbitmq:rabbit
+   - redis:redis
+  volumes:
+   - ./src:/project/src
+  env_file:
+   - ./docker/private/development/db.env
+  environment:
+   - INSTANCE_TYPE=worker
+   - DJANGO_CONFIGURATION=Development
+   - RUN_DEVSERVER=True

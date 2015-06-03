@@ -1,0 +1,26 @@
+{
+  "network": {
+
+    "servers": [ "logstash:5043" ],
+
+    "ssl certificate": "/opt/certs/logstash-forwarder.crt",
+    "ssl key": "/opt/certs/logstash-forwarder.key",
+    "ssl ca": "/opt/certs/logstash-forwarder.crt",
+
+    "timeout": 15
+  },
+
+  "files": [
+    {
+      "paths": [
+        "/var/log/messages",
+        "/var/log/*.log"
+      ],
+
+      "fields": { "type": "syslog" }
+    }, {
+      "paths": [ "/var/log/app/*.log" ],
+      "fields": { "type": "stdin" }
+    }
+  ]
+}
