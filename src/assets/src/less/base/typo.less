@@ -16,16 +16,18 @@
 }
 .typo_hl { /* HeadLine */
     font-family: 'Roboto', sans-serif;
-    font-size: 24px;
-    color: rgba(24, 28, 39, 0.9);
+    font-size: 30px;
+    font-weight: 300;
+    color: #2B303A;
     &.typo_white {color: rgba(255, 255, 255, 0.9)}
     &.typo_black {color: rgba(24, 28, 39, 0.9);}
 }
 .typo_t { /* Title */
     font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    color: rgba(24, 28, 39, 0.8);
-    &.typo_white {color: rgba(255, 255, 255, 0.8)}
+    font-size: 18px;
+    font-weight: 400;
+    color: #181C27;
+    &.typo_white {color: #fff;}
     &.typo_black {color: rgba(24, 28, 39, 0.8);}
 }
 button, body, .typo_b { /* Body */
@@ -86,4 +88,19 @@ p.typo_some_class {
 p.typo_some_class1 {
     &:extend(.typo_c);
     &:extend(.typo_c.typo_black);
+}
+
+
+.h1 {
+    .typo_hl;
+    margin: 10px 0 20px 0;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: left;
+}
+.text-center {
+    text-align: center;
 }

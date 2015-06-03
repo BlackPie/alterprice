@@ -1,0 +1,32 @@
+#index-page {
+    .pure-u-1-2.text-right, .pure-u-1-4.text-right {
+        text-align: right;
+    }
+
+    .pure-u-1-2.text-center {
+        text-align: center;
+    }
+
+    .pure-u-1-2.text-left {
+        text-align: left;
+    }
+
+    .block-1-1, .block-1-2, .block-2-1, .block-2-2 {
+        position: relative;
+        text-align: left;
+
+        span {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+
+            &.top {
+                top: 30px;
+            }
+
+            &.bottom {
+                bottom: 30px;
+            }
+        }
+    }
+}

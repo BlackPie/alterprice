@@ -9,29 +9,34 @@
     <![endif]-->
 </head>
 <body>
-    <div id="left-column-block">
-        <a href="/" class="home"><img src="/static/dist/images/logo.svg" /></a>
-        <ul class="catalog-menu">
-            <li class="active"><a href="#">Все категории</a></li>
-            <li class="has-submenu"><a href="#">Электроника</a></li>
-            <li class="has-submenu"><a href="#">Компьютеры</a></li>
-            <li class="has-submenu"><a href="#">Бытовая техника</a></li>
-            <li class="has-submenu"><a href="#">Товары для здоровья</a></li>
-        </ul>
-    </div>
-    <div id="header-block">
-        <form id="catalog-search">
-            <input type="text" class="b_input_search" placeholder="Поиск среди более 6 000 000 товаров" />
-            <button type="submit"><i class="icon-search"></i></button>
-        </form>
-    </div>
-    {% block content %}Hello!{% endblock content %}
-    <div id="footer-block">
-        <ul>
-            <li><a href="#">Пользовательское соглашение</a></li>
-            <li><a href="#">Вход для интернет магазинов</a></li>
-            <li><a href="#">Контакты</a></li>
-        </ul>
+    <div id="container">
+        <div id="left-column-block">
+            <a href="/" class="home"><img src="/static/dist/images/logo.svg" /></a>
+            <ul class="catalog-menu">
+                <li class="active"><a href="#">Все категории</a></li>
+                <li class="has-submenu"><a href="#">Электроника</a></li>
+                <li class="has-submenu"><a href="#">Компьютеры</a></li>
+                <li class="has-submenu"><a href="#">Бытовая техника</a></li>
+                <li class="has-submenu"><a href="#">Товары для здоровья</a></li>
+            </ul>
+        </div>
+        <div id="header-block">
+            <form id="catalog-search">
+                <input type="text" class="b_input_search" placeholder="Поиск среди более 6 000 000 товаров" />
+                <button type="submit"><i class="icon-search"></i></button>
+            </form>
+        </div>
+        <div id="content-wrapper">
+            {% block content %}Hello!{% endblock content %}
+            <div style="clear: both"></div>
+        </div>
+        <div id="footer-block">
+            <ul>
+                <li><a href="#">Пользовательское соглашение</a></li>
+                <li><a href="#">Вход для интернет магазинов</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+        </div>
     </div>
     <script src="/static/dist/js/main.js"
     	data-main="{% if current_app %}{{ current_app }}{% else %}landing{% endif %}"
