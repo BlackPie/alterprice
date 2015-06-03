@@ -7,5 +7,5 @@ urlpatterns = patterns(
     '',
     url(r'^index/$', TemplateView.as_view(template_name='markup/index.html'), name="first"),
     url(r'^categories/$', TemplateView.as_view(template_name='markup/categories_list.html'), name="second"),
-    url(r'^3/$', TemplateView.as_view(template_name='markup/3.html'), name="third"),
+    url(r'^items/$', TemplateView.as_view(template_name='markup/items.html'), name="third"),
 )

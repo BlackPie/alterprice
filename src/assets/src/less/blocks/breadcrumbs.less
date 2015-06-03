@@ -1,0 +1,31 @@
+#block-breadcrumbs {
+    position: absolute;
+    margin-top: -30px;
+
+    li {
+        display: inline-block;
+        position: relative;
+        padding: 0 12px 0 4px;
+
+        &:after {
+            content: '>';
+            position: absolute;
+            right: 0;
+            color: #919191;
+        }
+
+        &:last-child {
+            &:after {
+                display: none;
+            }
+        }
+
+        &:first-child {
+            padding-left: 0;
+        }
+    }
+
+    span, a {
+        color: #919191;
+    }
+}
