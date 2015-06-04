@@ -16,6 +16,8 @@
 
         ul {
             display: none;
+            opacity: 0.0;
+            transition: opacity 0.2s ease-in 0s;
         }
 
         a {
@@ -67,6 +69,7 @@
             &.open {
                 ul {
                     display: block;
+                    opacity: 1.0;
                 }
 
                 &> a:after {

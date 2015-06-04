@@ -3,14 +3,14 @@ _ = require 'underscore'
 Marionette = require 'backbone.marionette'
 Backbone = require 'backbone'
 
-CatalogMenuView = require 'base/views/CatalogMenuView'
+LeftMenuView = require 'base/views/LeftMenuView'
 
 
 module.exports = class DefaultController extends Marionette.Controller
 
     initialize: (options) =>
         @channel = options.channel
-        @catalogMenuView = new CatalogMenuView {channel: @channel}
+        @leftMenuView = new LeftMenuView {channel: @channel}
 
 
     index: () =>

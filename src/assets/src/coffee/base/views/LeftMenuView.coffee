@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
 
 
-module.exports = class CatalogMenuView extends Marionette.ItemView
+module.exports = class LeftMenuView extends Marionette.ItemView
     el: $('#left-column-block')
 
     template: false
