@@ -60,6 +60,10 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
                                                  default=CLIENT,
                                                  choices=USER_TYPE_CHOICES)
 
+    created = models.DateTimeField(auto_now_add=True,
+                                   editable=False,
+                                   verbose_name=_(u'Дата регистрации'))
+
     USERNAME_FIELD = 'email'
 
     objects = AlterPriceUserManager()
