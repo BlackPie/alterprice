@@ -148,6 +148,9 @@ class Base(Configuration):
     INTERNAL_APPS = (
         'alterprice',
         'apuser',
+        'catalog',
+        'utils',
+        'shop',
         'markup',  # TMP app
     )
 
