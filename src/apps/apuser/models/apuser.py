@@ -10,8 +10,37 @@ class AlterPriceUserManager(models.Manager):
     def make(self):
         return True
 
+    def make_client(self):
+        obj = self.make()
+        obj.user_type = self.model.CLIENT
+        obj.save()
+        return obj
+
+    def make_operator(self):
+        obj = self.make()
+        obj.user_type = self.model.OPERATOR
+        obj.save()
+        return obj
+
+    def make_admin(self):
+        obj = self.make()
+        obj.user_type = self.model.ADMIN
+        obj.save()
+        return obj
+
 
 class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
+
+    CLIENT = 0
+    OPERATOR = 1
+    ADMIN = 2
+
+    USER_TYPE_CHOICES = (
+        (CLIENT, _('Клиент')),
+        (OPERATOR, _('Оператор')),
+        (ADMIN, _('Администратор')),
+    )
+
     email = models.EmailField(max_length=100,
                               db_index=True,
                               unique=True,
@@ -20,11 +49,13 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
                             null=True,
                             blank=True,
                             verbose_name=_(u'Имя'))
-
     is_staff = models.BooleanField(_(u'Статус сотрудника'),
                                    default=False,
                                    help_text=_(u'Определяет, может ли '
                                                u'пользователь войти в сайт администратора.'))
+    user_type = models.PositiveSmallIntegerField(verbose_name=_(u'Статус'),
+                                                 default=CLIENT,
+                                                 choices=USER_TYPE_CHOICES)
 
     USERNAME_FIELD = 'email'
 
@@ -35,6 +66,15 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return u'%s: %s' % (self.id, self.email)
+
+    def is_client(self):
+        return True if self.user_type is self.CLIENT else False
+
+    def is_operator(self):
+        return True if self.user_type is self.OPERATOR else False
+
+    def is_admin(self):
+        return True if self.user_type is self.ADMI else False
 
     class Meta:
         verbose_name = _('Пользователь')
