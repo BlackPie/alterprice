@@ -3,7 +3,7 @@
         .item-card-block {
             margin-right: 18px;
 
-            &:nth-child(3) {
+            &:nth-child(3n) {
                 margin-right: 0;
             }
         }
@@ -14,15 +14,24 @@
     }
 
     .items-filter {
-        padding: 20px;
+        padding: 0 20px 20px 20px;
 
         .title {
             display: block;
+            font-weight: 400;
+            color: #626262;
+            margin: 20px 0;
         }
 
         .price {
             border-bottom: 1px solid #ECECEC;
-            padding: 0 0 12px 0;
+            padding: 0 0 14px 0;
+            margin: 0 0 40px 0;
+
+            input {
+                width: 35px;
+                color: #919191;
+            }
 
             .pure-u-1-2 {
                 &:first-child {
@@ -34,9 +43,25 @@
                 }
 
                 label {
+                    padding: 10px;
                     display: block;
+                    height: 40px;
                     border: 1px solid #969696;
                 }
+            }
+        }
+
+        .producers {
+            label {
+                display: block;
+                margin: 7px 0;
+                color: #626262;
+            }
+
+            input[type="checkbox"] {
+                position: relative;
+                top: -1px;
+                margin-right: 4px;
             }
         }
     }
