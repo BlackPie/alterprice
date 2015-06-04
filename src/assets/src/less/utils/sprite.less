@@ -11,6 +11,17 @@ The large array-like variables contain all information about a single icon
 At the bottom of this section, we provide information about the spritesheet itself
 @spritesheet: width height image @spritesheet-sprites;
 */
+@chevron-bottom-white-name: chevron-bottom-white;
+@chevron-bottom-white-x: 7px;
+@chevron-bottom-white-y: 41px;
+@chevron-bottom-white-offset-x: -7px;
+@chevron-bottom-white-offset-y: -41px;
+@chevron-bottom-white-width: 11px;
+@chevron-bottom-white-height: 7px;
+@chevron-bottom-white-total-width: 46px;
+@chevron-bottom-white-total-height: 51px;
+@chevron-bottom-white-image: '../../src/images/sprite.png';
+@chevron-bottom-white: 7px 41px -7px -41px 11px 7px 46px 51px '../../src/images/sprite.png' chevron-bottom-white;
 @chevron-right-white-name: chevron-right-white;
 @chevron-right-white-x: 0px;
 @chevron-right-white-y: 41px;
@@ -69,7 +80,7 @@ At the bottom of this section, we provide information about the spritesheet itse
 @spritesheet-width: 46px;
 @spritesheet-height: 51px;
 @spritesheet-image: '../../src/images/sprite.png';
-@spritesheet-sprites: @chevron-right-white @delivery-grey @search-grey @star-grey @star-yellow;
+@spritesheet-sprites: @chevron-bottom-white @chevron-right-white @delivery-grey @search-grey @star-grey @star-yellow;
 @spritesheet: 46px 51px '../../src/images/sprite.png' @spritesheet-sprites;
 
 /*

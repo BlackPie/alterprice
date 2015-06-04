@@ -14,7 +14,14 @@
             <a href="/markup/index/" class="home"><img src="/static/dist/images/logo.svg" /></a>
             <ul class="catalog-menu">
                 <li class="active"><a href="/markup/categories/">Все категории</a></li>
-                <li class="has-submenu"><a href="#">Электроника</a></li>
+                <li class="has-submenu">
+                    <a href="#">Электроника</a>
+                    <ul>
+                        <li><a href="#">Мобильные телефоны</a></li>
+                        <li><a href="#">Компьютеры</a></li>
+                        <li><a href="#">Бытовая техника</a></li>
+                    </ul>
+                </li>
                 <li class="has-submenu"><a href="#">Компьютеры</a></li>
                 <li class="has-submenu"><a href="#">Бытовая техника</a></li>
                 <li class="has-submenu"><a href="#">Дом и дача</a></li>
@@ -50,8 +57,8 @@
             </ul>
         </div>
     </div>
-    <script src="/static/dist/js/main.js"
-    	data-main="{% if current_app %}{{ current_app }}{% else %}landing{% endif %}"
+    <script src="{{ STATIC_URL }}dist/js/main.js"
+    	data-main="{% if current_app %}{{ current_app }}{% else %}default{% endif %}"
     ></script>
 </body>
 </html>

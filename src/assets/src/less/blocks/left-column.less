@@ -14,6 +14,12 @@
     .catalog-menu {
         background: #31353D;
 
+        ul {
+            display: none;
+            opacity: 0.0;
+            transition: opacity 0.2s ease-in 0s;
+        }
+
         a {
             height: 50px;
             display: flex;
@@ -42,16 +48,15 @@
                     content: "";
                     height: 50px;
                     width: 5px;
-                    background: #fff;
+                    background: #F9BD2D;
                     position: absolute;
                     left: 0;
-                    #gradient.vertical(#7EDAD5; #483B8F);
                 }
             }
         }
 
         li.has-submenu {
-            a:after {
+            &> a:after {
                 content: '';
                 display: block;
                 .icon(@chevron-right-white-name);
@@ -59,6 +64,19 @@
                 right: 10px;
                 top: 50%;
                 margin-top: -5px;
+            }
+
+            &.open {
+                ul {
+                    display: block;
+                    opacity: 1.0;
+                }
+
+                &> a:after {
+                    .icon(@chevron-bottom-white-name);
+                    right: 8px;
+                    margin-top: -4px;
+                }
             }
         }
     }
