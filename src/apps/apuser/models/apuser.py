@@ -4,6 +4,9 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class AlterPriceUserManager(models.Manager):
+    def get_by_natural_key(self, username):
+        return self.get(**{self.model.USERNAME_FIELD: username})
+
     def get_list(self):
         return self.all()
 
@@ -66,6 +69,9 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return u'%s: %s' % (self.id, self.email)
+
+    def get_short_name(self):
+        return self.name
 
     def is_client(self):
         return True if self.user_type is self.CLIENT else False
