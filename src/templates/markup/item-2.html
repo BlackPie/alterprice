@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <div id="item-detail-page">
+        {% include 'blocks/breadcrumbs.html' %}
+        <div class="h1">Sony Alpha ILCE-6000 Kit</div>
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div class="block-2-2 main-info-wrapper">
+                    <div class="price-wrapper">
+                        <span>Средняя цена</span>
+                        <div class="middle-price"><span>44 900</span> руб</div>
+                        <div class="price-range">34 088 - 70 490 руб</div>
+                    </div>
+                    <div class="description-wrapper">
+                        <p>- фотокамера с поддержкой сменных объективов</p>
+                        <p>- байонет Sony E</p>
+                        <p>- объектив в комплекте, модель уточняйте у продавца</p>
+                        <p>- матрица 24.7 МП (APS-C)</p>
+                        <p>- съемка видео Full HD</p>
+                        <p>- поворотный экран 3"</p>
+                        <p>- Wi-Fi</p>
+                    </div>
+                    <div class="offer-wrapper">
+                        <div class="pure-g">
+                            <div class="pure-u-1-3">
+                                <div class="shop">Яркий фотомаркет</div>
+                                <div class="rating">
+                                    <i class="icon-star-yellow"></i>
+                                    <i class="icon-star-yellow"></i>
+                                    <i class="icon-star-yellow"></i>
+                                    <i class="icon-star-yellow"></i>
+                                    <i class="icon-star-yellow"></i>
+                                </div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="price"><span>44 900</span> руб</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <a href="#" class="btn btn-blue btn-full-width">В магазин</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1-2 text-right">
+                <div class="block-2-2 gallery-wrapper">
+                    <div class="image" style="background-image: url({{ STATIC_URL }}dist/images/content/item/1.png)"></div>
+                    <ul class="navigation">
+                        <li><a href="#" style="background-image: url({{ STATIC_URL }}dist/images/content/item/2.png)"></a></li>
+                        <li><a href="#" style="background-image: url({{ STATIC_URL }}dist/images/content/item/3.png)"></a></li>
+                        <li><a href="#" style="background-image: url({{ STATIC_URL }}dist/images/content/item/4.png)"></a></li>
+                        <li><a href="#" style="background-image: url({{ STATIC_URL }}dist/images/content/item/3.png)"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pure-u-1-1">
+                <div class="block-ful-x item-info">
+                    <header>
+                        <ul>
+                            <li><a href="/markup/item/">Предложения магазинов <span>(61)</span></a></li>
+                            <li><a href="/markup/item-1/">Характеристики</a></li>
+                            <li class="active"><a href="/markup/item-2/">Отзывы <span>(23)</span></a></li>
+                        </ul>
+                    </header>
+                    <section class="offers-wrapper" style="display: none">
+                        <div class="filter-wrapper">
+                            <ul>
+                                <li>Фильтр:</li>
+                                <li>
+                                    <li class="active"><a href="#">Все</a></li>
+                                    <li><a href="#">С доставкой</a></li>
+                                    <li><a href="#">Самовывоз</a></li>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="offers-list">
+                            <div class="pure-g offer-block">
+                                <div class="pure-u-1-4">
+                                    <span class="shop">Яркий фотомаркет</span>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <div class="rating">
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                    </div>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <div class="price"><span>44 900</span> руб</div>
+                                </div>
+                                <div class="pure-u-1-4">
+                                    <div class="delivery"><i class="icon-delivery"></i> Бесплатно, самовывоз</div>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <a href="#" class="btn btn-blue btn-full-width">В магазин</a>
+                                </div>
+                            </div>
+                            <div class="pure-g offer-block">
+                                <div class="pure-u-1-4">
+                                    <span class="shop">Яркий фотомаркет</span>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <div class="rating">
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                    </div>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <div class="price"><span>44 900</span> руб</div>
+                                </div>
+                                <div class="pure-u-1-4">
+                                    <div class="delivery"><i class="icon-delivery"></i> Бесплатно, самовывоз</div>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <a href="#" class="btn btn-blue btn-full-width">В магазин</a>
+                                </div>
+                            </div>
+                            <div class="pure-g offer-block">
+                                <div class="pure-u-1-4">
+                                    <span class="shop">Яркий фотомаркет</span>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <div class="rating">
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                        <i class="icon-star-yellow"></i>
+                                    </div>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <div class="price"><span>44 900</span> руб</div>
+                                </div>
+                                <div class="pure-u-1-4">
+                                    <div class="delivery"><i class="icon-delivery"></i> Бесплатно, самовывоз</div>
+                                </div>
+                                <div class="pure-u-1-6">
+                                    <a href="#" class="btn btn-blue btn-full-width">В магазин</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="params-wrapper" style="display: none">
+                        <div class="pure-g">
+                            <div class="pure-u-1-1">
+                                <div class="heading">Матрица</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Общее число пикселов</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">24.7 млн</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Число эффективных пикселов</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">24.3 млн</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Размер</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">APS-C (23.5 x 15.6 мм)</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Кроп-фактор</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">1.5</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Максимальное разрешение</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">6000 x 4000</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Тип матрицы</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">CMOS</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Чувствительность</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">100 - 3200 ISO, Auto ISO</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Расширенные значения ISO</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">ISO6400, ISO12800, ISO25600, ISO51200</div>
+                            </div>
+                        </div>
+                        <div class="pure-g">
+                            <div class="pure-u-1-1">
+                                <div class="heading">Матрица</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Общее число пикселов</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">24.7 млн</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Число эффективных пикселов</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">24.3 млн</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Размер</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">APS-C (23.5 x 15.6 мм)</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Кроп-фактор</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">1.5</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Максимальное разрешение</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">6000 x 4000</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Тип матрицы</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">CMOS</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Чувствительность</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">100 - 3200 ISO, Auto ISO</div>
+                            </div>
+                            <div class="pure-u-1-3">
+                                <div class="title">Расширенные значения ISO</div>
+                            </div>
+                            <div class="pure-u-2-3">
+                                <div class="value">ISO6400, ISO12800, ISO25600, ISO51200</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="comments-wrapper">
+                        <div>
+                            <div class="comment-block">
+                                <header>
+                                    <div class="pure-g">
+                                        <div class="pure-u-1-2">
+                                            <div class="name">Shaporev Alexey</div>
+                                            <div class="date">05.05.2015</div>
+                                            <div class="rating">
+                                                <i class="icon-star-yellow"></i>
+                                                <i class="icon-star-yellow"></i>
+                                                <i class="icon-star-yellow"></i>
+                                                <i class="icon-star-yellow"></i>
+                                                <i class="icon-star-yellow"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pure-u-1-2 text-right">
+                                            <span class="yandex-market-review">Отзыв с Яндекс Маркет</span>
+                                        </div>
+                                    </div>
+                                </header>
+                                <div class="content">
+                                    <dl class="product-review-item__stat  product-review-item__stat_type_inline">
+                                        <dt class="product-review-item__title">Достоинства:</dt>
+                                        <dd class="product-review-item__text">- надёжный и качественный продукт: нет глюков, подвисов, сбоев, всё работает чётко, ровно и не подводит<br>- хороший интерфейс: всё интуитивно понятно, пользоваться удобно и приятно; программы можно организовать по папкам, на свой вкус</dd>
+                                    </dl>
+                                    <dl class="product-review-item__stat  product-review-item__stat_type_inline">
+                                        <dt class="product-review-item__title">Недостатки:</dt>
+                                        <dd class="product-review-item__text">- нехватка памяти: с другой стороны - люди вынуждены пользоваться только самым необходимым, ничего лишнего и ненужного - не поставишь ) всегда приходится делать выбор - всё подряд не напихаешь; проблема решается покупкой переходника для карт памяти. Беру на флешке фильмы, скидываю по одному-два - смотрю, удаляю; фотографии можно так же с флешки скидывать.<br>- закрытая система: этот недостаток спорный, я бы сказала, плавно переходящий в достоинство; я даже уважаю Apple за закрытость - никакого дешёвого китайского левака не подключишь, ничего неадекватного не загрузишь; своего рода, это отличная защита продукта от глюков, подвисов и сбоев<br>- высокая цена на продукт и комплектующие: это, пожалуй, основной серьёзный недостаток, который я  могу назвать. Тысяч семь тут явно лишние; но, слишком уж сильное достоинство - надёжность и качество - именно за это люди готовы отдавать эти деньги за Apple (я сейчас не говорю о тех, кто берёт ради моды и понтов)</dd>
+                                    </dl>
+                                    <div class="product-review-item__stat  product-review-item__stat_type_inline">
+                                        <div class="product-review-item__title">Комментарий: </div>
+                                        <div class="product-review-item__text">Я уважаю продукцию Apple потому, что когда ей пользуешься, чувствуется, что создатели делали её с любовью к пользователю.<br>Мне нужен был "деловой" серьёзный гаджет, в котором я могла бы работать (установила ворд, эксель), писать статьи, учиться. Я получила то, что мне было нужно. <br>К этому всему я получила так же возможность простых развлечений в виде игр и разных интересных приложений :)<br>По поводу возмущений: "Всё надо покупать!" <br>Знаете, по-моему на любом девайсе хорошие и полные приложения - стоят денег. А так же бесплатных приложений и игр предостаточно, Apple - не исключение. Кстати, цены то на приложения, если уж на то пошло, не космические вовсе.<br>Из серьёзного купила только форд и эксель по 300 рублей. Остальное из покупного - баловство, да и стоит недорого.<br>И ещё по поводу обложек. Полтора года назад при покупке планшета предложили обложку за 3000 рублей, кажется, я обалдела, но, решила взять. Так вот эта обложка всяко разно удобно сгибается и до сих пор выглядит хорошо и прилично! :-)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-block">
+                                <header>
+                                    <div class="pure-g">
+                                        <div class="pure-u-1-2">
+                                            <div class="name">Shaporev Alexey</div>
+                                            <div class="date">05.05.2015</div>
+                                            <div class="rating">
+                                                <i class="icon-star-yellow"></i>
+                                                <i class="icon-star-yellow"></i>
+                                                <i class="icon-star-yellow"></i>
+                                                <i class="icon-star-yellow"></i>
+                                                <i class="icon-star-yellow"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pure-u-1-2 text-right">
+                                            <span class="yandex-market-review">Отзыв с Яндекс Маркет</span>
+                                        </div>
+                                    </div>
+                                </header>
+                                <div class="content">
+                                    <dl class="product-review-item__stat  product-review-item__stat_type_inline">
+                                        <dt class="product-review-item__title">Достоинства:</dt>
+                                        <dd class="product-review-item__text">- надёжный и качественный продукт: нет глюков, подвисов, сбоев, всё работает чётко, ровно и не подводит<br>- хороший интерфейс: всё интуитивно понятно, пользоваться удобно и приятно; программы можно организовать по папкам, на свой вкус</dd>
+                                    </dl>
+                                    <dl class="product-review-item__stat  product-review-item__stat_type_inline">
+                                        <dt class="product-review-item__title">Недостатки:</dt>
+                                        <dd class="product-review-item__text">- нехватка памяти: с другой стороны - люди вынуждены пользоваться только самым необходимым, ничего лишнего и ненужного - не поставишь ) всегда приходится делать выбор - всё подряд не напихаешь; проблема решается покупкой переходника для карт памяти. Беру на флешке фильмы, скидываю по одному-два - смотрю, удаляю; фотографии можно так же с флешки скидывать.<br>- закрытая система: этот недостаток спорный, я бы сказала, плавно переходящий в достоинство; я даже уважаю Apple за закрытость - никакого дешёвого китайского левака не подключишь, ничего неадекватного не загрузишь; своего рода, это отличная защита продукта от глюков, подвисов и сбоев<br>- высокая цена на продукт и комплектующие: это, пожалуй, основной серьёзный недостаток, который я  могу назвать. Тысяч семь тут явно лишние; но, слишком уж сильное достоинство - надёжность и качество - именно за это люди готовы отдавать эти деньги за Apple (я сейчас не говорю о тех, кто берёт ради моды и понтов)</dd>
+                                    </dl>
+                                    <div class="product-review-item__stat  product-review-item__stat_type_inline">
+                                        <div class="product-review-item__title">Комментарий: </div>
+                                        <div class="product-review-item__text">Я уважаю продукцию Apple потому, что когда ей пользуешься, чувствуется, что создатели делали её с любовью к пользователю.<br>Мне нужен был "деловой" серьёзный гаджет, в котором я могла бы работать (установила ворд, эксель), писать статьи, учиться. Я получила то, что мне было нужно. <br>К этому всему я получила так же возможность простых развлечений в виде игр и разных интересных приложений :)<br>По поводу возмущений: "Всё надо покупать!" <br>Знаете, по-моему на любом девайсе хорошие и полные приложения - стоят денег. А так же бесплатных приложений и игр предостаточно, Apple - не исключение. Кстати, цены то на приложения, если уж на то пошло, не космические вовсе.<br>Из серьёзного купила только форд и эксель по 300 рублей. Остальное из покупного - баловство, да и стоит недорого.<br>И ещё по поводу обложек. Полтора года назад при покупке планшета предложили обложку за 3000 рублей, кажется, я обалдела, но, решила взять. Так вот эта обложка всяко разно удобно сгибается и до сих пор выглядит хорошо и прилично! :-)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-grey btn-full-width show-more">Показать еще</button>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
