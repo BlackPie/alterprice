@@ -13,4 +13,5 @@ urlpatterns = patterns(
     url(r'^item-2/$', TemplateView.as_view(template_name='markup/item-2.html'), name="ololo2"),
     url(r'^search/$', TemplateView.as_view(template_name='markup/search.html'), name="search"),
     url(r'^search-empty/$', TemplateView.as_view(template_name='markup/search-empty.html'), name="search-empty"),
+    url(r'^agreement/$', TemplateView.as_view(template_name='markup/agreement.html'), name="agreement"),
 )
