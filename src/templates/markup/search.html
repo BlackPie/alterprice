@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <div id="items-list-page">
+        <div class="h1">Результаты поиска по запросу - "Samsung"</div>
+        <div class="pure-g">
+            <div class="pure-u-3-4">
+                <div class="categories-filter-wrapper">
+                    <div class="categories-filter">
+                        <button class="btn btn-sea">Телевизоры и плазменные панели</button>
+                        <button class="btn btn-sea">Мобильные телефоны</button>
+                        <button class="btn btn-sea">Пылесосы</button>
+                        <button class="btn btn-sea">Еще какая-то категория</button>
+                    </div>
+                    <a href="#" class="show-all">Еще 118 категорий</a>
+                </div>
+                <div class="items-wrapper">
+                    {% include 'blocks/item_card.html' with title='Canon EOS 600D Kit' price='12 950' shop='Ситилинк' img='dist/images/content/items/1.png' %}
+                    {% include 'blocks/item_card.html' with title='Nikon D3200' price='17 550' shop='Ситилинк' img='dist/images/content/items/2.png' %}
+                    {% include 'blocks/item_card.html' with title='Canon EOS 1200D' price='10 000' shop='Ситилинк' img='dist/images/content/items/3.png' %}
+                    {% include 'blocks/item_card.html' with title='Canon EOS 600D Kit' price='9 999' shop='М.ВИДЕО' img='dist/images/content/items/4.png' %}
+                    {% include 'blocks/item_card.html' with title='Nikon D3200' price='950' shop='Ситилинк' img='dist/images/content/items/5.png' %}
+                    {% include 'blocks/item_card.html' with title='Canon EOS 1200D' price='12 000' shop='Ситилинк' img='dist/images/content/items/6.png' %}
+                </div>
+                <button type="button" class="btn btn-grey btn-full-width">Показать еще</button>
+            </div>
+            <div class="pure-u-1-4 text-right">
+                <div class="block-1-x text-left">
+                    <div class="items-filter">
+                        <div class="price">
+                            <span class="title">Цена, руб</span>
+                            <div class="pure-g">
+                                <div class="pure-u-1-2">
+                                    <label>от <input type="text" value="0" /></label>
+                                </div>
+                                <div class="pure-u-1-2">
+                                    <label>до <input type="text" value="9999" /></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="producers">
+                            <span class="title">Производитель</span>
+                            <label><input type="checkbox" /> Sony</label>
+                            <label><input type="checkbox" /> Nicon</label>
+                            <label><input type="checkbox" /> Canon</label>
+                            <label><input type="checkbox" /> Samsung</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
