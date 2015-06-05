@@ -1,3 +1,4 @@
+from django.core.validators import EMPTY_VALUES
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
@@ -7,8 +8,19 @@ class AlterPriceUserManager(models.Manager):
     def get_by_natural_key(self, username):
         return self.get(**{self.model.USERNAME_FIELD: username})
 
-    def get_list(self):
-        return self.all()
+    def get_list(self, client=False, operator=False, admin=False):
+        filters = {}
+        if client:
+            filters['user_type'] = self.model.CLIENT
+        if operator:
+            filters['user_type'] = self.model.OPERATOR
+        if admin:
+            filters['user_type'] = self.model.ADMIN
+        if filters not in EMPTY_VALUES:
+            qs = self.filter(**filters)
+        else:
+            qs = self.all()
+        return qs
 
     def make(self):
         return True
