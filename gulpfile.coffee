@@ -39,7 +39,7 @@ bundle = ->
         .pipe source('bundle.js')
         .pipe buffer()
         .pipe rename('main.js')
-        .pipe uglify()
+        #.pipe uglify()
         .pipe gulp.dest(ASSETS_DIST + 'js')
 
 
