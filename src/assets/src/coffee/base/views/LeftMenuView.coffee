@@ -15,6 +15,7 @@ module.exports = class LeftMenuView extends Marionette.ItemView
         "click @ui.toggleSubCategoryBtn":  "onClickToggleSubCategoryBtn"
 
 
+
     initialize: (options) =>
         @channel = options.channel
 

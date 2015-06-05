@@ -40,10 +40,17 @@
             </ul>
         </div>
         <div id="header-block">
-            <form id="catalog-search">
-                <input type="text" class="b_input_search" placeholder="Поиск среди более 6 000 000 товаров" />
-                <button type="submit"><i class="icon-search"></i></button>
-            </form>
+            <div class="pure-g">
+                <div class="pure-u-3-4">
+                    <form id="catalog-search">
+                        <input type="text" class="b_input_search" placeholder="Поиск среди более 6 000 000 товаров" />
+                        <button type="submit"><i class="icon-search"></i></button>
+                    </form>
+                </div>
+                <div class="pure-u-1-4">
+                    {% include 'blocks/location.html' %}
+                </div>
+            </div>
         </div>
         <div id="content-wrapper">
             {% block content %}Hello!{% endblock content %}
