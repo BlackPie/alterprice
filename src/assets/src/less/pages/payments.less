@@ -1,0 +1,77 @@
+#payments-page {
+    .pure-u-1-2.text-right {
+        text-align: right;
+    }
+
+    .user-balance-informer {
+        padding: 20px 20px 20px 76px;
+        position: relative;
+
+        &:before {
+            .icon-wallet-big;
+            content: '';
+            position: absolute;
+            left: 26px;
+            top: 39px;
+        }
+
+        &> span {
+            .typo_s;
+            color: #676767;
+            font-weight: 300;
+        }
+
+        div {
+            .typo_bt;
+            color: #2B303A;
+
+            span {
+                .typo_mh;
+                color: #2B303A;
+                font-weight: 400;
+            }
+        }
+    }
+
+
+    .payment-block {
+        text-align: left;
+
+        &> header {
+            .typo_s;
+            text-transform: uppercase;
+            color: #6D6D6D;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+
+            td, th {
+                .typo_s;
+                text-align: left;
+                padding: 10px 20px;
+                color: #2B303A;
+            }
+
+            th {
+                border-bottom: 1px solid #272B34;
+            }
+
+            td {
+                border-bottom: 1px solid #D7D7D7;
+            }
+
+            a.download, a.view {
+                display: inline-block;
+                width: 25px;
+                margin-right: 5px;
+
+                i {
+                    position: absolute;
+                    margin-top: -13px;
+                }
+            }
+        }
+    }
+}
