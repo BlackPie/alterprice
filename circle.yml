@@ -1,0 +1,38 @@
+machine:
+  services:
+    - docker
+
+checkout:
+  post:
+    - git checkout develop
+
+dependencies:
+  override:
+    - python bootstrap.py
+    - ./bin/buildout
+    - if [[ -e ~/docker/docker-baseimage.tar ]]; then docker load -i ~/docker/docker-baseimage.tar; fi
+    - if [[ ! -e ~/docker/docker-baseimage.tar ]]; then mkdir -p ~/docker && ls ~/ && docker pull createdigitalspb/docker-baseimage && docker save createdigitalspb/docker-baseimage > ~/docker/docker-baseimage.tar; fi
+
+    - if [[ -e ~/docker/alterprice.tar ]]; then docker load -i ~/docker/alterprice.tar; fi
+    - ./bin/fab circleci build_container
+    - mkdir -p ~/docker; docker save createdigitalspb/alterprice > ~/docker/alterprice.tar
+
+  cache_directories:
+    - "eggs"
+    - "~/docker"
+
+
+test:
+  override:
+    - date
+
+
+deployment:
+  staging:
+    branch: develop
+    commands:
+      - date
+      - ./bin/fab circleci publish_container
+      - date
+      - ./bin/fab staging deploy
+      - date
