@@ -1,0 +1,86 @@
+#shop-profile-page {
+    .pure-u-1-2.text-right {
+        text-align: right;
+    }
+
+    .block-2-x {
+        padding: 20px;
+    }
+
+    #profile-edit-btn {
+        .icon-edit;
+        position: absolute;
+        right: 0px;
+        top: 10px;
+    }
+
+    #edit-profile-form {
+        position: relative;
+
+        footer {
+          text-align: right;
+        }
+
+        .name {
+            span {
+                .typo_sh;
+                font-size: 32px;
+                font-weight: 400;
+                line-height: 36px;
+            }
+
+            .status {
+                display: inline-block;
+                position: relative;
+                top: -12px;
+                left: 8px;
+
+                &.ok {
+                    .icon-status-ok;
+                }
+            }
+
+            .tooltip {
+                display: none;
+                .typo_c;
+                color: #727272;
+                position: absolute;
+                background: #E6E6E6;
+                white-space: nowrap;
+                padding: 0 10px;
+                height: 20px;
+                line-height: 20px;
+                margin-top: -28px;
+                margin-left: -8px;
+
+                &:before {
+                    .icon-triangle-bottom;
+                    content: '';
+                    position: absolute;
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+
+    .help {
+        text-align: left;
+        color: #2B303A;
+
+        p {
+            .typo_s;
+            margin: 20px 0;
+            line-height: 22px;
+        }
+
+        .contacts {
+            border-top: 1px dashed #D7D7D7;
+            padding: 20px 0 0 0;
+
+            .title {
+                .typo_p;
+                color: #7B7B7B;
+            }
+        }
+    }
+}
