@@ -34,12 +34,14 @@ class AlterPriceUserManager(models.Manager):
     def make_operator(self):
         obj = self.make()
         obj.user_type = self.model.OPERATOR
+        obj.is_staff = True
         obj.save()
         return obj
 
     def make_admin(self):
         obj = self.make()
         obj.user_type = self.model.ADMIN
+        obj.is_staff = True
         obj.save()
         return obj
 
@@ -60,6 +62,11 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
                               db_index=True,
                               unique=True,
                               verbose_name=_(u'Электронная почта'))
+    phone = models.CharField(max_length=100,
+                             blank=True,
+                             null=True,
+                             default=None,
+                             verbose_name=_(u'Телефон'))
     name = models.CharField(max_length=150,
                             null=True,
                             blank=True,
@@ -71,7 +78,6 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
     user_type = models.PositiveSmallIntegerField(verbose_name=_(u'Статус'),
                                                  default=CLIENT,
                                                  choices=USER_TYPE_CHOICES)
-
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
                                    verbose_name=_(u'Дата регистрации'))
@@ -81,10 +87,10 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
     objects = AlterPriceUserManager()
 
     def __unicode__(self):
-        return u'%s: %s' % (self.id, self.email)
+        return u'%s: %s' % (self.name, self.email)
 
     def __str__(self):
-        return u'%s: %s' % (self.id, self.email)
+        return u'%s: %s' % (self.name, self.email)
 
     def get_short_name(self):
         return self.name
