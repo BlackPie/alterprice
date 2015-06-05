@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 
 LeftMenuView = require 'base/views/LeftMenuView'
 CitySelectorView = require 'base/views/CitySelectorView'
+CatalogItemsListFilterView = require 'catalog/items_list/views/CatalogItemsListFilterView'
 
 
 module.exports = class CatalogItemsListController extends Marionette.Controller
@@ -13,6 +14,7 @@ module.exports = class CatalogItemsListController extends Marionette.Controller
         @channel = options.channel
         @leftMenuView = new LeftMenuView {channel: @channel}
         @citySelectorView = new CitySelectorView {channel: @channel}
+        @catalogItemsListFilterView = new CatalogItemsListFilterView {channel: @channel}
 
 
     index: () =>

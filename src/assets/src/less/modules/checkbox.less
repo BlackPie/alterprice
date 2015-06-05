@@ -1,0 +1,22 @@
+label.checkbox {
+    position: relative;
+    padding-left: 25px;
+
+    &:before {
+        .icon-checkbox-empty;
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 1px;
+    }
+
+    &.checked {
+        &:before {
+            .icon-checkbox-checked;
+        }
+    }
+
+    input[type="checkbox"] {
+        display: none;
+    }
+}

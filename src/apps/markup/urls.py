@@ -14,4 +14,8 @@ urlpatterns = patterns(
     url(r'^search/$', TemplateView.as_view(template_name='markup/search.html'), name="search"),
     url(r'^search-empty/$', TemplateView.as_view(template_name='markup/search-empty.html'), name="search-empty"),
     url(r'^agreement/$', TemplateView.as_view(template_name='markup/agreement.html'), name="agreement"),
+    url(r'^client/$', TemplateView.as_view(template_name='markup/profile.html'), name="client"),
+    url(r'^client-edit/$', TemplateView.as_view(template_name='markup/profile-edit.html'), name="client-edit"),
+    url(r'^shop/$', TemplateView.as_view(template_name='markup/shop.html'), name="shop"),
+    url(r'^shop-edit/$', TemplateView.as_view(template_name='markup/shop-edit.html'), name="shop-edit"),
 )
