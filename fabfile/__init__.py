@@ -10,7 +10,6 @@ def commons():
     env.docker_username = os.environ.get('docker_username', None)
     env.docker_password = os.environ.get('docker_password', None)
     env.docker_email = os.environ.get('docker_email', None)
-
     env.app_container_name = 'createdigitalspb/alterprice'
 
 
@@ -19,7 +18,7 @@ def staging():
     env.settings = 'staging'
     env.hosts = ['144.76.79.14']
     env.user = 'vagrant'
-    env.port = '17022'
+    env.port = '19022'
     env.django_exec = '/project/bin/django'
     env.fig_file = 'docker-compose-staging.yml'
     message_highlight("Configuration set", "Staging")
