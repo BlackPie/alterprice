@@ -102,14 +102,18 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class UserInline(admin.TabularInline):
+    # form = forms.AdminUserForm
     model = models.AlterPriceUser
     # fields = ('email', 'name')
 
 
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'operator', 'approved')
+    readonly_fields = ('user', )
     list_filter = (RegDateFilter, OperatorFilter)
-    search_fields = ['user__email', 'user__phone']
+    search_fields = ['user__email', 'phone']
+    fields = ('operator', 'user', 'name', 'last_name', 'phone')
+    verbose_name = 'asdasd'
     # inlines = [UserInline, ]
 
     def queryset(self, request):
@@ -122,15 +126,17 @@ class ClientAdmin(admin.ModelAdmin):
     def render_change_form(self, request, context, *args, **kwargs):
         operator_qs = models.AlterPriceUser.objects.get_list(operator=True)
         context['adminform'].form.fields['operator'].queryset = operator_qs
-        user_qs = models.AlterPriceUser.objects.get_list(client=True)
-        context['adminform'].form.fields['user'].queryset = user_qs
+        # user_qs = models.AlterPriceUser.objects.get_list(client=True)
+        # context['adminform'].form.fields['user'].queryset = user_qs
         return super(ClientAdmin, self).render_change_form(request, context, args, kwargs)
 
 
 class OperatorAdmin(admin.ModelAdmin):
+    readonly_fields = ('code', 'user')
+
     def render_change_form(self, request, context, *args, **kwargs):
-        user_qs = models.AlterPriceUser.objects.get_list(operator=True)
-        context['adminform'].form.fields['user'].queryset = user_qs
+        # user_qs = models.AlterPriceUser.objects.get_list(operator=True)
+        # context['adminform'].form.fields['user'].queryset = user_qs
         return super(OperatorAdmin, self).render_change_form(request, context, args, kwargs)
 
 
