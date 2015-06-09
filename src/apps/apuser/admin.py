@@ -113,7 +113,6 @@ class ClientAdmin(admin.ModelAdmin):
     list_filter = (RegDateFilter, OperatorFilter)
     search_fields = ['user__email', 'phone']
     fields = ('operator', 'user', 'name', 'last_name', 'phone')
-    verbose_name = 'asdasd'
     # inlines = [UserInline, ]
 
     def queryset(self, request):
