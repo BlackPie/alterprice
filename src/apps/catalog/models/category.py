@@ -22,6 +22,12 @@ class Category(NameModel):
 
     objects = CategoryManager()
 
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         verbose_name = _('Категория')
         verbose_name_plural = _('Категории')
