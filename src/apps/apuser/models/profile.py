@@ -28,6 +28,7 @@ class AdminProfile(Profile):
     user = models.OneToOneField(AlterPriceUser,
                                 related_name='admin_user',
                                 verbose_name=_('Пользователь'))
+
     class Meta:
         verbose_name = _('Администратор')
         verbose_name_plural = _('Администраторы')
@@ -66,3 +67,40 @@ class ClientProfile(Profile, ApprovedModel):
     class Meta:
         verbose_name = _('Клиент')
         verbose_name_plural = _('Клиенты')
+
+
+class ClientPaymentInfo(models.Model):
+    client = models.OneToOneField(ClientProfile,
+                                  verbose_name=_('Клиент'))
+    org_name = models.CharField(max_length=255,
+                                verbose_name=_('Название организации'))
+    inn = models.CharField(max_length=255,
+                           verbose_name=_('ИНН'))
+    kpp = models.CharField(max_length=255,
+                           verbose_name=_('КПП'))
+    bik = models.CharField(max_length=255,
+                           verbose_name=_('БИК'))
+    rs = models.CharField(max_length=255,
+                          verbose_name=_('Р/С'))
+    corp_bill = models.CharField(max_length=255,
+                                 verbose_name=_('Кор. счет'))
+    bank_name = models.CharField(max_length=255,
+                                 verbose_name=_('Название банка'))
+    contact_name = models.CharField(max_length=255,
+                                    verbose_name=_('ФИО контактного лица'))
+    contact_phone = models.CharField(max_length=255,
+                                     verbose_name=_('Телефон контактного лица'))
+    legal_address = models.CharField(max_length=255,
+                                     verbose_name=_('Юридический адрес'))
+    post_address = models.CharField(max_length=255,
+                                    verbose_name=_('Почтовый адрес'))
+
+    def __str__(self):
+        return self.org_name
+
+    def __unicode__(self):
+        return self.org_name
+
+    class Meta:
+        verbose_name = _('Платежные данные клиента')
+        verbose_name_plural = _('Платежные данные клиентов')
