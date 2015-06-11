@@ -13,6 +13,10 @@ urlpatterns = patterns(
     # APPs
     url(r'^markup/', include('markup.urls', namespace="markup")),
 
+
+    # API urls
+    url(r'^api/product/', include('product.api.urls', namespace="product-api")),
+
     # Aadmin urls
     url(r'^admin/', include(admin.site.urls)),
 )
