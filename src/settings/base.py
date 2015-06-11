@@ -151,6 +151,7 @@ class Base(Configuration):
         'catalog',
         'utils',
         'shop',
+        'product',
         'markup',  # TMP app
     )
 
