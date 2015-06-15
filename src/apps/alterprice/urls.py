@@ -12,6 +12,7 @@ urlpatterns = patterns(
 
     # APPs
     url(r'^markup/', include('markup.urls', namespace="markup")),
+    url(r'^product/', include('product.urls', namespace="product")),
 
 
     # API urls
