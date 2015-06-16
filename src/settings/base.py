@@ -135,6 +135,7 @@ class Base(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django.contrib.humanize',
         'rest_framework',
         'django_filters',
         'django_extensions',
