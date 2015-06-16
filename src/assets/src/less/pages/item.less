@@ -65,24 +65,31 @@
 
 
     .gallery-wrapper {
-        padding: 20px;
+        padding: 20px 0;
         text-align: left;
 
         .image {
-            height: 320px;
+            height: 300px;
+            margin-bottom: 20px;
             background-position: center center;
             background-repeat: no-repeat;
+            background-size: contain;
         }
 
         .navigation {
             font-size: 0;
+            padding-left: 10px;
 
             li {
                 display: inline-block;
-                margin-right: 9px;
+                margin: 0 4px;
 
-                &:last-child {
-                    margin-right: 0;
+                //&:last-child {
+                //    margin-right: 0;
+                //}
+
+                &.active {
+                    display: none;
                 }
             }
 
@@ -92,6 +99,7 @@
                 width: 100px;
                 background-position: center center;
                 background-repeat: no-repeat;
+                background-size: contain;
             }
         }
 
