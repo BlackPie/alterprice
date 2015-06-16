@@ -1,12 +1,12 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 # Project imports
-from product.models import Product, ProductProperty
+from product import models
 from product.api import serializers
 
 
 class ProductList(ListAPIView):
     serializer_class = serializers.ProductSerializer
-    model = Product
+    model = models.Product
 
     def get_queryset(self):
         qs = self.model.objects.get_list()
@@ -16,7 +16,7 @@ class ProductList(ListAPIView):
 
 class ProductDetail(RetrieveAPIView):
     serializer_class = serializers.ProductSerializer
-    model = Product
+    model = models.Product
 
     def get_queryset(self):
         qs = self.model.objects.get_list()
@@ -26,7 +26,16 @@ class ProductDetail(RetrieveAPIView):
 
 class ProductProperties(ListAPIView):
     serializer_class = serializers.ProductPropertySerializer
-    model = ProductProperty
+    model = models.ProductProperty
+
+    def get_queryset(self):
+        qs = self.model.objects.all()
+        return qs
+
+
+class ProductPhotos(ListAPIView):
+    serializer_class = serializers.ProductPhotoSerializer
+    model = models.ProductPhoto
 
     def get_queryset(self):
         qs = self.model.objects.all()

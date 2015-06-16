@@ -8,4 +8,5 @@ urlpatterns = patterns(
     url(r'^detail/(?P<pk>\d+)/$', views.ProductDetail.as_view(), name='detail'),
 
     url(r'^detail/(?P<pk>\d+)/properties/$', views.ProductProperties.as_view(), name='properties'),
+    url(r'^detail/(?P<pk>\d+)/photos/$', views.ProductPhotos.as_view(), name='photos'),
 )

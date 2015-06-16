@@ -22,6 +22,21 @@ class ProductPropertySerializer(serializers.ModelSerializer):
         return PropertyInfoSerializer(qs, many=True).data
 
 
+class ProductPhotoSerializer(serializers.ModelSerializer):
+    preview = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.ProductPhoto
+        fields = ('preview', 'image')
+
+    def get_preview(self, obj):
+        return obj.get_preview()
+
+    def get_image(self, obj):
+        return obj.get_big()
+
+
 class ProductSerializer(serializers.ModelSerializer):
     avg_price = serializers.SerializerMethodField()
 

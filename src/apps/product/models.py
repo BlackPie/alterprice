@@ -1,5 +1,7 @@
+import os
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.fields import ThumbnailerField
 
 
 class ProductManager(models.Manager):
@@ -76,3 +78,33 @@ class PropertyInfo(models.Model):
     class Meta:
         verbose_name = _('Данные свойства')
         verbose_name_plural = _('Данные свойств')
+
+
+def get_photo_path(instance, filename):
+    return os.path.join("product/", filename)
+
+
+class ProductPhoto(models.Model):
+    product = models.ForeignKey(Product,
+                                verbose_name=_('Продукт'))
+    photo = ThumbnailerField(blank=True,
+                             null=True,
+                             default=None,
+                             upload_to=get_photo_path,
+                             verbose_name=_('Фото'))
+
+    def get_preview(self):
+        if self.photo:
+            return self.photo['product_small'].url
+        else:
+            return None
+
+    def get_big(self):
+        if self.photo:
+            return self.photo['product_big'].url
+        else:
+            return None
+
+    class Meta:
+        verbose_name = _('Фото продукта')
+        verbose_name_plural = _('Фото продуктов')

@@ -11,8 +11,12 @@ class ProductShopInline(admin.StackedInline):
     model = models.ProductShop
 
 
+class ProductPhotoInline(admin.StackedInline):
+    model = models.ProductPhoto
+
+
 class ProductAdmin(admin.ModelAdmin):
-    inlines = (ProductPropertyInline, ProductShopInline)
+    inlines = (ProductPropertyInline, ProductShopInline, ProductPhotoInline)
     list_display = ('__str__', 'created')
     ordering = ('created', )
 
