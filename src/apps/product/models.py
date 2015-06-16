@@ -31,9 +31,15 @@ class Product(models.Model):
         verbose_name_plural = _('Продукты')
 
 
-class ProductShop(models.Model):
+class ProductFK(models.Model):
     product = models.ForeignKey(Product,
                                 verbose_name=_('Продукт'))
+
+    class Meta:
+        abstract = True
+
+
+class ProductShop(ProductFK):
     shop = models.ForeignKey('shop.Shop',
                              verbose_name=_('Магазин'))
     price = models.CharField(max_length=255,
@@ -44,9 +50,7 @@ class ProductShop(models.Model):
         verbose_name_plural = _('магазины продуктов')
 
 
-class ProductProperty(models.Model):
-    product = models.ForeignKey(Product,
-                                verbose_name=_('Продукт'))
+class ProductProperty(ProductFK):
     name = models.CharField(max_length=255,
                             verbose_name=_('Название'))
 
@@ -84,9 +88,7 @@ def get_photo_path(instance, filename):
     return os.path.join("product/", filename)
 
 
-class ProductPhoto(models.Model):
-    product = models.ForeignKey(Product,
-                                verbose_name=_('Продукт'))
+class ProductPhoto(ProductFK):
     photo = ThumbnailerField(blank=True,
                              null=True,
                              default=None,

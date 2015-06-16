@@ -7,6 +7,9 @@ class CategoryManager(models.Manager):
     def get_list(self):
         return self.all()
 
+    def get_frist_level(self):
+        return self.filter(parent__isnull=True)
+
 
 class Category(NameModel):
     parent = models.ForeignKey("self",
