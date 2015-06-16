@@ -43,6 +43,14 @@
                     </div>
                 </div>
             </div>
+            {% with object.get_photos as photos  %}
+                {% for photo in photos %}
+                    <p>{{ photo.get_preview }}</p>
+                    <p>{{ photo.get_image }}</p>
+                {% empty %}
+                    no uploaded photos
+                {% endfor %}
+            {% endwith %}
             <div class="pure-u-1-2 text-right">
                 <div class="block-2-2 gallery-wrapper">
                     <div class="image" style="background-image: url({{ STATIC_URL }}dist/images/content/item/1.png)"></div>

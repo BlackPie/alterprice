@@ -26,6 +26,9 @@ class Product(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_photos(self):
+        return self.productphoto_set.all()
+
     class Meta:
         verbose_name = _('Продукт')
         verbose_name_plural = _('Продукты')
