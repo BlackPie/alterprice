@@ -263,8 +263,8 @@ class Base(Configuration):
 
     THUMBNAIL_ALIASES = {
         '': {
-            'product_small': {'size': (100, 85), 'autocrop': True, 'crop': 'smart'},
-            'product_big': {'size': (428, 320), 'autocrop': True, 'crop': 'smart'},
+            'product_small': {'size': (100, 85), 'autocrop': False, 'crop': False},
+            'product_big': {'size': (428, 320), 'autocrop': False, 'crop': False},
         }
     }
 
