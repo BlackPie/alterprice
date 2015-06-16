@@ -13,13 +13,7 @@
                         <div class="price-range">34 088 - 70 490 руб</div>
                     </div>
                     <div class="description-wrapper">
-                        <p>- фотокамера с поддержкой сменных объективов</p>
-                        <p>- байонет Sony E</p>
-                        <p>- объектив в комплекте, модель уточняйте у продавца</p>
-                        <p>- матрица 24.7 МП (APS-C)</p>
-                        <p>- съемка видео Full HD</p>
-                        <p>- поворотный экран 3"</p>
-                        <p>- Wi-Fi</p>
+                        {% autoescape off %}{{ object.description }}{% endautoescape %}
                     </div>
                     <div class="offer-wrapper">
                         <div class="pure-g">
@@ -43,23 +37,20 @@
                     </div>
                 </div>
             </div>
-            {% with object.get_photos as photos  %}
-                {% for photo in photos %}
-                    <p>{{ photo.get_preview }}</p>
-                    <p>{{ photo.get_image }}</p>
-                {% empty %}
-                    no uploaded photos
-                {% endfor %}
-            {% endwith %}
             <div class="pure-u-1-2 text-right">
                 <div class="block-2-2 gallery-wrapper">
-                    <div class="image" style="background-image: url({{ STATIC_URL }}dist/images/content/item/1.png)"></div>
-                    <ul class="navigation">
-                        <li><a href="#" style="background-image: url({{ STATIC_URL }}dist/images/content/item/2.png)"></a></li>
-                        <li><a href="#" style="background-image: url({{ STATIC_URL }}dist/images/content/item/3.png)"></a></li>
-                        <li><a href="#" style="background-image: url({{ STATIC_URL }}dist/images/content/item/4.png)"></a></li>
-                        <li><a href="#" style="background-image: url({{ STATIC_URL }}dist/images/content/item/3.png)"></a></li>
-                    </ul>
+                    {% with object.get_photos as photos  %}
+                        {% for photo in photos %}
+                            {% if forloop.first %}
+                                <div class="image" style="background-image: url({{ photo.get_big }})"></div>
+                            {% endif %}
+                        {% endfor %}
+                        <ul class="navigation">
+                            {% for photo in photos %}
+                                <li {% if forloop.first %}class="active"{% endif %}><a href="#" style="background-image: url({{ photo.get_preview }})"></a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endwith %}
                 </div>
             </div>
             <div class="pure-u-1-1">
