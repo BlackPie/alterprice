@@ -47,6 +47,8 @@ class ProductShop(ProductFK):
                              verbose_name=_('Магазин'))
     price = models.CharField(max_length=255,
                              verbose_name=_('Цена'))
+    point = models.IntegerField(default=2,
+                                verbose_name=_('Рейтинг'))
 
     class Meta:
         verbose_name = _('Магазин продукта')
