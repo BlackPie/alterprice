@@ -2,6 +2,7 @@ import random
 from rest_framework import serializers
 # Project imports
 from product import models
+from shop.api.serializers import ShopSerializer
 
 
 class PropertyInfoSerializer(serializers.ModelSerializer):
@@ -37,14 +38,24 @@ class ProductPhotoSerializer(serializers.ModelSerializer):
         return obj.get_big()
 
 
+class ProductShopSerializer(serializers.ModelSerializer):
+    shop = ShopSerializer()
+
+    class Meta:
+        model = models.ProductShop
+        fields = ('shop', 'price', 'point')
+
+
 class ProductSerializer(serializers.ModelSerializer):
     avg_price = serializers.SerializerMethodField()
     min_price = serializers.SerializerMethodField()
     max_price = serializers.SerializerMethodField()
+    best_offer = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Product
-        fields = ('id', 'name', 'description', 'avg_price', 'min_price', 'max_price')
+        fields = ('id', 'name', 'description', 'best_offer',
+                  'avg_price', 'min_price', 'max_price')
 
     def get_avg_price(self, obj):
         return random.randrange(100, 10000)
@@ -54,3 +65,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_max_price(self, obj):
         return random.randrange(200, 1000)
+
+    def get_best_offer(self, obj):
+        ps = obj.productshop_set.first()
+        return ProductShopSerializer(ps).data if ps else None
