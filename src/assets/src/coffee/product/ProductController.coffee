@@ -40,18 +40,15 @@ module.exports = class ProductController extends Marionette.Controller
         @productTabsOffersView.show()
         @productTabsPropsView.hide()
         @productTabsReviewsView.hide()
-        console.log '1'
 
 
     openPropsTab: =>
         @productTabsPropsView.show()
         @productTabsOffersView.hide()
         @productTabsReviewsView.hide()
-        console.log '2'
 
 
     openReviewsTab: =>
         @productTabsReviewsView.show()
         @productTabsOffersView.hide()
         @productTabsPropsView.hide()
-        console.log '3'

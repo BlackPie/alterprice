@@ -25,6 +25,8 @@ module.exports = class ProductTabsNavigtionView extends Marionette.ItemView
     onClickTabLink: (e) =>
         e.preventDefault()
         newActiveLink = @$(e.target)
+        if newActiveLink.closest('a').size() > 0
+            newActiveLink = newActiveLink.closest 'a'
         activeLink = @$(@ui.tabsWrapper).find '.active'
         activeLink.removeClass 'active'
         newActiveLink.closest('li').addClass 'active'
