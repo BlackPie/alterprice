@@ -12,6 +12,7 @@ logger.setLevel(logger.levels.DEBUG)
 
 
 DefaultApp = require 'default/DefaultApp'
+ProductApp = require 'product/ProductApp'
 CatalogItemsListApp = require 'catalog/items_list/CatalogItemsListApp'
 
 
@@ -28,6 +29,7 @@ entryPoint = getEntryPoint()
 entryPoints =
     'default': DefaultApp
     'catalog-items-list': CatalogItemsListApp
+    'product-detail': ProductApp
 
 
 if window.context != undefined
