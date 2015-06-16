@@ -29,6 +29,9 @@ class Product(models.Model):
     def get_photos(self):
         return self.productphoto_set.all()
 
+    def get_best_offer(self):
+        return self.productshop_set.first()
+
     class Meta:
         verbose_name = _('Продукт')
         verbose_name_plural = _('Продукты')
