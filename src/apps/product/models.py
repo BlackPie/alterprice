@@ -14,6 +14,7 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
                                    verbose_name=_(u'Дата создания'))
+    description = models.TextField(verbose_name=_('Описание'))
 
     objects = ProductManager()
 

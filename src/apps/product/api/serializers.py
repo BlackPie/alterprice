@@ -1,3 +1,4 @@
+import random
 from rest_framework import serializers
 # Project imports
 from product.models import Product, ProductProperty
@@ -10,15 +11,11 @@ class ProductPropertySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    properties = serializers.SerializerMethodField()
+    avg_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ('name', 'properties')
+        fields = ('id', 'name', 'description', 'avg_price')
 
-    def get_properties(self, obj):
-        qs = obj.productproperty_set.all()
-        if qs.exists():
-            return ProductPropertySerializer(qs, many=True).data
-        else:
-            return None
+    def get_avg_price(self, obj):
+        return random.randrange(100, 10000)
