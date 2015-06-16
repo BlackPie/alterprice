@@ -39,10 +39,18 @@ class ProductPhotoSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     avg_price = serializers.SerializerMethodField()
+    min_price = serializers.SerializerMethodField()
+    max_price = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Product
-        fields = ('id', 'name', 'description', 'avg_price')
+        fields = ('id', 'name', 'description', 'avg_price', 'min_price', 'max_price')
 
     def get_avg_price(self, obj):
         return random.randrange(100, 10000)
+
+    def get_min_price(self, obj):
+        return random.randrange(20, 1000)
+
+    def get_max_price(self, obj):
+        return random.randrange(200, 1000)
