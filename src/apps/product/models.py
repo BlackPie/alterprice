@@ -45,17 +45,34 @@ class ProductShop(models.Model):
 class ProductProperty(models.Model):
     product = models.ForeignKey(Product,
                                 verbose_name=_('Продукт'))
+    name = models.CharField(max_length=255,
+                            verbose_name=_('Название'))
+
+    def __str__(self):
+        return "%s: %s" % (self.product, self.name)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.product, self.name)
+
+    class Meta:
+        verbose_name = _('Свойство продукта')
+        verbose_name_plural = _('Свойства продуктов')
+
+
+class PropertyInfo(models.Model):
+    productproperty = models.ForeignKey(ProductProperty,
+                                        verbose_name=_('Свойство'))
     property_name = models.CharField(max_length=255,
                                      verbose_name=_('Название свойства'))
     property_value = models.CharField(max_length=255,
                                       verbose_name=_('Значение свойства'))
 
     def __str__(self):
-        return "%s: %s" % (self.product, self.property_name)
+        return self.property_name
 
     def __unicode__(self):
-        return self.__str__
+        return self.property_name
 
     class Meta:
-        verbose_name = _('Свойство продукта')
-        verbose_name_plural = _('Свойства продуктов')
+        verbose_name = _('Данные свойства')
+        verbose_name_plural = _('Данные свойств')
