@@ -14,6 +14,19 @@
             <a href="/" class="home"><img src="/static/dist/images/logo.svg" /></a>
             <ul class="catalog-menu">
                 <li class="active"><a href="/markup/categories/">Все категории</a></li>
+                {% for category in categories  %}
+                <li class="has-submenu">
+                    <a href="">{{ category.name }}</a>
+                    <ul>
+                        {% for scategory in category.children.all %}
+                            <li><a href="">{{ scategory.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+                {% comment %}
+                    
+                
                 <li class="has-submenu">
                     <a href="#">Электроника</a>
                     <ul>
@@ -37,6 +50,7 @@
                 <li class="has-submenu"><a href="#">Товары для здоровья</a></li>
                 <li class="has-submenu"><a href="#">Продукты</a></li>
                 <li class="has-submenu"><a href="#">Услуги</a></li>
+                {% endcomment %}
             </ul>
         </div>
         {% include 'blocks/header/user_header.html' %}
