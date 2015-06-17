@@ -6,7 +6,7 @@ from easy_thumbnails.fields import ThumbnailerField
 
 class ProductManager(models.Manager):
     def get_list(self):
-        qs = self.filter()
+        qs = self.filter(productshop__shop__status=1)
         return qs.distinct()
 
 
@@ -126,16 +126,10 @@ class ProductPhoto(ProductFK):
                              verbose_name=_('Фото'))
 
     def get_preview(self):
-        if self.photo:
-            return self.photo['product_small'].url
-        else:
-            return None
+        return self.photo['product_small'].url if self.photo else None
 
     def get_big(self):
-        if self.photo:
-            return self.photo['product_big'].url
-        else:
-            return None
+        return self.photo['product_big'].url if self.photo else None
 
     class Meta:
         verbose_name = _('Фото продукта')

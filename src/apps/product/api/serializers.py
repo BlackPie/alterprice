@@ -1,41 +1,9 @@
 import random
+from django.db.models import Min
 from rest_framework import serializers
 # Project imports
 from product import models
 from shop.api.serializers import ShopSerializer
-
-
-class PropertyInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.PropertyInfo
-        fields = ('property_name', 'property_value')
-
-
-class ProductPropertySerializer(serializers.ModelSerializer):
-    info = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.ProductProperty
-        fields = ('name', 'info')
-
-    def get_info(self, obj):
-        qs = obj.propertyinfo_set.all()
-        return PropertyInfoSerializer(qs, many=True).data
-
-
-class ProductPhotoSerializer(serializers.ModelSerializer):
-    preview = serializers.SerializerMethodField()
-    image = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.ProductPhoto
-        fields = ('preview', 'image')
-
-    def get_preview(self, obj):
-        return obj.get_preview()
-
-    def get_image(self, obj):
-        return obj.get_big()
 
 
 class ProductShopDeliverySerializer(serializers.ModelSerializer):
@@ -54,25 +22,22 @@ class ProductShopSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    avg_price = serializers.SerializerMethodField()
     min_price = serializers.SerializerMethodField()
-    max_price = serializers.SerializerMethodField()
-    best_offer = serializers.SerializerMethodField()
+    offer = serializers.SerializerMethodField()
+    offers_count = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Product
-        fields = ('id', 'name', 'description', 'best_offer',
-                  'avg_price', 'min_price', 'max_price')
-
-    def get_avg_price(self, obj):
-        return random.randrange(100, 10000)
+        fields = ('id', 'name', 'description', 'offer',
+                  'min_price', 'offers_count')
 
     def get_min_price(self, obj):
-        return random.randrange(20, 1000)
+        price =  obj.productshop_set.filter(shop__status=1).aggregate(Min('price'))
+        return price.get('price__min', None)
 
-    def get_max_price(self, obj):
-        return random.randrange(200, 1000)
+    def get_offers_count(self, obj):
+        return obj.offers_count
 
-    def get_best_offer(self, obj):
-        ps = obj.productshop_set.first()
+    def get_offer(self, obj):
+        ps = obj.productshop_set.order_by('price').first()
         return ProductShopSerializer(ps).data if ps else None

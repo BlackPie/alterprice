@@ -5,9 +5,6 @@ from product.api import views
 urlpatterns = patterns(
     '',
     url(r'^list/$', views.ProductList.as_view(), name='list'),
-    url(r'^detail/(?P<pk>\d+)/$', views.ProductDetail.as_view(), name='detail'),
 
-    url(r'^detail/(?P<pk>\d+)/properties/$', views.ProductProperties.as_view(), name='properties'),
-    url(r'^detail/(?P<pk>\d+)/photos/$', views.ProductPhotos.as_view(), name='photos'),
     url(r'^detail/(?P<pk>\d+)/offers/$', views.ProductOffers.as_view(), name='offers'),
 )

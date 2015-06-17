@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from utils.abstract_models import ApprovedModel
+from utils.abstract_models import ApprovedModel, StatusModel
 
 
 class MakeException(Exception):
@@ -17,11 +17,9 @@ class ShopManager(models.Manager):
         return True
 
 
-class Shop(ApprovedModel):
-
+class Shop(ApprovedModel, StatusModel):
     name = models.CharField(max_length=255,
                             verbose_name=_('Название'))
-
     user = models.ForeignKey('apuser.AlterPriceUser',
                              related_name='owner',
                              verbose_name=_('Пользователь'))
@@ -29,9 +27,6 @@ class Shop(ApprovedModel):
                               verbose_name=_('Название юридического лица'))
     ogrn = models.CharField(max_length=255,
                             verbose_name=_('ОГРН'))
-    created = models.DateTimeField(auto_now_add=True,
-                                   editable=False,
-                                   verbose_name=_(u'Дата создания'))
     city = models.CharField(max_length=255,
                             null=True,
                             blank=True,
