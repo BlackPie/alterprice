@@ -12,3 +12,4 @@ module.exports = class ProductOffersListView extends Marionette.CollectionView
 
     getChildView: (model) =>
         return ProductOffersItemView
+
