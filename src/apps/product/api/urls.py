@@ -9,4 +9,5 @@ urlpatterns = patterns(
 
     url(r'^detail/(?P<pk>\d+)/properties/$', views.ProductProperties.as_view(), name='properties'),
     url(r'^detail/(?P<pk>\d+)/photos/$', views.ProductPhotos.as_view(), name='photos'),
+    url(r'^detail/(?P<pk>\d+)/offers/$', views.ProductOffers.as_view(), name='offers'),
 )

@@ -40,3 +40,12 @@ class ProductPhotos(ListAPIView):
     def get_queryset(self):
         qs = self.model.objects.all()
         return qs
+
+
+class ProductOffers(ListAPIView):
+    serializer_class = serializers.ProductShopSerializer
+    model = models.ProductShop
+
+    def get_queryset(self):
+        qs = self.model.objects.all()
+        return qs

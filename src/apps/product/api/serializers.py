@@ -38,12 +38,19 @@ class ProductPhotoSerializer(serializers.ModelSerializer):
         return obj.get_big()
 
 
+class ProductShopDeliverySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProductShopDelivery
+        fields = ('delivery', 'pickup', 'price')
+
+
 class ProductShopSerializer(serializers.ModelSerializer):
     shop = ShopSerializer()
+    productshopdelivery = ProductShopDeliverySerializer()
 
     class Meta:
         model = models.ProductShop
-        fields = ('shop', 'price', 'point')
+        fields = ('shop', 'price', 'point', 'productshopdelivery')
 
 
 class ProductSerializer(serializers.ModelSerializer):

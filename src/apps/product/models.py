@@ -53,9 +53,31 @@ class ProductShop(ProductFK):
     point = models.IntegerField(default=2,
                                 verbose_name=_('Рейтинг'))
 
+    def __str__(self):
+        return "%s: %s" % (self.shop.name, self.product.name)
+
     class Meta:
         verbose_name = _('Магазин продукта')
         verbose_name_plural = _('магазины продуктов')
+
+
+class ProductShopDelivery(models.Model):
+    productshop = models.OneToOneField(ProductShop,
+                                       verbose_name=_('Магазин продукта'))
+
+    pickup = models.BooleanField(default=True,
+                                 verbose_name=_('Самовывоз'))
+    delivery = models.BooleanField(default=True,
+                                   verbose_name=_('Доставка'))
+    price = models.CharField(max_length=255,
+                             null=True,
+                             blank=True,
+                             default=None,
+                             verbose_name=_('Цена доставки'))
+
+    class Meta:
+        verbose_name = _('Доставка продукта')
+        verbose_name_plural = _('Доставка продуктов')
 
 
 class ProductProperty(ProductFK):
