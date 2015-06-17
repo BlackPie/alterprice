@@ -15,6 +15,8 @@ class ProductDetailPageView(DetailView):
         context['price'] = {
             'min': random.randrange(20, 1000),
             'max': random.randrange(1000, 2000),
+            'mid': random.randrange(1000, 2000),
         }
         context['best_offer'] = self.object.get_best_offer()
+        context['properties'] = self.object.productproperty_set.prefetch_related('propertyinfo_set')
         return context

@@ -45,12 +45,23 @@
             }
         }
 
+        .overlay {
+            position: fixed;
+            display: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 200;
+        }
+
         .choose-your-city-wrapper {
             display: none;
             background: #FFFFFF;
             width: 220px;
             position: absolute;
             box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+            z-index: 300;
 
             a {
                 display: block;
@@ -62,6 +73,10 @@
 
                 &:hover {
                     background: #F0F2F5;
+                }
+
+                &:active {
+                    color: #323232;
                 }
             }
         }
