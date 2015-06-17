@@ -29,8 +29,8 @@ class Product(models.Model):
     def get_photos(self):
         return self.productphoto_set.all()
 
-    def get_best_offer(self):
-        return self.productshop_set.first()
+    def get_offers(self):
+        return self.productshop_set.filter(shop__status=1)
 
     class Meta:
         verbose_name = _('Продукт')

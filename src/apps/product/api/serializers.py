@@ -1,5 +1,3 @@
-import random
-from django.db.models import Min
 from rest_framework import serializers
 # Project imports
 from product import models
@@ -32,12 +30,13 @@ class ProductSerializer(serializers.ModelSerializer):
                   'min_price', 'offers_count')
 
     def get_min_price(self, obj):
-        price =  obj.productshop_set.filter(shop__status=1).aggregate(Min('price'))
-        return price.get('price__min', None)
+        ps = obj.get_offers().order_by('price').first()
+        return ps.price
 
     def get_offers_count(self, obj):
         return obj.offers_count
 
     def get_offer(self, obj):
-        ps = obj.productshop_set.order_by('price').first()
-        return ProductShopSerializer(ps).data if ps else None
+        # Fix when top bets on category will released
+        ps = obj.get_offers().first()
+        return ShopSerializer(ps.shop).data if ps else None
