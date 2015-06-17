@@ -10,11 +10,15 @@ module.exports = class ProductOffersCollection extends PageableCollection
     state:
         firstPage: 1
         currentPage: 1
-        pageSize: 10
+        pageSize: 3
 
     queryParams:
         currentPage: "page"
         pageSize: "page_size"
+
+
+    startPageSize: 3
+    showMoreSize: 1
 
 
     initialize: (options) =>
