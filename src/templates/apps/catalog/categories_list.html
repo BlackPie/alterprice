@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <div id="subcategories-list-page">
+        <div class="h1">Все категории</div>
+        <div>
+            {% for category in children_categories %}
+                {% cycle '<div class="row">' '' '' %}
+                <div class="block-03-x">
+                    <div class="image" style="background-image: url({{ category.get_preview }})"></div>
+                    <div class="title">{{ category.name }}</div>
+                    <ul>
+                        {% for subcategory in category.get_children %}
+                            <li><a href="/catalog/{{ subcategory.id }}/">{{ subcategory.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% if forloop.last %}
+                    </div>
+                {% else %}
+                    {% cycle '' '' '</div>' %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

@@ -42,6 +42,9 @@ class Category(NameModel):
     def get_preview(self):
         return self.photo['category'].url if self.photo else None
 
+    def get_children(self):
+        return Category.objects.filter(parent=self.pk)
+
     def __str__(self):
         return self.name
 
