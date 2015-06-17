@@ -19,6 +19,7 @@ urlpatterns = patterns(
     # API urls
     url(r'^api/product/', include('product.api.urls', namespace="product-api")),
     url(r'^api/catalog/', include('catalog.api.urls', namespace="catalog-api")),
+    url(r'^api/brand/', include('brand.api.urls', namespace="brand-api")),
 
     # Aadmin urls
     url(r'^admin/', include(admin.site.urls)),

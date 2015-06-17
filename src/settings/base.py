@@ -154,6 +154,7 @@ class Base(Configuration):
         'utils',
         'shop',
         'product',
+        'brand',
         'markup',  # TMP app
     )
 
