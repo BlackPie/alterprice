@@ -45,6 +45,9 @@ class Category(NameModel):
     def get_children(self):
         return Category.objects.filter(parent=self.pk)
 
+    def get_url(self):
+        return "/catalog/%d/" % self.pk
+
     def __str__(self):
         return self.name
 
