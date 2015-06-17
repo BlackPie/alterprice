@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <div id="categories-list-page">
+        <div class="h1">Все категории</div>
+        <div>
+            {% for category in categories  %}
+                <a href="/catalog/{{ category.pk }}/" class="block-1-1">
+                    <div class="image" style="background-image: url({{ category.get_preview }})"></div>
+                    <div class="title">{{ category.name }}</div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

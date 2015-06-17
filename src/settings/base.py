@@ -114,6 +114,7 @@ class Base(Configuration):
 
     TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + (
         'alterprice.processors.categories',
+        'alterprice.processors.current_url',
     )
 
     MIDDLEWARE_CLASSES = (

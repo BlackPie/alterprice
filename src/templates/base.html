@@ -12,46 +12,7 @@
     <div id="container">
         <div id="left-column-block">
             <a href="/" class="home"><img src="/static/dist/images/logo.svg" /></a>
-            <ul class="catalog-menu">
-                <li class="active"><a href="/markup/categories/">Все категории</a></li>
-                {% for category in categories  %}
-                <li class="has-submenu">
-                    <a href="">{{ category.name }}</a>
-                    <ul>
-                        {% for scategory in category.children.all %}
-                            <li><a href="">{{ scategory.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                {% endfor %}
-                {% comment %}
-                    
-                
-                <li class="has-submenu">
-                    <a href="#">Электроника</a>
-                    <ul>
-                        <li><a href="#">Мобильные телефоны</a></li>
-                        <li><a href="#">Компьютеры</a></li>
-                        <li><a href="#">Бытовая техника</a></li>
-                    </ul>
-                </li>
-                <li class="has-submenu"><a href="#">Компьютеры</a></li>
-                <li class="has-submenu"><a href="#">Бытовая техника</a></li>
-                <li class="has-submenu"><a href="#">Дом и дача</a></li>
-                <li class="has-submenu"><a href="#">Гардероб</a></li>
-                <li class="has-submenu"><a href="#">Детские товары</a></li>
-                <li class="has-submenu"><a href="#">Косметика</a></li>
-                <li class="has-submenu"><a href="#">Спорт и отдых</a></li>
-                <li class="has-submenu"><a href="#">Авто</a></li>
-                <li class="has-submenu"><a href="#">Всё для офиса</a></li>
-                <li class="has-submenu"><a href="#">Досуг и развлечения</a></li>
-                <li class="has-submenu"><a href="#">Подарки и цветы</a></li>
-                <li class="has-submenu"><a href="#">Оборудование</a></li>
-                <li class="has-submenu"><a href="#">Товары для здоровья</a></li>
-                <li class="has-submenu"><a href="#">Продукты</a></li>
-                <li class="has-submenu"><a href="#">Услуги</a></li>
-                {% endcomment %}
-            </ul>
+            {% include 'blocks/catalog_menu.html' %}
         </div>
         {% include 'blocks/header/user_header.html' %}
         <div id="content-wrapper">
@@ -67,9 +28,9 @@
         </div>
     </div>
     {% if context %}
-    <script>
-        window.context = '{{ context|safe }}';
-    </script>
+        <script>
+            window.context = '{{ context|safe }}';
+        </script>
     {% endif %}
     <script src="{{ STATIC_URL }}dist/js/main.js"
     	data-main="{% if current_app %}{{ current_app }}{% else %}catalog-items-list{% endif %}"
