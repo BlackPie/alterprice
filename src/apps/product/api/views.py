@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 # Project imports
 from product import models
-from product.api import serializers
+from product.api import serializers, filters
 
 
 class ProductList(ListAPIView):
@@ -45,6 +45,7 @@ class ProductPhotos(ListAPIView):
 class ProductOffers(ListAPIView):
     serializer_class = serializers.ProductShopSerializer
     model = models.ProductShop
+    filter_class = filters.ProductShopFilter
 
     def get_queryset(self):
         qs = self.model.objects.all()
