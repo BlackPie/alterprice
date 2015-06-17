@@ -9,7 +9,7 @@ module.exports = class LeftMenuView extends Marionette.ItemView
     template: false
 
     ui:
-        toggleSubCategoryBtn: '.has-submenu'
+        toggleSubCategoryBtn: '.has-submenu > a'
 
     events:
         "click @ui.toggleSubCategoryBtn":  "onClickToggleSubCategoryBtn"
