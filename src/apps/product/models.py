@@ -11,6 +11,11 @@ class ProductManager(models.Manager):
 
 
 class Product(models.Model):
+    brand = models.ForeignKey('brand.Brand',
+                              null=True,
+                              blank=True,
+                              default=None,
+                              verbose_name=_('Бренд'))
     name = models.CharField(max_length=255,
                             verbose_name=_('Название'))
     created = models.DateTimeField(auto_now_add=True,
