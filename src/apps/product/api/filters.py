@@ -4,10 +4,8 @@ from django.core.validators import EMPTY_VALUES
 from product.models import ProductShop
 
 
-class DeliveryFilter(django_filters.NumberFilter):
+class DeliveryFilter(django_filters.CharFilter):
     def filter(self, qs, value):
-        # delivery_type=pickup
-        # delivery_type=delivery
         if value not in EMPTY_VALUES:
             if value == 'pickup':
                 return qs.filter(productshopdelivery__pickup=True)
