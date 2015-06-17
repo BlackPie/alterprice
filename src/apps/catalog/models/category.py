@@ -10,7 +10,8 @@ class CategoryManager(models.Manager):
         return self.all()
 
     def get_frist_level(self):
-        return self.filter(parent__isnull=True)
+        qs = self.filter(parent__isnull=True)
+        return qs.prefetch_related('children')
 
 
 def get_photo_path(instance, filename):

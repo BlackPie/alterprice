@@ -112,9 +112,9 @@ class Base(Configuration):
         os.path.join(BASE_DIR, "templates"),
     )
 
-    # TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + (
-    #     'appname.context_processors.processor_name'
-    # )
+    TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + (
+        'alterprice.processors.categories',
+    )
 
     MIDDLEWARE_CLASSES = (
         'django.contrib.sessions.middleware.SessionMiddleware',
