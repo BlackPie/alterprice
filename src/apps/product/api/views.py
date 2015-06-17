@@ -1,4 +1,6 @@
 from rest_framework.generics import ListAPIView
+from django.db.models import Count
+
 # Project imports
 from product import models
 from product.api import serializers, filters
@@ -11,6 +13,7 @@ class ProductList(ListAPIView):
     def get_queryset(self):
         qs = self.model.objects.get_list()
         qs = qs.prefetch_related('productshop_set')
+        qs = qs.annotate(offers_count=Count('productshop'))
         return qs
 
 

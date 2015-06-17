@@ -266,6 +266,7 @@ class Base(Configuration):
         '': {
             'product_small': {'size': (100, 85), 'autocrop': False, 'crop': False},
             'product_big': {'size': (428, 320), 'autocrop': False, 'crop': False},
+            'category': {'size': (200, 150), 'autocrop': False, 'crop': False},
         }
     }
 
