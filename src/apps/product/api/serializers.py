@@ -5,39 +5,6 @@ from product import models
 from shop.api.serializers import ShopSerializer
 
 
-class PropertyInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.PropertyInfo
-        fields = ('property_name', 'property_value')
-
-
-class ProductPropertySerializer(serializers.ModelSerializer):
-    info = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.ProductProperty
-        fields = ('name', 'info')
-
-    def get_info(self, obj):
-        qs = obj.propertyinfo_set.all()
-        return PropertyInfoSerializer(qs, many=True).data
-
-
-class ProductPhotoSerializer(serializers.ModelSerializer):
-    preview = serializers.SerializerMethodField()
-    image = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.ProductPhoto
-        fields = ('preview', 'image')
-
-    def get_preview(self, obj):
-        return obj.get_preview()
-
-    def get_image(self, obj):
-        return obj.get_big()
-
-
 class ProductShopDeliverySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ProductShopDelivery

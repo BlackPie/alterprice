@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView
 # Project imports
 from product import models
 from product.api import serializers, filters
@@ -10,35 +10,7 @@ class ProductList(ListAPIView):
 
     def get_queryset(self):
         qs = self.model.objects.get_list()
-        qs = qs.prefetch_related('productproperty_set')
-        return qs
-
-
-class ProductDetail(RetrieveAPIView):
-    serializer_class = serializers.ProductSerializer
-    model = models.Product
-
-    def get_queryset(self):
-        qs = self.model.objects.get_list()
-        qs = qs.prefetch_related('productproperty_set')
-        return qs
-
-
-class ProductProperties(ListAPIView):
-    serializer_class = serializers.ProductPropertySerializer
-    model = models.ProductProperty
-
-    def get_queryset(self):
-        qs = self.model.objects.all()
-        return qs
-
-
-class ProductPhotos(ListAPIView):
-    serializer_class = serializers.ProductPhotoSerializer
-    model = models.ProductPhoto
-
-    def get_queryset(self):
-        qs = self.model.objects.all()
+        qs = qs.prefetch_related('productshop_set')
         return qs
 
 
@@ -48,5 +20,6 @@ class ProductOffers(ListAPIView):
     filter_class = filters.ProductShopFilter
 
     def get_queryset(self):
-        qs = self.model.objects.all()
+        product_id = self.kwargs.get('pk', None)
+        qs = self.model.objects.filter(product_id=product_id)
         return qs
