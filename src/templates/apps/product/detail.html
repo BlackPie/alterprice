@@ -75,87 +75,20 @@
                     </header>
                     <div id="offers-wrapper-layout">
                         <section class="offers-wrapper">
-                            <div class="filter-wrapper">
-                                <ul>
-                                    <li>Фильтр:</li>
-                                    <li>
-                                        <li class="active"><a href="#">Все</a></li>
-                                        <li><a href="#">С доставкой</a></li>
-                                        <li><a href="#">Самовывоз</a></li>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="offers-list">
-                                <div class="pure-g offer-block">
-                                    <div class="pure-u-1-4">
-                                        <span class="shop">Яркий фотомаркет</span>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <div class="rating">
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                        </div>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <div class="price"><span>44 900</span> руб</div>
-                                    </div>
-                                    <div class="pure-u-1-4">
-                                        <div class="delivery"><i class="icon-delivery"></i> Бесплатно, самовывоз</div>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <a href="#" class="btn btn-purple btn-full-width">В магазин</a>
-                                    </div>
-                                </div>
-                                <div class="pure-g offer-block">
-                                    <div class="pure-u-1-4">
-                                        <span class="shop">Яркий фотомаркет</span>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <div class="rating">
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                        </div>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <div class="price"><span>44 900</span> руб</div>
-                                    </div>
-                                    <div class="pure-u-1-4">
-                                        <div class="delivery"><i class="icon-delivery"></i> Бесплатно, самовывоз</div>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <a href="#" class="btn btn-purple btn-full-width">В магазин</a>
-                                    </div>
-                                </div>
-                                <div class="pure-g offer-block">
-                                    <div class="pure-u-1-4">
-                                        <span class="shop">Яркий фотомаркет</span>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <div class="rating">
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                            <i class="icon-star-yellow"></i>
-                                        </div>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <div class="price"><span>44 900</span> руб</div>
-                                    </div>
-                                    <div class="pure-u-1-4">
-                                        <div class="delivery"><i class="icon-delivery"></i> Бесплатно, самовывоз</div>
-                                    </div>
-                                    <div class="pure-u-1-6">
-                                        <a href="#" class="btn btn-purple btn-full-width">В магазин</a>
-                                    </div>
+                            <div id="product-offers-filter-view">
+                                <div class="filter-wrapper">
+                                    <input type="hidden" id="delivery_type" value="" />
+                                    <ul>
+                                        <li>Фильтр:</li>
+                                        <li>
+                                            <li class="active"><a href="#" data-type="" class="filter-link">Все</a></li>
+                                            <li><a href="#" class="filter-link" data-type="delivery">С доставкой</a></li>
+                                            <li><a href="#" class="filter-link" data-type="pickup">Самовывоз</a></li>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
+                            <div class="offers-list"></div>
                             <button class="btn btn-grey btn-full-width show-more">Показать еще</button>
                         </section>
                     </div>

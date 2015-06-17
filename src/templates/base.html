@@ -52,6 +52,11 @@
             </ul>
         </div>
     </div>
+    {% if context %}
+    <script>
+        window.context = '{{ context|safe }}';
+    </script>
+    {% endif %}
     <script src="{{ STATIC_URL }}dist/js/main.js"
     	data-main="{% if current_app %}{{ current_app }}{% else %}catalog-items-list{% endif %}"
     ></script>

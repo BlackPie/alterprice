@@ -3,9 +3,10 @@ ViewableModel   = require 'base/models/ViewableModel'
 module.exports = class ProductOfferModel extends ViewableModel
     idAttribute: "_nonexistent_id"
 
-    url: "/api/company/"
+    url: null
 
-    urlRoot: "/api/company/"
+    urlRoot: null
 
     getViewURL: () =>
-        "/company/detail/#{@get 'slug'}/"
+        null
+#        "/company/detail/#{@get 'slug'}/"

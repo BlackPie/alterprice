@@ -1,6 +1,7 @@
 import random
 from django.views.generic.detail import DetailView
 from product.models import Product
+import json
 
 
 class ProductDetailPageView(DetailView):
@@ -19,4 +20,7 @@ class ProductDetailPageView(DetailView):
         }
         context['best_offer'] = self.object.get_best_offer()
         context['properties'] = self.object.productproperty_set.prefetch_related('propertyinfo_set')
+        context['context'] = json.dumps({
+            'productId': context['object'].pk
+        })
         return context

@@ -6,7 +6,7 @@ module.exports = class ProductOffersLayout extends Marionette.LayoutView
     el: $("#offers-wrapper-layout")
 
     regions:
-        offersFilter:  ".filter-wrapper"
+        offersFilter:  "#product-offers-filter-view"
         offersList: ".offers-list"
 
 

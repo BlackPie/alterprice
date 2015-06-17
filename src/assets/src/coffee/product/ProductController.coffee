@@ -13,22 +13,35 @@ ProductOffersLayout = require 'product/layouts/ProductOffersLayout'
 #ProductTabsOffersView = require 'product/views/tabs/ProductTabsOffersView'
 ProductTabsPropsView = require 'product/views/tabs/ProductTabsPropsView'
 ProductTabsReviewsView = require 'product/views/tabs/ProductTabsReviewsView'
+ProductOffersFilterView = require 'product/views/offers/ProductOffersFilterView'
+ProductOffersListView = require 'product/views/offers/ProductOffersListView'
+ProductOffersFilterState = require 'product/states/ProductOffersFilterState'
+ProductOffersCollection = require 'product/collections/ProductOffersCollection'
 
 
 module.exports = class ProductController extends Marionette.Controller
 
     initialize: (options) =>
         @channel = options.channel
+        @productId = options.context.productId
+
         @leftMenuView = new LeftMenuView {channel: @channel}
         @citySelectorView = new CitySelectorView {channel: @channel}
 
         @productGalleryView = new ProductGalleryView {channel: @channel}
         @productTabsNavigtionView = new ProductTabsNavigtionView {channel: @channel}
-        #@productTabsOffersView = new ProductTabsOffersView {channel: @channel}
         @productTabsPropsView = new ProductTabsPropsView {channel: @channel}
         @productTabsReviewsView = new ProductTabsReviewsView {channel: @channel}
 
         @productOffersLayout = new ProductOffersLayout {channel: @channel}
+        @productOffersCollection = new ProductOffersCollection {id: @productId}
+        @productOffersFilterView = new ProductOffersFilterView {channel: @channel}
+        @productOffersListView = new ProductOffersListView {channel: @channel, collection: @productOffersCollection}
+        @productOffersLayout.offersList.show(@productOffersListView)
+
+        @productOffersCollection.fetchFiltered()
+
+        @channel.vent.on Events.SET_OFFERS_FILTER,  @onSetOffersFilter
 
         @channel.vent.on Events.OPEN_OFFERS_TAB,  @openOffersTab
         @channel.vent.on Events.OPEN_PROPS_TAB,  @openPropsTab
@@ -40,7 +53,6 @@ module.exports = class ProductController extends Marionette.Controller
 
 
     openOffersTab: =>
-        #@productTabsOffersView.show()
         @productOffersLayout.show()
         @productTabsPropsView.hide()
         @productTabsReviewsView.hide()
@@ -49,12 +61,16 @@ module.exports = class ProductController extends Marionette.Controller
     openPropsTab: =>
         @productTabsPropsView.show()
         @productOffersLayout.hide()
-        #@productTabsOffersView.hide()
         @productTabsReviewsView.hide()
 
 
     openReviewsTab: =>
         @productTabsReviewsView.show()
         @productOffersLayout.hide()
-        #@productTabsOffersView.hide()
         @productTabsPropsView.hide()
+
+
+    onSetOffersFilter: =>
+        filterData = @productOffersFilterView.getFilterData()
+        productOffersFilterState = ProductOffersFilterState.fromArray filterData
+        @productOffersCollection.fetchFiltered productOffersFilterState

@@ -1,11 +1,11 @@
 PageableCollection = require "backbone.paginator"
 
-CompanyModel = require '../models/ProductOfferModel'
+ProductOfferModel = require '../models/ProductOfferModel'
 
 
 module.exports = class ProductOffersCollection extends PageableCollection
-    model: CompanyModel
-    url: "/api/company/list/"
+    model: ProductOfferModel
+    url: null
 
     state:
         firstPage: 1
@@ -15,6 +15,10 @@ module.exports = class ProductOffersCollection extends PageableCollection
     queryParams:
         currentPage: "page"
         pageSize: "page_size"
+
+
+    initialize: (options) =>
+        @url = "/api/product/detail/#{options.id}/offers/"
 
 
     stateToParams: (filterState) ->

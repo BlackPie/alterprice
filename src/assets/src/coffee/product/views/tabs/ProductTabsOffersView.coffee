@@ -4,7 +4,7 @@ Marionette = require 'backbone.marionette'
 
 
 module.exports = class ProductTabsOffersView extends Marionette.ItemView
-    el: $('#offers-wrapper-view')
+    el: $('#product-offers-filter-view')
 
     template: false
 
