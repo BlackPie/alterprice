@@ -10,6 +10,7 @@ from utils.views import APIView
 class ProductList(ListAPIView):
     serializer_class = serializers.ProductSerializer
     model = models.Product
+    filter_class = filters.ProductListFilter
 
     def get_queryset(self):
         qs = self.model.objects.get_list()
