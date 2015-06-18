@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import django_filters
 from django.core.validators import EMPTY_VALUES
-from product.models import ProductShop
+from product import models
+from brand.models import Brand
+from catalog.models import Category
+from django.db.models import Min, Max, Q
 
 
 class DeliveryFilter(django_filters.CharFilter):
@@ -18,5 +21,46 @@ class ProductShopFilter(django_filters.FilterSet):
     delivery_type = DeliveryFilter()
 
     class Meta:
-        model = ProductShop
+        model = models.ProductShop
         fields = ['delivery_type', ]
+
+
+class PriceMaxFilter(django_filters.NumberFilter):
+    def filter(self, qs, value):
+        if value not in EMPTY_VALUES:
+            qs = qs.by_max_price(value)
+        return qs
+
+
+class PriceMinFilter(django_filters.NumberFilter):
+    def filter(self, qs, value):
+        if value not in EMPTY_VALUES:
+            qs = qs.by_min_price(value)
+        return qs
+
+
+class BrandFilter(django_filters.ModelMultipleChoiceFilter):
+    def filter(self, qs, value):
+        if len(value) > 0:
+            qs = qs.by_brands(value)
+        return qs
+
+
+class ProductSearchFilter(django_filters.CharFilter):
+    def filter(self, qs, value):
+        if value not in EMPTY_VALUES:
+            qs = qs.search(value)
+        return qs
+
+
+class ProductListFilter(django_filters.FilterSet):
+    price_max = PriceMaxFilter()
+    price_min = PriceMinFilter()
+    brand = BrandFilter(queryset=Brand.objects.all())
+    # category = CategoryFilter(queryset=Category.objects.all())
+    search = ProductSearchFilter()
+
+    class Meta:
+        model = models.Product
+        # fields = ['price_min', 'price_max', 'brand', 'search', 'category']
+        fields = ['price_min', 'price_max', 'brand', 'search']
