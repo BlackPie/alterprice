@@ -1,7 +1,7 @@
 <ul class="catalog-menu">
     <li {% if current_url == '/catalog/' %}class="active"{% endif %}><a href="/catalog/">Все категории</a></li>
     {% for category in categories  %}
-    <li class="has-submenu">
+    <li class="has-submenu {% if current_url == category.get_url %}active open{% endif %}">
         <a href="/catalog/{{ category.id }}/">{{ category.name }}</a>
         <ul>
             {% for scategory in category.children.all %}

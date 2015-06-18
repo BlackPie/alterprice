@@ -1,8 +1,19 @@
 #subcategories-list-page {
+    .row {
+        position: relative;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        overflow: hidden;
+    }
+
     .block-03-x {
+        display: inline-block;
         margin: 0 16px 20px 16px;
         padding-top: 15px;
+        padding-bottom: 10px;
         position: relative;
+        vertical-align: top;
 
         &:nth-child(3n) {
             margin-right: 0;
@@ -11,8 +22,6 @@
         &:nth-child(1n) {
             margin-left: 0;
         }
-
-
 
         .image {
             height: 150px;
