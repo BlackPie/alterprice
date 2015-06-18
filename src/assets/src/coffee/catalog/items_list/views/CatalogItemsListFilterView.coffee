@@ -14,6 +14,8 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
         checkboxLabel: 'label.checkbox'
         checkboxInput: 'label.checkbox input'
         submitBtn: '.submit'
+        priceFromInput: '#price_from'
+        priceTillInput: '#price_till'
 
     events:
         "change @ui.checkboxInput": "onChangeCheckboxInput"
@@ -32,3 +34,10 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
         console.log offset.top
         submitBtn.css 'top', offset.top
         submitBtn.fadeIn()
+
+
+    getFilterData: =>
+        data =
+            price_from: @$(@ui.priceFromInput).val()
+            price_till: @$(@ui.priceTillInput).val()
+        return data

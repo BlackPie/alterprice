@@ -9,7 +9,6 @@ class CatalogAllCategoriesPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CatalogAllCategoriesPageView, self).get_context_data(**kwargs)
-        # context['current_app'] = 'product-detail'
         return context
 
 
@@ -26,8 +25,6 @@ class CatalogCategoriesListPageView(DetailView):
         context['children_categories'] = self.object.get_children()
         if self.object.parent:
             context['parent_category'] = self.object.parent.pk
-
-        #context['current_app'] = 'product-detail'
         return context
 
 
@@ -38,6 +35,7 @@ class CatalogCategoryProductListPageView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CatalogCategoryProductListPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'catalog-items-list'
         if self.object.parent:
             context['parent_category'] = self.object.parent.pk
         return context
