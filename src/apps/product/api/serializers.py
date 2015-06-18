@@ -2,6 +2,9 @@ from rest_framework import serializers
 # Project imports
 from product import models
 from shop.api.serializers import ShopSerializer
+from catalog.api.serializers import CategorySerializer
+from catalog.models import Category
+from brand.models import Brand
 
 
 class ProductShopDeliverySerializer(serializers.ModelSerializer):
@@ -45,3 +48,14 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_photo(self, obj):
         p = obj.get_photos()
         return p.first().get_preview() if p.exists() else None
+
+
+class ProductCountSerializer(serializers.Serializer):
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+        many=True)
+    brand = serializers.PrimaryKeyRelatedField(
+        queryset=Brand.objects.all(),
+        many=True)
+    price_min = serializers.CharField(allow_blank=True)
+    price_max = serializers.CharField(allow_blank=True)
