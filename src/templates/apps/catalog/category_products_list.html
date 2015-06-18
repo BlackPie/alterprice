@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <div id="subcategories-list-page">
+        <div id="block-breadcrumbs">
+            <ul>
+                <li><a href="{% url 'catalog:categories_list' %}">Все категории</a></li>
+                {% if object.parent %}
+                    {% if object.parent.parent %}
+                        <li><a href="{% url 'catalog:category_categories_list' object.parent.parent.pk %}">{{ object.parent.parent.name }}</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'catalog:category_categories_list' object.parent.pk %}">{{ object.parent.name }}</a></li>
+                {% endif %}
+                <li><span>{{ object.name }}</span></li>
+            </ul>
+        </div>
+        <div class="h1">{{ object.name }}</div>
+        <div>
+            ololo
+        </div>
+    </div>
+{% endblock content %}

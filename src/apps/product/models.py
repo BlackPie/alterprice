@@ -37,6 +37,10 @@ class Product(models.Model):
     def get_offers(self):
         return self.productshop_set.filter(shop__status=1)
 
+    def get_best_offer(self):
+        offers = self.get_offers()
+        return offers.first() if offers.exists() else None
+
     class Meta:
         verbose_name = _('Продукт')
         verbose_name_plural = _('Продукты')
