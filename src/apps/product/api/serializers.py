@@ -23,11 +23,12 @@ class ProductSerializer(serializers.ModelSerializer):
     min_price = serializers.SerializerMethodField()
     offer = serializers.SerializerMethodField()
     offers_count = serializers.SerializerMethodField()
+    photo = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Product
         fields = ('id', 'name', 'description', 'offer',
-                  'min_price', 'offers_count')
+                  'min_price', 'offers_count', 'photo')
 
     def get_min_price(self, obj):
         ps = obj.get_offers().order_by('price').first()
@@ -40,3 +41,7 @@ class ProductSerializer(serializers.ModelSerializer):
         # Fix when top bets on category will released
         ps = obj.get_offers().first()
         return ShopSerializer(ps.shop).data if ps else None
+
+    def get_photo(self, obj):
+        p = obj.get_photos()
+        return p.first().get_preview() if p.exists() else None
