@@ -6,5 +6,6 @@ urlpatterns = patterns(
     '',
     url(r'^list/$', views.ProductList.as_view(), name='list'),
 
+    url(r'^list/count/$', views.ProductCount.as_view(), name='list-count'),
     url(r'^detail/(?P<pk>\d+)/offers/$', views.ProductOffers.as_view(), name='offers'),
 )

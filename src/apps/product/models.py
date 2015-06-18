@@ -57,8 +57,7 @@ class ProductFK(models.Model):
 class ProductShop(ProductFK):
     shop = models.ForeignKey('shop.Shop',
                              verbose_name=_('Магазин'))
-    price = models.CharField(max_length=255,
-                             verbose_name=_('Цена'))
+    price = models.IntegerField(verbose_name=_('Цена'))
     point = models.IntegerField(default=2,
                                 verbose_name=_('Рейтинг'))
 
@@ -78,11 +77,10 @@ class ProductShopDelivery(models.Model):
                                  verbose_name=_('Самовывоз'))
     delivery = models.BooleanField(default=True,
                                    verbose_name=_('Доставка'))
-    price = models.CharField(max_length=255,
-                             null=True,
-                             blank=True,
-                             default=None,
-                             verbose_name=_('Цена доставки'))
+    price = models.IntegerField(null=True,
+                                blank=True,
+                                default=None,
+                                verbose_name=_('Цена доставки'))
 
     class Meta:
         verbose_name = _('Доставка продукта')
