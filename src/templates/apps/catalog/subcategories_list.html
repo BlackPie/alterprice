@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <div id="categories-list-page">
+        <div id="block-breadcrumbs">
+            <ul>
+                <li><a href="{% url 'catalog:categories_list' %}">Все категории</a></li>
+                {% if object.parent %}
+                    {% if object.parent.parent %}
+                        <li><a href="{% url 'catalog:category_categories_list' object.parent.parent.pk %}">{{ object.parent.parent.name }}</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'catalog:category_categories_list' object.parent.pk %}">{{ object.parent.name }}</a></li>
+                {% endif %}
+                <li><span>{{ object.name }}</span></li>
+            </ul>
+        </div>
+        <div class="h1">Все категории</div>
+        <div>
+            {% for category in object.get_children  %}
+                <a href="{% url 'catalog:category_products_list' category.pk %}" class="block-1-1">
+                    <div class="image" style="background-image: url({{ category.get_preview }})"></div>
+                    <div class="title">{{ category.name }}</div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

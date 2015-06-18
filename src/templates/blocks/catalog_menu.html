@@ -1,13 +1,20 @@
 <ul class="catalog-menu">
-    <li {% if current_url == '/catalog/' %}class="active"{% endif %}><a href="/catalog/">Все категории</a></li>
-    {% for category in categories  %}
-    <li class="has-submenu {% if current_url == category.get_url %}active open{% endif %}">
-        <a href="/catalog/{{ category.id }}/">{{ category.name }}</a>
-        <ul>
-            {% for scategory in category.children.all %}
-                <li><a href="/catalog/{{ scategory.id }}/">{{ scategory.name }}</a></li>
-            {% endfor %}
-        </ul>
+    {% url 'catalog:categories_list' as catalog_url %}
+    <li {% if current_url == catalog_url %}class="active"{% endif %}>
+        <a href="{{ catalog_url }}">Все категории</a>
     </li>
+    {% for category in categories  %}
+        {% url 'catalog:category_categories_list' category.pk as category_categories_list_url %}
+        <li class="has-submenu {% if current_url == category_categories_list_url %}active open{% endif %}{% if object.parent.pk == category.pk %}open{% endif %}">
+            <a href="{{ category_categories_list_url }}">{{ category.name }}</a>
+            <ul>
+                {% for subcategory in category.children.all %}
+                    {% url 'catalog:category_products_list' subcategory.pk as category_products_list_url %}
+                    <li {% if current_url = category_products_list_url %}class="active"{% endif %}>
+                        <a href="{{ category_products_list_url }}">{{ subcategory.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
     {% endfor %}
 </ul>

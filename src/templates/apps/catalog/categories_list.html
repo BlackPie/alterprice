@@ -2,16 +2,30 @@
 
 {% block content%}
     <div id="subcategories-list-page">
-        <div class="h1">Все категории</div>
+        <div id="block-breadcrumbs">
+            <ul>
+                <li><a href="{% url 'catalog:categories_list' %}">Все категории</a></li>
+                {% if object.parent %}
+                    {% if object.parent.parent %}
+                        <li><a href="{% url 'catalog:category_categories_list' object.parent.parent.pk %}">{{ object.parent.parent.name }}</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'catalog:category_categories_list' object.parent.pk %}">{{ object.parent.name }}</a></li>
+                {% endif %}
+                <li><span>{{ object.name }}</span></li>
+            </ul>
+        </div>
+        <div class="h1">{{ object.name }}</div>
         <div>
             {% for category in children_categories %}
                 {% cycle '<div class="row">' '' '' %}
                 <div class="block-03-x">
-                    <div class="image" style="background-image: url({{ category.get_preview }})"></div>
-                    <div class="title">{{ category.name }}</div>
+                    <a href="{% url 'catalog:category_categories_list' category.pk %}">
+                        <div class="image" style="background-image: url({{ category.get_preview }})"></div>
+                        <div class="title">{{ category.name }}</div>
+                    </a>
                     <ul>
                         {% for subcategory in category.get_children %}
-                            <li><a href="/catalog/{{ subcategory.id }}/">{{ subcategory.name }}</a></li>
+                            <li><a href="{% url 'catalog:category_products_list' subcategory.id %}">{{ subcategory.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

@@ -1,19 +1,10 @@
+PrettyPrice = require 'base/utils/PrettyPrice'
+
 template = (locals) =>
     if locals.shop == undefined
         return null
 
-
-    priceFormat = (_number) =>
-        decimal= 0
-        separator= ' '
-        r = parseFloat(_number)
-        exp10 =Math.pow(10,decimal)
-        r = Math.round(r*exp10)/exp10
-        rr = Number(r).toFixed(decimal).toString().split('.')
-        b = rr[0].replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g,"\$1"+separator)
-        return b
-
-    price = priceFormat locals.price
+    price = PrettyPrice.format locals.price
 
     rating = {}
     for i in [0..5]

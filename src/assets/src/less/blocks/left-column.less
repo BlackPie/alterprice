@@ -34,14 +34,6 @@
 
             &:hover {
                 background: #22262E;
-            }
-        }
-
-        li.active {
-            background: #22262E;
-
-            &> a {
-                font-weight: 400;
 
                 &:before {
                     display: block;
@@ -51,6 +43,7 @@
                     background: #F9BD2D;
                     position: absolute;
                     left: 0;
+                    top: 0;
                 }
             }
         }
@@ -67,9 +60,15 @@
             }
 
             &.open {
+                background: #262B35;
+
                 ul {
                     display: block;
                     opacity: 1.0;
+                }
+
+                &> a {
+                    background: #22262E;
                 }
 
                 &> a:after {
@@ -79,5 +78,26 @@
                 }
             }
         }
+
+        li.active {
+            background: #0E1013;
+
+            &> a {
+                background: #0E1013 !important;
+                //font-weight: 400;
+
+//                &:before {
+//                    display: block;
+//                    content: "";
+//                    height: 50px;
+//                    width: 5px;
+//                    background: #F9BD2D;
+//                    position: absolute;
+//                    left: 0;
+//                }
+            }
+        }
+
+
     }
 }

@@ -2,7 +2,22 @@
 {% load humanize %}
 {% block content%}
     <div id="item-detail-page">
-        {% include 'blocks/breadcrumbs.html' %}
+        <div id="block-breadcrumbs">
+            <ul>
+                <li><a href="{% url 'catalog:categories_list' %}">Все категории{{ object.category }}</a></li>
+
+                {% if object.category %}
+                    {% if object.parent %}
+                        {% if object.parent.parent %}
+                            <li><a href="{% url 'catalog:category_categories_list' object.parent.parent.pk %}">{{ object.parent.parent.name }}</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'catalog:category_categories_list' object.parent.pk %}">{{ object.parent.name }}</a></li>
+                    {% endif %}
+                {% endif %}
+                <li><span>{{ object.name }}</span></li>
+            </ul>
+        </div>
+
         <div class="h1">{{ object.name }}</div>
         <div class="pure-g">
             <div class="pure-u-1-2">

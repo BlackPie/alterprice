@@ -32,8 +32,6 @@
             window.context = '{{ context|safe }}';
         </script>
     {% endif %}
-    <script src="{{ STATIC_URL }}dist/js/main.js"
-    	data-main="{% if current_app %}{{ current_app }}{% else %}catalog-items-list{% endif %}"
-    ></script>
+    <script src="{{ STATIC_URL }}dist/js/main.js" {% if current_app %}data-main="{{ current_app }}"{% endif %}></script>
 </body>
 </html>
