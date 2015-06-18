@@ -19,6 +19,12 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
 
     events:
         "change @ui.checkboxInput": "onChangeCheckboxInput"
+        "focusin @ui.priceFromInput": "onFocusInPriceInput"
+        "focusin @ui.priceTillInput": "onFocusInPriceInput"
+        "focusout @ui.priceFromInput": "onFocusOutPriceInput"
+        "focusout @ui.priceTillInput": "onFocusOutPriceInput"
+        "change @ui.priceFromInput": "onChangePriceInput"
+        "change @ui.priceTillInput": "onChangePriceInput"
 
 
     initialize: (options) =>
@@ -41,3 +47,17 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
             price_from: @$(@ui.priceFromInput).val()
             price_till: @$(@ui.priceTillInput).val()
         return data
+
+
+    onFocusInPriceInput: (e) =>
+        @$(e.target).closest('label').addClass 'focus'
+
+
+    onFocusOutPriceInput: (e) =>
+        @$(e.target).closest('label').removeClass 'focus'
+
+
+    onChangePriceInput: (e) =>
+        $.ajax
+            url: '/api/product/list/count/'
+            type: 'POST'
