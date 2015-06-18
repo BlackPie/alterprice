@@ -57,5 +57,5 @@ class ProductCountSerializer(serializers.Serializer):
     brand = serializers.PrimaryKeyRelatedField(
         queryset=Brand.objects.all(),
         many=True)
-    price_min = serializers.CharField(allow_blank=True)
-    price_max = serializers.CharField(allow_blank=True)
+    price_min = serializers.CharField(allow_blank=True, allow_null=True)
+    price_max = serializers.CharField(allow_blank=True, allow_null=True)

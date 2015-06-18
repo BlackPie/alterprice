@@ -2,48 +2,7 @@ import os
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerField
-
-
-class ProductManager(models.Manager):
-    def get_list(self):
-        qs = self.filter(productshop__shop__status=1)
-        return qs.distinct()
-
-
-class Product(models.Model):
-    brand = models.ForeignKey('brand.Brand',
-                              null=True,
-                              blank=True,
-                              default=None,
-                              verbose_name=_('Бренд'))
-    name = models.CharField(max_length=255,
-                            verbose_name=_('Название'))
-    created = models.DateTimeField(auto_now_add=True,
-                                   editable=False,
-                                   verbose_name=_(u'Дата создания'))
-    description = models.TextField(verbose_name=_('Описание'))
-
-    objects = ProductManager()
-
-    def __str__(self):
-        return self.name
-
-    def __unicode__(self):
-        return self.name
-
-    def get_photos(self):
-        return self.productphoto_set.all()
-
-    def get_offers(self):
-        return self.productshop_set.filter(shop__status=1)
-
-    def get_best_offer(self):
-        offers = self.get_offers()
-        return offers.first() if offers.exists() else None
-
-    class Meta:
-        verbose_name = _('Продукт')
-        verbose_name_plural = _('Продукты')
+from .product import Product
 
 
 class ProductFK(models.Model):

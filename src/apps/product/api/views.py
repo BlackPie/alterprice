@@ -29,15 +29,19 @@ class ProductCount(APIView):
         category = serializer.validated_data.get('category')
         brand = serializer.validated_data.get('brand')
 
-        qs = models.Product.objects.all()
+        qs = models.Product.objects.get_list()
+
         if price_min not in EMPTY_VALUES:
-            qs = qs.filter(productshop__price__gte=price_min)
+            qs = qs.by_min_price(price_min)
+
         if price_max not in EMPTY_VALUES:
-            qs = qs.filter(productshop__price__lte=price_max)
-        if category not in EMPTY_VALUES:
+            qs = qs.by_max_price(price_max)
+
+        if len(category) > 0:
             pass
-        if brand not in EMPTY_VALUES:
+        if len(brand) > 0:
             qs = qs.filter(brand__in=brand)
+
         response['product_count'] = qs.distinct().count()
         return response
 
