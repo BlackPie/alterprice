@@ -47,11 +47,12 @@ class PaymentInfoInline(admin.StackedInline):
 
 
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'operator', 'approved')
+    # list_display = ('__str__', 'operator', 'approved')
+    list_display = ('__str__', 'approved')
     readonly_fields = ('user', )
     list_filter = (RegDateFilter, OperatorFilter)
     search_fields = ['user__email', 'phone']
-    fields = ('operator', 'user', 'name', 'last_name', 'phone')
+    fields = ('user', 'name', 'last_name', 'phone')
     inlines = [PaymentInfoInline, ]
 
     def queryset(self, request):
