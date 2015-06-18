@@ -67,6 +67,9 @@ class ApprovedModel(models.Model):
                                          default=None,
                                          verbose_name=_(u'Дата подтверждения'))
     moderator = models.ForeignKey('apuser.AlterPriceUser',
+                                  null=True,
+                                  blank=True,
+                                  default=None,
                                   # related_name='moderator',
                                   verbose_name=_('Модератор'))
 
