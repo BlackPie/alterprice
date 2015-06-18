@@ -2,6 +2,7 @@ import random
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from catalog.models import Category
+from brand.models import Brand
 
 
 class CatalogAllCategoriesPageView(TemplateView):
@@ -36,6 +37,7 @@ class CatalogCategoryProductListPageView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CatalogCategoryProductListPageView, self).get_context_data(**kwargs)
         context['current_app'] = 'catalog-items-list'
+        context['brands'] = Brand.objects.all()
         if self.object.parent:
             context['parent_category'] = self.object.parent.pk
         return context

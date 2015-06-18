@@ -5,7 +5,7 @@ template = (locals) =>
 
     return "<div class=\"item-card-block block-1-x first-inline\">
     <a href=\"/product/detail/#{locals.id}/\">
-        <div class=\"image\" style=\"background-image: url(/static/dist/images/content/items/6.png)\"></div>
+        <div class=\"image\" style=\"background-image: url(#{locals.photo})\"></div>
         <div class=\"title\">#{locals.name}</div>
     </a>
     <div class=\"price\">от <span>#{price}</span> руб</div>

@@ -14,7 +14,7 @@
                 <li><span>{{ object.name }}</span></li>
             </ul>
         </div>
-        <div class="h1">Все категории</div>
+        <div class="h1">{{ object.name }}</div>
         <div>
             {% for category in object.get_children  %}
                 <a href="{% url 'catalog:category_products_list' category.pk %}" class="block-1-1">

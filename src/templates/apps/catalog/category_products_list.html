@@ -20,7 +20,7 @@
                 <div id="catalog-products-layout">
                     <div id="catalog-products-list-view" class="items-wrapper"></div>
                 </div>
-                <button type="button" class="btn btn-grey btn-full-width">Показать еще</button>
+                <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
             </div>
             <div class="pure-u-1-4 text-right">
                 <div class="block-1-x text-left">
@@ -38,10 +38,9 @@
                         </div>
                         <div class="producers">
                             <span class="title">Производитель</span>
-                            <label class="checkbox"><input type="checkbox" /> Sony</label>
-                            <label class="checkbox"><input type="checkbox" /> Nicon</label>
-                            <label class="checkbox"><input type="checkbox" /> Canon</label>
-                            <label class="checkbox"><input type="checkbox" /> Samsung</label>
+                            {% for brand in brands %}
+                                <label class="checkbox"><input type="checkbox" /> {{ brand.name }}</label>
+                            {% endfor %}
                         </div>
                         <button class="submit" type="submit">Показать <span>(40)</span></button>
                     </form>
