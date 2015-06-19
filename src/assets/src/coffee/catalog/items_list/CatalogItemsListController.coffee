@@ -31,6 +31,7 @@ module.exports = class CatalogItemsListController extends Marionette.Controller
         @catalogProductsLayout.productsList.show @catalogProductsListView
 
         @catalogProductsCollection.on "sync", (collection) =>
+            console.log collection.state.totalPages
             if collection.state.totalPages > 1
                 @catalogProductsPagerView.show()
             else

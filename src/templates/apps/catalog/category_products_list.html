@@ -55,7 +55,7 @@
                             <div class="producers">
                                 <span class="title">Производитель</span>
                                 {% for brand in brands %}
-                                    <label class="checkbox"><input type="checkbox" /> {{ brand.name }}</label>
+                                    <label class="checkbox"><input type="checkbox" value="{{ brand.pk }}" class="brand-input" /> {{ brand.name }}</label>
                                 {% endfor %}
                             </div>
                             <button class="submit" type="submit">Показать <span>(40)</span></button>

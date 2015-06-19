@@ -1,10 +1,18 @@
 #items-list-page {
     .items-wrapper {
         .item-card-block {
-            margin-right: 14px;
+            margin-right: 19px;
 
             &:nth-child(3n) {
                 margin-right: 0;
+            }
+        }
+
+        &> div {
+            div:nth-child(3n) {
+                .item-card-block {
+                    margin-right: 0;
+                }
             }
         }
     }
