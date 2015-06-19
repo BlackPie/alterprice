@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from django.forms import ModelMultipleChoiceField
 import django_filters
 from django.core.validators import EMPTY_VALUES
 from product import models
 from brand.models import Brand
-from catalog.models import Category
-from django.db.models import Min, Max, Q
+from catalog.models import Category # NOQA
+EMPTY_VALUES = EMPTY_VALUES + ([''],)
 
 
 class DeliveryFilter(django_filters.CharFilter):
@@ -39,9 +40,19 @@ class PriceMinFilter(django_filters.NumberFilter):
         return qs
 
 
+class ModelMultipleChoiceField(ModelMultipleChoiceField):
+    def clean(self, value):
+        if value in EMPTY_VALUES:
+            return self.queryset
+        else:
+            return super().clean(value)
+
+
 class BrandFilter(django_filters.ModelMultipleChoiceFilter):
+    field_class = ModelMultipleChoiceField
+
     def filter(self, qs, value):
-        if len(value) > 0:
+        if value not in EMPTY_VALUES:
             qs = qs.by_brands(value)
         return qs
 
@@ -56,7 +67,8 @@ class ProductSearchFilter(django_filters.CharFilter):
 class ProductListFilter(django_filters.FilterSet):
     price_max = PriceMaxFilter()
     price_min = PriceMinFilter()
-    brand = BrandFilter(queryset=Brand.objects.all())
+    brand = BrandFilter(queryset=Brand.objects.all(),
+                        required=False)
     # category = CategoryFilter(queryset=Category.objects.all())
     search = ProductSearchFilter()
 
