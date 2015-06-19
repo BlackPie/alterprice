@@ -1,8 +1,8 @@
 module.exports = class CatalogProductsFilterState
 
     constructor: (options) ->
-        @price_from = options.price_from or null
-        @price_till = options.price_till or null
+        @price_min = options.price_min or null
+        @price_max = options.price_max or null
         @brand = options.brand or null
 
 
@@ -12,4 +12,4 @@ module.exports = class CatalogProductsFilterState
 
 
     @fromArray: (data) =>
-        return new ProductOffersFilterState data
+        return new CatalogProductsFilterState data

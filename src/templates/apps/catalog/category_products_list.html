@@ -24,26 +24,28 @@
             </div>
             <div class="pure-u-1-4 text-right">
                 <div class="block-1-x text-left">
-                    <form class="items-filter">
-                        <div class="price">
-                            <span class="title">Цена, руб</span>
-                            <div class="pure-g">
-                                <div class="pure-u-1-2">
-                                    <label>от <input type="text" id="price_from" placeholder="0" /></label>
-                                </div>
-                                <div class="pure-u-1-2">
-                                    <label>до <input type="text" id="price_till" placeholder="9999" /></label>
+                    <div id="catalog-products-filter-view">
+                        <form class="items-filter">
+                            <div class="price">
+                                <span class="title">Цена, руб</span>
+                                <div class="pure-g">
+                                    <div class="pure-u-1-2">
+                                        <label>от <input type="text" id="price_from" placeholder="0" /></label>
+                                    </div>
+                                    <div class="pure-u-1-2">
+                                        <label>до <input type="text" id="price_till" placeholder="9999" /></label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="producers">
-                            <span class="title">Производитель</span>
-                            {% for brand in brands %}
-                                <label class="checkbox"><input type="checkbox" /> {{ brand.name }}</label>
-                            {% endfor %}
-                        </div>
-                        <button class="submit" type="submit">Показать <span>(40)</span></button>
-                    </form>
+                            <div class="producers">
+                                <span class="title">Производитель</span>
+                                {% for brand in brands %}
+                                    <label class="checkbox"><input type="checkbox" /> {{ brand.name }}</label>
+                                {% endfor %}
+                            </div>
+                            <button class="submit" type="submit">Показать <span>(40)</span></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
