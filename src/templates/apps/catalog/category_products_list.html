@@ -7,6 +7,9 @@
                 <li><a href="{% url 'catalog:categories_list' %}">Все категории</a></li>
                 {% if object.parent %}
                     {% if object.parent.parent %}
+                        {% if object.parent.parent.parent %}
+                            <li><a href="{% url 'catalog:category_categories_list' object.parent.parent.parent.pk %}">{{ object.parent.parent.parent.name }}</a></li>
+                        {% endif %}
                         <li><a href="{% url 'catalog:category_categories_list' object.parent.parent.pk %}">{{ object.parent.parent.name }}</a></li>
                     {% endif %}
                     <li><a href="{% url 'catalog:category_categories_list' object.parent.pk %}">{{ object.parent.name }}</a></li>
@@ -17,10 +20,22 @@
         <div class="h1">{{ object.name }}</div>
         <div class="pure-g">
             <div class="pure-u-3-4">
+                {% if children_categories|length > 0 %}
+                    <div class="categories-filter-wrapper">
+                        <div class="categories-filter">
+                            {% for category in children_categories %}
+                                <a href="{% url 'catalog:category_products_list' category.pk %}" class="btn btn-sea">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
+                        <a href="#" class="show-all" style="display: none;">Все {{ children_categories|length }} категорий</a>
+                    </div>
+                {% endif %}
                 <div id="catalog-products-layout">
                     <div id="catalog-products-list-view" class="items-wrapper"></div>
                 </div>
-                <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
+                <div id="catalog-products-pager-view">
+                    <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
+                </div>
             </div>
             <div class="pure-u-1-4 text-right">
                 <div class="block-1-x text-left">

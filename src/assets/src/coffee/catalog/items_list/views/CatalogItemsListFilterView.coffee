@@ -27,6 +27,8 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
         "change @ui.priceFromInput": "onChangePriceInput"
         "change @ui.priceTillInput": "onChangePriceInput"
         "submit @ui.filterForm": "onSubmitFilterForm"
+        "keyup @ui.priceFromInput": "onKeyupPriceInput"
+        "keyup @ui.priceTillInput": "onKeyupPriceInput"
 
 
     initialize: (options) =>
@@ -39,7 +41,6 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
         _ = @
         el = @$(e.target).closest('label')
         offset = el.position()
-        priceFromInput = @$(@ui.priceFromInput)
 
         $.ajax
             url: '/api/product/list/count/'
@@ -87,4 +88,22 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
 
     onSubmitFilterForm: (e) =>
         e.preventDefault()
+        @$(@ui.submitBtn).removeClass 'show'
         @channel.vent.trigger Events.SET_FILTER
+
+
+    isNumeric: (number) =>
+        if number in ['0', '1', '2', '3', '4', '5', '6', '7' , '8', '9']
+            return true
+        else
+            return false
+
+
+    onKeyupPriceInput: (e) =>
+        el = @$(e.target)
+        value = el.val()
+        if not @isNumeric value.substring(value.length - 1) or value != ""
+            value = value.substring 0, value.length - 1
+            el.val value
+        else
+            @$(@ui.priceFromInput).change()
