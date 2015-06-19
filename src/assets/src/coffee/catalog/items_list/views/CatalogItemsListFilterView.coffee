@@ -61,7 +61,6 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
             brand.push $(el).val()
         if brand.length > 0
             data['brand'] = brand
-        console.log data
         return data
 
 
