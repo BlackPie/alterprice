@@ -27,11 +27,11 @@ class Shop(ApprovedModel, StatusModel):
                               verbose_name=_('Название юридического лица'))
     ogrn = models.CharField(max_length=255,
                             verbose_name=_('ОГРН'))
-    city = models.CharField(max_length=255,
-                            null=True,
-                            blank=True,
-                            default=None,
-                            verbose_name=_('Город'))
+    city = models.ForeignKey('catalog.City',
+                             null=True,
+                             blank=True,
+                             default=None,
+                             verbose_name=_('Город'))
     phone = models.CharField(max_length=255,
                              null=True,
                              blank=True,

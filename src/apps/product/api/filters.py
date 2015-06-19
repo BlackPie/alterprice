@@ -4,7 +4,7 @@ import django_filters
 from django.core.validators import EMPTY_VALUES
 from product import models
 from brand.models import Brand
-from catalog.models import Category
+from catalog.models import Category # NOQA
 EMPTY_VALUES = EMPTY_VALUES + ([''],)
 
 
