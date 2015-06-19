@@ -1,10 +1,18 @@
 #items-list-page {
     .items-wrapper {
         .item-card-block {
-            margin-right: 18px;
+            margin-right: 19px;
 
             &:nth-child(3n) {
                 margin-right: 0;
+            }
+        }
+
+        &> div {
+            div:nth-child(3n) {
+                .item-card-block {
+                    margin-right: 0;
+                }
             }
         }
     }
@@ -19,11 +27,12 @@
     }
 
     .categories-filter-wrapper {
+        transition: height .3s ease-out 0s;
         padding-bottom: 20px;
         position: relative;
 
         .categories-filter {
-            height: 40px;
+            height: 48px;
             overflow: hidden;
         }
 
@@ -35,13 +44,15 @@
         .show-all {
             position: absolute;
             right: 0;
-            top: 0;
+            top: -10px;
             .typo_s;
             color: #48A297;
             width: 140px;
-            height: 40px;
+            height: 60px;
             display: block;
-            line-height: 40px;
+            line-height: 60px;
+            background: #f5f5f5;
+            box-shadow: -20px 0 19px 4px #f5f5f5;
         }
     }
 
@@ -73,6 +84,10 @@
 
             &:hover {
                 background: #F6D67D;
+            }
+
+            &:active {
+                background: #EFC654;
             }
 
             span {

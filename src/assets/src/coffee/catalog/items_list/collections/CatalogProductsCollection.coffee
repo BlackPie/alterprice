@@ -18,7 +18,7 @@ module.exports = class CatalogProductsCollection extends PageableCollection
 
 
     startPageSize: 3
-    showMoreSize: 1
+    showMoreSize: 3
 
 
     #initialize: (options) =>

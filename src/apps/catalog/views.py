@@ -40,4 +40,5 @@ class CatalogCategoryProductListPageView(DetailView):
         context['brands'] = Brand.objects.all()
         if self.object.parent:
             context['parent_category'] = self.object.parent.pk
+        context['children_categories'] = self.object.get_children()
         return context
