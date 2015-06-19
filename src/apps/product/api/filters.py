@@ -43,7 +43,7 @@ class PriceMinFilter(django_filters.NumberFilter):
 class ModelMultipleChoiceField(ModelMultipleChoiceField):
     def clean(self, value):
         if value in EMPTY_VALUES:
-            return self.queryset
+            return list()
         else:
             return super().clean(value)
 
