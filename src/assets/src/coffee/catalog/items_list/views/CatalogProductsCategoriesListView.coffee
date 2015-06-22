@@ -2,7 +2,7 @@ $ = require 'jquery'
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
 Events = require 'catalog/Events'
-
+DeclensionOfNumber = require 'base/utils/DeclensionOfNumber'
 
 module.exports = class CatalogProductsCategoriesListView extends Marionette.ItemView
     el: $('.categories-filter-wrapper')
@@ -22,10 +22,13 @@ module.exports = class CatalogProductsCategoriesListView extends Marionette.Item
         categoriesWrapper = @$(@ui.categoriesWrapper)
         maxWidth = categoriesWrapper.width()
         width = 0
+        number = 0
         categoriesWrapper.find('a').each (i, el) =>
             width = width + $(el).outerWidth() + 8
+            number = number + 1
         if width > maxWidth - @$(@ui.showAllBtn).outerWidth()
-            @$(@ui.showAllBtn).fadeIn()
+            str = DeclensionOfNumber.run(number, ['категория', 'категории', 'категорий'])
+            @$(@ui.showAllBtn).text("Все #{number} #{str}").fadeIn 'slow'
 
 
 
