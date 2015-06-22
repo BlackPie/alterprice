@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import query, Min, Max, Q
 from django.utils.translation import ugettext_lazy as _
+from utils.abstract_models import YMkey
 
 
 class ProductQuerySet(query.QuerySet):
@@ -30,7 +31,7 @@ class ProductManager(models.Manager):
         return qs.distinct()
 
 
-class Product(models.Model):
+class Product(YMkey):
     brand = models.ForeignKey('brand.Brand',
                               null=True,
                               blank=True,
@@ -41,6 +42,11 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
                                    verbose_name=_(u'Дата создания'))
+    category = models.ForeignKey('catalog.Category',
+                                 null=True,
+                                 blank=True,
+                                 default=None,
+                                 verbose_name=_('Категория'))
     description = models.TextField(verbose_name=_('Описание'))
 
     objects = ProductManager.from_queryset(ProductQuerySet)()
