@@ -9,6 +9,10 @@ class ProductQuerySet(query.QuerySet):
     def active(self):
         return self.filter(productshop__shop__status=1)
 
+    def by_ymid(self, ym_id):
+        # return self.active().filter(ym_id=ym_id)
+        return self.filter(ym_id=ym_id)
+
     def by_min_price(self, value):
         qs = self.annotate(price_min=Min('productshop__price'))
         return qs.filter(price_min__gte=value)

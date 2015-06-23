@@ -17,7 +17,6 @@ class Command(BaseCommand):
         products = list()
         productshops = list()
         properties = list()
-        prop_infos = list()
         deliveris = list()
 
         for x in range(1, 10):
@@ -80,14 +79,14 @@ class Command(BaseCommand):
         productmodels.ProductShop.objects.bulk_create(productshops)
         productmodels.ProductProperty.objects.bulk_create(properties)
 
-        for prop in productmodels.ProductProperty.objects.all():
-            for x in range(0, 3):
-                pi = productmodels.PropertyInfo()
-                pi.productproperty = prop
-                pi.property_name = 'prop_name_%d_%d' % (prop.id, x)
-                pi.property_value = 'prop_value_%d_%d' % (prop.id, x)
-                prop_infos.append(pi)
-        productmodels.PropertyInfo.objects.bulk_create(prop_infos)
+        # for prop in productmodels.ProductProperty.objects.all():
+        #     for x in range(0, 3):
+        #         pi = productmodels.PropertyInfo()
+        #         pi.productproperty = prop
+        #         pi.property_name = 'prop_name_%d_%d' % (prop.id, x)
+        #         pi.property_value = 'prop_value_%d_%d' % (prop.id, x)
+        #         prop_infos.append(pi)
+        # productmodels.PropertyInfo.objects.bulk_create(prop_infos)
 
         for ps in productmodels.ProductShop.objects.all():
             d = productmodels.ProductShopDelivery()

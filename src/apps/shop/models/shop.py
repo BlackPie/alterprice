@@ -57,16 +57,3 @@ class Shop(ApprovedModel, StatusModel, YMkey):
     class Meta:
         verbose_name = _('Магазин')
         verbose_name_plural = _('Магазины')
-
-
-class ShopYML(models.Model):
-    shop = models.ForeignKey(Shop,
-                             verbose_name=_('Магазин'))
-    yml_url = models.URLField(verbose_name=_('YMl url'))
-    created = models.DateTimeField(auto_now_add=True,
-                                   editable=False,
-                                   verbose_name=_(u'Дата создания'))
-
-    class Meta:
-        verbose_name = _('YML файл магазина')
-        verbose_name_plural = _('YML файлы магазинов')

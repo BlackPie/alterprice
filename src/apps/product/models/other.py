@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerField
 from .product import Product
+from catalog.models import Property, Currency
+from shop.models import OfferCategories
 
 
 class ProductFK(models.Model):
@@ -16,9 +18,23 @@ class ProductFK(models.Model):
 class ProductShop(ProductFK):
     shop = models.ForeignKey('shop.Shop',
                              verbose_name=_('Магазин'))
+    url = models.URLField(null=True,
+                          blank=True,
+                          default=None,
+                          verbose_name=_('Ссылка на товар'))
     price = models.IntegerField(verbose_name=_('Цена'))
+    currency = models.ForeignKey(Currency,
+                                 null=True,
+                                 blank=True,
+                                 default=None,
+                                 verbose_name=_('Валюта'))
     point = models.IntegerField(default=2,
                                 verbose_name=_('Рейтинг'))
+    offercategory = models.ForeignKey(OfferCategories,
+                                      null=True,
+                                      blank=True,
+                                      default=None,
+                                      verbose_name=_('Категория предолжения'))
 
     def __str__(self):
         return "%s: %s" % (self.shop.name, self.product.name)
@@ -46,38 +62,34 @@ class ProductShopDelivery(models.Model):
         verbose_name_plural = _('Доставка продуктов')
 
 
+class ProductPropertyManager(models.Manager):
+    def make(self, value, codename):
+        obj = self.model()
+        obj.value = value
+        obj.prop = Property.objects.make(codename=codename)
+        return obj
+
+
 class ProductProperty(ProductFK):
-    name = models.CharField(max_length=255,
-                            verbose_name=_('Название'))
+    value = models.CharField(max_length=255,
+                             verbose_name=_('Значение свойства'))
+    prop = models.ForeignKey(Property,
+                             null=True,
+                             blank=True,
+                             default=None,
+                             verbose_name=_('Свойство'))
+
+    objects = ProductPropertyManager()
 
     def __str__(self):
-        return "%s: %s" % (self.product, self.name)
+        return "%s: %s" % (self.product, self.value)
 
     def __unicode__(self):
-        return "%s: %s" % (self.product, self.name)
+        return "%s: %s" % (self.product, self.value)
 
     class Meta:
         verbose_name = _('Свойство продукта')
         verbose_name_plural = _('Свойства продуктов')
-
-
-class PropertyInfo(models.Model):
-    productproperty = models.ForeignKey(ProductProperty,
-                                        verbose_name=_('Свойство'))
-    property_name = models.CharField(max_length=255,
-                                     verbose_name=_('Название свойства'))
-    property_value = models.CharField(max_length=255,
-                                      verbose_name=_('Значение свойства'))
-
-    def __str__(self):
-        return self.property_name
-
-    def __unicode__(self):
-        return self.property_name
-
-    class Meta:
-        verbose_name = _('Данные свойства')
-        verbose_name_plural = _('Данные свойств')
 
 
 def get_photo_path(instance, filename):

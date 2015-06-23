@@ -2,6 +2,7 @@ import random
 from django.views.generic.detail import DetailView
 from product.models import Product
 import json
+from shop.models import Shop, ShopYML
 
 
 class ProductDetailPageView(DetailView):
@@ -23,4 +24,9 @@ class ProductDetailPageView(DetailView):
         context['context'] = json.dumps({
             'productId': context['object'].pk
         })
+        s = Shop.objects.first()
+        ShopYML.objects.make(
+            shop=s,
+            yml='https://yandex.st/market-export/1.0-17/partner/help/YML.xml'
+        )
         return context

@@ -1,1 +1,2 @@
-from .shop import Shop, ShopYML # NOQA
+from .shop import Shop # NOQA
+from .offer import ShopYML, OfferCategories # NOQA
