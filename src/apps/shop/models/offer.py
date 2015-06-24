@@ -66,14 +66,22 @@ class ShopYMLManager(models.Manager):
 
         obj.save()
         # create OfferCategories rows
-        OfferCategories.objects.make_from_parsed_list(shopyml=obj,
-                                                      plist=categories)
+        offercats = OfferCategories.objects.make_from_parsed_list(shopyml=obj,
+                                                                  plist=categories)
 
         for offer in offers:
-            productmodels.Product
-            productmodels.ProductShop
+            product = productmodels.Product.objects.make_from_yml(offer)
 
+            productshop = productmodels.ProductShop.objects.make_from_yml(
+                product=product,
+                shop=shop,
+                currency=currency,
+                yml_obj=offer,
+                offercats=offercats)
 
+            productmodels.ProductShopDelivery.objects.make_from_yml(
+                productshop=productshop,
+                yml_obj=offer)
         return obj
 
 
@@ -107,12 +115,13 @@ class OfferCategoriesManager(models.Manager):
     def make_from_parsed_list(self, plist, shopyml):
         offercats = list()
         for cats in plist:
-            offercats.append(category=cats.get('system_cat'), shopyml=shopyml)
+            offercats.append(
+                self.model(category=cats.get('system_cat'), shopyml=shopyml))
         if len(offercats) > 0:
             self.bulk_create(offercats)
-            return True
+            return offercats
         else:
-            return False
+            return None
 
 
 class OfferCategories(models.Model):
