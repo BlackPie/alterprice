@@ -20,4 +20,7 @@ urlpatterns = patterns(
     url(r'^shop/$', TemplateView.as_view(template_name='markup/shop.html'), name="shop"),
     url(r'^shop-edit/$', TemplateView.as_view(template_name='markup/shop-edit.html'), name="shop-edit"),
     url(r'^payments/$', TemplateView.as_view(template_name='markup/payments.html'), name="payments"),
+    url(r'^client-main/$', TemplateView.as_view(template_name='markup/client-main.html'), name="client-main"),
+    url(r'^sign-in/$', TemplateView.as_view(template_name='markup/sign_in.html'), name="client-main"),
+    url(r'^add-shop/$', TemplateView.as_view(template_name='markup/add-shop.html'), name="add-shop"),
 )

@@ -7,6 +7,7 @@ csrfHandler = require './base/utils/csrfHandler'
 
 $.ajaxSetup
     beforeSend: csrfHandler
+    traditional: true
 
 logger.setLevel(logger.levels.DEBUG)
 
