@@ -136,3 +136,10 @@ class NameModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class YMkey(models.Model):
+    ym_id = models.IntegerField(verbose_name=_('Yandex Market ID'))
+
+    class Meta:
+        abstract = True

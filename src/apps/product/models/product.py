@@ -1,12 +1,17 @@
 from django.db import models
 from django.db.models import query, Min, Max, Q
 from django.utils.translation import ugettext_lazy as _
+from utils.abstract_models import YMkey
 
 
 class ProductQuerySet(query.QuerySet):
 
     def active(self):
         return self.filter(productshop__shop__status=1)
+
+    def by_ymid(self, ym_id):
+        # return self.active().filter(ym_id=ym_id)
+        return self.filter(ym_id=ym_id)
 
     def by_min_price(self, value):
         qs = self.annotate(price_min=Min('productshop__price'))
@@ -19,6 +24,9 @@ class ProductQuerySet(query.QuerySet):
     def by_brands(self, value):
         return self.filter(brand__in=value)
 
+    def by_category(self, value):
+        return self.filter(category=value)
+
     def search(self, value):
         return self.filter(Q(name__icontains=value) |
                            Q(brand__name__icontains=value))
@@ -29,8 +37,17 @@ class ProductManager(models.Manager):
         qs = self.active()
         return qs.distinct()
 
+    def make_from_yml(self, yml_obj):
+        qs = self.filter(ym_id=yml_obj.get('@id', None))
+        if qs.exists():
+            obj = qs.first()
+        else:
+            obj = self.model()
+            # obj.
 
-class Product(models.Model):
+
+
+class Product(YMkey):
     brand = models.ForeignKey('brand.Brand',
                               null=True,
                               blank=True,
@@ -41,6 +58,11 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
                                    verbose_name=_(u'Дата создания'))
+    category = models.ForeignKey('catalog.Category',
+                                 null=True,
+                                 blank=True,
+                                 default=None,
+                                 verbose_name=_('Категория'))
     description = models.TextField(verbose_name=_('Описание'))
 
     objects = ProductManager.from_queryset(ProductQuerySet)()

@@ -1,7 +1,7 @@
 import os
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from utils.abstract_models import NameModel
+from utils.abstract_models import NameModel, YMkey
 from easy_thumbnails.fields import ThumbnailerField
 
 
@@ -13,12 +13,33 @@ class CategoryManager(models.Manager):
         qs = self.filter(parent__isnull=True)
         return qs.prefetch_related('children')
 
+    def make(self, name, ym_id, parent=None):
+        obj = self.model()
+        obj.name = name
+        obj.ym_id = ym_id
+        obj.parent = parent
+        obj.save()
+        return obj
+
+    def make_from_yml(self, obj):
+        ym_id = obj.get('@id')
+        qs = self.filter(ym_id=ym_id)
+        if qs.exists():
+            return qs.first()
+        else:
+            name = obj.get('#text', None)
+            parent_id = obj.get('@parentId', None)
+            parent = None
+            if parent_id:
+                parent = self.filter(ym_id=parent_id).first()
+            return self.make(name=name, ym_id=ym_id, parent=parent)
+
 
 def get_photo_path(instance, filename):
     return os.path.join("category/", filename)
 
 
-class Category(NameModel):
+class Category(NameModel, YMkey):
     parent = models.ForeignKey("self",
                                blank=True,
                                null=True,
