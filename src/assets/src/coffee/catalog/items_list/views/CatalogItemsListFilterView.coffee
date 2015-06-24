@@ -19,6 +19,7 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
         filterForm: 'form.items-filter'
         brandInput: '.brand-input'
         categoryInput: '#category'
+        searchInput: '#search'
 
     events:
         "change @ui.checkboxInput": "onChangeCheckboxInput"
@@ -58,6 +59,7 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
             price_min: @$(@ui.priceFromInput).val()
             price_max: @$(@ui.priceTillInput).val()
             category: @$(@ui.categoryInput).val()
+            search: @$(@ui.searchInput).val()
         brand = []
         @$(@ui.brandInput).filter(':checked').each (i, el) =>
             brand.push $(el).val()
