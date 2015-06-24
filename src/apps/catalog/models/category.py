@@ -1,8 +1,14 @@
 import os
 from django.db import models
+from django.db.models import query
 from django.utils.translation import ugettext_lazy as _
 from utils.abstract_models import NameModel, YMkey
 from easy_thumbnails.fields import ThumbnailerField
+
+
+class CategoryQuerySet(query.QuerySet):
+    def by_ymid(self, ym_id):
+        return self.filter(ym_id=ym_id)
 
 
 class CategoryManager(models.Manager):
@@ -58,7 +64,7 @@ class Category(NameModel, YMkey):
                              upload_to=get_photo_path,
                              verbose_name=_('Фото'))
 
-    objects = CategoryManager()
+    objects = CategoryManager.from_queryset(CategoryQuerySet)()
 
     def get_preview(self):
         return self.photo['category'].url if self.photo else None

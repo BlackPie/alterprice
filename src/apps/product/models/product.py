@@ -1,7 +1,10 @@
+from django.core.validators import EMPTY_VALUES
 from django.db import models
 from django.db.models import query, Min, Max, Q
 from django.utils.translation import ugettext_lazy as _
+from catalog.models import Category
 from utils.abstract_models import YMkey
+from brand.models import Brand
 
 
 class ProductQuerySet(query.QuerySet):
@@ -36,17 +39,36 @@ class ProductQuerySet(query.QuerySet):
 
 
 class ProductManager(models.Manager):
+
     def get_list(self):
         qs = self.active()
         return qs.distinct()
 
-    def make_from_yml(self, yml_obj):
-        qs = self.filter(ym_id=yml_obj.get('@id', None))
-        if qs.exists():
-            obj = qs.first()
+    def get_name(self, yml_obj):
+        if 'vendor' in yml_obj.keys():
+            return yml_obj.get('model')
         else:
-            obj = self.model()
-            # obj.
+            return yml_obj.get('name')
+
+    def make_from_yml(self, yml_obj):
+        ym_id = yml_obj.get('@id', None)
+        if ym_id not in EMPTY_VALUES:
+            qs = self.by_ymid(ym_id)
+            if qs.exists():
+                obj = qs.first()
+            else:
+                obj = self.model()
+                obj.name = self.get_name(yml_obj)
+                obj.ym_id = yml_obj.get('@id')
+                category_id = yml_obj.get('categoryId').get('#text')
+                obj.category = Category.objects.by_ymid(category_id).first()
+                obj.brand = Brand.objects.make_from_yml(yml_obj)
+                obj.description = yml_obj.get('description')
+                obj.save()
+                # delivery
+                 # all other to properties!!                 
+
+        return obj
 
 
 class Product(YMkey):
