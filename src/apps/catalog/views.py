@@ -49,10 +49,6 @@ class CatalogSearchProductsPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CatalogSearchProductsPageView, self).get_context_data(**kwargs)
-        context['current_app'] = 'catalog-items-list'
+        context['current_app'] = 'catalog-search'
         context['search'] = self.request.GET.get('search', '')
-        #context['brands'] = Brand.objects.all()
-        #if self.object.parent:
-        #    context['parent_category'] = self.object.parent.pk
-        #context['children_categories'] = self.object.get_children()
         return context

@@ -24,3 +24,11 @@ class ClientSignUpPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ClientSignUpPageView, self).get_context_data(**kwargs)
         return context
+
+
+class ClientPasswordResetPageView(TemplateView):
+    template_name = "apps/client/password_reset.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientPasswordResetPageView, self).get_context_data(**kwargs)
+        return context
