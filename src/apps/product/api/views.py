@@ -5,6 +5,8 @@ from django.db.models import Count
 from product import models
 from product.api import serializers, filters
 from utils.views import APIView
+from catalog.models import Category
+from catalog.api.serializers import CategorySerializer
 
 
 class ProductList(ListAPIView):
@@ -20,6 +22,20 @@ class ProductList(ListAPIView):
         return qs
 
 
+class ProductListCategories(ListAPIView):
+    serializer_class = CategorySerializer
+    model = Category
+    filter_class = None
+
+    def get_queryset(self):
+        qs = models.Product.objects.get_list()
+        qs = qs.annotate(offers_count=Count('productshop'))
+        qs = qs.prefetch_related('productshop_set')
+        qs = qs.prefetch_related('productphoto_set')
+        f = filters.ProductListFilter(self.request.GET, queryset=qs)
+        return self.model.objects.filter(product__in=f.queryset)
+
+
 class ProductCount(APIView):
     serializer_class = serializers.ProductCountSerializer
 
@@ -27,6 +43,7 @@ class ProductCount(APIView):
         response = {}
         price_min = serializer.validated_data.get('price_min', None)
         price_max = serializer.validated_data.get('price_max', None)
+        search = serializer.validated_data.get('search', None)
         category = serializer.validated_data.get('category')
         brand = serializer.validated_data.get('brand')
 
@@ -42,6 +59,9 @@ class ProductCount(APIView):
             qs = qs.by_category(category)
         if len(brand) > 0:
             qs = qs.by_brands(brand)
+
+        if search not in EMPTY_VALUES:
+            qs = qs.search(search)
 
         response['product_count'] = qs.distinct().count()
         return response
