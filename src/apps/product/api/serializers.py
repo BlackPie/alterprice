@@ -52,7 +52,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class ProductCountSerializer(serializers.Serializer):
     category = serializers.PrimaryKeyRelatedField(
-        queryset=Category.objects.all())
+        queryset=Category.objects.all(),
+        required=False,
+        allow_null=True)
     brand = serializers.PrimaryKeyRelatedField(
         queryset=Brand.objects.all(),
         many=True)

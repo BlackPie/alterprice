@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import django_filters
-from django.db.models import Q
 from django.forms import ModelMultipleChoiceField
 from django.core.validators import EMPTY_VALUES
 # Project imports
@@ -79,7 +78,8 @@ class ProductListFilter(django_filters.FilterSet):
     price_min = PriceMinFilter()
     brand = BrandFilter(queryset=Brand.objects.all(),
                         required=False)
-    category = CategoryFilter(queryset=Category.objects.all())
+    category = CategoryFilter(queryset=Category.objects.all(),
+                              required=False)
     search = ProductSearchFilter()
 
     class Meta:
