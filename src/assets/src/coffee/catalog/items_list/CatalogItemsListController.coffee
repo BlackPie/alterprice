@@ -37,7 +37,8 @@ module.exports = class CatalogItemsListController extends Marionette.Controller
             else
                 @catalogProductsPagerView.hide()
 
-        @catalogProductsCollection.fetchFiltered()
+        #@catalogProductsCollection.fetchFiltered()
+        @onSetFilter()
 
         @channel.vent.on Events.SET_FILTER,  @onSetFilter
         @channel.vent.on Events.SHOW_MORE,  @onShowMore
