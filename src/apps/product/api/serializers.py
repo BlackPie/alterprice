@@ -60,3 +60,4 @@ class ProductCountSerializer(serializers.Serializer):
         many=True)
     price_min = serializers.CharField(allow_blank=True, allow_null=True)
     price_max = serializers.CharField(allow_blank=True, allow_null=True)
+    search = serializers.CharField(allow_null=True, allow_blank=True)
