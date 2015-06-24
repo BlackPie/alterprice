@@ -38,10 +38,10 @@ class ProductCount(APIView):
         if price_max not in EMPTY_VALUES:
             qs = qs.by_max_price(price_max)
 
-        if len(category) > 0:
-            pass
+        if category not in EMPTY_VALUES:
+            qs = qs.by_categiry(category)
         if len(brand) > 0:
-            qs = qs.filter(brand__in=brand)
+            qs = qs.by_category(brand)
 
         response['product_count'] = qs.distinct().count()
         return response
