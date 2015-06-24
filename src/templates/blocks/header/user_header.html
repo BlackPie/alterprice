@@ -1,8 +1,8 @@
 <div id="header-block">
     <div class="pure-g">
         <div class="pure-u-3-4">
-            <form id="catalog-search">
-                <input type="text" class="b_input_search" placeholder="Поиск среди более 6 000 000 товаров" />
+            <form id="catalog-search" method="GET" action="{% url 'catalog:search_products_list' %}">
+                <input type="text" name="search" class="b_input_search" value="{{ search }}" placeholder="Поиск среди более 6 000 000 товаров" />
                 <button type="submit"><i class="icon-search"></i></button>
             </form>
         </div>
