@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 # Project imports
 from catalog.models import Category, Currency
+from product import models as productmodels
 from .shop import Shop
 
 
@@ -67,6 +68,11 @@ class ShopYMLManager(models.Manager):
         # create OfferCategories rows
         OfferCategories.objects.make_from_parsed_list(shopyml=obj,
                                                       plist=categories)
+
+        for offer in offers:
+            productmodels.Product
+            productmodels.ProductShop
+
 
         return obj
 

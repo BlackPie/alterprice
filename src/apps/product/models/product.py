@@ -24,6 +24,9 @@ class ProductQuerySet(query.QuerySet):
     def by_brands(self, value):
         return self.filter(brand__in=value)
 
+    def by_category(self, value):
+        return self.filter(category=value)
+
     def search(self, value):
         return self.filter(Q(name__icontains=value) |
                            Q(brand__name__icontains=value))
@@ -33,6 +36,15 @@ class ProductManager(models.Manager):
     def get_list(self):
         qs = self.active()
         return qs.distinct()
+
+    def make_from_yml(self, yml_obj):
+        qs = self.filter(ym_id=yml_obj.get('@id', None))
+        if qs.exists():
+            obj = qs.first()
+        else:
+            obj = self.model()
+            # obj.
+
 
 
 class Product(YMkey):

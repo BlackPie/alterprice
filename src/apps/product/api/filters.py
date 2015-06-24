@@ -48,6 +48,13 @@ class ModelMultipleChoiceField(ModelMultipleChoiceField):
             return super().clean(value)
 
 
+class CategoryFilter(django_filters.ModelChoiceFilter):
+    def filter(self, qs, value):
+        if value not in EMPTY_VALUES:
+            qs = qs.by_category(value)
+        return qs
+
+
 class BrandFilter(django_filters.ModelMultipleChoiceFilter):
     field_class = ModelMultipleChoiceField
 
@@ -69,10 +76,9 @@ class ProductListFilter(django_filters.FilterSet):
     price_min = PriceMinFilter()
     brand = BrandFilter(queryset=Brand.objects.all(),
                         required=False)
-    # category = CategoryFilter(queryset=Category.objects.all())
+    category = CategoryFilter(queryset=Category.objects.all())
     search = ProductSearchFilter()
 
     class Meta:
         model = models.Product
-        # fields = ['price_min', 'price_max', 'brand', 'search', 'category']
-        fields = ['price_min', 'price_max', 'brand', 'search']
+        fields = ['price_min', 'price_max', 'brand', 'search', 'category']

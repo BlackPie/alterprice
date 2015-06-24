@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerField
 from .product import Product
 from catalog.models import Property, Currency
-from shop.models import OfferCategories
+# from shop.models import OfferCategories
 
 
 class ProductFK(models.Model):
@@ -30,7 +30,7 @@ class ProductShop(ProductFK):
                                  verbose_name=_('Валюта'))
     point = models.IntegerField(default=2,
                                 verbose_name=_('Рейтинг'))
-    offercategory = models.ForeignKey(OfferCategories,
+    offercategory = models.ForeignKey('shop.OfferCategories',
                                       null=True,
                                       blank=True,
                                       default=None,
