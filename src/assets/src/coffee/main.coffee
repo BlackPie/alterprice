@@ -12,10 +12,13 @@ $.ajaxSetup
 logger.setLevel(logger.levels.DEBUG)
 
 
-DefaultApp = require 'default/DefaultApp'
+DefaultUserApp = require 'default/user/DefaultUserApp'
 ProductApp = require 'product/ProductApp'
 CatalogItemsListApp = require 'catalog/items_list/CatalogItemsListApp'
 CatalogSearchApp = require 'catalog/search/CatalogSearchApp'
+ClientIndexApp = require 'client/index/ClientIndexApp'
+ClientLoginApp = require 'client/login/ClientLoginApp'
+ClientRegistrationApp = require 'client/registration/ClientRegistrationApp'
 
 
 getEntryPoint = ->
@@ -29,10 +32,13 @@ getEntryPoint = ->
 entryPoint = getEntryPoint()
 
 entryPoints =
-    'default': DefaultApp
+    'default': DefaultUserApp
     'catalog-items-list': CatalogItemsListApp
     'catalog-search': CatalogSearchApp
     'product-detail': ProductApp
+    'client-index': ClientIndexApp
+    'client-login': ClientLoginApp
+    'client-registration': ClientRegistrationApp
 
 
 if window.context != undefined

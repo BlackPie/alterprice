@@ -7,7 +7,7 @@ LeftMenuView = require 'base/views/LeftMenuView'
 CitySelectorView = require 'base/views/CitySelectorView'
 
 
-module.exports = class CatalogItemsListController extends Marionette.Controller
+module.exports = class DefaultUserController extends Marionette.Controller
 
     initialize: (options) =>
         @channel = options.channel

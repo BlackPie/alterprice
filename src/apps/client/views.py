@@ -7,6 +7,7 @@ class ClientIndexPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientIndexPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-index'
         return context
 
 
@@ -15,6 +16,7 @@ class ClientSignInPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientSignInPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-login'
         return context
 
 
@@ -23,6 +25,7 @@ class ClientSignUpPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientSignUpPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-registration'
         return context
 
 
@@ -31,4 +34,13 @@ class ClientPasswordResetPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientPasswordResetPageView, self).get_context_data(**kwargs)
+        return context
+
+
+class ClientProfilePageView(TemplateView):
+    template_name = "apps/client/profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientProfilePageView, self).get_context_data(**kwargs)
+        context['user'] = self.request.user
         return context

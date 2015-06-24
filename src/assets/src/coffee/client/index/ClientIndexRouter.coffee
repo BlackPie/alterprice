@@ -2,6 +2,6 @@ Marionette = require 'backbone.marionette'
 Backbone   = require 'backbone'
 
 
-module.exports = class DefaultRouter extends Marionette.AppRouter
+module.exports = class ClientIndexRouter extends Marionette.AppRouter
 	appRoutes:
 		"": "index"
