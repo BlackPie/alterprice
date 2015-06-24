@@ -14,6 +14,7 @@ urlpatterns = patterns(
     url(r'^markup/', include('markup.urls', namespace="markup")),
     url(r'^product/', include('product.urls', namespace="product")),
     url(r'^catalog/', include('catalog.urls', namespace="catalog")),
+    url(r'^client/', include('client.urls', namespace="client")),
 
 
     # API urls

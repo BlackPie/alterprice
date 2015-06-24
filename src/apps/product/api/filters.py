@@ -78,8 +78,7 @@ class ProductListFilter(django_filters.FilterSet):
     price_min = PriceMinFilter()
     brand = BrandFilter(queryset=Brand.objects.all(),
                         required=False)
-    category = CategoryFilter(queryset=Category.objects.all(),
-                              required=False)
+    category = CategoryFilter(queryset=Category.objects.all(), required=False)
     search = ProductSearchFilter()
 
     class Meta:
