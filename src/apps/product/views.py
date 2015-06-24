@@ -20,13 +20,8 @@ class ProductDetailPageView(DetailView):
             'mid': random.randrange(1000, 2000),
         }
         context['best_offer'] = self.object.get_best_offer()
-        context['properties'] = self.object.productproperty_set.prefetch_related('propertyinfo_set')
+        context['properties'] = self.object.productproperty_set.all()
         context['context'] = json.dumps({
             'productId': context['object'].pk
         })
-        s = Shop.objects.first()
-        ShopYML.objects.make(
-            shop=s,
-            yml='https://yandex.st/market-export/1.0-17/partner/help/YML.xml'
-        )
         return context

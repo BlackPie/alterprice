@@ -49,7 +49,6 @@ class ProductManager(models.Manager):
             # obj.
 
 
-
 class Product(YMkey):
     brand = models.ForeignKey('brand.Brand',
                               null=True,
