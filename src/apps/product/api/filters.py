@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import django_filters
-from django.db.models import Q
 from django.forms import ModelMultipleChoiceField
 from django.core.validators import EMPTY_VALUES
 # Project imports
