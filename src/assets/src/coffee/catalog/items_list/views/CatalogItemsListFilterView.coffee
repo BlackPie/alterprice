@@ -117,3 +117,7 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
             el.val value
         else
             @$(@ui.priceFromInput).change()
+
+
+    setCategory: (categoryId) =>
+        @$(@ui.categoryInput).val(categoryId)
