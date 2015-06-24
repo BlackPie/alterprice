@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from django.forms import ModelMultipleChoiceField
 import django_filters
+from django.db.models import Q
+from django.forms import ModelMultipleChoiceField
 from django.core.validators import EMPTY_VALUES
+# Project imports
 from product import models
 from brand.models import Brand
 from catalog.models import Category # NOQA
@@ -51,7 +53,8 @@ class ModelMultipleChoiceField(ModelMultipleChoiceField):
 class CategoryFilter(django_filters.ModelChoiceFilter):
     def filter(self, qs, value):
         if value not in EMPTY_VALUES:
-            qs = qs.by_category(value)
+            if isinstance(value, Category):
+                qs = qs.by_category(value)
         return qs
 
 

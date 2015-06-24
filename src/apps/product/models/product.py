@@ -25,7 +25,10 @@ class ProductQuerySet(query.QuerySet):
         return self.filter(brand__in=value)
 
     def by_category(self, value):
-        return self.filter(category=value)
+        if value.children.exists():
+            return self.filter(Q(category=value) | Q(category__in=value.children.all()))
+        else:
+            return self.filter(category=value)
 
     def search(self, value):
         return self.filter(Q(name__icontains=value) |
