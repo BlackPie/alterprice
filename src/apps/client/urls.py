@@ -12,5 +12,8 @@ urlpatterns = patterns(
     url(r'^profile/$', views.ClientProfilePageView.as_view(), name='profile'),
     url(r'^shop/add/$', views.ClientShopAddPageView.as_view(), name='shop_add'),
     url(r'^shop/(?P<pk>\d+)/$', views.ClientShopAddPageView.as_view(), name='shop_detail'),
+
+    # Middleware UL
+    url(r'^shop/change/$', views.ChnageShop.as_view(), name='change-shop'),
 )
 

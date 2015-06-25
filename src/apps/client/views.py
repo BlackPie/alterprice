@@ -1,5 +1,9 @@
-from django.views.generic import TemplateView
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.views.generic import TemplateView, FormView
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic.detail import DetailView
+from django import forms
 from shop.models import Shop
 
 
@@ -67,3 +71,26 @@ class ClientShopDetailPageView(DetailView):
         context = super(ClientShopDetailPageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-shop-add'
         return context
+
+
+class ChangeShopForm(forms.Form):
+    shop = forms.ModelChoiceField(
+        empty_label=_('Выберете магазин'),
+        queryset=Shop.objects.all())
+
+
+class ChnageShop(FormView):
+    form_class = ChangeShopForm
+    template_name = 'change_shop_form.html'
+
+    def get_success_url(self):
+        return reverse('client:change-shop')
+
+    def get_initials(self):
+        return {'shop': Shop.objects.filter(user=self.request.user)}
+
+    def form_valid(self, form):
+        shop = form.cleaned_data.get('shop')
+        self.request.session['shop_id'] = shop.id
+        return super(ChnageShop, self).form_valid(form)
+        # return HttpResponseRedirect(self.request.META.get('HTTP_REFFERER'))
