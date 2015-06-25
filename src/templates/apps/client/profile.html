@@ -3,43 +3,51 @@
 {% block content%}
     <div id="client-profile-page">
         <div class="h1">Профиль</div>
-
         <div class="pure-g">
             <div class="pure-u-1-2">
                 <div class="block-2-x">
-                    <form id="edit-profile-form" class="form-block">
-                        <a href="#" id="profile-edit-btn"></a>
-                        <div class="name">
-                            <span>{{ user.get_short_name }}</span>
-                            <div class="status ok">
-                                <div class="tooltip">Профиль подтвержден</div>
+                    <div id="client-profile-form-view">
+                        <form id="edit-profile-form" class="form-block">
+                            <a href="#" id="profile-edit-btn"></a>
+                            <div class="name">
+                                <span>{{ user.get_short_name }}</span>
+                                <div class="status ok">
+                                    <div class="tooltip">Профиль подтвержден</div>
+                                </div>
                             </div>
-                        </div>
-                        <label class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name">Email</div>
-                            <div class="pure-u-3-5 field-value">{{ user.email }}</div>
-                        </label>
-                        <label class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name">Телефон</div>
-                            <div class="pure-u-3-5 field-value">{{ user.phone }}</div>
-                        </label>
-                        <div class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name">Страна</div>
-                            <div class="pure-u-3-5 field-value">Россия</div>
-                        </div>
-                        <div class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name">Регион</div>
-                            <div class="pure-u-3-5 field-value">Александровский</div>
-                        </div>
-                        <div class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name">Форма организации</div>
-                            <div class="pure-u-3-5 field-value">Юридическое лицо</div>
-                        </div>
-                        <div class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name">Наименование компании</div>
-                            <div class="pure-u-3-5 field-value">CompanyName</div>
-                        </div>
-                    </form>
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name">Email</div>
+                                <div class="pure-u-3-5 field-value">
+                                    <input type="text" class="b_input_text" disabled="disabled" value="{{ user.email }}" />
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name">Телефон</div>
+                                <div class="pure-u-3-5 field-value">
+                                    <input type="text" class="b_input_text phone-mask" disabled="disabled" value="{{ user.phone }}" />
+                                </div>
+                            </label>
+                            <div class="pure-g field-wrapper no-edit">
+                                <div class="pure-u-2-5 field-name">Страна</div>
+                                <div class="pure-u-3-5 field-value">Россия</div>
+                            </div>
+                            <div class="pure-g field-wrapper no-edit">
+                                <div class="pure-u-2-5 field-name">Регион</div>
+                                <div class="pure-u-3-5 field-value">Александровский</div>
+                            </div>
+                            <div class="pure-g field-wrapper no-edit">
+                                <div class="pure-u-2-5 field-name">Форма организации</div>
+                                <div class="pure-u-3-5 field-value">Юридическое лицо</div>
+                            </div>
+                            <div class="pure-g field-wrapper no-edit">
+                                <div class="pure-u-2-5 field-name">Название компании</div>
+                                <div class="pure-u-3-5 field-value">CompanyName</div>
+                            </div>
+                            <footer>
+                                <button type="submit" class="btn btn-purple">Сохранить</button>
+                            </footer>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="pure-u-1-2 text-right">

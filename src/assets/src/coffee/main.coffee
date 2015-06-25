@@ -19,6 +19,7 @@ CatalogSearchApp = require 'catalog/search/CatalogSearchApp'
 ClientIndexApp = require 'client/index/ClientIndexApp'
 ClientLoginApp = require 'client/login/ClientLoginApp'
 ClientRegistrationApp = require 'client/registration/ClientRegistrationApp'
+ClientProfileApp = require 'client/profile/ClientProfileApp'
 
 
 getEntryPoint = ->
@@ -39,6 +40,7 @@ entryPoints =
     'client-index': ClientIndexApp
     'client-login': ClientLoginApp
     'client-registration': ClientRegistrationApp
+    'client-profile': ClientProfileApp
 
 
 if window.context != undefined
