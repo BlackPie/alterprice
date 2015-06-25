@@ -44,7 +44,7 @@ class ClientProfilePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ClientProfilePageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-profile'
-        context['user'] = self.request.user
+        #context['user'] = self.request.user
         #context['client'] = context['user'].clientprofile_set.first()
         return context
 
