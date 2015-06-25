@@ -10,6 +10,7 @@ urlpatterns = patterns(
     url(r'^registration/$', views.ClientSignUpPageView.as_view(), name='registration'),
     url(r'^password_reset/$', views.ClientPasswordResetPageView.as_view(), name='password_reset'),
     url(r'^profile/$', views.ClientProfilePageView.as_view(), name='profile'),
-    url(r'^shop/add/$', views.ClientShopAddPageView.as_view(), name='add_shop'),
+    url(r'^shop/add/$', views.ClientShopAddPageView.as_view(), name='shop_add'),
+    url(r'^shop/(?P<pk>\d+)/$', views.ClientShopAddPageView.as_view(), name='shop_detail'),
 )
 

@@ -1,11 +1,11 @@
 <div id="location-block">
-    <button class="choose-your-city-btn" type="button">Санкт-Петербург и ЛО</button>
+    <button class="choose-your-city-btn" type="button">{{ cities.first.name }}</button>
     <div class="overlay"></div>
     <div class="choose-your-city-wrapper">
         <ul>
-            <li><a href="#" class="city-choice">Москва и МО</a></li>
-            <li><a href="#" class="city-choice">Санкт-Петербург и ЛО</a></li>
-            <li><a href="#" class="city-choice">Другой город</a></li>
+            {% for city in cities %}
+                <li><a href="#" data-value="{{ city.id }}" class="city-choice">{{ city.name }}</a></li>
+            {% endfor %}
         </ul>
     </div>
 </div>

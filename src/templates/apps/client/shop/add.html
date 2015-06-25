@@ -12,38 +12,38 @@
                                 <label class="pure-g field-wrapper vertical-field">
                                     <div class="pure-u-1-1 field-name">НАЗВАНИЕ МАГАЗИНА</div>
                                     <div class="pure-u-1-1 field-value">
-                                        <input type="text" class="b_input_text" value="">
+                                        <input name="name" type="text" class="b_input_text" value="">
                                     </div>
                                 </label>
                                 <label class="pure-g field-wrapper vertical-field">
                                     <div class="pure-u-1-1 field-name">ЮРИДИЧЕСКОЕ ЛИЦО</div>
                                     <div class="pure-u-1-1 field-value">
-                                        <input type="text" class="b_input_text" value="">
+                                        <input name="entity" type="text" class="b_input_text" value="">
                                     </div>
                                 </label>
                                 <label class="pure-g field-wrapper vertical-field">
                                     <div class="pure-u-1-1 field-name">ОГРН</div>
                                     <div class="pure-u-1-1 field-value">
-                                        <input type="text" class="b_input_text" value="">
+                                        <input name="ogrn" type="text" class="b_input_text" value="">
                                     </div>
                                 </label>
                                 <label class="pure-g field-wrapper vertical-field">
                                     <div class="pure-u-1-1 field-name">ГОРОД</div>
                                     <div class="pure-u-1-1 field-value">
                                         <div class="select">
-                                            <select>
+                                            <select name="city">
                                                 <option></option>
-                                                <option value="0">Москва и МО</option>
-                                                <option value="1">Санкт-Петербург и ЛО</option>
-                                                <option value="2">Другой город</option>
+                                                {% for city in cities %}
+                                                    <option value="{{ city.id }}">{{ city.name }}</option>
+                                                {% endfor %}
                                             </select>
                                             <div class="overlay"></div>
                                             <div class="select-wrapper">
                                                 <a href="#" class="current-value b_input_text"></a>
                                                 <ul>
-                                                    <li><a href="#" data-value="0" class="choice">Москва и МО</a></li>
-                                                    <li><a href="#" data-value="1" class="choice">Санкт-Петербург и ЛО</a></li>
-                                                    <li><a href="#" data-value="2" class="choice">Другой город</a></li>
+                                                    {% for city in cities %}
+                                                        <li><a href="#" data-value="{{ city.id }}" class="choice">{{ city.name }}</a></li>
+                                                    {% endfor %}
                                                 </ul>
                                             </div>
                                         </div>
@@ -54,25 +54,25 @@
                                 <label class="pure-g field-wrapper vertical-field">
                                     <div class="pure-u-1-1 field-name">ТЕЛЕФОН</div>
                                     <div class="pure-u-1-1 field-value">
-                                        <input type="text" class="b_input_text phone-mask" value="">
+                                        <input name="phone" type="text" class="b_input_text phone-mask" value="">
                                     </div>
                                 </label>
                                 <label class="pure-g field-wrapper vertical-field">
                                     <div class="pure-u-1-1 field-name">АДРЕС</div>
                                     <div class="pure-u-1-1 field-value">
-                                        <input type="text" class="b_input_text" value="">
+                                        <input name="address" type="text" class="b_input_text" value="">
                                     </div>
                                 </label>
                                 <label class="pure-g field-wrapper vertical-field">
                                     <div class="pure-u-1-1 field-name">САЙТ</div>
                                     <div class="pure-u-1-1 field-value">
-                                        <input type="text" class="b_input_text" value="">
+                                        <input name="site" type="text" class="b_input_text" value="">
                                     </div>
                                 </label>
                                 <label class="pure-g field-wrapper vertical-field">
                                     <div class="pure-u-1-1 field-name">URL ДЛЯ ПОЛУЧЕНИЯ YML-ФАЙЛА</div>
                                     <div class="pure-u-1-1 field-value">
-                                        <input type="text" class="b_input_text" value="">
+                                        <input name="yml-url" type="text" class="b_input_text" value="">
                                     </div>
                                 </label>
                             </div>

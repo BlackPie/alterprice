@@ -4,6 +4,18 @@
 
         .left-column {
             padding-right: 55px;
+            position: relative;
+
+            &:before {
+                content: '';
+                height: 100%;
+                position: absolute;
+                display: block;
+                border-left: 1px dashed #979797;
+                height: 333px;
+                right: -1px;
+                top: 30px;
+            }
         }
 
         .right-column {

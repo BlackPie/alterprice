@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
+from shop import Shop
 
 
 class ClientIndexPageView(TemplateView):
@@ -53,5 +54,16 @@ class ClientShopAddPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientShopAddPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-shop-add'
+        return context
+
+
+class ClientShopDetailPageView(DetailView):
+    model = Shop
+
+    template_name = "apps/client/shop/add.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientShopDetailPageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-shop-add'
         return context
