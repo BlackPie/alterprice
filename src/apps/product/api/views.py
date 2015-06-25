@@ -33,7 +33,7 @@ class ProductListCategories(ListAPIView):
         qs = qs.prefetch_related('productshop_set')
         qs = qs.prefetch_related('productphoto_set')
         f = filters.ProductListFilter(self.request.GET, queryset=qs)
-        return self.model.objects.filter(product__in=f.qs)
+        return self.model.objects.filter(product__in=f.qs).distinct()
 
 
 class ProductCount(APIView):
