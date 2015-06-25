@@ -1,4 +1,3 @@
-from django.utils.functional import SimpleLazyObject
 from shop.models import Shop
 
 
