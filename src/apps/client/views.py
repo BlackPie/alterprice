@@ -61,7 +61,7 @@ class ClientShopAddPageView(TemplateView):
 class ClientShopDetailPageView(DetailView):
     model = Shop
 
-    template_name = "apps/client/shop/add.html"
+    template_name = "apps/client/shop/detail.html"
 
     def get_context_data(self, **kwargs):
         context = super(ClientShopDetailPageView, self).get_context_data(**kwargs)
