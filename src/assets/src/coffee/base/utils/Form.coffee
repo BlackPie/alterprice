@@ -6,9 +6,7 @@ module.exports = class Form
 
     constructor: (options) ->
         @form = options.form
-
         successCallback = options.success
-
         @form.ajaxForm
             dataType: options.dataType or 'json'
             type: @form.attr 'method' or 'POST'

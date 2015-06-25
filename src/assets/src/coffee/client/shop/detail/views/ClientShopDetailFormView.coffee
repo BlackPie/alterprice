@@ -37,7 +37,6 @@ module.exports = class ClientShopDetailFormView extends Marionette.ItemView
 
         new Form
             form: form
-            dataType: 'html'
             success: =>
                 inputs.attr 'disabled', 'disabled'
                 form.removeClass 'edit'
