@@ -9,6 +9,7 @@ module.exports = class Form
 
         @form.ajaxForm
             dataType: options.dataType or 'json'
+            type: @form.attr 'method' or 'POST'
             beforeSubmit: =>
                 options.form.find('.error-text').remove()
             success: (response, jqForm, options) =>
