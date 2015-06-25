@@ -15,11 +15,18 @@
     ]
   },
   "browser": {
-    "jquery-form": "./src/assets/src/vendor/jquery.form.js"
+    "jquery-form": "./src/assets/src/vendor/jquery.form.js",
+    "jquery-maskedinput": "./src/assets/src/vendor/jquery.maskedinput.js"
   },
   "browserify-shim": {
     "jquery": "$",
     "jquery-form": {
+      "exports": "jQuery.fn",
+      "depends": [
+        "jquery:jQuery"
+      ]
+    },
+    "jquery-maskedinput": {
       "exports": "jQuery.fn",
       "depends": [
         "jquery:jQuery"
