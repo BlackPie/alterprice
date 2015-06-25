@@ -75,7 +75,7 @@ class ShopYMLManager(models.Manager):
             productshop = productmodels.ProductShop.objects.make_from_yml(
                 product=product,
                 shop=shop,
-                currency=currency,
+                currency=obj.currency,
                 yml_obj=offer,
                 offercats=offercats)
 
@@ -118,8 +118,7 @@ class OfferCategoriesManager(models.Manager):
             offercats.append(
                 self.model(category=cats.get('system_cat'), shopyml=shopyml))
         if len(offercats) > 0:
-            self.bulk_create(offercats)
-            return offercats
+            return self.bulk_create(offercats)
         else:
             return None
 

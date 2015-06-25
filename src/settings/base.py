@@ -126,6 +126,7 @@ class Base(Configuration):
         'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'client.middleware.ShopMiddleware'
     )
 
     ROOT_URLCONF = 'alterprice.urls'
@@ -156,6 +157,7 @@ class Base(Configuration):
         'shop',
         'product',
         'brand',
+        'client',
         'markup',  # TMP app
     )
 
