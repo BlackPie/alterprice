@@ -1,0 +1,42 @@
+#payments-refill-page {
+    .tabs-nav {
+        li {
+            display: inline-block;
+            margin-right: 30px;
+        }
+
+        .tab-link {
+            .typo_s;
+            line-height: 40px;
+            color: #676767;
+            position: relative;
+            padding-left: 20px;
+            text-transform: uppercase;
+
+            &[data-tab="online"] {
+                &:before {
+                    .icon(@payment-online-name);
+                    top: 0px;
+                }
+            }
+
+            &[data-tab="bill"] {
+                &:before {
+                    .icon(@payment-card-name);
+                    top: 4px;
+                }
+            }
+
+            &:before {
+                display: block;
+                content: '';
+                position: absolute;
+            }
+        }
+    }
+
+    .block-ful-x {
+        border-top: 1px solid #979797;
+        padding: 0 20px 20px 20px;
+    }
+}

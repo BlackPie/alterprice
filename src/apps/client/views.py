@@ -76,3 +76,12 @@ class ClientWalletBalancePageView(TemplateView):
         context = super(ClientWalletBalancePageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-shop-add'
         return context
+
+
+class ClientWalletRefillPageView(TemplateView):
+    template_name = "apps/client/wallet/refill.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientWalletRefillPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-shop-add'
+        return context
