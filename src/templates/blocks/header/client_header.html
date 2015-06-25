@@ -3,11 +3,15 @@
         <div class="pure-u-1-4">
             <div class="user-balance">Текущий баланс: <span>1493</span> у.е.</div>
         </div>
-        <div class="pure-u-3-8">
+        <div class="pure-u-1-4">
             <div class="user-status">Статус: <span>активный</span></div>
         </div>
-        <div class="pure-u-1-8"></div>
-        <div class="pure-u-1-8"></div>
+        <div class="pure-u-1-4">
+            <a href="{% url 'client:add_shop' %}" class="btn btn-link">Добавить магазин</a>
+        </div>
+        <div class="pure-u-1-8">
+
+        </div>
         <div class="pure-u-1-8 logout-wrapper">
             <a href="{% url 'client:profile' %}" class="btn btn-link">Профиль</a>
             <a href="#" class="logout-btn"></a>
