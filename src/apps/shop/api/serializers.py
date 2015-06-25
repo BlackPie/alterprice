@@ -6,4 +6,9 @@ from shop import models
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Shop
-        fields = ('id', 'name', )
+        fields = ('id', 'name', 'approved')
+
+
+class CreateShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Shop
