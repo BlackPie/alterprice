@@ -2,12 +2,12 @@
 
 {% block content%}
     <div id="client-shop-detail-page">
-        <div class="h1">Профиль</div>
+        <div class="h1">Данные магазина</div>
         <div class="pure-g">
             <div class="pure-u-1-2">
                 <div class="block-2-x">
                     <div id="client-shop-detail-form-view">
-                        <form id="edit-profile-form" class="form-block">
+                        <form action="/api/shop/{{ object.pk }}/update/" method="POST" id="edit-profile-form" class="form-block">
                             <a href="#" id="shop-edit-btn"></a>
                             <div class="name">
                                 <span>{{ object.name }}</span>
