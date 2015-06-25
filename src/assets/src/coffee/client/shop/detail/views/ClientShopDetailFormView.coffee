@@ -30,12 +30,18 @@ module.exports = class ClientShopDetailFormView extends Marionette.ItemView
         @channel = options.channel
         @$(@ui.phoneInput).mask('(999) 999-9999')
         new Select @$(@ui.selectWrapper)
+
         form = @$(@ui.form)
+        inputs = @$(@ui.inputs)
+        selectWrapper = @$(@ui.selectWrapper)
+
         new Form
             form: form
             dataType: 'html'
             success: =>
+                inputs.attr 'disabled', 'disabled'
                 form.removeClass 'edit'
+                selectWrapper.addClass 'disabled'
 
 
     onClickEditBtn: (e) =>

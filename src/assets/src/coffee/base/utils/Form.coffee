@@ -7,6 +7,8 @@ module.exports = class Form
     constructor: (options) ->
         @form = options.form
 
+        successCallback = options.success
+
         @form.ajaxForm
             dataType: options.dataType or 'json'
             type: @form.attr 'method' or 'POST'
@@ -16,8 +18,9 @@ module.exports = class Form
                 if response.status == 'success'
                     if response.redirect_to
                         window.location.href = response.redirect_to
-                    if options.success
-                        options.success()
+
+                if successCallback
+                    successCallback()
             error:  (response) =>
                 if response.responseJSON.status == 'fail'
                     for fieldName of response.responseJSON.errors
