@@ -6,7 +6,7 @@
         <div class="pure-g">
             <div class="pure-u-1-2">
                 <div class="block-2-x">
-                    <div id="client-profile-form-view">
+                    <div id="client-shop-detail-form-view">
                         <form id="edit-profile-form" class="form-block">
                             <a href="#" id="shop-edit-btn"></a>
                             <div class="name">
@@ -23,7 +23,23 @@
                             <label class="pure-g field-wrapper">
                                 <div class="pure-u-2-5 field-name">Город</div>
                                 <div class="pure-u-3-5 field-value">
-                                    <input type="text" class="b_input_text" disabled="disabled" value="{{ object.city|default:'' }}" />
+                                    <div class="select disabled">
+                                        <select name="city">
+                                            <option></option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}" {% if city.id == object.city.id %}selected{% endif %}>{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="overlay"></div>
+                                        <div class="select-wrapper">
+                                            <a href="#" class="current-value b_input_text">{{ object.city.name|default:'' }}</a>
+                                            <ul>
+                                                {% for city in cities %}
+                                                    <li><a href="#" data-value="{{ city.id }}" class="choice">{{ city.name }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper">
@@ -44,7 +60,6 @@
                                     <input type="text" class="b_input_text" disabled="disabled" value="{{ object.site }}" />
                                 </div>
                             </label>
-
                             <footer>
                                 <button type="submit" class="btn btn-purple">Сохранить</button>
                             </footer>

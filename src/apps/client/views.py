@@ -65,5 +65,5 @@ class ClientShopDetailPageView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientShopDetailPageView, self).get_context_data(**kwargs)
-        context['current_app'] = 'client-shop-add'
+        context['current_app'] = 'client-shop-detail'
         return context
