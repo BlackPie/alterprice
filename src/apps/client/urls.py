@@ -15,5 +15,7 @@ urlpatterns = patterns(
     url(r'^wallet/balance/$', views.ClientWalletBalancePageView.as_view(), name='wallet_balance'),
     url(r'^wallet/refill/$', views.ClientWalletRefillPageView.as_view(), name='wallet_refill'),
 
+    # Middleware UL
+    url(r'^shop/change/$', views.ChnageShop.as_view(), name='change-shop'),
 )
 

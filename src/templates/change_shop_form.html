@@ -1,0 +1,15 @@
+{% extends "client_base.html" %}
+
+
+{% block content %}
+
+{{ current_shop }}
+
+<form action="{% url 'client:change-shop' %}" method="POST">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">GO</button>
+</form>
+
+
+{% endblock content %}

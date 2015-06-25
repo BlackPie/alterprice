@@ -116,6 +116,7 @@ class Base(Configuration):
         'alterprice.processors.categories',
         'alterprice.processors.current_url',
         'alterprice.processors.cities',
+        'client.processors.shop_processor'
     )
 
     MIDDLEWARE_CLASSES = (
