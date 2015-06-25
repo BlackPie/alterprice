@@ -44,4 +44,14 @@ class ClientProfilePageView(TemplateView):
         context = super(ClientProfilePageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-profile'
         context['user'] = self.request.user
+        #context['client'] = context['user'].clientprofile_set.first()
+        return context
+
+
+class ClientShopAddPageView(TemplateView):
+    template_name = "apps/client/shop/add.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientShopAddPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-shop-add'
         return context

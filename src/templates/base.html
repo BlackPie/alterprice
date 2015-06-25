@@ -19,13 +19,7 @@
             {% block content %}Hello!{% endblock content %}
             <div style="clear: both"></div>
         </div>
-        <div id="footer-block">
-            <ul>
-                <li><a href="#">Пользовательское соглашение</a></li>
-                <li><a href="#">Вход для интернет магазинов</a></li>
-                <li><a href="#">Контакты</a></li>
-            </ul>
-        </div>
+        {% include 'blocks/footer.html' %}
     </div>
     {% if context %}
         <script>
