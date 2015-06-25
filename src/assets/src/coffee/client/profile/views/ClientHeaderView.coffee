@@ -27,7 +27,7 @@ module.exports = class ClientHeaderView extends Marionette.ItemView
         el = @$(e.target)
         wrapper = el.closest '.select-wrapper'
         wrapper.find('.overlay').show()
-        wrapper.find('.choices').show()
+        wrapper.find('.choices').fadeIn 'fast'
 
 
     onClickOverlay: (e) =>
@@ -35,5 +35,5 @@ module.exports = class ClientHeaderView extends Marionette.ItemView
         el = @$(e.target)
         wrapper = el.closest '.select-wrapper'
         el.hide()
-        wrapper.find('.choices').hide()
+        wrapper.find('.choices').fadeOut 'fast'
 
