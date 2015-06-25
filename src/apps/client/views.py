@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
-from shop import Shop
+from shop.models import Shop
 
 
 class ClientIndexPageView(TemplateView):
