@@ -16,6 +16,8 @@ module.exports = class Form
                 if response.status == 'success'
                     if response.redirect_to
                         window.location.href = response.redirect_to
+                    if options.success
+                        options.success()
             error:  (response) =>
                 if response.responseJSON.status == 'fail'
                     for fieldName of response.responseJSON.errors

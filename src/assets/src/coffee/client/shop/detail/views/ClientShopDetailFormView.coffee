@@ -28,9 +28,14 @@ module.exports = class ClientShopDetailFormView extends Marionette.ItemView
 
     initialize: (options) =>
         @channel = options.channel
-        new Form {form: @$(@ui.form), dataType: 'html'}
         @$(@ui.phoneInput).mask('(999) 999-9999')
         new Select @$(@ui.selectWrapper)
+        form = @$(@ui.form)
+        new Form
+            form: form
+            dataType: 'html'
+            success: =>
+                form.removeClass 'edit'
 
 
     onClickEditBtn: (e) =>
