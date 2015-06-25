@@ -27,6 +27,7 @@ class OperatorFilter(admin.SimpleListFilter):
 
 class UserAdmin(admin.ModelAdmin):
     list_filter = ('user_type', RegDateFilter)
+    fields = ('email', 'user_type', 'password')
 
     def queryset(self, request):
         qs = super(UserAdmin, self).queryset(request)
@@ -49,7 +50,7 @@ class PaymentInfoInline(admin.StackedInline):
 class ClientAdmin(admin.ModelAdmin):
     # list_display = ('__str__', 'operator', 'approved')
     list_display = ('__str__', 'approved')
-    readonly_fields = ('user', )
+    # readonly_fields = ('user', )
     list_filter = (RegDateFilter, OperatorFilter)
     search_fields = ['user__email', 'phone']
     fields = ('user', 'name', 'last_name', 'phone')
@@ -64,9 +65,9 @@ class ClientAdmin(admin.ModelAdmin):
 
     def render_change_form(self, request, context, *args, **kwargs):
         operator_qs = models.AlterPriceUser.objects.get_list(operator=True)
-        context['adminform'].form.fields['operator'].queryset = operator_qs
-        # user_qs = models.AlterPriceUser.objects.get_list(client=True)
-        # context['adminform'].form.fields['user'].queryset = user_qs
+        # context['adminform'].form.fields['operator'].queryset = operator_qs
+        user_qs = models.AlterPriceUser.objects.get_list(client=True)
+        context['adminform'].form.fields['user'].queryset = user_qs
         return super(ClientAdmin, self).render_change_form(request, context, args, kwargs)
 
 
@@ -85,7 +86,7 @@ class AdminProfileAdmin(admin.ModelAdmin):
         context['adminform'].form.fields['user'].queryset = user_qs
         return super(AdminProfileAdmin, self).render_change_form(request, context, args, kwargs)        
 
-# admin.site.register(models.AlterPriceUser, UserAdmin)
+admin.site.register(models.AlterPriceUser, UserAdmin)
 admin.site.register(models.ClientProfile, ClientAdmin)
 admin.site.register(models.OperatorProfile, OperatorAdmin)
 admin.site.register(models.AdminProfile, AdminProfileAdmin)
