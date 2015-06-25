@@ -11,25 +11,8 @@
 <body>
     <div id="container">
         <div id="left-column-block">
-            <a href="/markup/index/" class="home"><img src="/static/dist/images/logo.svg" /></a>
-            <ul class="catalog-menu">
-                 <li class="has-submenu">
-                    <a href="#">Статистика</a>
-                    <ul>
-                        <li><a href="#">По магазину</a></li>
-                        <li><a href="#">По прайс-листу</a></li>
-                    </ul>
-                </li>
-                <li class="has-submenu">
-                    <a href="#">Прайс-листы</a>
-                    <ul>
-                        <li><a href="#">Добавить прайс-лист</a></li>
-                    </ul>
-                </li>
-                <li class="">
-                    <a href="#">Данные магазина</a>
-                </li>
-            </ul>
+            <a href="{% url 'client:index' %}" class="home"><img src="/static/dist/images/logo.svg" /></a>
+            {% include 'blocks/client_menu.html' %}
         </div>
         {% include 'blocks/header/client_header.html' %}
         <div id="content-wrapper">
