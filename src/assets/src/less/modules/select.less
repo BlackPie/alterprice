@@ -36,6 +36,7 @@
         .current-value {
             display: block;
             position: relative;
+            transition: all .1s ease-out 0s;
 
             &:after {
                 content: '';
@@ -45,6 +46,8 @@
                 top: 17px;
                 right: 20px;
                 opacity: 0.6;
+                transition: all .1s ease-out 0s;
+                opacity: 1.0;
             }
         }
     }
@@ -62,6 +65,16 @@
     &.shadow {
         ul {
             box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);
+        }
+    }
+
+    &.disabled {
+        .current-value {
+            border-color: transparent;
+
+            &:after {
+                opacity: 0;
+            }
         }
     }
 }

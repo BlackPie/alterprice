@@ -48,7 +48,7 @@ class ClientProfilePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ClientProfilePageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-profile'
-        context['user'] = self.request.user
+        #context['user'] = self.request.user
         #context['client'] = context['user'].clientprofile_set.first()
         return context
 
@@ -65,10 +65,19 @@ class ClientShopAddPageView(TemplateView):
 class ClientShopDetailPageView(DetailView):
     model = Shop
 
-    template_name = "apps/client/shop/add.html"
+    template_name = "apps/client/shop/detail.html"
 
     def get_context_data(self, **kwargs):
         context = super(ClientShopDetailPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-shop-detail'
+        return context
+
+
+class ClientWalletBalancePageView(TemplateView):
+    template_name = "apps/client/wallet/balance.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientWalletBalancePageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-shop-add'
         return context
 

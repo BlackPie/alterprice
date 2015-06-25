@@ -12,18 +12,16 @@ module.exports = class Select
         @choices = @wrapper.find('.choice')
         _ = @
 
-        #@sync()
-
         @currentValue.on 'click', (e) =>
             e.preventDefault()
-            _.open()
+            if not _.el.hasClass 'disabled'
+                _.open()
 
         @overlay.on 'click', (e) =>
             e.preventDefault()
             _.close()
 
         @choices.click (e) =>
-            console.log 'asdf'
             e.preventDefault()
             el = $(e.target)
             value = el.attr('data-value')

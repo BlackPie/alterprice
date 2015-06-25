@@ -9,11 +9,13 @@ module.exports = class Form
 
         @form.ajaxForm
             dataType: options.dataType or 'json'
-            success: (formData, jqForm, options) =>
-
-                console.log 'success'
-            error:  (response) =>
+            beforeSubmit: =>
                 options.form.find('.error-text').remove()
+            success: (response, jqForm, options) =>
+                if response.status == 'success'
+                    if response.redirect_to
+                        window.location.href = response.redirect_to
+            error:  (response) =>
                 if response.responseJSON.status == 'fail'
                     for fieldName of response.responseJSON.errors
                         fieldWrapper = options.form.find("*[name=\"#{fieldName}\"]").closest '.field-wrapper'

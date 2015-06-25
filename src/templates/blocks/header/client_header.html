@@ -10,7 +10,16 @@
             <a href="{% url 'client:shop_add' %}" class="btn btn-link">Добавить магазин</a>
         </div>
         <div class="pure-u-1-8">
-
+            <div class="select-wrapper">
+                <a href="#" class="btn btn-link payments-link dropdown-btn">Оплаты</a>
+                <div class="overlay"></div>
+                <div class="choices">
+                    <ul>
+                        <li><a href="{% url 'client:wallet_refill' %}">Пополнить баланс</a></li>
+                        <li><a href="{% url 'client:wallet_balance' %}">Лицевой счет</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="pure-u-1-8 logout-wrapper">
             <a href="{% url 'client:profile' %}" class="btn btn-link">Профиль</a>

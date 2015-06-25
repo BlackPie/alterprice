@@ -1,0 +1,75 @@
+{% extends 'client_base.html' %}
+
+{% block content%}
+    <div id="client-shop-detail-page">
+        <div class="h1">Профиль</div>
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div class="block-2-x">
+                    <div id="client-shop-detail-form-view">
+                        <form id="edit-profile-form" class="form-block">
+                            <a href="#" id="shop-edit-btn"></a>
+                            <div class="name">
+                                <span>{{ object.name }}</span>
+                            </div>
+                            <div class="pure-g field-wrapper no-edit">
+                                <div class="pure-u-2-5 field-name">Юридическое лицо</div>
+                                <div class="pure-u-3-5 field-value">{{ object.entity }}</div>
+                            </div>
+                            <div class="pure-g field-wrapper no-edit">
+                                <div class="pure-u-2-5 field-name">ОГРН</div>
+                                <div class="pure-u-3-5 field-value">{{ object.ogrn }}</div>
+                            </div>
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name">Город</div>
+                                <div class="pure-u-3-5 field-value">
+                                    <div class="select disabled">
+                                        <select name="city">
+                                            <option></option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}" {% if city.id == object.city.id %}selected{% endif %}>{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="overlay"></div>
+                                        <div class="select-wrapper">
+                                            <a href="#" class="current-value b_input_text">{{ object.city.name|default:'' }}</a>
+                                            <ul>
+                                                {% for city in cities %}
+                                                    <li><a href="#" data-value="{{ city.id }}" class="choice">{{ city.name }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name">Телефон</div>
+                                <div class="pure-u-3-5 field-value">
+                                    <input type="text" class="b_input_text" disabled="disabled" value="{{ object.phone }}" />
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name">Адрес</div>
+                                <div class="pure-u-3-5 field-value">
+                                    <input type="text" class="b_input_text" disabled="disabled" value="{{ object.address }}" />
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name">Сайт</div>
+                                <div class="pure-u-3-5 field-value">
+                                    <input type="text" class="b_input_text" disabled="disabled" value="{{ object.site }}" />
+                                </div>
+                            </label>
+                            <footer>
+                                <button type="submit" class="btn btn-purple">Сохранить</button>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1-2 text-right">
+                {% include 'blocks/client/call_center.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
