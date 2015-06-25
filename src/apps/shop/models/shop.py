@@ -1,10 +1,16 @@
-from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.db.models.query import QuerySet
+from django.utils.translation import ugettext_lazy as _
 from utils.abstract_models import ApprovedModel, StatusModel, YMkey
 
 
 class MakeException(Exception):
     ""
+
+
+class ShopQuerySet(QuerySet):
+    def by_owner(self, user):
+        return self.filter(user=user)
 
 
 class ShopManager(models.Manager):
@@ -46,7 +52,8 @@ class Shop(ApprovedModel, StatusModel, YMkey):
                            blank=True,
                            default=None,
                            verbose_name=_('Сайт'))
-    objects = ShopManager()
+
+    objects = ShopManager.from_queryset(ShopQuerySet)()
 
     def __str__(self):
         return self.name
