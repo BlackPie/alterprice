@@ -140,4 +140,57 @@
         top: 50%;
         margin-top: -8px;
     }
+
+    .payments-link {
+        position: relative;
+        padding-right: 20px;
+
+        &:after {
+            content: '';
+            display: block;
+            .icon(@chevron-bottom-grey-name);
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: 1px;
+        }
+    }
+
+    .select-wrapper {
+        .overlay {
+            position: fixed;
+            display: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 200;
+        }
+
+        .choices {
+            display: none;
+            background: #FFFFFF;
+            width: 220px;
+            position: absolute;
+            box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+            z-index: 300;
+
+            a {
+                display: block;
+                height: 45px;
+                display: flex;
+                align-items: center;
+                padding: 0 20px;
+                color: #676767;
+
+                &:hover {
+                    background: #F0F2F5;
+                }
+
+                &:active {
+                    color: #323232;
+                }
+            }
+        }
+    }
 }
