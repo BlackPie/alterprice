@@ -20,6 +20,6 @@ module.exports = class ClientShopAddFormView extends Marionette.ItemView
 
     initialize: (options) =>
         @channel = options.channel
-        new Form {form: @$(@ui.form), dataType: 'html'}
-        @$(@ui.phoneInput).mask('(999) 999-9999')
+        new Form {form: @$(@ui.form), dataType: 'json'}
+        @$(@ui.phoneInput).mask '(999) 999-9999'
         new Select @$(@ui.selectWrapper)
