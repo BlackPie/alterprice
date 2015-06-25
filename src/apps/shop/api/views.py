@@ -24,6 +24,9 @@ class ShopCreate(CreateAPIView):
         if serializer.is_valid():
             self.perform_create(serializer)
             response['status'] = 'success'
+            response['redirect_to'] = reverse(
+                'client:shop_detail',
+                kwargs={"pk": serializer.instance.id})
             api_status = status.HTTP_201_CREATED
         else:
             response['status'] = 'fail'
