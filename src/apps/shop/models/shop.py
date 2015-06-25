@@ -23,7 +23,7 @@ class ShopManager(models.Manager):
         return True
 
 
-class Shop(ApprovedModel, StatusModel, YMkey):
+class Shop(ApprovedModel, StatusModel):
     name = models.CharField(max_length=255,
                             verbose_name=_('Название'))
     user = models.ForeignKey('apuser.AlterPriceUser',
