@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 # Project imports
 from apuser import models
@@ -12,6 +12,13 @@ class PaymentList(ListAPIView):
 
     def get_queryset(self):
         return self.model.objects.by_user(self.request.user)
+
+
+class PaymentCreate(CreateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class BillList(ListAPIView):
