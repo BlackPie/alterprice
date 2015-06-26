@@ -86,6 +86,12 @@ class AdminProfileAdmin(admin.ModelAdmin):
         context['adminform'].form.fields['user'].queryset = user_qs
         return super(AdminProfileAdmin, self).render_change_form(request, context, args, kwargs)        
 
+
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'amount', 'payment_type', 'created')
+
+
+admin.site.register(models.Payment, PaymentAdmin)
 admin.site.register(models.AlterPriceUser, UserAdmin)
 admin.site.register(models.ClientProfile, ClientAdmin)
 admin.site.register(models.OperatorProfile, OperatorAdmin)

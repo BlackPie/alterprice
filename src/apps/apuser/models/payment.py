@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.query import QuerySet
 from django.utils.translation import ugettext_lazy as _
 from .apuser import AlterPriceUser as User
 from catalog.models import Currency
@@ -29,12 +30,22 @@ class Bill(models.Model):
         verbose_name_plural = _('Счета')
 
 
+class PaymentQueryset(QuerySet):
+    def by_user(self, user):
+        return self.filter(user=user).select_related('currency')
+
+
+class PaymentManager(models.Manager):
+    def make(self):
+        return True
+
+
 class Payment(models.Model):
     BILL = 0
     ONLINE = 1
 
     PAYMENT_CHOICES = (
-        (BILL, _('Банковыский счет')),
+        (BILL, _('Банковский счет')),
         (ONLINE, _('Онлайн оплата')),
     )
     payment_type = models.PositiveSmallIntegerField(verbose_name=_(u'Тип оплаты'),
@@ -50,6 +61,8 @@ class Payment(models.Model):
 
     currency = models.ForeignKey(Currency,
                                  verbose_name=_('Валюта'))
+
+    objects = PaymentManager.from_queryset(PaymentQueryset)()
 
     class Meta:
         verbose_name = _('Оплата')

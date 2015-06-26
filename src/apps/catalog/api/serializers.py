@@ -7,3 +7,9 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Category
         fields = ('id', 'name')
+
+
+class CurrencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Currency
+        fields = ('codename', )

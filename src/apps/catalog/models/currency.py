@@ -22,6 +22,12 @@ class Currency(models.Model):
 
     objects = CurrencyManager()
 
+    def __str__(self):
+        return self.codename
+
+    def __unicode__(self):
+        return self.codename
+
     class Meta:
         verbose_name = _('Валюта')
         verbose_name_plural = _('Валюты')
