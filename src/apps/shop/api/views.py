@@ -54,7 +54,7 @@ class ShopUpdate(UpdateAPIView):
         if serializer.is_valid():
             self.perform_update(serializer)
             response['status'] = 'success'
-            api_status = status.HTTP_201_CREATED
+            api_status = status.HTTP_200_OK
         else:
             response['status'] = 'fail'
             response['errors'] = serializer.errors
