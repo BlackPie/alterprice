@@ -95,6 +95,9 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
     def is_admin(self):
         return True if self.user_type is self.ADMI else False
 
+    def get_shops(self):
+        return self.owner.all()
+
     class Meta:
         verbose_name = _('Пользователь')
         verbose_name_plural = _('Пользователи')
