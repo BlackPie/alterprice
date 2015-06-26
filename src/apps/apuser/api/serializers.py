@@ -4,7 +4,7 @@ from apuser import models
 from catalog.api.serializers import CurrencySerializer
 
 
-class BillSerialziers(serializers.ModelSerializer):
+class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Bill
         fields = ('amount', 'created')

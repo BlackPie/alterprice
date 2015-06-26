@@ -16,6 +16,16 @@ class Balance(models.Model):
         verbose_name_plural = _('Баланс')
 
 
+class BillQueryset(QuerySet):
+    def by_user(self, user):
+        return self.filter(user=user)
+
+
+class BillManager(models.Manager):
+    def make(self, user):
+        return True
+
+
 class Bill(models.Model):
     user = models.ForeignKey(User,
                              verbose_name=_('Пользователь'))
@@ -24,6 +34,8 @@ class Bill(models.Model):
                                    verbose_name=_(u'Дата создания'))
     amount = models.IntegerField(default=0,
                                  verbose_name=_('Сумма'))
+
+    objects = BillManager.from_queryset(BillQueryset)()
 
     class Meta:
         verbose_name = _('Счет')

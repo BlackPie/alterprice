@@ -91,6 +91,11 @@ class PaymentAdmin(admin.ModelAdmin):
     list_display = ('user', 'amount', 'payment_type', 'created')
 
 
+class BillAdmin(admin.ModelAdmin):
+    list_display = ('user', 'amount', 'created')
+
+
+admin.site.register(models.Bill, BillAdmin)
 admin.site.register(models.Payment, PaymentAdmin)
 admin.site.register(models.AlterPriceUser, UserAdmin)
 admin.site.register(models.ClientProfile, ClientAdmin)

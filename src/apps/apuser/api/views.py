@@ -12,3 +12,12 @@ class PaymentList(ListAPIView):
 
     def get_queryset(self):
         return self.model.objects.by_user(self.request.user)
+
+
+class BillList(ListAPIView):
+    serializer_class = serializers.BillSerializer
+    model = models.Bill
+    permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        return self.model.objects.by_user(self.request.user)
