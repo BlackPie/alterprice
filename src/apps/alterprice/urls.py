@@ -23,6 +23,7 @@ urlpatterns = patterns(
     url(r'^api/brand/', include('brand.api.urls', namespace="brand-api")),
     url(r'^api/shop/', include('shop.api.urls', namespace="shop-api")),
     url(r'^api/user/', include('apuser.api.urls', namespace="user-api")),
+    url(r'^api/client/', include('client.api.urls', namespace="client-api")),
 
     # Aadmin urls
     url(r'^admin/', include(admin.site.urls)),
