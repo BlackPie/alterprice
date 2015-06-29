@@ -39,11 +39,31 @@
     }
 }
 
+
+.field-wrapper.has-error {
+    .b_input_text {
+        background: #F1AAA4;
+        border: 1px solid #F1AAA4;
+    }
+}
+
+
 form.form-block {
     .field-wrapper {
         display: block;
         .typo_s;
         margin: 10px 0;
+    }
+
+    .form-error {
+        font-family: Roboto,sans-serif;
+        font-size: 12px;
+        color: #E66A5D;
+        position: absolute;
+        line-height: 24px;
+        margin-left: 2px;
+        margin-top: -12px;
+        font-weight: 400;
     }
 
     .field-name {
@@ -69,7 +89,11 @@ form.form-block {
     }
 
     .error-text {
-        color: rgb(255, 107, 107);
+        .typo_c;
+        color: #E66A5D;
+        position: absolute;
+        line-height: 24px;
+        margin-left: 2px;
     }
 }
 

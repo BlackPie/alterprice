@@ -11,10 +11,14 @@ module.exports = class ClientHeaderView extends Marionette.ItemView
     ui:
         dropdownBtn: '.dropdown-btn'
         overlay: '.overlay'
+        changeShopForm: '#change-shop-form'
+        changeShopIdInput: '#change-shop-form-input'
+        changeShopLink: '.choose-this-shop'
 
     events:
         "click @ui.dropdownBtn": "onClickDropdownBtn"
         "click @ui.overlay": "onClickOverlay"
+        "click @ui.changeShopLink": "onClickChangeShopLink"
 
 
     initialize: (options) =>
@@ -22,7 +26,6 @@ module.exports = class ClientHeaderView extends Marionette.ItemView
 
 
     onClickDropdownBtn: (e) =>
-        console.log 'sdf'
         e.preventDefault()
         el = @$(e.target)
         wrapper = el.closest '.select-wrapper'
@@ -36,4 +39,14 @@ module.exports = class ClientHeaderView extends Marionette.ItemView
         wrapper = el.closest '.select-wrapper'
         el.hide()
         wrapper.find('.choices').fadeOut 'fast'
+
+
+    onClickChangeShopLink: (e) =>
+        e.preventDefault()
+        el = @$(e.target)
+        shopId = el.attr 'data-id'
+        @$(@ui.changeShopIdInput).val(shopId)
+        @$(@ui.changeShopForm).submit()
+
+
 
