@@ -72,3 +72,38 @@ form.form-block {
         color: rgb(255, 107, 107);
     }
 }
+
+
+.number-input-wrapper {
+    input[type="text"] {
+        width: 42px;
+        height: 24px;
+        border-radius: 4px;
+        border: 1px solid #D7D7D7;
+        .typo_s;
+        text-align: center;
+    }
+
+    .increment-btn, .decrement-btn {
+        height: 24px;
+        width: 15px;
+        text-align: center;
+
+        &:before {
+            content: '';
+            display: inline-block;
+        }
+    }
+
+    .increment-btn {
+        &:before {
+            .small-arrow-top-grey;
+        }
+    }
+
+    .decrement-btn {
+        &:before {
+            .small-arrow-bottom-grey;
+        }
+    }
+}

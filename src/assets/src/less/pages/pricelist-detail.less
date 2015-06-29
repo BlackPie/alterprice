@@ -1,0 +1,109 @@
+#client-pricelist-detail {
+    .params-list {
+        padding: 20px;
+
+        header {
+            .typo_s;
+            text-transform: uppercase;
+            color: #6D6D6D;
+            padding: 0 0 15px 0;
+        }
+
+        form#client-pricelist-detail-form {
+            position: relative;
+
+            #pricelist-edit-btn {
+                .icon-edit;
+                position: absolute;
+                right: 0px;
+                top: 10px;
+            }
+
+            input {
+                border: 1px solid transparent;
+                transition: all .3s ease-out 0s;
+            }
+
+            &.edit {
+                input {
+                    border: 1px solid #E7E8EC;
+                }
+
+                footer {
+                    display: block;
+                }
+
+                #pricelist-edit-btn {
+                    display: none;
+                }
+            }
+
+            footer {
+                display: none;
+                text-align: right;
+                padding-top: 10px;
+            }
+        }
+    }
+
+    .info-wrapper {
+        padding-left: 40px;
+
+        .pure-g {
+            margin-bottom: 25px;
+            .typo_s;
+            color: #767676;
+
+            a {
+                color: #767676;
+            }
+        }
+
+        .status.active {
+            color: #5AC8BB;
+        }
+    }
+
+
+    .management-wrapper {
+        header {
+            .typo_s;
+            text-transform: uppercase;
+            color: #6D6D6D;
+            padding: 20px;
+        }
+
+        footer {
+            .typo_s;
+            color: #6D6D6D;
+            padding: 30px 20px 20px 20px;
+        }
+
+        table {
+            width: 100%;
+
+            td, th {
+                .typo_s;
+                text-align: left;
+                padding: 10px 20px;
+                color: #2B303A;
+            }
+
+            th {
+                border-bottom: 1px solid #272B34;
+
+                &.text-center {
+                    text-align: center;
+                }
+            }
+
+            td {
+                border-bottom: 1px solid #D7D7D7;
+
+                &.text-center {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
