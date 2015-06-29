@@ -133,7 +133,8 @@ class ChnageShop(FormView):
     template_name = 'change_shop_form.html'
 
     def get_success_url(self):
-        return reverse('client:change-shop')
+        return reverse('client:shop_detail',
+                       kwargs={'pk': self.request.session.get('shop_id')})
 
     def get_initials(self):
         return {'shop': Shop.objects.filter(user=self.request.user)}
