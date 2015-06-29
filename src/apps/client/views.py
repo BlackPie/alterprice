@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from shop.models import Shop
 from client import decorators
 from client import forms
+from apuser.models import Payment, Bill
 
 
 class ClientIndexPageView(TemplateView):
@@ -108,7 +109,9 @@ class ClientWalletBalancePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientWalletBalancePageView, self).get_context_data(**kwargs)
-        context['current_app'] = 'client-shop-add'  # FIXIT: DUBLICATE
+        context['refill_history'] = Payment.objects.filter(user=self.request.user.pk)
+        context['bills'] = Bill.objects.filter(user=self.request.user.pk)
+        context['current_app'] = 'client-shop-add'
         return context
 
     @method_decorator(decorators.login_required)
