@@ -12,6 +12,7 @@ module.exports = class Form
             type: @form.attr 'method' or 'POST'
             beforeSubmit: =>
                 options.form.find('.error-text').remove()
+                options.form.find('.has-error').removeClass 'has-error'
             success: (response, jqForm, options) =>
                 if response.status == 'success'
                     if response.redirect_to
@@ -21,5 +22,9 @@ module.exports = class Form
             error:  (response) =>
                 if response.responseJSON.status == 'fail'
                     for fieldName of response.responseJSON.errors
-                        fieldWrapper = options.form.find("*[name=\"#{fieldName}\"]").closest '.field-wrapper'
-                        fieldWrapper.find('.field-name').append "<span class=\"error-text\"> - #{response.responseJSON.errors[fieldName]}</span>"
+                        if fieldName == 'non_field_errors'
+                            options.form.prepend "<span class=\"form-error\">#{response.responseJSON.errors[fieldName]}</span>"
+                        else
+                            fieldWrapper = options.form.find("*[name=\"#{fieldName}\"]").closest '.field-wrapper'
+                            fieldWrapper.addClass 'has-error'
+                            fieldWrapper.find('.field-value').append "<span class=\"error-text\">#{response.responseJSON.errors[fieldName]}</span>"

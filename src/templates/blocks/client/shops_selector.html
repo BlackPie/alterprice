@@ -8,16 +8,20 @@
             <a href="#" class="btn btn-link shop-link dropdown-btn" data-id="{{ current_shop.pk }}">{{ current_shop.name }}</a>
             <div class="overlay"></div>
             <div class="choices">
-                <ul>
-                    {% for shop in shops %}
-                        {% if current_shop.pk != shop.pk %}
-                            <li><a href="#" data-id="{{ shop.pk }}">{{ shop.name }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    <li class="add-new-shop-btn-wrapper">
-                        <a href="{% url 'client:shop_add' %}" class="add-new-shop-btn">Добавить магазин</a>
-                    </li>
-                </ul>
+                <form id="change-shop-form" action="{% url 'client:change-shop' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="change-shop-form-input" name="shop" value="" />
+                    <ul>
+                        {% for shop in shops %}
+                            {% if current_shop.pk != shop.pk %}
+                                <li><a href="#" data-id="{{ shop.pk }}" class="choose-this-shop">{{ shop.name }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li class="add-new-shop-btn-wrapper">
+                            <a href="{% url 'client:shop_add' %}" class="add-new-shop-btn">Добавить магазин</a>
+                        </li>
+                    </ul>
+                </form>
             </div>
         </div>
     {% endif %}
