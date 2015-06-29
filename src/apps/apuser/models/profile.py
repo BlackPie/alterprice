@@ -1,8 +1,14 @@
 from django.db import models
-from .apuser import AlterPriceUser
+from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
+# Project imports
+from .apuser import AlterPriceUser
 from utils.helpers import generate_code
-from utils.abstract_models import ApprovedModel
+from utils.abstract_models import ApprovedModel, is_choice_of
+
+
+class MakeException(Exception):
+    ""
 
 
 class Profile(models.Model):
@@ -47,16 +53,61 @@ class OperatorProfile(Profile):
         verbose_name_plural = _('Операторы')
 
 
+class ClientProfileManager(models.Manager):
+    def make(self, user, operator=None, name=None, last_name=None,
+             company=None, city=None, ownership_type=None):
+        if not isinstance(user, AlterPriceUser):
+            raise MakeException('invalid user obj')
+        if operator not in EMPTY_VALUES:
+            if not isinstance(operator, OperatorProfile):
+                raise MakeException('invalid operator obj')
+        if not (ownership_type, self.model.OWNERSHIP_CHOICES):
+            ownership_type = self.model.ENTITY
+        obj = self.model()
+        obj.user = user
+        obj.name = name
+        obj.operator = operator
+        obj.last_name = last_name
+        obj.ownership_type = ownership_type
+        obj.company = company
+        obj.city = city
+        obj.save()
+        return obj
+
+
 class ClientProfile(Profile, ApprovedModel):
+    ENTITY = 0
+    INDIVIDUAL = 1
+
+    OWNERSHIP_CHOICES = (
+        (ENTITY, _('Юридическое лицо')),
+        (INDIVIDUAL, _('Физическое лицо')),
+    )
+
     user = models.OneToOneField(AlterPriceUser,
                                 related_name='client_user',
                                 verbose_name=_('Пользователь'))
+    ownership_type = models.PositiveSmallIntegerField(verbose_name=_(u'Форма собственности'),
+                                                      default=ENTITY,
+                                                      choices=OWNERSHIP_CHOICES)
+    city = models.CharField(max_length=255,
+                            default=None,
+                            blank=True,
+                            null=True,
+                            verbose_name=_('Город'))
+    company = models.CharField(max_length=255,
+                               default=None,
+                               blank=True,
+                               null=True,
+                               verbose_name=_('Название компании'))
     operator = models.ForeignKey(AlterPriceUser,
                                  null=True,
                                  blank=True,
                                  default=None,
                                  related_name='operator',
                                  verbose_name=_('Оператор'))
+
+    objects = ClientProfileManager()
 
     def __str__(self):
         return "%s" % self.user.email

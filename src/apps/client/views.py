@@ -17,6 +17,10 @@ class ClientIndexPageView(TemplateView):
         context['current_app'] = 'client-index'
         return context
 
+    @method_decorator(decorators.profile_reverse)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ClientIndexPageView, self).dispatch(request, *args, **kwargs)
+
 
 class ClientSignInPageView(TemplateView):
     template_name = "apps/client/login.html"

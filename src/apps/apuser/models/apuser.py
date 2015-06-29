@@ -1,7 +1,13 @@
 from django.core.validators import EMPTY_VALUES
 from django.db import models
+from django.db.models.query import QuerySet
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
+
+
+class AlterPriceUserQueryset(QuerySet):
+    def by_email(self, email):
+        return self.filter(email=email)
 
 
 class AlterPriceUserManager(models.Manager):
@@ -22,8 +28,12 @@ class AlterPriceUserManager(models.Manager):
             qs = self.all()
         return qs
 
-    def make(self):
-        return True
+    def make(self, email, password):
+        obj = self.model()
+        obj.email = email
+        obj.set_password(password)
+        obj.save()
+        return obj
 
     def make_client(self):
         obj = self.make()
@@ -75,7 +85,7 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
-    objects = AlterPriceUserManager()
+    objects = AlterPriceUserManager.from_queryset(AlterPriceUserQueryset)()
 
     def __unicode__(self):
         return self.email
