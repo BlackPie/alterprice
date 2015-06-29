@@ -47,7 +47,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     user_agreement = serializers.BooleanField(write_only=True)
 
-    operator_code = serializers.CharField()
+    operator_code = serializers.CharField(allow_blank=True)
     company = serializers.CharField()
 
     class Meta:
@@ -56,7 +56,10 @@ class SignUpSerializer(serializers.ModelSerializer):
                   'phone', 'first_name', 'last_name',
                   'city', 'ownership_type', 'company',
                   'operator_code')
-        # write_only_fields = ['password', ]
+        write_only_fields = [
+            'phone', 'first_name', 'last_name', 'ownership_type',
+            'city', 'company'
+        ]
 
     def create(self, validated_data):
         email = validated_data.get('email')
@@ -64,14 +67,16 @@ class SignUpSerializer(serializers.ModelSerializer):
             email=email,
             password=validated_data.get('password'),)
         EmailValidation.objects.make(user=user, email=email)
+        code = validated_data.get('code')
+        op_qs = models.OperatorProfile.objects.filter(code=code)
         models.ClientProfile.objects.make(
             user=user,
-            code=validated_data.get('operator_code'),
+            operator=op_qs.first() if op_qs.exists() else None,
             city=validated_data.get('city'),
             company=validated_data.get('company'),
             name=validated_data.get('first_name'),
             last_name=validated_data.get('last_name'),
-
+            ownership_type=validated_data.get('ownership_type')
         )
         return user
 
@@ -95,8 +100,9 @@ class SignUpSerializer(serializers.ModelSerializer):
         return value
 
     def validate_operator_code(self, value):
-        qs = models.OperatorProfile.objects.filter(code=value)
-        if not qs.exists():
-            raise serializers.ValidationError(
-                _('Оператор с таким кодом не найден'))
+        if value not in EMPTY_VALUES:
+            qs = models.OperatorProfile.objects.filter(code=value)
+            if not qs.exists():
+                raise serializers.ValidationError(
+                    _('Оператор с таким кодом не найден'))
         return value
