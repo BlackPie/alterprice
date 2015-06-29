@@ -17,6 +17,20 @@ label.radio {
         }
     }
 
+    &.purple {
+        &:before {
+            .icon-radio-empty-purple;
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        &.selected:before {
+            .icon-radio-purple-selected;
+        }
+    }
+
     input[type="radio"] {
         display: none;
     }

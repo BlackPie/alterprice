@@ -3,110 +3,148 @@
 {% block content%}
     <div id="payments-refill-page">
         <div class="h1">Пополнения</div>
-        <div>
+        <div id="client-wallet-refill-view">
             <ul class="tabs-nav">
-                <li><a href="#" class="tab-link" data-tab="online">Онлайн-оплата</a></li>
-                <li><a href="#" class="tab-link" data-tab="bill">Оплата по банковскому счету</a></li>
+                <li class="active"><a href="#" class="tab-link" data-tab="online">Онлайн-оплата</a></li>
+                <li><a href="#" class="tab-link" data-tab="card">Оплата по банковскому счету</a></li>
             </ul>
         </div>
-        <div class="block-ful-x">
-            <form class="" data-tab="online">
-                <div class="pure-g">
-                    <div class="pure-u-1-2">
-                        <label>
-                            <span>Введите сумму</span>
-                            <input type="text" >
-                        </label>
-                    </div>
-                    <div class="pure-u-1-2">
-                        <span>ВЫБЕРИТЕ ПЛАТЁЖНУЮ СИСТЕМУ</span>
-                        <label><input type="radio"> Visa, Visa Electron</label>
-                        <label><input type="radio"> MasterCard</label>
-                    </div>
-                    <div class="pure-u-1-1 form-footer">
-                        <button type="submit" class="btn btn-purple">Продолжить</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="block-ful-x">
-            <form class="" data-tab="online">
-                <div class="pure-g">
-                    <div class="pure-u-1-2 left-column">
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">НАЗВАНИЕ ОРГАНИЗАЦИИ</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="name" type="text" class="b_input_text" value="">
+        <div id="client-wallet-refill-online-form-view">
+            <div class="block-ful-x tab-content online active">
+                <form id="client-wallet-refill-online-form" class="online-refill" data-tab="online">
+                    <div class="pure-g">
+                        <div class="pure-u-1-2 left-column">
+                            <label class="quantum-label field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">Введите сумму</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input id="quantum-input" name="name" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                        </div>
+                        <div class="pure-u-1-2 right-column">
+                            <div class="title">ВЫБЕРИТЕ ПЛАТЁЖНУЮ СИСТЕМУ</div>
+                            <div class="pure-g field-wrapper vertical-field radio-wrapper">
+                                <div class="pure-u-1-1 field-value">
+                                    <label class="radio purple selected">
+                                        <input type="radio" checked="" name="type">
+                                        <span><div style="background-image: url({{ STATIC_URL}}dist/images/content/payments/visa.png);"></div>Visa, Visa Electron</span>
+                                    </label>
+                                </div>
+                                <div class="pure-u-1-1 field-value">
+                                    <label class="radio purple">
+                                        <input type="radio" name="type">
+                                        <span><div style="background-image: url({{ STATIC_URL}}dist/images/content/payments/mastercard.png);"></div>MasterCard</span>
+                                    </label>
+                                </div>
+                                <div class="pure-u-1-1 field-value">
+                                    <label class="radio purple">
+                                        <input type="radio" name="type">
+                                        <span><div style="background-image: url({{ STATIC_URL}}dist/images/content/payments/maestro.png);"></div>Maestro</span>
+                                    </label>
+                                </div>
+                                <div class="pure-u-1-1 field-value">
+                                    <label class="radio purple">
+                                        <input type="radio" name="type">
+                                        <span><div style="background-image: url({{ STATIC_URL}}dist/images/content/payments/ya.png);"></div>Яндекс.Деньги</span>
+                                    </label>
+                                </div>
+                                <div class="pure-u-1-1 field-value">
+                                    <label class="radio purple">
+                                        <input type="radio" name="type">
+                                        <span><div style="background-image: url({{ STATIC_URL}}dist/images/content/payments/webmoney.png);"></div>WebMoney</span>
+                                    </label>
+                                </div>
                             </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">ИНН</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="entity" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">КПП</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="ogrn" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">БИК</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="ogrn" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">Р/С</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="ogrn" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">КОРРЕСПОНДЕНТСКИЙ СЧЕТ</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="ogrn" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                    </div>
-                    <div class="pure-u-1-2 right-column">
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">НАЗВАНИЕ БАНКА</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="phone" type="text" class="b_input_text phone-mask" value="">
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">ФИО КОНТАКТНОГО ЛИЦА</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="address" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">ТЕЛЕФОН КОНТАКТНОГО ЛИЦА</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="site" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">ЮРИДИЧЕСКИЙ АДРЕС</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="yml-url" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper vertical-field">
-                            <div class="pure-u-1-1 field-name">ПОЧТОВЫЙ АДРЕС</div>
-                            <div class="pure-u-1-1 field-value">
-                                <input name="yml-url" type="text" class="b_input_text" value="">
-                            </div>
-                        </label>
-                        <div class="form-footer">
-                            <button type="submit" class="btn btn-purple">ЗАПРОСИТЬ СЧЁТ</button>
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div class="pure-g">
+                        <div class="pure-u-1-1 form-footer">
+                            <button type="submit" class="btn btn-purple">Продолжить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="client-wallet-refill-card-form-view">
+            <div class="block-ful-x tab-content card">
+                <form id="client-wallet-refill-card-form" class="form-block" data-tab="online">
+                    <div class="pure-g">
+                        <div class="pure-u-1-2 left-column">
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">НАЗВАНИЕ ОРГАНИЗАЦИИ</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="name" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">ИНН</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="entity" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">КПП</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="ogrn" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">БИК</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="ogrn" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">Р/С</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="ogrn" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">КОРРЕСПОНДЕНТСКИЙ СЧЕТ</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="ogrn" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                        </div>
+                        <div class="pure-u-1-2 right-column">
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">НАЗВАНИЕ БАНКА</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="phone" type="text" class="b_input_text phone-mask" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">ФИО КОНТАКТНОГО ЛИЦА</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="address" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">ТЕЛЕФОН КОНТАКТНОГО ЛИЦА</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="site" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">ЮРИДИЧЕСКИЙ АДРЕС</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="yml-url" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper vertical-field">
+                                <div class="pure-u-1-1 field-name">ПОЧТОВЫЙ АДРЕС</div>
+                                <div class="pure-u-1-1 field-value">
+                                    <input name="yml-url" type="text" class="b_input_text" value="">
+                                </div>
+                            </label>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-purple">ЗАПРОСИТЬ СЧЁТ</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock content %}
