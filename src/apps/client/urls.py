@@ -18,6 +18,9 @@ urlpatterns = patterns(
     url(r'^shop/(?P<pk>\d+)/$', views.ClientShopDetailPageView.as_view(), name='shop_detail'),
     url(r'^wallet/balance/$', views.ClientWalletBalancePageView.as_view(), name='wallet_balance'),
     url(r'^wallet/refill/$', views.ClientWalletRefillPageView.as_view(), name='wallet_refill'),
+    url(r'^pricelist/(?P<pk>\d+)/$', views.ClientPricelistDetailPageView.as_view(), name='pricelist_detail'),
+
+    #
 
     # Middleware UL
     url(r'^shop/change/$', views.ChnageShop.as_view(), name='change-shop'),

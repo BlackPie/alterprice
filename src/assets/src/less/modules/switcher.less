@@ -1,0 +1,35 @@
+.switcher-wrapper {
+    width: 30px;
+    height: 17px;
+    display: inline-block;
+    background: #F5F5F5;
+    border-radius: 40px;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    position: relative;
+    transition: all .25s ease-out 0s;
+
+    input {
+        display: none;
+    }
+
+    .switcher {
+        width: 17px;
+        height: 17px;
+        border-radius: 17px;
+        background: #FFFFFF;
+        box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 0;
+        right: 13px;
+        transition: all .15s ease-in 0s;
+    }
+
+    &.on {
+        background: #5AC8BB;
+
+        .switcher {
+            right: 0;
+        }
+    }
+}

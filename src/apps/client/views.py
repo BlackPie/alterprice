@@ -144,6 +144,16 @@ class ChnageShop(FormView):
         # TODO: mb change to revers to HTTP_REFERRER
         return super(ChnageShop, self).form_valid(form)
 
+
+class ClientPricelistDetailPageView(TemplateView):
+    template_name = "apps/client/pricelist/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientPricelistDetailPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-pricelist-detail'
+        return context
+
+
     @method_decorator(decorators.login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ChnageShop, self).dispatch(request, *args, **kwargs)
