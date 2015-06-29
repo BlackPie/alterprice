@@ -22,6 +22,7 @@ ClientRegistrationApp = require 'client/registration/ClientRegistrationApp'
 ClientProfileApp = require 'client/profile/ClientProfileApp'
 ClientShopAddApp = require 'client/shop/add/ClientShopAddApp'
 ClientShopDetailApp = require 'client/shop/detail/ClientShopDetailApp'
+ClientWalletRefillApp  = require 'client/wallet/refill/ClientWalletRefillApp'
 
 
 getEntryPoint = ->
@@ -45,6 +46,7 @@ entryPoints =
     'client-profile': ClientProfileApp
     'client-shop-add': ClientShopAddApp
     'client-shop-detail': ClientShopDetailApp
+    'client-wallet-refill': ClientWalletRefillApp
 
 
 if window.context != undefined

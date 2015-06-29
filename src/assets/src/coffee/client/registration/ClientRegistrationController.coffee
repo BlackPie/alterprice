@@ -10,7 +10,6 @@ module.exports = class ClientRegistrationController extends Marionette.Controlle
 
     initialize: (options) =>
         @channel = options.channel
-
         @clientRegistrationFormView = new ClientRegistrationFormView {channel: @channel}
 
 
