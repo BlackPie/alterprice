@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 def login_required(f):
     def wrapper(request, *args, **kwargs):
         if request.user.is_anonymous():
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('client:index'))
         else:
             return f(request, *args, **kwargs)
     return wrapper
