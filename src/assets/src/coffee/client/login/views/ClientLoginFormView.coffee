@@ -16,4 +16,4 @@ module.exports = class ClientLoginFormView extends Marionette.ItemView
 
     initialize: (options) =>
         @channel = options.channel
-        new Form {form: @$(@ui.form), dataType: 'html'}
+        new Form {form: @$(@ui.form)}

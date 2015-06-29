@@ -12,7 +12,9 @@
             <li><a href="#">Добавить прайс-лист</a></li>
         </ul>
     </li>
-    <li class="">
-        <a href="#">Данные магазина</a>
-    </li>
+    {% if current_shop %}
+        <li>
+            <a href="{% url 'client:shop_detail' current_shop.pk %}">Данные магазина</a>
+        </li>
+    {% endif %}
 </ul>

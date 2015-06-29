@@ -16,7 +16,6 @@ module.exports = class Form
                 if response.status == 'success'
                     if response.redirect_to
                         window.location.href = response.redirect_to
-
                 if successCallback
                     successCallback()
             error:  (response) =>
