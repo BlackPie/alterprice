@@ -1,5 +1,7 @@
 {% extends 'client_base.html' %}
 
+{% load humanize %}
+
 {% block content%}
     <div id="payments-page">
         <div class="h1">Оплаты</div>
@@ -7,7 +9,7 @@
             <div class="pure-u-1-4">
                 <div class="block-1-x user-balance-informer">
                     <span>Текущий баланс</span>
-                    <div><span>1493</span> у.е.</div>
+                    <div><span>{{ user.balance.value|intcomma }}</span> руб.</div>
                 </div>
             </div>
         </div>
