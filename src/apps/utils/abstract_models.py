@@ -143,3 +143,12 @@ class YMkey(models.Model):
 
     class Meta:
         abstract = True
+
+
+def is_choice_of(status, choices):
+    if status in EMPTY_VALUES:
+        return False
+    for c in choices:
+        if c[0] is status:
+            return True
+    return False

@@ -1,11 +1,14 @@
 from rest_framework import serializers
-
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.core.validators import EMPTY_VALUES
 from django.utils.crypto import constant_time_compare
 from django.utils.translation import ugettext_lazy as _
 User = get_user_model()
+# Project imports
+from client.api import messages
+from catalog.models import EmailValidation
+from apuser import models
 
 
 def create_username_field():
@@ -32,3 +35,68 @@ class SignInSerializer(serializers.ModelSerializer):
         if not self.object:
             raise serializers.ValidationError(_(u'Не валидная пара логин-пароль'))
         return attrs
+
+
+class SignUpSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    phone = serializers.CharField()
+    city = serializers.CharField()
+    ownership_type = serializers.ChoiceField(
+        choices=models.ClientProfile.OWNERSHIP_CHOICES)
+
+    user_agreement = serializers.BooleanField(write_only=True)
+
+    operator_code = serializers.CharField()
+    company = serializers.CharField()
+
+    class Meta:
+        model = User
+        fields = ('email', 'password', 'user_agreement',
+                  'phone', 'first_name', 'last_name',
+                  'city', 'ownership_type', 'company',
+                  'operator_code')
+        # write_only_fields = ['password', ]
+
+    def create(self, validated_data):
+        email = validated_data.get('email')
+        user = User.objects.make(
+            email=email,
+            password=validated_data.get('password'),)
+        EmailValidation.objects.make(user=user, email=email)
+        models.ClientProfile.objects.make(
+            user=user,
+            code=validated_data.get('operator_code'),
+            city=validated_data.get('city'),
+            company=validated_data.get('company'),
+            name=validated_data.get('first_name'),
+            last_name=validated_data.get('last_name'),
+
+        )
+        return user
+
+    def validate_user_agreement(self, value):
+        if not value:
+            raise serializers.ValidationError(_('Необходимо согласие на хранение данных'))
+        return value
+
+    def validate_email(self, value):
+        if value in EMPTY_VALUES:
+            raise serializers.ValidationError(
+                messages.email_errors.get('blank'))
+        qs = User.objects.by_email(value)
+        if qs.exists():
+            raise serializers.ValidationError(
+                messages.email_errors.get('already_exist'))
+        emvs = EmailValidation.objects.get_list(email=value)
+        if emvs.exists():
+            raise serializers.ValidationError(
+                messages.email_errors.get('already_sent'))
+        return value
+
+    def validate_operator_code(self, value):
+        qs = models.OperatorProfile.objects.filter(code=value)
+        if not qs.exists():
+            raise serializers.ValidationError(
+                _('Оператор с таким кодом не найден'))
+        return value

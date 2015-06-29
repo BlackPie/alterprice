@@ -25,9 +25,14 @@ class OperatorFilter(admin.SimpleListFilter):
         return queryset
 
 
+class BalanceInline(admin.TabularInline):
+    model = models.Balance
+
+
 class UserAdmin(admin.ModelAdmin):
     list_filter = ('user_type', RegDateFilter)
     fields = ('email', 'user_type', 'password')
+    inlines = [BalanceInline, ]
 
     def queryset(self, request):
         qs = super(UserAdmin, self).queryset(request)
