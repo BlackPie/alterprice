@@ -4,6 +4,8 @@ from django.views.generic import TemplateView, FormView
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.detail import DetailView
 from django import forms
+from django.utils.decorators import method_decorator
+# Project imports
 from shop.models import Shop
 
 
@@ -16,6 +18,7 @@ class ClientIndexPageView(TemplateView):
         return context
 
 
+# decorator reverse profile
 class ClientSignInPageView(TemplateView):
     template_name = "apps/client/login.html"
 
@@ -24,7 +27,10 @@ class ClientSignInPageView(TemplateView):
         context['current_app'] = 'client-login'
         return context
 
+    def dispatch(self, request, *args, **kwargs):
+        return super(ClientSignInPageView, self).dispatch(request, *args, **kwargs)
 
+# decorator reverse profile
 class ClientSignUpPageView(TemplateView):
     template_name = "apps/client/registration.html"
 
@@ -34,6 +40,7 @@ class ClientSignUpPageView(TemplateView):
         return context
 
 
+# decorator reverse profile
 class ClientPasswordResetPageView(TemplateView):
     template_name = "apps/client/password_reset.html"
 
@@ -41,7 +48,7 @@ class ClientPasswordResetPageView(TemplateView):
         context = super(ClientPasswordResetPageView, self).get_context_data(**kwargs)
         return context
 
-
+# decorator login required
 class ClientProfilePageView(TemplateView):
     template_name = "apps/client/profile.html"
 
@@ -53,6 +60,7 @@ class ClientProfilePageView(TemplateView):
         return context
 
 
+# decorator login required
 class ClientShopAddPageView(TemplateView):
     template_name = "apps/client/shop/add.html"
 
@@ -61,10 +69,9 @@ class ClientShopAddPageView(TemplateView):
         context['current_app'] = 'client-shop-add'
         return context
 
-
+# decorator login required
 class ClientShopDetailPageView(DetailView):
     model = Shop
-
     template_name = "apps/client/shop/detail.html"
 
     def get_context_data(self, **kwargs):
@@ -73,6 +80,7 @@ class ClientShopDetailPageView(DetailView):
         return context
 
 
+# decorator login required
 class ClientWalletBalancePageView(TemplateView):
     template_name = "apps/client/wallet/balance.html"
 
@@ -82,7 +90,7 @@ class ClientWalletBalancePageView(TemplateView):
         return context
 
 
-
+# decorator login required
 class ClientWalletRefillPageView(TemplateView):
     template_name = "apps/client/wallet/refill.html"
 
@@ -98,6 +106,7 @@ class ChangeShopForm(forms.Form):
         queryset=Shop.objects.all())
 
 
+# decorator login required
 class ChnageShop(FormView):
     form_class = ChangeShopForm
     template_name = 'change_shop_form.html'

@@ -19,5 +19,5 @@ class SignInAPIView(APIView):
 
     def success_data(self, serializer):
         response = {}
-        response['redirect_to'] = reverse_lazy('index')
+        response['redirect_to'] = reverse_lazy('client:profile')
         return response
