@@ -1,0 +1,24 @@
+<div id="client-shop-selector">
+    {% if shops|length == 0 %}
+        <div class="add-new-shop-btn-wrapper">
+            <a href="{% url 'client:shop_add' %}" class="btn btn-link add-new-shop-btn">Добавить магазин</a>
+        </div>
+    {% else %}
+        <div class="select-wrapper">
+            <a href="#" class="btn btn-link shop-link dropdown-btn" data-id="{{ current_shop.pk }}">{{ current_shop.name }}</a>
+            <div class="overlay"></div>
+            <div class="choices">
+                <ul>
+                    {% for shop in shops %}
+                        {% if current_shop.pk != shop.pk %}
+                            <li><a href="#" data-id="{{ shop.pk }}">{{ shop.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="add-new-shop-btn-wrapper">
+                        <a href="{% url 'client:shop_add' %}" class="add-new-shop-btn">Добавить магазин</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+</div>
