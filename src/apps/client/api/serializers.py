@@ -29,11 +29,6 @@ class SignInSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         self.object = authenticate(username=attrs[User.USERNAME_FIELD],
                                    password=attrs['password'])
-        # if self.object:
-            # if not self.object.active():
-            #     raise serializers.ValidationError(_(u'Не активный пользователь'))
-            # return attrs
-        # else:
         if not self.object:
             raise serializers.ValidationError(_(u'Не валидная пара логин-пароль'))
         return attrs

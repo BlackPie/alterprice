@@ -22,7 +22,7 @@ class APIView(RestAPIView):
         if serializer.is_valid():
             self.success_action(request, serializer)
             response['status'] = 'success'
-            response['data'] = self.success_data(serializer)
+            response.update(self.success_data(serializer))
             api_status = status.HTTP_200_OK
         else:
             response['status'] = 'fail'
