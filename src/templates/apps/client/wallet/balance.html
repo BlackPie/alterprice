@@ -26,21 +26,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1 244</td>
-                                <td>10.01.2015</td>
-                                <td>онлайн оплата</td>
-                            </tr>
-                            <tr>
-                                <td>1 244</td>
-                                <td>10.01.2015</td>
-                                <td>онлайн оплата</td>
-                            </tr>
-                            <tr>
-                                <td>1 244</td>
-                                <td>10.01.2015</td>
-                                <td>банковский счет</td>
-                            </tr>
+                            {% for record in refill_history %}
+                                <tr>
+                                    <td>{{ record.amount|intcomma }}</td>
+                                    <td>{{ record.created|date:"d.m.Y" }}</td>
+                                    <td>{% if record.payment_type == 0 %}банковский счет{% else %}онлайн оплата{% endif %}</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -57,46 +49,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Счет №129876</td>
-                                <td>10.01.2015</td>
-                                <td>
-                                    <a href="#" class="view"><i class="icon-eye-grey"></i></a>
-                                    <a href="#" class="download"><i class="icon-download-grey"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Счет №129876</td>
-                                <td>10.01.2015</td>
-                                <td>
-                                    <a href="#" class="view"><i class="icon-eye-grey"></i></a>
-                                    <a href="#" class="download"><i class="icon-download-grey"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Счет №129876</td>
-                                <td>10.01.2015</td>
-                                <td>
-                                    <a href="#" class="view"><i class="icon-eye-grey"></i></a>
-                                    <a href="#" class="download"><i class="icon-download-grey"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Счет №129876</td>
-                                <td>10.01.2015</td>
-                                <td>
-                                    <a href="#" class="view"><i class="icon-eye-grey"></i></a>
-                                    <a href="#" class="download"><i class="icon-download-grey"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Счет №129876</td>
-                                <td>10.01.2015</td>
-                                <td>
-                                    <a href="#" class="view"><i class="icon-eye-grey"></i></a>
-                                    <a href="#" class="download"><i class="icon-download-grey"></i></a>
-                                </td>
-                            </tr>
+                            {% for bill in bills %}
+                                <tr>
+                                    <td>Счет №{{ bill.pk }}</td>
+                                    <td>{{ bill.created|date:"d.m.Y" }}</td>
+                                    <td>
+                                        <a href="#" class="view"><i class="icon-eye-grey"></i></a>
+                                        <a href="#" class="download"><i class="icon-download-grey"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
