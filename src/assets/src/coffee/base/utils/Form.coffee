@@ -11,7 +11,7 @@ module.exports = class Form
             dataType: options.dataType or 'json'
             type: @form.attr 'method' or 'POST'
             beforeSubmit: =>
-                options.form.find('.error-text').remove()
+                options.form.find('.error-text, .form-error').remove()
                 options.form.find('.has-error').removeClass 'has-error'
             success: (response, jqForm, options) =>
                 if response.status == 'success'
