@@ -5,7 +5,7 @@
         <a href="{% url 'client:index' %}"><img src="{{ STATIC_URL }}dist/images/logo-black.svg"></a>
         <div class="h1">Вход</div>
         {% if welcome %}
-            <p>congrats</p>
+            <p class="welcome">Поздравляем с успешной регистрацией! Авторизируйтесь для дальнейшей работы.</p>
         {% endif %}
         <div id="client-login-form-view">
             <form action="{% url 'client-api:signin' %}" method="POST" id="login-form" class="form-block">
