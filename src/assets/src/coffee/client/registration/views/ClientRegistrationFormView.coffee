@@ -4,7 +4,6 @@ Marionette = require 'backbone.marionette'
 
 Radio = require 'base/utils/Radio'
 Form = require 'base/utils/Form'
-Select = require 'base/utils/Select'
 Checkbox = require 'base/utils/Checkbox'
 require 'jquery-maskedinput'
 
@@ -20,6 +19,10 @@ module.exports = class ClientRegistrationFormView extends Marionette.ItemView
         phoneInput: '.phone-mask'
         selectWrapper: '.select'
         checkboxWrapper: 'label.checkbox'
+        showOperatorCodeBtn: '.operator-code-show-link'
+
+    events:
+        "click @ui.showOperatorCodeBtn": "onClickShowOperatorCodeBtn"
 
 
     initialize: (options) =>
@@ -27,5 +30,9 @@ module.exports = class ClientRegistrationFormView extends Marionette.ItemView
         new Radio @$(@ui.radioWrapper)
         new Form {form: @$(@ui.form)}
         @$(@ui.phoneInput).mask('(999) 999-9999')
-        new Select @$(@ui.selectWrapper)
         Checkbox.init @$(@ui.checkboxWrapper)
+
+
+    onClickShowOperatorCodeBtn: (e) =>
+        e.preventDefault()
+        @$(e.target).closest('.field-wrapper').find('.field-value').slideToggle 'fast'

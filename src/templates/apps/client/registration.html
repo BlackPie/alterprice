@@ -29,23 +29,7 @@
                 <div class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Регион России</div>
                     <div class="pure-u-1-1 field-value">
-                        <div class="select shadow">
-                            <select name="city">
-                                <option></option>
-                                <option value="0">Москва и МО</option>
-                                <option value="1">Санкт-Петербург и ЛО</option>
-                                <option value="2">Другой город</option>
-                            </select>
-                            <div class="overlay"></div>
-                            <div class="select-wrapper">
-                                <a href="#" class="current-value b_input_text shadow"></a>
-                                <ul>
-                                    <li><a href="#" data-value="0" class="choice">Москва и МО</a></li>
-                                    <li><a href="#" data-value="1" class="choice">Санкт-Петербург и ЛО</a></li>
-                                    <li><a href="#" data-value="2" class="choice">Другой город</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        <input name="city" type="text" class="b_input_text focus_grey shadow" value="">
                     </div>
                 </div>
                 <label class="pure-g field-wrapper vertical-field">
@@ -54,6 +38,12 @@
                         <input name="phone" type="text" class="phone-mask b_input_text focus_grey shadow" value="">
                     </div>
                 </label>
+                <!--<label class="pure-g field-wrapper vertical-field">-->
+                    <!--<div class="pure-u-1-1 field-name">Компания</div>-->
+                    <!--<div class="pure-u-1-1 field-value">-->
+                        <!--<input name="company" type="text" class="b_input_text focus_grey shadow" value="">-->
+                    <!--</div>-->
+                <!--</label>-->
                 <label class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Email</div>
                     <div class="pure-u-1-1 field-value">
@@ -72,8 +62,8 @@
                         <input name="confirm_password" type="password" class="b_input_text shadow focus_grey" value="">
                     </div>
                 </label>
-                <label class="pure-g field-wrapper vertical-field">
-                    <div class="pure-u-1-1 field-name"><a href="#">ВВЕСТИ КОД ОПЕРАТОРА</a></div>
+                <label class="pure-g field-wrapper vertical-field operator-code">
+                    <div class="pure-u-1-1 field-name"><a href="#" class="operator-code-show-link">ВВЕСТИ КОД ОПЕРАТОРА</a></div>
                     <div class="pure-u-1-1 field-value">
                         <input name="operator_code" type="text" class="b_input_text shadow focus_grey" value="">
                     </div>
