@@ -1,6 +1,7 @@
+from django.http import Http404
+from django.contrib import auth
 from django.core.urlresolvers import reverse
-from django.views.generic import TemplateView, FormView
-from django.utils.translation import ugettext_lazy as _
+from django.views.generic import TemplateView, FormView, RedirectView
 from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 # Project imports
@@ -8,6 +9,7 @@ from shop.models import Shop
 from client import decorators
 from client import forms
 from apuser.models import Payment, Bill
+from catalog.models import EmailValidation, PasswordRecovery
 
 
 class ClientIndexPageView(TemplateView):
@@ -51,6 +53,23 @@ class ClientSignUpPageView(TemplateView):
         return super(ClientSignUpPageView, self).dispatch(request, *args, **kwargs)
 
 
+class ActivateView(RedirectView):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        token = kwargs.get('token', None)
+        emvs = EmailValidation.objects.get_valid(token=token)
+        if not emvs.exists():
+            raise Http404
+        emv = emvs.first()
+        emv.confirm()
+        user = emv.user
+        if not user.active():
+            user.activate()
+        return '%s?welcome' % reverse('client:login')
+
+
 class ClientPasswordResetPageView(TemplateView):
     template_name = "apps/client/password_reset.html"
 
@@ -62,6 +81,20 @@ class ClientPasswordResetPageView(TemplateView):
     @method_decorator(decorators.profile_reverse)
     def dispatch(self, request, *args, **kwargs):
         return super(ClientPasswordResetPageView, self).dispatch(request, *args, **kwargs)
+
+
+class RecoveryPassword(TemplateView):
+    template_name = "apps/client/password_reset.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        token = kwargs.get('token', None)
+        if token:
+            pr = PasswordRecovery.objects.get_valid(token=token)
+            if pr is None:
+                raise Http404
+        else:
+            raise Http404
+        return super(RecoveryPassword, self).dispatch(request, *args, **kwargs)
 
 
 class ClientProfilePageView(TemplateView):

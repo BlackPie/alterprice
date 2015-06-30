@@ -34,6 +34,8 @@ class SignInSerializer(serializers.ModelSerializer):
                                    password=attrs['password'])
         if not self.object:
             raise serializers.ValidationError(_(u'Не валидная пара логин-пароль'))
+        if not self.object.active():
+            raise serializers.ValidationError(_(u'Не активный пользователь'))
         return attrs
 
 
@@ -42,7 +44,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(write_only=True)
     phone = serializers.CharField(write_only=True)
     city = serializers.CharField(write_only=True)
-    company = serializers.CharField(write_only=True, allow_blank=True)
+    company = serializers.CharField(write_only=True, allow_blank=True, required=False)
     user_agreement = serializers.BooleanField(write_only=True)
     confirm_password = serializers.CharField(write_only=True)
 
