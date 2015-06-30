@@ -1,11 +1,13 @@
 $ = require 'jquery'
 require 'jquery-form'
+formSuccessTemplate = require 'templates/client/formSuccess'
 
 
 module.exports = class Form
 
     constructor: (options) ->
         @form = options.form
+        form = options.form
         successCallback = options.success
         @form.ajaxForm
             dataType: options.dataType or 'json'
@@ -17,6 +19,9 @@ module.exports = class Form
                 if response.status == 'success'
                     if response.redirect_to
                         window.location.href = response.redirect_to
+                    else
+                        console.log options.form
+                        form.html(formSuccessTemplate(response))
                 if successCallback
                     successCallback()
             error:  (response) =>
