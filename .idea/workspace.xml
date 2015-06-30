@@ -2,7 +2,7 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/assets/src/coffee/client/profile/views/ClientHeaderView.coffee" line="34" />
-    <bookmark url="file://$PROJECT_DIR$/src/apps/client/views.py" line="109" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/src/apps/client/views.py" line="110" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76525841-b2eb-40ad-aab8-562f41bb6254" name="Default" comment="" />
@@ -27,75 +27,81 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="apuser.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/apps/apuser/models/apuser.py">
+      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/apps/client/api/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.0769231" vertical-offset="939" max-vertical-offset="1785">
-              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#47#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="payment.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/apps/apuser/models/payment.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.807693" vertical-offset="210" max-vertical-offset="1305">
-              <caret line="31" column="11" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/apps/client/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.423077" vertical-offset="1308" max-vertical-offset="2460">
-              <caret line="111" column="22" selection-start-line="111" selection-start-column="17" selection-end-line="111" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="balance.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/templates/apps/client/wallet/balance.html">
+      <file leaf-file-name="registration.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/templates/apps/client/registration.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="1140">
-              <caret line="14" column="54" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="54" />
+            <state vertical-scroll-proportion="0.27804878" vertical-offset="372" max-vertical-offset="1380">
+              <caret line="40" column="16" selection-start-line="40" selection-start-column="20" selection-end-line="45" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wallet-balance.less" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/assets/src/less/pages/wallet-balance.less">
+      <file leaf-file-name="sign-up.less" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assets/src/less/pages/sign-up.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19457547" vertical-offset="0" max-vertical-offset="1500">
-              <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+            <state vertical-scroll-proportion="-20.625" vertical-offset="0" max-vertical-offset="705">
+              <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wallet_menu.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/templates/blocks/client/wallet_menu.html">
+      <file leaf-file-name="ClientRegistrationFormView.coffee" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/registration/views/ClientRegistrationFormView.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="225">
-              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="660">
+              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="client_header.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/templates/blocks/header/client_header.html">
+      <file leaf-file-name="login.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/templates/apps/client/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="390">
-              <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+            <state vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="555">
+              <caret line="7" column="55" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Form.coffee" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/base/utils/Form.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+              <caret line="29" column="147" selection-start-line="29" selection-start-column="147" selection-end-line="29" selection-end-column="147" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="checkbox.less" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assets/src/less/modules/checkbox.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.125" vertical-offset="0" max-vertical-offset="405">
+              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forms.less" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assets/src/less/components/forms.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.1" vertical-offset="275" max-vertical-offset="2250">
+              <caret line="42" column="26" selection-start-line="42" selection-start-column="26" selection-end-line="42" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -111,23 +117,13 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/profile/ClientProfileController.coffee" />
-        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/shop/add/ClientShopAddController.coffee" />
-        <option value="$PROJECT_DIR$/src/assets/src/less/pages/payments-refill.less" />
-        <option value="$PROJECT_DIR$/src/templates/apps/client/shop/detail.html" />
-        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/shop/detail/views/ClientShopDetailFormView.coffee" />
-        <option value="$PROJECT_DIR$/src/apps/apuser/models/apuser.py" />
-        <option value="$PROJECT_DIR$/src/assets/src/less/blocks/client/shop-selector.less" />
-        <option value="$PROJECT_DIR$/src/templates/client_base.html" />
         <option value="$PROJECT_DIR$/src/templates/blocks/client/wallet_menu.html" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/login/views/ClientLoginFormView.coffee" />
-        <option value="$PROJECT_DIR$/src/templates/apps/client/login.html" />
         <option value="$PROJECT_DIR$/src/assets/src/less/modules/radio.less" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill/ClientWalletRefillApp.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill/ClientWalletRefillRouter.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/shop/detail/ClientShopDetailController.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/Events.coffee" />
-        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/registration/views/ClientRegistrationFormView.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/registration/ClientRegistrationController.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill/views/ClientWalletRefillTabNavView.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill/ClientWalletRefillController.coffee" />
@@ -136,7 +132,6 @@
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill/views/ClientWalletRefillCardFormView.coffee" />
         <option value="$PROJECT_DIR$/src/apps/client/urls.py" />
         <option value="$PROJECT_DIR$/src/assets/src/less/components/blocks.less" />
-        <option value="$PROJECT_DIR$/src/assets/src/less/components/icons.less" />
         <option value="$PROJECT_DIR$/src/assets/src/less/main.less" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/base/utils/Switcher.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/ClientPricelistDetailApp.coffee" />
@@ -154,14 +149,25 @@
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill/views/ClientWalletRefillOnlineFormView.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/base/utils/Number.coffee" />
         <option value="$PROJECT_DIR$/src/templates/blocks/client/left_menu.html" />
-        <option value="$PROJECT_DIR$/src/assets/src/coffee/base/utils/Form.coffee" />
-        <option value="$PROJECT_DIR$/src/assets/src/less/components/forms.less" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/profile/views/ClientHeaderView.coffee" />
         <option value="$PROJECT_DIR$/src/templates/blocks/client/shops_selector.html" />
         <option value="$PROJECT_DIR$/src/templates/blocks/header/client_header.html" />
         <option value="$PROJECT_DIR$/src/apps/client/views.py" />
-        <option value="$PROJECT_DIR$/src/templates/apps/client/wallet/balance.html" />
+        <option value="$PROJECT_DIR$/src/templates/apps/client/login.html" />
+        <option value="$PROJECT_DIR$/src/assets/src/less/components/icons.less" />
         <option value="$PROJECT_DIR$/src/assets/src/less/pages/wallet-balance.less" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/ClientWalletBalanceApp.coffee" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/ClientWalletBalanceRouter.coffee" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/ClientWalletBalanceController.coffee" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/models/ClientWalletPaymentModel.coffee" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/collections/ClientWalletPaymentsCollection.coffee" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/templates/client/PaymentTr.coffee" />
+        <option value="$PROJECT_DIR$/src/templates/apps/client/wallet/balance.html" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/base/utils/Form.coffee" />
+        <option value="$PROJECT_DIR$/src/assets/src/less/components/forms.less" />
+        <option value="$PROJECT_DIR$/src/assets/src/less/pages/sign-up.less" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/client/registration/views/ClientRegistrationFormView.coffee" />
+        <option value="$PROJECT_DIR$/src/templates/apps/client/registration.html" />
       </list>
     </option>
   </component>
@@ -227,72 +233,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alterprice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alterprice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alterprice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alterprice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alterprice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="alterprice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -407,11 +347,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance" />
       <recent name="$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/views" />
       <recent name="$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail" />
       <recent name="$PROJECT_DIR$/src/assets/src/coffee/client" />
       <recent name="$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill" />
-      <recent name="$PROJECT_DIR$/src/templates/apps/client/wallet" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets/src/coffee/client" />
@@ -630,150 +570,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/registration/ClientRegistrationController.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22968198" vertical-offset="0" max-vertical-offset="849">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill/ClientWalletRefillController.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48165137" vertical-offset="0" max-vertical-offset="872">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/apps/client/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="555">
-          <caret line="7" column="104" selection-start-line="7" selection-start-column="94" selection-end-line="7" selection-end-column="104" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/less/pages/wallet-refill.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.64" vertical-offset="1803" max-vertical-offset="2895">
-          <caret line="139" column="22" selection-start-line="139" selection-start-column="22" selection-end-line="139" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/wallet/refill/views/ClientWalletRefillCardFormView.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
-          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
-          <folding>
-            <marker date="1435581592000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/apps/client/wallet/refill.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.375" vertical-offset="990" max-vertical-offset="2325">
-          <caret line="97" column="61" selection-start-line="97" selection-start-column="61" selection-end-line="97" selection-end-column="61" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#span#0;n#label#0;n#div#0;n#div#1;n#div#1;n#div#0;n#form#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#span#0;n#label#0;n#div#1;n#div#1;n#div#1;n#div#0;n#form#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#span#0;n#label#0;n#div#2;n#div#1;n#div#1;n#div#0;n#form#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#span#0;n#label#0;n#div#3;n#div#1;n#div#1;n#div#0;n#form#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#span#0;n#label#0;n#div#4;n#div#1;n#div#1;n#div#0;n#form#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/apps/client/shop/add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0" vertical-offset="0" max-vertical-offset="1395">
-          <caret line="24" column="48" selection-start-line="0" selection-start-column="0" selection-end-line="87" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/apps/client/profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="945">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/less/pages/profile.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.68" vertical-offset="11" max-vertical-offset="1770">
-          <caret line="13" column="18" selection-start-line="10" selection-start-column="8" selection-end-line="13" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/less/components/blocks.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="900">
-          <caret line="0" column="84" selection-start-line="0" selection-start-column="73" selection-end-line="0" selection-end-column="84" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/less/components/icons.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-25.333334" vertical-offset="967" max-vertical-offset="1815">
-          <caret line="105" column="21" selection-start-line="105" selection-start-column="1" selection-end-line="105" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/less/main.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.458333" vertical-offset="28" max-vertical-offset="930">
-          <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/less/components/buttons.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.0" vertical-offset="0" max-vertical-offset="1920">
-          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/main.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5078979" vertical-offset="197" max-vertical-offset="1050">
-          <caret line="41" column="38" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/base/utils/Select.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.123674914" vertical-offset="0" max-vertical-offset="849">
-          <caret line="7" column="36" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/ClientPricelistDetailRouter.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07067138" vertical-offset="0" max-vertical-offset="849">
-          <caret line="4" column="44" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/ClientPricelistDetailApp.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17002518" vertical-offset="0" max-vertical-offset="794">
-          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/shop/detail/views/ClientShopDetailFormView.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.088339224" vertical-offset="0" max-vertical-offset="960">
@@ -918,30 +714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/less/components/forms.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3515815" vertical-offset="581" max-vertical-offset="2070">
-          <caret line="58" column="9" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/apps/client/api/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.017201835" vertical-offset="0" max-vertical-offset="872">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/apps/apuser/api/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13761468" vertical-offset="0" max-vertical-offset="872">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/apps/client/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40780142" vertical-offset="0" max-vertical-offset="846">
@@ -974,14 +746,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/base/utils/Form.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45565006" vertical-offset="0" max-vertical-offset="823">
-          <caret line="25" column="48" selection-start-line="25" selection-start-column="48" selection-end-line="25" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/blocks/header/user_header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="872">
@@ -992,7 +756,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/blocks/header/client_header.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="390">
+        <state vertical-scroll-proportion="0.19457547" vertical-offset="0" max-vertical-offset="848">
           <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
           <folding />
         </state>
@@ -1003,49 +767,219 @@
         <state vertical-scroll-proportion="2.0769231" vertical-offset="939" max-vertical-offset="1785">
           <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
           <folding>
-            <element signature="e#0#47#0" expanded="true" />
+            <element signature="e#0#47#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/apps/client/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.423077" vertical-offset="1308" max-vertical-offset="2460">
+        <state vertical-scroll-proportion="0.35106382" vertical-offset="1308" max-vertical-offset="2460">
           <caret line="111" column="22" selection-start-line="111" selection-start-column="17" selection-end-line="111" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/blocks/client/wallet_menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0884434" vertical-offset="0" max-vertical-offset="848">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/apps/apuser/models/payment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.807693" vertical-offset="210" max-vertical-offset="1305">
+        <state vertical-scroll-proportion="0.30141845" vertical-offset="210" max-vertical-offset="1305">
           <caret line="31" column="11" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="11" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/blocks/client/wallet_menu.html">
+    <entry file="file://$PROJECT_DIR$/src/apps/catalog/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="225">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="872">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/apps/client/wallet/balance.html">
+    <entry file="file://$PROJECT_DIR$/src/apps/alterprice/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="1140">
-          <caret line="14" column="54" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="54" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="872">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/less/components/icons.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-31.583334" vertical-offset="967" max-vertical-offset="1890">
+          <caret line="115" column="17" selection-start-line="115" selection-start-column="1" selection-end-line="115" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/src/less/pages/wallet-balance.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19457547" vertical-offset="0" max-vertical-offset="1500">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        <state vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="1620">
+          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/ClientWalletBalanceApp.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3636364" vertical-offset="0" max-vertical-offset="240">
+          <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/ClientWalletBalanceRouter.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.0909091" vertical-offset="0" max-vertical-offset="180">
+          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/ClientWalletBalanceController.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/catalog/items_list/models/CatalogProductModel.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <caret line="11" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="11" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/models/ClientWalletPaymentModel.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/catalog/items_list/collections/CatalogProductsCollection.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="780">
+          <caret line="10" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="46" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/wallet/balance/collections/ClientWalletPaymentsCollection.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/templates/product/CategoryCard.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06896552" vertical-offset="0" max-vertical-offset="870">
+          <caret line="4" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/templates/client/PaymentTr.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+          <folding>
+            <marker date="1435656188000" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/apps/client/wallet/balance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.91962177" vertical-offset="92" max-vertical-offset="1185">
+          <caret line="58" column="36" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/apps/apuser/api/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0862069" vertical-offset="0" max-vertical-offset="870">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/apps/client/api/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/apps/client/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="555">
+          <caret line="7" column="55" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/base/utils/Form.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+          <caret line="29" column="147" selection-start-line="29" selection-start-column="147" selection-end-line="29" selection-end-column="147" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/less/modules/checkbox.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.125" vertical-offset="0" max-vertical-offset="405">
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/less/components/forms.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.1" vertical-offset="275" max-vertical-offset="2250">
+          <caret line="42" column="26" selection-start-line="42" selection-start-column="26" selection-end-line="42" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/less/pages/sign-up.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.625" vertical-offset="0" max-vertical-offset="705">
+          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/registration/views/ClientRegistrationFormView.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="660">
+          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/apps/client/registration.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27804878" vertical-offset="372" max-vertical-offset="1380">
+          <caret line="40" column="16" selection-start-line="40" selection-start-column="20" selection-end-line="45" selection-end-column="28" />
           <folding />
         </state>
       </provider>

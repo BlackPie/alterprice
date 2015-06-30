@@ -5,77 +5,73 @@
         <a href="{% url 'client:index' %}"><img src="{{ STATIC_URL }}dist/images/logo-black.svg"></a>
         <div class="h1">Регистрация</div>
         <div id="client-registration-form-view">
-            <form id="registration-form" class="form-block" method="POST">
+            <form action="{% url 'client-api:signup' %}" id="registration-form" class="form-block" method="POST">
                 <label class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Имя</div>
                     <div class="pure-u-1-1 field-value">
-                        <input type="text" class="b_input_text focus_grey shadow" value="">
+                        <input name="first_name" type="text" class="b_input_text focus_grey shadow" value="">
                     </div>
                 </label>
                 <label class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Фамилия</div>
                     <div class="pure-u-1-1 field-value">
-                        <input type="text" class="b_input_text focus_grey shadow" value="">
+                        <input name="last_name" type="text" class="b_input_text focus_grey shadow" value="">
                     </div>
                 </label>
                 <div class="pure-g field-wrapper vertical-field radio-wrapper">
                     <div class="pure-u-1-2 field-value">
-                        <label class="radio"><input type="radio" checked name="type" /> Физическое лицо</label>
+                        <label class="radio"><input type="radio" checked name="ownership_type" value="1" /> Физическое лицо</label>
                     </div>
                     <div class="pure-u-1-2 field-value">
-                        <label class="radio"><input type="radio" name="type" /> Юридическое лицо</label>
+                        <label class="radio"><input type="radio" name="ownership_type" value="0" /> Юридическое лицо</label>
                     </div>
                 </div>
                 <div class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Регион России</div>
                     <div class="pure-u-1-1 field-value">
-                        <div class="select shadow">
-                            <select>
-                                <option></option>
-                                <option value="0">Москва и МО</option>
-                                <option value="1">Санкт-Петербург и ЛО</option>
-                                <option value="2">Другой город</option>
-                            </select>
-                            <div class="overlay"></div>
-                            <div class="select-wrapper">
-                                <a href="#" class="current-value b_input_text shadow"></a>
-                                <ul>
-                                    <li><a href="#" data-value="0" class="choice">Москва и МО</a></li>
-                                    <li><a href="#" data-value="1" class="choice">Санкт-Петербург и ЛО</a></li>
-                                    <li><a href="#" data-value="2" class="choice">Другой город</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        <input name="city" type="text" class="b_input_text focus_grey shadow" value="">
                     </div>
                 </div>
                 <label class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Номер телефона</div>
                     <div class="pure-u-1-1 field-value">
-                        <input type="text" class="phone-mask b_input_text focus_grey shadow" value="">
+                        <input name="phone" type="text" class="phone-mask b_input_text focus_grey shadow" value="">
                     </div>
                 </label>
+                <!--<label class="pure-g field-wrapper vertical-field">-->
+                    <!--<div class="pure-u-1-1 field-name">Компания</div>-->
+                    <!--<div class="pure-u-1-1 field-value">-->
+                        <!--<input name="company" type="text" class="b_input_text focus_grey shadow" value="">-->
+                    <!--</div>-->
+                <!--</label>-->
                 <label class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Email</div>
                     <div class="pure-u-1-1 field-value">
-                        <input type="text" class="b_input_text focus_grey shadow" value="">
+                        <input name="email" type="text" class="b_input_text focus_grey shadow" value="">
                     </div>
                 </label>
                 <label class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Пароль</div>
                     <div class="pure-u-1-1 field-value">
-                        <input type="password" class="b_input_text focus_grey shadow" value="">
+                        <input name="password" type="password" class="b_input_text focus_grey shadow" value="">
                     </div>
                 </label>
                 <label class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Повторите пароль</div>
                     <div class="pure-u-1-1 field-value">
-                        <input type="password" class="b_input_text shadow focus_grey" value="">
+                        <input name="confirm_password" type="password" class="b_input_text shadow focus_grey" value="">
+                    </div>
+                </label>
+                <label class="pure-g field-wrapper vertical-field operator-code">
+                    <div class="pure-u-1-1 field-name"><a href="#" class="operator-code-show-link">ВВЕСТИ КОД ОПЕРАТОРА</a></div>
+                    <div class="pure-u-1-1 field-value">
+                        <input name="operator_code" type="text" class="b_input_text shadow focus_grey" value="">
                     </div>
                 </label>
                 <div class="pure-g field-wrapper vertical-field checkbox-wrapper">
                     <div class="pure-u-1-1 field-value">
                         <label class="checkbox">
-                            <input type="checkbox" value=""> Я согласен с <a href="#">условиями оферты и политикой конфиденциальности</a>
+                            <input name="user_agreement" type="checkbox" value="true"> Я согласен с <a href="#">условиями оферты и политикой конфиденциальности</a>
                         </label>
                     </div>
                 </div>
