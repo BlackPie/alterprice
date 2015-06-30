@@ -35,7 +35,12 @@ class EmailValidationManager(models.Manager):
 
     def generate_token(self, email):
         length = settings.EMAIL_TOKEN_LENGHT
-        return hashlib.md5('%s%s' % (email, time.time())).hexdigest()[:length]
+        # email = email.encode('utf8')
+        # t = '%s' % time.time()
+        # t = t.encode('utf8')
+        patt = '%s%s' % (email, time)
+        patt = patt.encode('utf8')
+        return hashlib.md5(patt).hexdigest()[:length]
 
     def get_expired(self):
         return self.filter(expiration_date__lte=datetime.utcnow())

@@ -100,6 +100,7 @@ class ClientShopDetailPageView(DetailView):
 
     @method_decorator(decorators.login_required)
     def dispatch(self, request, *args, **kwargs):
+        # TODO: check that request.user is owner of shop ( self.object )
         return super(ClientShopDetailPageView, self).dispatch(request, *args, **kwargs)
 
 

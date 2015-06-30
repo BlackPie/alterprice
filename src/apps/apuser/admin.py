@@ -77,11 +77,13 @@ class ClientAdmin(admin.ModelAdmin):
 
 
 class OperatorAdmin(admin.ModelAdmin):
-    readonly_fields = ('code', 'user')
+    readonly_fields = ('code', )
+    list_display = ('__str__', 'name', 'last_name')
+    list_filter = (RegDateFilter, )
 
     def render_change_form(self, request, context, *args, **kwargs):
-        # user_qs = models.AlterPriceUser.objects.get_list(operator=True)
-        # context['adminform'].form.fields['user'].queryset = user_qs
+        user_qs = models.AlterPriceUser.objects.get_list(operator=True)
+        context['adminform'].form.fields['user'].queryset = user_qs
         return super(OperatorAdmin, self).render_change_form(request, context, args, kwargs)
 
 
