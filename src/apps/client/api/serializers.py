@@ -38,17 +38,20 @@ class SignInSerializer(serializers.ModelSerializer):
 
 
 class SignUpSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    phone = serializers.CharField()
-    city = serializers.CharField()
-    ownership_type = serializers.ChoiceField(
-        choices=models.ClientProfile.OWNERSHIP_CHOICES)
-
+    first_name = serializers.CharField(write_only=True)
+    last_name = serializers.CharField(write_only=True)
+    phone = serializers.CharField(write_only=True)
+    city = serializers.CharField(write_only=True)
+    company = serializers.CharField(write_only=True)
     user_agreement = serializers.BooleanField(write_only=True)
 
-    operator_code = serializers.CharField(allow_blank=True)
-    company = serializers.CharField()
+    ownership_type = serializers.ChoiceField(
+        write_only=True,
+        choices=models.ClientProfile.OWNERSHIP_CHOICES)
+
+    operator_code = serializers.CharField(
+        write_only=True,
+        allow_blank=True)
 
     class Meta:
         model = User
@@ -67,7 +70,7 @@ class SignUpSerializer(serializers.ModelSerializer):
             email=email,
             password=validated_data.get('password'),)
         EmailValidation.objects.make(user=user, email=email)
-        code = validated_data.get('code')
+        code = validated_data.get('operator_code')
         op_qs = models.OperatorProfile.objects.filter(code=code)
         models.ClientProfile.objects.make(
             user=user,

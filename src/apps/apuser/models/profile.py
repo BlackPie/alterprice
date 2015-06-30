@@ -48,6 +48,12 @@ class OperatorProfile(Profile):
                             default=generate_code,
                             verbose_name=_('Код'))
 
+    def __str__(self):
+        return self.user.email
+
+    def __unicode__(self):
+        return self.user.email
+
     class Meta:
         verbose_name = _('Оператор')
         verbose_name_plural = _('Операторы')
@@ -66,7 +72,7 @@ class ClientProfileManager(models.Manager):
         obj = self.model()
         obj.user = user
         obj.name = name
-        obj.operator = operator
+        obj.operator = operator.user
         obj.last_name = last_name
         obj.ownership_type = ownership_type
         obj.company = company
