@@ -84,7 +84,12 @@ class ClientPasswordResetPageView(TemplateView):
 
 
 class RecoveryPassword(TemplateView):
-    template_name = "apps/client/password_reset.html"
+    template_name = "apps/client/password_new.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(RecoveryPassword, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-reset-password'
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         token = kwargs.get('token', None)

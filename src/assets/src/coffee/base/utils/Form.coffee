@@ -20,8 +20,8 @@ module.exports = class Form
                     if response.redirect_to
                         window.location.href = response.redirect_to
                     else
-                        console.log options.form
-                        form.html(formSuccessTemplate(response))
+                        if response.message
+                            form.html(formSuccessTemplate(response))
                 if successCallback
                     successCallback()
             error:  (response) =>
