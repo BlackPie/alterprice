@@ -72,7 +72,8 @@ class ClientProfileManager(models.Manager):
         obj = self.model()
         obj.user = user
         obj.name = name
-        obj.operator = operator.user
+        if operator:
+            obj.operator = operator.user
         obj.last_name = last_name
         obj.ownership_type = ownership_type
         obj.company = company
