@@ -42,8 +42,9 @@ class SignUpSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(write_only=True)
     phone = serializers.CharField(write_only=True)
     city = serializers.CharField(write_only=True)
-    company = serializers.CharField(write_only=True)
+    company = serializers.CharField(write_only=True, allow_blank=True)
     user_agreement = serializers.BooleanField(write_only=True)
+    confirm_password = serializers.CharField(write_only=True)
 
     ownership_type = serializers.ChoiceField(
         write_only=True,
@@ -58,7 +59,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         fields = ('email', 'password', 'user_agreement',
                   'phone', 'first_name', 'last_name',
                   'city', 'ownership_type', 'company',
-                  'operator_code')
+                  'operator_code', 'confirm_password')
         write_only_fields = [
             'phone', 'first_name', 'last_name', 'ownership_type',
             'city', 'company'
@@ -82,6 +83,13 @@ class SignUpSerializer(serializers.ModelSerializer):
             ownership_type=validated_data.get('ownership_type')
         )
         return user
+
+    def validate(self, attrs):
+        pwd = attrs.get('password')
+        confirm_pwd = attrs.get('confirm_password')
+        if not constant_time_compare(pwd, confirm_pwd):
+            raise serializers.ValidationError(_('Пароли не совпадают'))
+        return attrs
 
     def validate_user_agreement(self, value):
         if not value:
