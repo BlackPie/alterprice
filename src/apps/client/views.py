@@ -75,6 +75,7 @@ class ClientPasswordResetPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientPasswordResetPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-reset-password'
         return context
 
     @method_decorator(decorators.profile_reverse)

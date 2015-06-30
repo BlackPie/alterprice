@@ -18,6 +18,7 @@ CatalogItemsListApp = require 'catalog/items_list/CatalogItemsListApp'
 CatalogSearchApp = require 'catalog/search/CatalogSearchApp'
 ClientIndexApp = require 'client/index/ClientIndexApp'
 ClientLoginApp = require 'client/login/ClientLoginApp'
+ClientPasswordResetApp = require 'client/password_reset/ClientPasswordResetApp'
 ClientRegistrationApp = require 'client/registration/ClientRegistrationApp'
 ClientProfileApp = require 'client/profile/ClientProfileApp'
 ClientShopAddApp = require 'client/shop/add/ClientShopAddApp'
@@ -49,6 +50,7 @@ entryPoints =
     'client-shop-detail': ClientShopDetailApp
     'client-wallet-refill': ClientWalletRefillApp
     'client-pricelist-detail': ClientPricelistDetailApp
+    'client-reset-password': ClientPasswordResetApp
 
 
 if window.context != undefined
