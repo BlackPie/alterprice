@@ -141,7 +141,8 @@ class EmailValidation(SendStatusModel):
 class PasswordRecoveryManager(models.Manager):
     def generate_token(self, email):
         length = settings.RECOVERY_TOKEN_LENGHT
-        return hashlib.md5('%s%s' % (email, time.time())).hexdigest()[:length]
+        pat = '%s%s' % (email, time.time())
+        return hashlib.md5(pat.encode('utf8')).hexdigest()[:length]
 
     def make(self, user, days=None):
         if user:

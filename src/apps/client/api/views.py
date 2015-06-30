@@ -7,6 +7,8 @@ from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model
 # Project imports
+from catalog import models as catalogmodels
+from apuser import models
 from client.api import serializers
 from utils.views import APIView
 
@@ -49,3 +51,22 @@ class SignUpAPIView(CreateAPIView):
             return Response(response,
                             status=status.HTTP_400_BAD_REQUEST,
                             headers=headers)
+
+
+class Recovery(APIView):
+    serializer_class = serializers.RecoveryEmailSerializer
+    permission_classes = (
+        permissions.AllowAny,
+    )
+
+    def success_action(self, request, serializer):
+        email = serializer.validated_data.get('email')
+        user = models.AlterPriceUser.objects.by_email(email).first()
+        catalogmodels.PasswordRecovery.objects.make(user=user)
+
+    def success_data(self, serializer):
+        response = {}
+        # email = serializer.validated_data.get('email')
+        response['message'] = _(
+            'Выслано сообщение со ссылкой на восстановление')
+        return response

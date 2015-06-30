@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 User = get_user_model()
 # Project imports
 from client.api import messages
-from catalog.models import EmailValidation
+from catalog.models import EmailValidation, PasswordRecovery
 from apuser import models
 
 
@@ -116,4 +116,23 @@ class SignUpSerializer(serializers.ModelSerializer):
             if not qs.exists():
                 raise serializers.ValidationError(
                     _('Оператор с таким кодом не найден'))
+        return value
+
+
+class RecoveryEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=255,
+                                   error_messages=messages.email_errors)
+
+    def validate_email(self, value):
+        if value in EMPTY_VALUES:
+            raise serializers.ValidationError(
+                messages.email_errors.get('blank'))
+        qs = User.objects.by_email(value)
+        if not qs.exists():
+            raise serializers.ValidationError(
+                messages.email_errors.get('not_exists'))
+        rcvs = PasswordRecovery.objects.get_list(user=qs.first(), initial=True)
+        if rcvs.exists():
+            raise serializers.ValidationError(
+                messages.email_errors.get('already_sent'))
         return value
