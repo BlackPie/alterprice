@@ -1,0 +1,59 @@
+#client-statistics-detail {
+    header {
+        .typo_s;
+        text-transform: uppercase;
+        color: #6D6D6D;
+        padding: 20px;
+    }
+
+    footer {
+        padding: 30px 20px 20px 20px;
+    }
+
+    table {
+        width: 100%;
+
+        td, th {
+            .typo_s;
+            text-align: left;
+            padding: 10px 20px;
+            color: #2B303A;
+        }
+
+        th {
+            border-bottom: 1px solid #272B34;
+
+            &.text-center {
+                text-align: center;
+            }
+        }
+
+        td {
+            border-bottom: 1px solid #D7D7D7;
+            font-weight: 700;
+
+            &.text-center {
+                text-align: center;
+            }
+        }
+
+        tr.category {
+            background: #E6E6E6;
+        }
+    }
+
+    .info {
+        .typo_ss;
+        font-weight: 400;
+        color: #888888;
+        padding-left: 30px;
+        position: relative;
+
+        &:before {
+            content: '';
+            .icon-info-blue;
+            position: absolute;
+            left: 0;
+        }
+    }
+}
