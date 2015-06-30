@@ -4,6 +4,9 @@
     <div id="sign-in-page">
         <a href="{% url 'client:index' %}"><img src="{{ STATIC_URL }}dist/images/logo-black.svg"></a>
         <div class="h1">Вход</div>
+        {% if welcome %}
+            <p>congrats</p>
+        {% endif %}
         <div id="client-login-form-view">
             <form action="{% url 'client-api:signin' %}" method="POST" id="login-form" class="form-block">
                 <label class="pure-g field-wrapper vertical-field">

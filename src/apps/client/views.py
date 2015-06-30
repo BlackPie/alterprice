@@ -29,7 +29,8 @@ class ClientSignInPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ClientSignInPageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-login'
-        context['welcome'] = True
+        welc = self.request.GET.get('welcome')
+        context['welcome'] = True if welc is '' else None
         return context
 
     @method_decorator(decorators.profile_reverse)
