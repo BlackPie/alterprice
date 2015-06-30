@@ -2,7 +2,7 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, UpdateAPIView
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model
@@ -54,7 +54,7 @@ class SignUpAPIView(CreateAPIView):
 
 
 class Recovery(APIView):
-    serializer_class = serializers.RecoveryEmailSerializer
+    serializer_class = serializers.RecoverySerializer
     permission_classes = (
         permissions.AllowAny,
     )
@@ -69,4 +69,24 @@ class Recovery(APIView):
         # email = serializer.validated_data.get('email')
         response['message'] = _(
             'Выслано сообщение со ссылкой на восстановление')
+        return response
+
+
+class RecoveryPassword(APIView):
+    serializer_class = serializers.RecoveryPasswordSerializer
+    permission_classes = (permissions.AllowAny, )
+
+    def success_action(self, request, serializer):
+        password = serializer.validated_data.get('password')
+        pr = catalogmodels.PasswordRecovery.objects.get_valid(
+            token=serializer.validated_data.get('token'))
+        pr.recover()
+        user = pr.user
+        user.set_password(password)
+        user.save()
+
+    def success_data(self, serializers):
+        response = {}
+        response['message'] = _('Ваш пароль успешно изменен')
+        response['redirect_to'] = reverse('client:login')
         return response

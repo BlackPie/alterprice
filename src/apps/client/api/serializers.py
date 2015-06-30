@@ -121,7 +121,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         return value
 
 
-class RecoveryEmailSerializer(serializers.Serializer):
+class RecoverySerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=255,
                                    error_messages=messages.email_errors)
 
@@ -137,4 +137,26 @@ class RecoveryEmailSerializer(serializers.Serializer):
         if rcvs.exists():
             raise serializers.ValidationError(
                 messages.email_errors.get('already_sent'))
+        return value
+
+
+class RecoveryPasswordSerializer(serializers.ModelSerializer):
+    confirm_password = serializers.CharField(write_only=True)
+    token = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('password', 'confirm_password', 'token')
+
+    def validate(self, attrs):
+        pwd = attrs.get('password')
+        confirm_pwd = attrs.get('confirm_password')
+        if not constant_time_compare(pwd, confirm_pwd):
+            raise serializers.ValidationError(_('Пароли не совпадают'))
+        return attrs
+
+    def validate_token(self, value):
+        qs = PasswordRecovery.objects.get_valid(token=value)
+        if not qs:
+            raise serializers.ValidationError(_('Не валидный токен'))
         return value
