@@ -15,6 +15,7 @@
     </li>
     {% if current_shop %}
         <li>
+            {% url 'client:shop_detail' as url %}
             <a href="{% url 'client:shop_detail' current_shop.pk %}">Данные магазина</a>
         </li>
     {% endif %}
