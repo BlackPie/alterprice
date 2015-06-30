@@ -1,6 +1,16 @@
 from django.contrib import admin
-from catalog.models import Category, City
+from catalog import models
 
 
-admin.site.register(City)
-admin.site.register(Category)
+class PasswordRecoveryAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'created', 'status', 'sending_status')
+
+
+class EmailValidationAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'created', 'status', 'sending_status')
+
+
+admin.site.register(models.City)
+admin.site.register(models.Category)
+admin.site.register(models.PasswordRecovery, PasswordRecoveryAdmin)
+admin.site.register(models.EmailValidation, EmailValidationAdmin)

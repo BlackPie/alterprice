@@ -133,6 +133,13 @@ class EmailValidation(SendStatusModel):
         self.expiration_date = email_expiration_date(days=days)
         self.save()
 
+
+    def __str__(self):
+        return self.email
+
+    def __unicode__(self):
+        return self.email
+
     class Meta:
         verbose_name = _('Активация электронной почты')
         verbose_name_plural = _('Активации электронной почты')
@@ -218,6 +225,12 @@ class PasswordRecovery(SendStatusModel):
                                          verbose_name=_('Дата восстановления'))
 
     objects = PasswordRecoveryManager()
+
+    def __str__(self):
+        return self.user.email
+
+    def __unicode__(self):
+        return self.user.email
 
     def recover(self):
         self.status = self.RECOVERED
