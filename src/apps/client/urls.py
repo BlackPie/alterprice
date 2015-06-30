@@ -19,6 +19,10 @@ urlpatterns = patterns(
     url(r'^activate/(?P<token>%s)/$' % settings.EMAIL_TOKEN_PATTERN,
         views.ActivateView.as_view(),
         name='activate-link'),
+    url(r'^password/(?P<token>%s)/$' % settings.RECOVERY_TOKEN_PATTERN,
+        views.RecoveryPassword.as_view(),
+        name="recovery-link"),
+
     # cabinet urls
     url(r'^profile/$', views.ClientProfilePageView.as_view(), name='profile'),
     url(r'^shop/add/$', views.ClientShopAddPageView.as_view(), name='shop_add'),
