@@ -25,7 +25,7 @@ module.exports = class ClientRegistrationFormView extends Marionette.ItemView
     initialize: (options) =>
         @channel = options.channel
         new Radio @$(@ui.radioWrapper)
-        new Form {form: @$(@ui.form), dataType: 'html'}
+        new Form {form: @$(@ui.form)}
         @$(@ui.phoneInput).mask('(999) 999-9999')
         new Select @$(@ui.selectWrapper)
         Checkbox.init @$(@ui.checkboxWrapper)
