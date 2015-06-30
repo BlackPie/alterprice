@@ -5,17 +5,6 @@ from .apuser import AlterPriceUser as User
 from catalog.models import Currency
 
 
-class Balance(models.Model):
-    user = models.OneToOneField(User,
-                                verbose_name=_('Пользователь'))
-    value = models.IntegerField(default=0,
-                                verbose_name=_('Значние'))
-
-    class Meta:
-        verbose_name = _('Баланс')
-        verbose_name_plural = _('Баланс')
-
-
 class BillQueryset(QuerySet):
     def by_user(self, user):
         return self.filter(user=user)
