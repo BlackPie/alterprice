@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
+# Project imports
+from utils.abstract_models import StatusModel
 
 
 class AlterPriceUserQueryset(QuerySet):
@@ -56,7 +58,7 @@ class AlterPriceUserManager(models.Manager):
         return obj
 
 
-class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
+class AlterPriceUser(AbstractBaseUser, PermissionsMixin, StatusModel):
 
     CLIENT = 0
     OPERATOR = 1
@@ -79,9 +81,6 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
     user_type = models.PositiveSmallIntegerField(verbose_name=_(u'Статус'),
                                                  default=CLIENT,
                                                  choices=USER_TYPE_CHOICES)
-    created = models.DateTimeField(auto_now_add=True,
-                                   editable=False,
-                                   verbose_name=_(u'Дата регистрации'))
 
     USERNAME_FIELD = 'email'
 

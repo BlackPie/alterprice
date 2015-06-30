@@ -1,5 +1,6 @@
+from django.http import Http404
 from django.core.urlresolvers import reverse
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, RedirectView
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
@@ -8,6 +9,7 @@ from shop.models import Shop
 from client import decorators
 from client import forms
 from apuser.models import Payment, Bill
+from catalog.models import EmailValidation
 
 
 class ClientIndexPageView(TemplateView):
@@ -49,6 +51,23 @@ class ClientSignUpPageView(TemplateView):
     @method_decorator(decorators.profile_reverse)
     def dispatch(self, request, *args, **kwargs):
         return super(ClientSignUpPageView, self).dispatch(request, *args, **kwargs)
+
+
+class ActivateView(RedirectView):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        token = kwargs.get('token', None)
+        emvs = EmailValidation.objects.get_valid(token=token)
+        if not emvs.exists():
+            raise Http404
+        emv = emvs.first()
+        emv.confirm()
+        user = emv.user
+        if not user.active():
+            user.activate()
+        return '%s?welcome' % reverse('client:login')
 
 
 class ClientPasswordResetPageView(TemplateView):

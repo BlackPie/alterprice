@@ -22,7 +22,7 @@ class StatusModel(models.Model):
     )
 
     status = models.PositiveSmallIntegerField(verbose_name=_(u'Статус'),
-                                              default=ENABLED,
+                                              default=DISABLED,
                                               choices=STATUS_CHOICES)
 
     created = models.DateTimeField(auto_now_add=True,
