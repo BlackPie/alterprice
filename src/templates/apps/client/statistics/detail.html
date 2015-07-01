@@ -1,0 +1,51 @@
+{% extends 'client_base.html' %}
+
+{% block content%}
+    <div id="client-statistics-detail">
+        <div class="h1">Статистика по магазину</div>
+        <div class="pure-g">
+            <div class="pure-u-1-1">
+                <div class="block-ful-x">
+                    <header>Краткая сводка</header>
+                    <table>
+                        <thead>
+                            <th></th>
+                            <th class="text-center">07.01.15</th>
+                            <th class="text-center">06.01.15</th>
+                            <th class="text-center">05.01.15</th>
+                            <th class="text-center">04.01.15</th>
+                            <th class="text-center">03.01.15</th>
+                            <th class="text-center">02.01.15</th>
+                            <th class="text-center">01.01.15</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Клики</td>
+                                <td class="text-center">12</td>
+                                <td class="text-center">32</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">3</td>
+                                <td class="text-center">23</td>
+                                <td class="text-center">11</td>
+                                <td class="text-center">32</td>
+                            </tr>
+                            <tr>
+                                <td>Расход, уе</td>
+                                <td class="text-center">12</td>
+                                <td class="text-center">32</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">3</td>
+                                <td class="text-center">23</td>
+                                <td class="text-center">11</td>
+                                <td class="text-center">32</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer>
+                        <div class="info">Данные приведены за последнюю неделю: количество кликов, которые приходятся на предложения вашего магазина, и расход средств за клики по вашим предложениям.</div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
