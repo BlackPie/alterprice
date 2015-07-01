@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.core.urlresolvers import reverse
 # Project imports
 from product import models
 from shop.api.serializers import ShopSerializer
@@ -15,11 +16,15 @@ class ProductShopDeliverySerializer(serializers.ModelSerializer):
 
 class ProductShopSerializer(serializers.ModelSerializer):
     shop = ShopSerializer()
+    click_url = serializers.SerializerMethodField()
     productshopdelivery = ProductShopDeliverySerializer()
 
     class Meta:
         model = models.ProductShop
-        fields = ('shop', 'price', 'point', 'productshopdelivery')
+        fields = ('shop', 'price', 'productshopdelivery', 'click_url')
+
+    def get_click_url(self, obj):
+        return reverse('catalog:click-offer', kwargs={'pk': obj.id})
 
 
 class ProductSerializer(serializers.ModelSerializer):

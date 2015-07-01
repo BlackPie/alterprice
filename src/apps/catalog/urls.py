@@ -10,6 +10,8 @@ urlpatterns = patterns(
     url(r'^(?P<pk>\d+)/products/$', views.CatalogCategoryProductListPageView.as_view(), name='category_products_list'),
     url(r'^search/$', views.CatalogSearchProductsPageView.as_view(), name='search_products_list'),
 
+    url(r'^click/(?P<pk>\d+)/$', views.ClickOffer.as_view(), name='click-offer'),
+
     # Middleware URL
     url(r'^city/change/$', views.ChangeCity.as_view(), name='change-city'),
 )

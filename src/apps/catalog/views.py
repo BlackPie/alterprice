@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, RedirectView
 from django.views.generic.detail import DetailView
 # Project imports
 from catalog.models import Category, City
@@ -70,3 +70,20 @@ class ChangeCity(FormView):
         city = form.cleaned_data.get('city')
         self.request.session['city_id'] = city.id
         return super(ChangeCity, self).form_valid(form)
+
+
+class ClickOffer(RedirectView):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        token = kwargs.get('token', None)
+        emvs = EmailValidation.objects.get_valid(token=token)
+        if not emvs.exists():
+            raise Http404
+        emv = emvs.first()
+        emv.confirm()
+        user = emv.user
+        if not user.active():
+            user.activate()
+        return '/'
