@@ -41,7 +41,7 @@ template = (locals) =>
         <div class=\"delivery\"><i class=\"icon-delivery\"></i> #{deliveries}</div>
     </div>
     <div class=\"pure-u-1-6\">
-        <a href=\"#\" class=\"btn btn-purple btn-full-width\">В магазин</a>
+        <a href=\"#{locals.click_url}\" target=\"_blank\" class=\"btn btn-purple btn-full-width\">В магазин</a>
     </div>
 </div>"
 
