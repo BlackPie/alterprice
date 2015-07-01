@@ -13,6 +13,7 @@ module.exports = class CitySelectorView extends Marionette.ItemView
         cityChoicesWrapper: '.choose-your-city-wrapper'
         cityChoiceBtn: '.city-choice'
         overlay: '.overlay'
+        changeCityForm: '#change-city-form'
 
     events:
         "click @ui.chooseCityBtn": "onClickChooseCityBtn"
@@ -39,12 +40,10 @@ module.exports = class CitySelectorView extends Marionette.ItemView
 
     onClickCityChoiceBtn: (e) =>
         e.preventDefault()
-        city = @$(e.target).text()
         cityChoicesWrapper = @$(@ui.cityChoicesWrapper)
-        @$(@ui.chooseCityBtn).text city
-        cityChoicesWrapper.fadeOut 70
-        cityChoicesWrapper.removeClass 'opened'
-        @$(@ui.overlay).hide()
+        cityId = @$(e.target).attr 'data-value'
+        @$(@ui.changeCityForm).find('input[name="city"]').val cityId
+        @$(@ui.changeCityForm).submit()
 
 
     onClickOverlay: (e) =>
