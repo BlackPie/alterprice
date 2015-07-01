@@ -82,8 +82,8 @@ class SignUpSerializer(serializers.ModelSerializer):
             company=validated_data.get('company'),
             name=validated_data.get('first_name'),
             last_name=validated_data.get('last_name'),
-            ownership_type=validated_data.get('ownership_type')
-        )
+            ownership_type=validated_data.get('ownership_type'))
+        models.Balance.objects.make(user=user)
         return user
 
     def validate(self, attrs):

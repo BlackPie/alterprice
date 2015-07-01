@@ -3,10 +3,20 @@ from django.utils.translation import ugettext_lazy as _
 from .apuser import AlterPriceUser as User
 from .payment import Payment
 from .click import Click
+from shop.models import Shop
+
+
+class MakeException(Exception):
+    ""
 
 
 class BalanceManager(models.Manager):
-    pass
+    def make(self, user):
+        if not isinstance(user, User):
+            raise MakeException('invalid user object')
+        obj = self.model(user=user)
+        obj.save()
+        return obj
 
 
 class Balance(models.Model):
@@ -42,6 +52,12 @@ class BalanceHistoryManager(models.Manager):
             obj.click = click
         obj.reason = reason
         obj.save()
+        # Update balance
+        balance.value = new_state
+        balance.save()
+        if new_state <= 0:
+            # Turns off (status=Disabled) all shops of balance.user
+            Shop.objects.turn_off_debtor(balance.user)
         return obj
 
     def increase(self, balance, value, payment):
@@ -55,9 +71,6 @@ class BalanceHistoryManager(models.Manager):
 
     def decrease(self, balance, value, click):
         new_state = balance.value - value
-        if new_state <= 0:
-            # turn off all shops and produts for this balance.user
-            pass
         obj = self.make(
             balance=balance,
             reason=self.model.CLICK,

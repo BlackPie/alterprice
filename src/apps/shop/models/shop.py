@@ -22,6 +22,11 @@ class ShopManager(models.Manager):
             raise MakeException("Invalid user")
         return True
 
+    def turn_off_debtor(self, user):
+        qs = self.filter(user=user)
+        if qs.exists():
+            qs.update(status=Shop.DISABLED)
+
 
 class Shop(ApprovedModel, StatusModel):
     name = models.CharField(max_length=255,

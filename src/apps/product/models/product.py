@@ -66,8 +66,7 @@ class ProductManager(models.Manager):
                 obj.description = yml_obj.get('description')
                 obj.save()
                 # delivery
-                 # all other to properties!!                 
-
+                # all other to properties!!
         return obj
 
 

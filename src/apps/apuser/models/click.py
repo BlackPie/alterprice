@@ -4,6 +4,21 @@ from django.utils.translation import ugettext_lazy as _
 from product.models import ProductShop
 
 
+class MakeException(Exception):
+    ""
+
+
+class ClickManager(models.Manager):
+    def make(self, productshop, user_ip):
+        if not isinstance(productshop, ProductShop):
+            raise MakeException('invalid productshop object')
+        obj = self.model()
+        obj.productshop = productshop
+        obj.user_ip = user_ip
+        obj.save()
+        return obj
+
+
 class Click(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
@@ -15,6 +30,8 @@ class Click(models.Model):
                                            blank=True,
                                            default=None,
                                            verbose_name=_('IP пользователя'))
+
+    objects = ClickManager()
 
     class Meta:
         verbose_name = _('Клик по товару')
