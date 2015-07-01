@@ -1,59 +1,220 @@
 #client-statistics-detail {
-    header {
-        .typo_s;
-        text-transform: uppercase;
-        color: #6D6D6D;
-        padding: 20px;
-    }
-
-    footer {
-        padding: 30px 20px 20px 20px;
-    }
-
-    table {
-        width: 100%;
-
-        td, th {
+    .short-brief {
+        header {
             .typo_s;
-            text-align: left;
-            padding: 10px 20px;
-            color: #2B303A;
+            text-transform: uppercase;
+            color: #6D6D6D;
+            padding: 20px;
         }
 
-        th {
-            border-bottom: 1px solid #272B34;
+        footer {
+            padding: 30px 20px 20px 20px;
+        }
 
-            &.text-center {
-                text-align: center;
+        table {
+            width: 100%;
+
+            td, th {
+                .typo_s;
+                text-align: left;
+                padding: 10px 20px;
+                color: #2B303A;
+            }
+
+            th {
+                border-bottom: 1px solid #272B34;
+
+                &.text-center {
+                    text-align: center;
+                }
+            }
+
+            td {
+                border-bottom: 1px solid #D7D7D7;
+                font-weight: 700;
+
+                &.text-center {
+                    text-align: center;
+                }
+            }
+
+            tr.category {
+                background: #E6E6E6;
             }
         }
 
-        td {
-            border-bottom: 1px solid #D7D7D7;
-            font-weight: 700;
+        .info {
+            .typo_ss;
+            font-weight: 400;
+            color: #888888;
+            padding-left: 30px;
+            position: relative;
 
-            &.text-center {
-                text-align: center;
+            &:before {
+                content: '';
+                .icon-info-blue;
+                position: absolute;
+                left: 0;
             }
-        }
-
-        tr.category {
-            background: #E6E6E6;
         }
     }
 
-    .info {
-        .typo_ss;
-        font-weight: 400;
-        color: #888888;
-        padding-left: 30px;
-        position: relative;
+    .full-statistics {
+        .filter-form {
+            .header {
+                border-bottom: 2px solid #F5F5F5;
+            }
 
-        &:before {
-            content: '';
-            .icon-info-blue;
-            position: absolute;
-            left: 0;
+            label {
+                display: inline-block;
+                height: 38px;
+                cursor: pointer;
+
+                input[type="radio"] {
+                    display: none;
+                }
+
+                span {
+                    .typo_s;
+                    line-height: 38px;
+                    display: block;
+                    padding: 0 38px;
+                    color: #888;
+                }
+
+                &.active {
+                    background: #E6E6E6;
+                    position: relative;
+
+                    span {
+                        color: #2B303A;
+                        line-height: 38px;
+                    }
+
+                    &:before {
+                        content: '';
+                        display: block;
+                        height: 2px;
+                        background: #F4CE5F;
+                        width: 100%;
+                        left: 0;
+                        bottom: -2px;
+                        position: absolute;
+                    }
+
+                    &:after {
+                        .icon-triangle-yellow;
+                        content: '';
+                        bottom: -8px;
+                        position: absolute;
+                        left: 50%;
+                        margin-left: -3px;
+                    }
+                    //border-bottom: 2px solid #F4CE5F;
+                }
+            }
+
+            .period-wrapper {
+                text-align: right;
+                .typo_s;
+                line-height: 38px;
+                font-weight: 300;
+                color: #888888;
+
+                a {
+                    line-height: 38px;
+                    height: 38px;
+                    font-weight: 300;
+                    color: #888888;
+                    position: relative;
+                    padding-right: 20px;
+                    margin-right: 20px;
+                    margin-left: 10px;
+
+                    &:after {
+                        content: '';
+                        display: block;
+                        .icon(@chevron-bottom-grey-name);
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        margin-top: -1px;
+                    }
+                }
+            }
+        }
+
+        table {
+            width: 100%;
+
+            td, th {
+                .typo_s;
+                text-align: left;
+                padding: 10px 20px;
+                color: #2B303A;
+            }
+
+            th {
+                border-bottom: 1px solid #272B34;
+                font-weight: 700;
+
+                &.text-center {
+                    text-align: center;
+                }
+            }
+
+            tbody th {
+                border-bottom: 1px solid #D7D7D7;
+            }
+
+            td {
+                border-bottom: 1px solid #D7D7D7;
+
+                &.text-center {
+                    text-align: center;
+                }
+            }
+
+            tr.category {
+                background: #E6E6E6;
+            }
+        }
+
+        footer {
+            .typo_s;
+            color: #6D6D6D;
+            padding: 30px 20px 20px 20px;
+        }
+    }
+
+    .counter-wrapper {
+        padding: 30px 20px 20px 20px;
+
+        .click-counter, .expense-counter {
+            span {
+                .typo_s;
+                color: #5BB2F4;
+                font-weight: 400;
+                display: inline-block;
+                margin-left: 5px;
+            }
+
+            position: relative;
+            display: inline-block;
+            .typo_hl;
+            font-weight: 400;
+            color: #5BB2F4;
+            margin-right: 20px;
+
+            div {
+                display: block;
+                .typo_c;
+                font-weight: 700;
+                text-transform: uppercase;
+                top: 4px;
+                right: 0;
+                line-height: 16px;
+            }
         }
     }
 }
