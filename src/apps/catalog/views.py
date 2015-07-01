@@ -1,7 +1,8 @@
-import random
-from django.views.generic import TemplateView
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import TemplateView, FormView
 from django.views.generic.detail import DetailView
-from catalog.models import Category
+from catalog.models import Category, City
 from brand.models import Brand
 
 
@@ -52,3 +53,27 @@ class CatalogSearchProductsPageView(TemplateView):
         context['current_app'] = 'catalog-search'
         context['search'] = self.request.GET.get('search', '')
         return context
+
+from django import forms
+
+
+class ChangeCityForm(forms.Form):
+    city = forms.ModelChoiceField(
+        empty_label=_('Выберете город'),
+        queryset=City.objects.all())
+
+
+class ChangeCity(FormView):
+    form_class = ChangeCityForm
+    template_name = 'change_city_form.html'
+
+    def get_success_url(self):
+        return reverse('catalog:categories_list')
+
+    def get_initials(self):
+        return {'': City.objects.filter(user=self.request.user)}
+
+    def form_valid(self, form):
+        city = form.cleaned_data.get('city')
+        self.request.session['city_id'] = city.id
+        return super(ChangeCity, self).form_valid(form)

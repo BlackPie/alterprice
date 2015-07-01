@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    {{ current_city }}
+
+
+    <form action="{% url 'catalog:change-city' %}" method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit">GO</button>
+    </form>
+{% endblock content %}

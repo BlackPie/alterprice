@@ -116,6 +116,7 @@ class Base(Configuration):
         'alterprice.processors.categories',
         'alterprice.processors.current_url',
         'alterprice.processors.cities',
+        'alterprice.processors.current_city',
         'client.processors.shop_processor'
     )
 
@@ -127,7 +128,8 @@ class Base(Configuration):
         'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'client.middleware.ShopMiddleware'
+        'client.middleware.ShopMiddleware',
+        'alterprice.middleware.CityMiddleware'
     )
 
     ROOT_URLCONF = 'alterprice.urls'
