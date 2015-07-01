@@ -1,8 +1,9 @@
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, FormView
 from django.views.generic.detail import DetailView
+# Project imports
 from catalog.models import Category, City
+from catalog.forms import ChangeCityForm
 from brand.models import Brand
 
 
@@ -53,14 +54,6 @@ class CatalogSearchProductsPageView(TemplateView):
         context['current_app'] = 'catalog-search'
         context['search'] = self.request.GET.get('search', '')
         return context
-
-from django import forms
-
-
-class ChangeCityForm(forms.Form):
-    city = forms.ModelChoiceField(
-        empty_label=_('Выберете город'),
-        queryset=City.objects.all())
 
 
 class ChangeCity(FormView):
