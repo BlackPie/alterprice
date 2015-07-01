@@ -77,6 +77,12 @@ class Payment(models.Model):
 
     objects = PaymentManager.from_queryset(PaymentQueryset)()
 
+    def is_payment(self):
+        return True if self.payment_detail is self.PAYMENT else False
+
+    def is_recovery(self):
+        return True if self.payment_detail is self.RECOVER else False
+
     class Meta:
         verbose_name = _('Оплата')
         verbose_name_plural = _('Оплаты')

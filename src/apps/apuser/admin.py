@@ -97,11 +97,31 @@ class AdminProfileAdmin(admin.ModelAdmin):
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('user', 'amount', 'payment_type', 'created')
 
+    def save_model(self, request, obj, form, change):
+        obj.save()
+        try:
+            balance = obj.user.balance
+        except:
+            balance = models.Balance.objects.make(user=obj.user)
+        if obj.is_payment():
+            models.BalanceHistory.objects.increase(
+                payment=obj,
+                balance=balance)
+        if obj.is_recovery():
+            models.BalanceHistory.objects.recover(
+                balance=balance,
+                payment=obj)
+
 
 class BillAdmin(admin.ModelAdmin):
     list_display = ('user', 'amount', 'created')
 
 
+class BalanceHistoryAdmin(admin.ModelAdmin):
+    list_display = ('balance', 'change_value', 'reason', 'created')
+
+
+admin.site.register(models.BalanceHistory, BalanceHistoryAdmin)
 admin.site.register(models.Bill, BillAdmin)
 admin.site.register(models.Payment, PaymentAdmin)
 admin.site.register(models.AlterPriceUser, UserAdmin)
