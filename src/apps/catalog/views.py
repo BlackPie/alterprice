@@ -77,13 +77,5 @@ class ClickOffer(RedirectView):
     query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
-        token = kwargs.get('token', None)
-        emvs = EmailValidation.objects.get_valid(token=token)
-        if not emvs.exists():
-            raise Http404
-        emv = emvs.first()
-        emv.confirm()
-        user = emv.user
-        if not user.active():
-            user.activate()
+        productshop_id = kwargs.get('pk', None)
         return '/'
