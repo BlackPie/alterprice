@@ -26,10 +26,10 @@ class Balance(models.Model):
                                 verbose_name=_('Значние'))
 
     def __str__(self):
-        return self.user
+        return self.user.email
 
     def __unicode__(self):
-        return self.user
+        return self.user.email
 
     objects = BalanceManager()
 
@@ -43,7 +43,7 @@ class BalanceHistoryManager(models.Manager):
              payment=None, click=None):
         obj = self.model()
         obj.balance = balance
-        obj.value = value
+        obj.change_value = value
         obj.previous_state = previous_state
         obj.new_state = new_state
         if payment:
@@ -60,14 +60,14 @@ class BalanceHistoryManager(models.Manager):
             Shop.objects.turn_off_debtor(balance.user)
         return obj
 
-    def increase(self, balance, value, payment):
+    def increase(self, balance, payment):
         return self.make(
             balance=balance,
             reason=self.model.REPLISHMENT,
             payment=payment,
             previous_state=balance.value,
-            value=value,
-            new_state=balance.value + value)
+            value=payment.amount,
+            new_state=balance.value + payment.amount)
 
     def decrease(self, balance, value, click):
         new_state = balance.value - value
@@ -80,14 +80,14 @@ class BalanceHistoryManager(models.Manager):
             new_state=new_state)
         return obj
 
-    def recover(self, balance, value, payment):
+    def recover(self, balance, payment):
         return self.make(
             balance=balance,
             reason=self.model.RECOVERY,
             payment=payment,
             previous_state=balance.value,
-            value=value,
-            new_state=balance.value + value)
+            value=payment.amount,
+            new_state=balance.value + payment.amount)
 
 
 class BalanceHistory(models.Model):
@@ -129,10 +129,10 @@ class BalanceHistory(models.Model):
     objects = BalanceHistoryManager()
 
     def __str__(self):
-        return self.balance
+        return self.balance.user.email
 
     def __unicode__(self):
-        return self.balance
+        return self.balance.user.email
 
     class Meta:
         verbose_name = _('Изменение баланса')
