@@ -45,13 +45,25 @@ class Payment(models.Model):
     BILL = 0
     ONLINE = 1
 
-    PAYMENT_CHOICES = (
+    TYPE_CHOICES = (
         (BILL, _('Банковский счет')),
         (ONLINE, _('Онлайн оплата')),
     )
-    payment_type = models.PositiveSmallIntegerField(verbose_name=_(u'Тип оплаты'),
+
+    PAYMENT = 0
+    RECOVER = 1
+
+    DETAIL_CHOICES = (
+        (PAYMENT, _('Платеж')),
+        (RECOVER, _('Возврат средств'))
+    )
+    payment_type = models.PositiveSmallIntegerField(verbose_name=_('Тип платежа'),
                                                     default=BILL,
-                                                    choices=PAYMENT_CHOICES)
+                                                    choices=TYPE_CHOICES)
+
+    payment_detail = models.PositiveSmallIntegerField(verbose_name=_(u'Основание платежа'),
+                                                      default=PAYMENT,
+                                                      choices=DETAIL_CHOICES)
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
                                    verbose_name=_(u'Дата создания'))

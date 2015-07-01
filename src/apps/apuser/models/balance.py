@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from .apuser import AlterPriceUser as User
 from .payment import Payment
+from .click import Click
 
 
 class BalanceManager(models.Manager):
@@ -59,12 +60,21 @@ class BalanceHistoryManager(models.Manager):
             pass
         obj = self.make(
             balance=balance,
-            reason=self.model.REPLISHMENT,
+            reason=self.model.CLICK,
             click=click,
             previous_state=balance.value,
             value=value,
             new_state=new_state)
         return obj
+
+    def recover(self, balance, value, payment):
+        return self.make(
+            balance=balance,
+            reason=self.model.RECOVERY,
+            payment=payment,
+            previous_state=balance.value,
+            value=value,
+            new_state=balance.value + value)
 
 
 class BalanceHistory(models.Model):
@@ -97,6 +107,11 @@ class BalanceHistory(models.Model):
                                 null=True,
                                 blank=True,
                                 verbose_name=_('Платеж'))
+    click = models.ForeignKey(Click,
+                              default=None,
+                              null=True,
+                              blank=True,
+                              verbose_name=_('Клик'))
 
     objects = BalanceHistoryManager()
 
