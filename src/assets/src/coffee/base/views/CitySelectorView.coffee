@@ -44,13 +44,6 @@ module.exports = class CitySelectorView extends Marionette.ItemView
         cityId = @$(e.target).attr 'data-value'
         @$(@ui.changeCityForm).find('input[name="city"]').val cityId
         @$(@ui.changeCityForm).submit()
-        #console.log cityId
-
-
-
-        #cityChoicesWrapper.fadeOut 70
-        #cityChoicesWrapper.removeClass 'opened'
-        #@$(@ui.overlay).hide()
 
 
     onClickOverlay: (e) =>

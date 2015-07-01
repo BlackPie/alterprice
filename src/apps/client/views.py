@@ -204,6 +204,15 @@ class ClientPricelistDetailPageView(TemplateView):
         return context
 
 
+class ClientPricelistAddPageView(TemplateView):
+    template_name = "apps/client/pricelist/add.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientPricelistAddPageView, self).get_context_data(**kwargs)
+        context['current_app'] = 'client-pricelist-detail'
+        return context
+
+
 class ClientStatisticsDetailPageView(TemplateView):
     template_name = "apps/client/statistics/detail.html"
 
