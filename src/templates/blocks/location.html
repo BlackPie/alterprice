@@ -1,7 +1,11 @@
 <div id="location-block">
-    <button class="choose-your-city-btn" type="button">{{ cities.first.name }}</button>
+    <button class="choose-your-city-btn" type="button">{{ current_city.name }}</button>
     <div class="overlay"></div>
     <div class="choose-your-city-wrapper">
+        <form id="change-city-form" action="{% url 'catalog:change-city' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="city" value="{{ current_city.pk }}">
+        </form>
         <ul>
             {% for city in cities %}
                 <li><a href="#" data-value="{{ city.id }}" class="city-choice">{{ city.name }}</a></li>
