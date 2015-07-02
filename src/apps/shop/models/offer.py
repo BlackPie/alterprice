@@ -48,6 +48,8 @@ class ShopYMLManager(models.Manager):
             obj = self.model()
             obj.shop = shop
             obj.yml_url = yml
+            if not name:
+                name = 'Прайс-лист #%d' % shop.id
             obj.name = name
             data = obj.parse_yml()
 
@@ -115,6 +117,12 @@ class ShopYML(models.Model):
         data = yml_file.read()
         yml_file.close()
         return xmltodict.parse(data)
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         verbose_name = _('YML файл магазина')

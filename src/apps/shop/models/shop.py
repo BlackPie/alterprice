@@ -79,6 +79,9 @@ class Shop(ApprovedModel, StatusModel):
     def __unicode__(self):
         return self.name
 
+    def get_ymls(self):
+        return self.shopyml_set.all()
+
     class Meta:
         verbose_name = _('Магазин')
         verbose_name_plural = _('Магазины')

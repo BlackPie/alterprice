@@ -9,7 +9,14 @@
     <li class="has-submenu">
         <a href="#">Прайс-листы</a>
         <ul>
-            <li><a href="/client/pricelist/1/">Прайс-лист 1</a></li>
+
+            {% for yml in current_shop.get_ymls %}
+                <li>
+                    <a href='{% url "client:pricelist_detail" yml.id%}'>
+                        {{ yml.name }}
+                    </a>
+                </li>
+            {% endfor %}
             <li><a href="{% url 'client:pricelist_add' %}">Добавить прайс-лист</a></li>
         </ul>
     </li>
