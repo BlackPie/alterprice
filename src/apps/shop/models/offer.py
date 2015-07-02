@@ -5,6 +5,7 @@ from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 # Project imports
+from utils.abstract_models import PublishModel
 from catalog.models import Category, Currency
 from product import models as productmodels
 from .shop import Shop
@@ -83,6 +84,7 @@ class ShopYMLManager(models.Manager):
             product = productmodels.Product.objects.make_from_yml(offer)
 
             productshop = productmodels.ProductShop.objects.make_from_yml(
+                shopyml=obj,
                 product=product,
                 shop=shop,
                 currency=obj.currency,
@@ -95,7 +97,7 @@ class ShopYMLManager(models.Manager):
         return obj
 
 
-class ShopYML(models.Model):
+class ShopYML(PublishModel):
     shop = models.ForeignKey(Shop,
                              verbose_name=_('Магазин'))
     name = models.CharField(max_length=255,

@@ -13,10 +13,12 @@ class BrandManager(models.Manager):
             if qs.exists():
                 obj = qs.first()
             else:
-                obj = self.model()
-                obj.name = yml_obj.get('vendor')
-                obj.code = code
-                obj.save()
+                name = yml_obj.get('vendor')
+                if name:
+                    obj = self.model()
+                    obj.name = name
+                    obj.code = code
+                    obj.save()
         return obj
 
 

@@ -9,11 +9,8 @@ from shop.api import serializers
 
 
 class ShopCreate(CreateAPIView):
-    permission_classes = (
-        IsAuthenticated,
-    )
-
     serializer_class = serializers.CreateShopSerializer
+    permission_classes = (IsAuthenticated, )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -39,8 +36,8 @@ class ShopUpdate(UpdateAPIView):
     serializer_class = serializers.UpdateShopSerializer
     queryset = models.Shop.objects.all()
     permission_classes = (
-        # TODO: permission that only owner ( or admin can update shop)
         IsAuthenticated,
+        # TODO: permission that only owner ( or admin can update shop)
     )
 
     def perform_update(self, serializer):
@@ -69,3 +66,29 @@ class ShopClientList(ListAPIView):
 
     def get_queryset(self):
         return self.model.objects.by_owner(self.request.user)
+
+
+class AddYML(CreateAPIView):
+    serializer_class = serializers.YMLCreateSerialzier
+    permission_classes = (IsAuthenticated, )
+
+    def perform_create(self, serializer):
+        # FIXIT TO shop from kwargs
+        shop = self.request.user.get_shops().first()
+        serializer.save(shop=shop)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        response = {}
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            response['status'] = 'success'
+            response['redirect_to'] = reverse(
+                'client:pricelist_detail',
+                kwargs={"pk": serializer.instance.id})
+            api_status = status.HTTP_201_CREATED
+        else:
+            response['status'] = 'fail'
+            response['errors'] = serializer.errors
+            api_status = status.HTTP_400_BAD_REQUEST
+        return Response(response, status=api_status)

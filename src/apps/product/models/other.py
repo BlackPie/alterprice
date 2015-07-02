@@ -16,13 +16,19 @@ class ProductFK(models.Model):
 
 
 class ProductShopManager(models.Manager):
-    def make_from_yml(self, yml_obj, shop, product, currency, offercats):
+    def make_from_yml(self, yml_obj, shop, product, currency,
+                      offercats, shopyml):
         obj = self.model()
         # check instances ( or useless method almost private)
         obj.product = product
         obj.shop = shop
         obj.currency = currency
-        obj.price = yml_obj.get('price')
+        obj.shopyml = shopyml
+        price = yml_obj.get('price')
+
+        if '.' in price:
+            price = float(price)
+        obj.price = price
         for oc in offercats:
             if oc.category == product.category:
                 obj.offercategory = oc
@@ -33,6 +39,8 @@ class ProductShopManager(models.Manager):
 class ProductShop(ProductFK):
     shop = models.ForeignKey('shop.Shop',
                              verbose_name=_('Магазин'))
+    shopyml = models.ForeignKey('shop.ShopYML',
+                                verbose_name=_('YML файл'))
     url = models.URLField(null=True,
                           blank=True,
                           default=None,

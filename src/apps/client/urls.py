@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 from client import views
 
 

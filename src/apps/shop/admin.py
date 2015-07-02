@@ -25,13 +25,12 @@ class OperatorFilter(admin.SimpleListFilter):
         return queryset
 
 
-
 class ShopYMLInline(admin.StackedInline):
     model = models.ShopYML
 
 
 class ShopAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'user', 'approved')
+    list_display = ('__str__', 'user', 'status')
     inlines = [ShopYMLInline]
     list_filter = (RegDateFilter, OperatorFilter)
 
