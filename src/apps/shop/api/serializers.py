@@ -11,12 +11,11 @@ class ShopSerializer(serializers.ModelSerializer):
 
 class CreateShopSerializer(serializers.ModelSerializer):
     yml_url = serializers.CharField(allow_blank=True, write_only=True)
-    yml_name = serializers.CharField(allow_blank=True, write_only=True)
 
     class Meta:
         model = models.Shop
         fields = ('city', 'phone', 'address', 'site', 'name', 'ogrn',
-                  'entity', 'yml_name', 'yml_url')
+                  'entity', 'yml_url')
 
     def create(self, validated_data):
         shop = models.Shop.objects.make(
@@ -32,8 +31,7 @@ class CreateShopSerializer(serializers.ModelSerializer):
         if yml_url:
             models.ShopYML.objects.make(
                 shop=shop,
-                yml=yml_url,
-                name=validated_data.get('yml_name'))
+                yml=yml_url)
         return shop
 
 

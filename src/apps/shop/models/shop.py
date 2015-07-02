@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.query import QuerySet
 from django.utils.translation import ugettext_lazy as _
-from utils.abstract_models import ApprovedModel, StatusModel, YMkey
+from utils.abstract_models import StatusModel
 
 
 class MakeException(Exception):
@@ -41,7 +41,7 @@ class ShopManager(models.Manager):
             qs.update(status=Shop.DISABLED)
 
 
-class Shop(ApprovedModel, StatusModel):
+class Shop(StatusModel):
     name = models.CharField(max_length=255,
                             verbose_name=_('Название'))
     user = models.ForeignKey('apuser.AlterPriceUser',

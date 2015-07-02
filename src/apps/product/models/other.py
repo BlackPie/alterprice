@@ -16,12 +16,14 @@ class ProductFK(models.Model):
 
 
 class ProductShopManager(models.Manager):
-    def make_from_yml(self, yml_obj, shop, product, currency, offercats):
+    def make_from_yml(self, yml_obj, shop, product, currency,
+                      offercats, shopyml):
         obj = self.model()
         # check instances ( or useless method almost private)
         obj.product = product
         obj.shop = shop
         obj.currency = currency
+        obj.shopyml = shopyml
         price = yml_obj.get('price')
 
         if '.' in price:

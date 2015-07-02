@@ -84,6 +84,7 @@ class ShopYMLManager(models.Manager):
             product = productmodels.Product.objects.make_from_yml(offer)
 
             productshop = productmodels.ProductShop.objects.make_from_yml(
+                shopyml=obj,
                 product=product,
                 shop=shop,
                 currency=obj.currency,
