@@ -39,7 +39,7 @@ class ShopYMLManager(models.Manager):
         currency = shop.get('currencies').get('currency')
         return categories, currency, offers
 
-    def make(self, shop, yml):
+    def make(self, shop, yml, name=None):
         if not isinstance(shop, Shop):
             raise MakeException(_('invalid shop object'))
         # TODO: check - shop is active
@@ -48,6 +48,9 @@ class ShopYMLManager(models.Manager):
             obj = self.model()
             obj.shop = shop
             obj.yml_url = yml
+            if not name:
+                name = 'Прайс-лист #%d' % shop.id
+            obj.name = name
             data = obj.parse_yml()
 
         except:
@@ -56,7 +59,14 @@ class ShopYMLManager(models.Manager):
         categories, currency, offers = self.get_data(data)
 
         # Search currency in catalog.Currency or create it
-        obj.currency = Currency.objects.make(codename=currency.get('@id'))
+        if isinstance(currency, list):
+            try:
+                cur = Currency.objects.make(codename=currency[0].get('@id'))
+            except:
+                cur = Currency.objects.first()
+        else:
+            cur = Currency.objects.make(codename=currency.get('@id'))
+        obj.currency = cur
 
         # Append catalog.Category object to every row with key 'system_cat'
         # If it does not exists,
@@ -88,6 +98,8 @@ class ShopYMLManager(models.Manager):
 class ShopYML(models.Model):
     shop = models.ForeignKey(Shop,
                              verbose_name=_('Магазин'))
+    name = models.CharField(max_length=255,
+                            verbose_name=_('Название YML'))
     yml_url = models.URLField(verbose_name=_('YMl url'))
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
@@ -106,6 +118,12 @@ class ShopYML(models.Model):
         yml_file.close()
         return xmltodict.parse(data)
 
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         verbose_name = _('YML файл магазина')
         verbose_name_plural = _('YML файлы магазинов')
@@ -118,7 +136,8 @@ class OfferCategoriesManager(models.Manager):
             offercats.append(
                 self.model(category=cats.get('system_cat'), shopyml=shopyml))
         if len(offercats) > 0:
-            return self.bulk_create(offercats)
+            self.bulk_create(offercats)
+            return self.filter(shopyml=shopyml)
         else:
             return None
 

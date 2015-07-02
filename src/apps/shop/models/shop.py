@@ -17,10 +17,23 @@ class ShopManager(models.Manager):
     def get_list(self):
         return self.all()
 
-    def make(self, user):
-        if not user.is_client():
+    def make(self, user, name, ogrn, entity,
+             phone=None, address=None, site=None, city=None):
+        if not hasattr(user, 'is_client'):
+            if not user.is_client():
+                raise MakeException("Invalid user")
             raise MakeException("Invalid user")
-        return True
+        obj = self.model()
+        obj.user = user
+        obj.city = city
+        obj.phone = phone
+        obj.address = address
+        obj.site = site
+        obj.name = name
+        obj.ogrn = ogrn
+        obj.entity = entity
+        obj.save()
+        return obj
 
     def turn_off_debtor(self, user):
         qs = self.filter(user=user)
@@ -65,6 +78,9 @@ class Shop(ApprovedModel, StatusModel):
 
     def __unicode__(self):
         return self.name
+
+    def get_ymls(self):
+        return self.shopyml_set.all()
 
     class Meta:
         verbose_name = _('Магазин')

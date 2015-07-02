@@ -63,9 +63,11 @@ class ProductShopDeliveryManager(models.Manager):
     def make_from_yml(self, productshop, yml_obj):
         obj = self.model()
         obj.productshop = productshop
-        obj.price = int(yml_obj.get('local_delivery_cost'))
-        obj.pickup = True if obj.get('pickup') == 'true' else False
-        obj.delivery = True if obj.get('delivery') == 'true' else False
+        delivery_price = yml_obj.get('local_delivery_cost')
+        if delivery_price:
+            obj.price = int(delivery_price)
+        obj.pickup = True if yml_obj.get('pickup') == 'true' else False
+        obj.delivery = True if yml_obj.get('delivery') == 'true' else False
         obj.save()
         return obj
 
@@ -148,21 +150,3 @@ class ProductPhoto(ProductFK):
     class Meta:
         verbose_name = _('Фото продукта')
         verbose_name_plural = _('Фото продуктов')
-
-
-
-# cats)
-#      22         obj.product = product
-#      23         obj.shop = shop
-# ---> 24         obj.currency = currency
-#      25         obj.price = yml_obj.get('price')
-#      26         for oc in offercats:
-
-# /usr/local/lib/python3.4/dist-packages/django/db/models/fields/related.py in __set__(self, instance, value)
-#     625                     instance._meta.object_name,
-#     626                     self.field.name,
-# --> 627                     self.field.rel.to._meta.object_name,
-#     628                 )
-#     629             )
-
-# ValueError: Cannot assign "OrderedDict([('@id', 'RUR'), ('@rate', '1'), ('@plus', '0')])": "ProductShop.currency" must be a "Currency" instance.

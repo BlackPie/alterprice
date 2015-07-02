@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, FormView, RedirectView
 from django.views.generic.detail import DetailView
@@ -5,6 +6,8 @@ from django.views.generic.detail import DetailView
 from catalog.models import Category, City
 from catalog.forms import ChangeCityForm
 from brand.models import Brand
+from product.models import ProductShop
+from apuser.models import Click, Balance, BalanceHistory
 
 
 class CatalogAllCategoriesPageView(TemplateView):
@@ -78,4 +81,32 @@ class ClickOffer(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         productshop_id = kwargs.get('pk', None)
-        return '/'
+        psqs = ProductShop.objects.filter(id=productshop_id)
+        if not psqs.exists():
+            raise Http404
+        ps = psqs.first()
+
+        click = Click.objects.make(
+            productshop=ps,
+            user_ip=self.request.META.get('REMOTE_ADDR'))
+        user = ps.shop.user
+
+        try:
+            balance = user.balance
+        except:
+            balance = Balance.objects.make(user=user)
+        BalanceHistory.objects.decrease(
+            balance=balance,
+            click=click,
+            value=ps.price)
+        return ps.url
+
+    # def get(self, request, *args, **kwargs):
+    #     url = self.get_redirect_url(*args, **kwargs)
+    #     if url:
+    #         if self.permanent:
+    #             return http.HttpResponsePermanentRedirect(url)
+    #         else:
+    #             return http.HttpResponseRedirect(url)
+    #     else:
+    #         return http.HttpResponseGone()

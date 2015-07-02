@@ -45,10 +45,10 @@ class ProductManager(models.Manager):
         return qs.distinct()
 
     def get_name(self, yml_obj):
+        if 'name' in yml_obj.keys():
+            return yml_obj.get('name')
         if 'vendor' in yml_obj.keys():
             return yml_obj.get('model')
-        else:
-            return yml_obj.get('name')
 
     def make_from_yml(self, yml_obj):
         ym_id = yml_obj.get('@id', None)
@@ -60,7 +60,7 @@ class ProductManager(models.Manager):
                 obj = self.model()
                 obj.name = self.get_name(yml_obj)
                 obj.ym_id = yml_obj.get('@id')
-                category_id = yml_obj.get('categoryId').get('#text')
+                category_id = yml_obj.get('categoryId')
                 obj.category = Category.objects.by_ymid(category_id).first()
                 obj.brand = Brand.objects.make_from_yml(yml_obj)
                 obj.description = yml_obj.get('description')
@@ -86,7 +86,10 @@ class Product(YMkey):
                                  blank=True,
                                  default=None,
                                  verbose_name=_('Категория'))
-    description = models.TextField(verbose_name=_('Описание'))
+    description = models.TextField(null=True,
+                                   blank=True,
+                                   default=None,
+                                   verbose_name=_('Описание'))
 
     objects = ProductManager.from_queryset(ProductQuerySet)()
 
