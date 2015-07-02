@@ -108,6 +108,14 @@ class YMLUpdate(UpdateAPIView):
 
 class YMLCategoryList(ListAPIView):
     permission_classes = (IsAuthenticated, )
+    serializer_class = serializers.YMLCategoryListSerializer
+    model = models.OfferCategories
+
+    def get_queryset(self):
+        yml_id = self.kwargs.get('pk')
+        qs = self.model.objects.filter(
+            shopyml_id=yml_id)
+        return qs.select_related('category')
 
 
 class YMLCategoryUpdate(UpdateAPIView):

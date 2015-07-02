@@ -1,12 +1,13 @@
 from rest_framework import serializers
 # Project imports
 from shop import models
+from catalog.api.serializers import CategorySerializer
 
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Shop
-        fields = ('id', 'name' )
+        fields = ('id', 'name')
 
 
 class CreateShopSerializer(serializers.ModelSerializer):
@@ -53,3 +54,15 @@ class YMLCreateSerialzier(serializers.ModelSerializer):
             name=validated_data.get('name')
         )
         return obj
+
+
+class YMLCategoryListSerializer(serializers.ModelSerializer):
+    lead_price = serializers.SerializerMethodField()
+    category = CategorySerializer()
+
+    class Meta:
+        model = models.OfferCategories
+        fields = ('category', 'price', 'lead_price')
+
+    def get_lead_price(self, obj):
+        return '123'
