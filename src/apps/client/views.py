@@ -152,7 +152,7 @@ class ClientWalletBalancePageView(TemplateView):
         context = super(ClientWalletBalancePageView, self).get_context_data(**kwargs)
         context['refill_history'] = Payment.objects.filter(user=self.request.user.pk)
         context['bills'] = Bill.objects.filter(user=self.request.user.pk)
-        context['current_app'] = 'client-shop-add'
+        context['current_app'] = 'client-wallet-balance'
         return context
 
     @method_decorator(decorators.login_required)
