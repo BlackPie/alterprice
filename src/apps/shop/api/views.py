@@ -134,4 +134,4 @@ class YMLProductList(ListAPIView):
             shopyml_id=yml_id)
         # qs = qs.select_related('category')
         # qs = qs.prefetch_related('productshop_set')
-        return qs.distinct()
+        return qs.order_by('-product__category').distinct()

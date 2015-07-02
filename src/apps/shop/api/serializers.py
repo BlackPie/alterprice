@@ -81,7 +81,7 @@ class YMLProductListserializer(serializers.ModelSerializer):
 
     class Meta:
         model = productmodels.ProductShop
-        fields = ('product', 'category', 'click_price')
+        fields = ('product', 'category', 'click_price',)
 
     def get_category(self, obj):
         # or pass it trough CategorySerializer
