@@ -50,6 +50,40 @@ class StatusModel(models.Model):
         abstract = True
 
 
+class PublishModel(models.Model):
+    NOT_PUBLISHED = 0
+    PUBLISHED = 1
+
+    PUBLISH_CHOICES = (
+        (NOT_PUBLISHED, _('Не публикуется')),
+        (PUBLISHED, _('Публикуется'))
+    )
+
+    publish_status = models.PositiveSmallIntegerField(
+        verbose_name=_('Статус публикации'),
+        default=NOT_PUBLISHED,
+        choices=PUBLISH_CHOICES)
+
+    publish_date = models.DateTimeField(
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name=_('Дата публикации'))
+
+    class Meta:
+        abstract = True
+
+    def is_published(self):
+        return True if self.publish_status is self.PUBLISHED else False
+
+    def publish(self):
+        if not self.is_published():
+            self.publish_status = self.PUBLISHED
+            self.publish_date = datetime.utcnow()
+            self.save()
+        return True
+
+
 class ApprovedModel(models.Model):
     APPROVED = 1
     NOT_APPROVED = 0

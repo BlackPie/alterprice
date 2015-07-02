@@ -22,7 +22,11 @@ class ProductShopManager(models.Manager):
         obj.product = product
         obj.shop = shop
         obj.currency = currency
-        obj.price = yml_obj.get('price')
+        price = yml_obj.get('price')
+
+        if '.' in price:
+            price = float(price)
+        obj.price = price
         for oc in offercats:
             if oc.category == product.category:
                 obj.offercategory = oc
@@ -33,6 +37,8 @@ class ProductShopManager(models.Manager):
 class ProductShop(ProductFK):
     shop = models.ForeignKey('shop.Shop',
                              verbose_name=_('Магазин'))
+    shopyml = models.ForeignKey('shop.ShopYML',
+                                verbose_name=_('YML файл'))
     url = models.URLField(null=True,
                           blank=True,
                           default=None,

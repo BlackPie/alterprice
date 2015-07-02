@@ -30,7 +30,7 @@ class CreateShopSerializer(serializers.ModelSerializer):
             entity=validated_data.get('entity'))
         yml_url = validated_data.get('yml_url', None)
         if yml_url:
-            ps = models.ShopYML.objects.make(
+            models.ShopYML.objects.make(
                 shop=shop,
                 yml=yml_url,
                 name=validated_data.get('yml_name'))
@@ -41,3 +41,17 @@ class UpdateShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Shop
         fields = ('phone', 'city', 'address', 'site')
+
+
+class YMLCreateSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model = models.ShopYML
+        fields = ('yml_url', 'name')
+
+    def create(self, validated_data):
+        obj = models.ShopYML.objects.make(
+            shop=validated_data.get('shop'),
+            yml=validated_data.get('yml_url'),
+            name=validated_data.get('name')
+        )
+        return obj
