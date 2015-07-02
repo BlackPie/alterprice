@@ -15,6 +15,7 @@ module.exports = class Form
             beforeSubmit: =>
                 options.form.find('.error-text, .form-error').remove()
                 options.form.find('.has-error').removeClass 'has-error'
+                form.find('*[type="submit"]').attr 'disabled', 'disabled'
             success: (response, jqForm, options) =>
                 if response.status == 'success'
                     if response.redirect_to
@@ -24,6 +25,7 @@ module.exports = class Form
                             form.html(formSuccessTemplate(response))
                 if successCallback
                     successCallback()
+                form.find('*[type="submit"]').removeAttr 'disabled'
             error:  (response) =>
                 if response.responseJSON.status == 'fail'
                     for fieldName of response.responseJSON.errors
@@ -33,3 +35,4 @@ module.exports = class Form
                             fieldWrapper = options.form.find("*[name=\"#{fieldName}\"]").closest '.field-wrapper'
                             fieldWrapper.addClass 'has-error'
                             fieldWrapper.find('.field-value').append "<span class=\"error-text\">#{response.responseJSON.errors[fieldName]}</span>"
+                form.find('*[type="submit"]').removeAttr 'disabled'
