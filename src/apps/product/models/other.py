@@ -1,5 +1,6 @@
 import os
 from django.db import models
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerField
 # from .product import Product
@@ -49,6 +50,9 @@ class ProductShop(ProductFK):
                           default=None,
                           verbose_name=_('Ссылка на товар'))
     price = models.IntegerField(verbose_name=_('Цена'))
+    click_price = models.IntegerField(
+        default=settings.DEFAULT_CLICK_PRICE,
+        verbose_name=_('Цена клика'))
     currency = models.ForeignKey(Currency,
                                  null=True,
                                  blank=True,

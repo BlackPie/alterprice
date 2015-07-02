@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 # Project imports
 from shop import models
+from product import models as productmodels
 from shop.api import serializers
 
 
@@ -124,3 +125,13 @@ class YMLCategoryUpdate(UpdateAPIView):
 
 class YMLProductList(ListAPIView):
     permission_classes = (IsAuthenticated, )
+    serializer_class = serializers.YMLProductListserializer
+    model = productmodels.ProductShop
+
+    def get_queryset(self):
+        yml_id = self.kwargs.get('pk')
+        qs = self.model.objects.filter(
+            shopyml_id=yml_id)
+        # qs = qs.select_related('category')
+        # qs = qs.prefetch_related('productshop_set')
+        return qs.distinct()
