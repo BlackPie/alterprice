@@ -92,3 +92,27 @@ class AddYML(CreateAPIView):
             response['errors'] = serializer.errors
             api_status = status.HTTP_400_BAD_REQUEST
         return Response(response, status=api_status)
+
+
+class YMLPublish(UpdateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+
+class YMLUnPublish(UpdateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+
+class YMLUpdate(UpdateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+
+class YMLCategoryList(ListAPIView):
+    permission_classes = (IsAuthenticated, )
+
+
+class YMLCategoryUpdate(UpdateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+
+class YMLProductList(ListAPIView):
+    permission_classes = (IsAuthenticated, )
