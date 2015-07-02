@@ -40,6 +40,9 @@ class ProductShop(ProductFK):
     shop = models.ForeignKey('shop.Shop',
                              verbose_name=_('Магазин'))
     shopyml = models.ForeignKey('shop.ShopYML',
+                                null=True,
+                                blank=True,
+                                default=None,
                                 verbose_name=_('YML файл'))
     url = models.URLField(null=True,
                           blank=True,
