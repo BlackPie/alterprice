@@ -85,4 +85,4 @@ class YMLProductListserializer(serializers.ModelSerializer):
 
     def get_category(self, obj):
         # or pass it trough CategorySerializer
-        return obj.product.category.name
+        return obj.product.category.name 
