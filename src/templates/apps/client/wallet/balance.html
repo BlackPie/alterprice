@@ -23,24 +23,25 @@
                     <!--<div class="pure-g">-->
                         <!--<div class="pure-u"></div>-->
                     <!--</div>-->
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Сумма<br>(без НДС), р</th>
-                                <th>Дата<br>поступления</th>
-                                <th>Вид<br>оплаты</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for record in refill_history %}
-                                <tr>
-                                    <td>{{ record.amount|intcomma }}</td>
-                                    <td>{{ record.created|date:"d.m.Y" }}</td>
-                                    <td>{% if record.payment_type == 0 %}банковский счет{% else %}онлайн оплата{% endif %}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div id="client-wallet-payments-layout"></div>
+                    <!--<table>-->
+                        <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th>Сумма<br>(без НДС), р</th>-->
+                                <!--<th>Дата<br>поступления</th>-->
+                                <!--<th>Вид<br>оплаты</th>-->
+                            <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody id="">-->
+                            <!--{% comment %}{% for record in refill_history %}-->
+                                <!--<tr>-->
+                                    <!--<td>{{ record.amount|intcomma }}</td>-->
+                                    <!--<td>{{ record.created|date:"d.m.Y" }}</td>-->
+                                    <!--<td>{% if record.payment_type == 0 %}банковский счет{% else %}онлайн оплата{% endif %}</td>-->
+                                <!--</tr>-->
+                            <!--{% endfor %}{% endcomment %}-->
+                        <!--</tbody>-->
+                    <!--</table>-->
                 </div>
             </div>
             <div class="pure-u-1-2 text-right">

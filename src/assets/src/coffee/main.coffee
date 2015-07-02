@@ -25,6 +25,7 @@ ClientShopAddApp = require 'client/shop/add/ClientShopAddApp'
 ClientShopDetailApp = require 'client/shop/detail/ClientShopDetailApp'
 ClientWalletRefillApp  = require 'client/wallet/refill/ClientWalletRefillApp'
 ClientPricelistDetailApp = require 'client/pricelist/detail/ClientPricelistDetailApp'
+ClientWalletBalanceApp = require 'client/wallet/balance/ClientWalletBalanceApp'
 
 
 getEntryPoint = ->
@@ -51,6 +52,7 @@ entryPoints =
     'client-wallet-refill': ClientWalletRefillApp
     'client-pricelist-detail': ClientPricelistDetailApp
     'client-reset-password': ClientPasswordResetApp
+    'client-wallet-balance': ClientWalletBalanceApp
 
 
 if window.context != undefined
