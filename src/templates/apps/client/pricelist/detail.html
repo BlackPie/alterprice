@@ -15,11 +15,9 @@
                                 <input type="text" class="b_input_text" disabled="disabled" value="ID 423456">
                             </div>
                         </label>
-                        <label class="pure-g field-wrapper">
+                        <label class="pure-g field-wrapper no-edit">
                             <div class="pure-u-1-3 field-name">Ссылка на YML-файл</div>
-                            <div class="pure-u-2-3 field-value">
-                                <input type="text" class="b_input_text" disabled="disabled" value="http://www.yarkiy.ru/product_categories/export/market.xml">
-                            </div>
+                            <div class="pure-u-2-3 field-value">http://www.yarkiy.ru/product_categories/export/market.xml</div>
                         </label>
                         <label class="pure-g field-wrapper">
                             <div class="pure-u-1-3 field-name">География</div>
@@ -53,61 +51,7 @@
             <div id="client-pricelist-detail-managment-view" class="pure-u-1-1 management-wrapper">
                 <div class="block-ful-x">
                     <header>Управление ставками</header>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Категории</th>
-                                <th class="text-center" width="200px">Лидирующая ставка, р</th>
-                                <th class="text-center" width="170px">Ставка, р</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Фото и видео камеры</td>
-                                <td class="text-center">11</td>
-                                <td class="text-center">
-                                    <div class="number-input-wrapper">
-                                        <button type="button" class="increment-btn btn"></button>
-                                        <input type="text" class="number-input" value="0" />
-                                        <button type="button" class="decrement-btn btn"></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Объективы</td>
-                                <td class="text-center">6</td>
-                                <td class="text-center">
-                                    <div class="number-input-wrapper">
-                                        <button type="button" class="increment-btn btn"></button>
-                                        <input type="text" class="number-input" value="24" />
-                                        <button type="button" class="decrement-btn btn"></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Вспышки</td>
-                                <td class="text-center">10</td>
-                                <td class="text-center">
-                                    <div class="number-input-wrapper">
-                                        <button type="button" class="increment-btn btn"></button>
-                                        <input type="text" class="number-input" value="26" />
-                                        <button type="button" class="decrement-btn btn"></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Аксессуары</td>
-                                <td class="text-center">6</td>
-                                <td class="text-center">
-                                    <div class="number-input-wrapper">
-                                        <button type="button" class="increment-btn btn"></button>
-                                        <input type="text" class="number-input" value="3" />
-                                        <button type="button" class="decrement-btn btn"></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="client-pricelist-detail-categories-view"></div>
                     <footer>
                         <a href="#" class="statistic-link">Посмотреть статистику</a>
                     </footer>
@@ -120,56 +64,8 @@
                         <div class="all-counter">45<span>Товаров в&nbsp;прайс-листе</span></div>
                         <div class="public-counter">28<span>Публикуемых товаров</span></div>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Название товара</th>
-                                <th class="text-center" width="170px">Ставка, р</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="category">
-                                <td colspan="2">Категория: Фото и видео камеры</td>
-                            </tr>
-                            <tr>
-                                <td>Фото и видео камеры</td>
-                                <td class="text-center">11</td>
-                            </tr>
-                             <tr>
-                                <td>Фото и видео камеры</td>
-                                <td class="text-center">11</td>
-                            </tr>
-                            <tr>
-                                <td>Фото и видео камеры</td>
-                                <td class="text-center">11</td>
-                            </tr>
-                            <tr>
-                                <td>Фото и видео камеры</td>
-                                <td class="text-center">11</td>
-                            </tr>
-                            <tr class="category">
-                                <td colspan="2">Категория: Фото и видео камеры</td>
-                            </tr>
-                            <tr>
-                                <td>Фото и видео камеры</td>
-                                <td class="text-center">11</td>
-                            </tr>
-                            <tr>
-                                <td>Фото и видео камеры</td>
-                                <td class="text-center">11</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <footer>
-                        <div class="pager">
-                            <ul>
-                                <li><a href="#">< Предыдущая</a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">Следующая ></a></li>
-                            </ul>
-                        </div>
-                    </footer>
+                    <div id="client-pricelist-detail-products-view"></div>
+                    <footer id="client-pricelist-detail-products-pager-view"></footer>
                 </div>
             </div>
         </div>

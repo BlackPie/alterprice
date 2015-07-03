@@ -54,7 +54,6 @@ entryPoints =
     'client-reset-password': ClientPasswordResetApp
     'client-wallet-balance': ClientWalletBalanceApp
 
-
 if window.context != undefined
     context = JSON.parse window.context
 else

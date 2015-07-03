@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, FormView, RedirectView
 from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
+import json
 # Project imports
 from shop.models import Shop
 from client import decorators
@@ -200,6 +201,7 @@ class ClientPricelistDetailPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientPricelistDetailPageView, self).get_context_data(**kwargs)
+        context['context'] = json.dumps({'pricelistId': self.kwargs['pk']})
         context['current_app'] = 'client-pricelist-detail'
         return context
 
