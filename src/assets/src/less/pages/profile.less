@@ -1,4 +1,16 @@
 #client-profile-page {
+
+    header {
+        .typo_s;
+        text-transform: uppercase;
+        color: #6D6D6D;
+        padding: 0 0 15px 0;
+    }
+
+    footer {
+        text-align: right;
+    }
+
     .pure-u-1-2.text-right {
         text-align: right;
     }
@@ -10,12 +22,31 @@
     #profile-edit-btn {
         .icon-edit;
         position: absolute;
-        right: 0px;
+        right: 30px;
         top: 10px;
     }
 
+    .help {
+        padding: 20px 20px 20px 30px;
+    }
+
+    #client-profile-form-view {
+        padding: 20px 0 20px 20px;
+    }
+
     #edit-profile-form {
+        padding-right: 30px;
         position: relative;
+
+        &:before {
+            content: '';
+            position: absolute;
+            display: block;
+            border-left: 1px dashed #979797;
+            height: 100%;
+            right: 0px;
+            top: 0;
+        }
 
         footer {
             display: none;

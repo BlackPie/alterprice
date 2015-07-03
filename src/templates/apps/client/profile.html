@@ -3,9 +3,10 @@
 {% block content%}
     <div id="client-profile-page">
         <div class="h1">Профиль</div>
-        <div class="pure-g">
-            <div class="pure-u-1-2">
-                <div class="block-2-x">
+
+        <div class="block-ful-x">
+            <div class="pure-g">
+                <div class="pure-u-1-2">
                     <div id="client-profile-form-view">
                         <form id="edit-profile-form" class="form-block">
                             <a href="#" id="profile-edit-btn"></a>
@@ -15,11 +16,9 @@
                                     <div class="tooltip">Профиль подтвержден</div>
                                 </div>
                             </div>
-                            <label class="pure-g field-wrapper">
+                            <label class="pure-g field-wrapper no-edit">
                                 <div class="pure-u-2-5 field-name">Email</div>
-                                <div class="pure-u-3-5 field-value">
-                                    <input type="text" class="b_input_text" disabled="disabled" value="{{ user.email }}" />
-                                </div>
+                                <div class="pure-u-3-5 field-value">{{ user.email }}</div>
                             </label>
                             <label class="pure-g field-wrapper">
                                 <div class="pure-u-2-5 field-name">Телефон</div>
@@ -49,9 +48,67 @@
                         </form>
                     </div>
                 </div>
+                <div class="pure-u-1-2 text-right">
+                    {% include 'blocks/client/call_center.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div class="block-2-x">
+                    <header>Смена пароля</header>
+                    <form id="" class="form-block">
+                        <label class="pure-g field-wrapper">
+                            <div class="pure-u-2-5 field-name">Текущий пароль</div>
+                            <div class="pure-u-3-5 field-value">
+                                <input type="password" class="b_input_text" value="" />
+                            </div>
+                        </label>
+                        <label class="pure-g field-wrapper">
+                            <div class="pure-u-2-5 field-name">Новый пароль</div>
+                            <div class="pure-u-3-5 field-value">
+                                <input type="password" class="b_input_text" value="" />
+                            </div>
+                        </label>
+                        <label class="pure-g field-wrapper">
+                            <div class="pure-u-2-5 field-name">Повторите пароль</div>
+                            <div class="pure-u-3-5 field-value">
+                                <input type="password" class="b_input_text" value="" />
+                            </div>
+                        </label>
+                        <footer>
+                            <button type="submit" class="btn btn-purple">Сменить пароль</button>
+                        </footer>
+                    </form>
+                </div>
             </div>
             <div class="pure-u-1-2 text-right">
-                {% include 'blocks/client/call_center.html' %}
+                <div class="block-2-x text-left">
+                    <header>Смена email</header>
+                    <form id="" class="form-block">
+                        <label class="pure-g field-wrapper">
+                            <div class="pure-u-2-5 field-name">Текущий Email</div>
+                            <div class="pure-u-3-5 field-value">
+                                <input type="password" class="b_input_text" value="" />
+                            </div>
+                        </label>
+                        <label class="pure-g field-wrapper">
+                            <div class="pure-u-2-5 field-name">Новый Email</div>
+                            <div class="pure-u-3-5 field-value">
+                                <input type="password" class="b_input_text" value="" />
+                            </div>
+                        </label>
+                        <label class="pure-g field-wrapper">
+                            <div class="pure-u-2-5 field-name"></div>
+                            <div class="pure-u-3-5 field-value">
+
+                            </div>
+                        </label>
+                        <footer>
+                            <button type="submit" class="btn btn-purple">Сменить Email</button>
+                        </footer>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

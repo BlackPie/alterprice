@@ -13,6 +13,9 @@ module.exports = class ClientPricelistDetailInfoView extends Marionette.ItemView
     ui:
         switcher: '.switcher-wrapper'
 
+    #events:
+
+
 
     initialize: (options) =>
         @channel = options.channel
