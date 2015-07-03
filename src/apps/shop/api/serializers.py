@@ -1,6 +1,7 @@
 from rest_framework import serializers
 # Project imports
 from shop import models
+from product import models as productmodels
 from catalog.api.serializers import CategorySerializer
 
 
@@ -66,3 +67,22 @@ class YMLCategoryListSerializer(serializers.ModelSerializer):
 
     def get_lead_price(self, obj):
         return '123'
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = productmodels.Product
+        fields = ('name', )
+
+
+class YMLProductListserializer(serializers.ModelSerializer):
+    category = serializers.SerializerMethodField()
+    product = ProductSerializer()
+
+    class Meta:
+        model = productmodels.ProductShop
+        fields = ('product', 'category', 'click_price',)
+
+    def get_category(self, obj):
+        # or pass it trough CategorySerializer
+        return obj.product.category.name 
