@@ -29,7 +29,7 @@ module.exports = class ClientPricelistDetailController extends Marionette.Contro
         @leftMenuView = new LeftMenuView {channel: @channel}
         @clientHeaderView = new ClientHeaderView {channel: @channel}
         @clientPriceListDetailParamsFormView = new ClientPriceListDetailParamsFormView {channel: @channel}
-        @clientPricelistDetailInfoView = new ClientPricelistDetailInfoView {channel: @channel}
+        @clientPricelistDetailInfoView = new ClientPricelistDetailInfoView {channel: @channel, pricelistId: @pricelistId}
 
         @clientPricelistDetailLayout = new ClientPricelistDetailLayout {channel: @channel}
 
@@ -58,7 +58,6 @@ module.exports = class ClientPricelistDetailController extends Marionette.Contro
 
     fetchProducts: =>
         @clientPricelistDetailProductsPagerView = new ClientPricelistDetailProductsPagerView {channel: @channel}
-        #pager = @clientPricelistDetailProductsPagerView
         options =
             pageSize: @clientPricelistProductsCollection.state.pageSize
             currentPage: @clientPricelistProductsCollection.state.currentPage

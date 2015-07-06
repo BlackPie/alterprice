@@ -6,7 +6,7 @@ from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 import json
 # Project imports
-from shop.models import Shop
+from shop.models import Shop, ShopYML
 from client import decorators
 from client import forms
 from apuser.models import Payment, Bill
@@ -202,6 +202,7 @@ class ClientPricelistDetailPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ClientPricelistDetailPageView, self).get_context_data(**kwargs)
         context['context'] = json.dumps({'pricelistId': self.kwargs['pk']})
+        context['object'] = ShopYML.objects.get(pk=self.kwargs['pk']) #self.kwargs['pk']
         context['current_app'] = 'client-pricelist-detail'
         return context
 
