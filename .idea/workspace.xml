@@ -57,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PricelistProducts.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PricelistProducts.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/templates/client/PricelistProducts.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.035419125" vertical-offset="0" max-vertical-offset="847">
-              <caret line="2" column="69" selection-start-line="2" selection-start-column="69" selection-end-line="2" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+              <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
               <folding>
                 <marker date="1436177189000" expanded="true" signature="65:85" placeholder="..." />
                 <marker date="1436177189000" expanded="true" signature="65:98" placeholder="..." />
@@ -119,15 +119,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pager.coffee" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pager.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/templates/pager.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-              <caret line="7" column="63" selection-start-line="7" selection-start-column="57" selection-end-line="7" selection-end-column="63" />
+            <state vertical-scroll-proportion="0.4781582" vertical-offset="0" max-vertical-offset="847">
+              <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
               <folding>
-                <marker date="1436174500000" expanded="true" signature="1060:1087" placeholder="..." />
-                <marker date="1436174500000" expanded="true" signature="1060:1087" placeholder="..." />
-                <marker date="1436174500000" expanded="true" signature="1064:1087" placeholder="..." />
+                <marker date="1436177580000" expanded="true" signature="1157:1184" placeholder="..." />
+                <marker date="1436177580000" expanded="true" signature="1157:1184" placeholder="..." />
+                <marker date="1436177580000" expanded="true" signature="1161:1184" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -197,13 +197,13 @@
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/Events.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/ClientPricelistDetailController.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/less/components/pager.less" />
-        <option value="$PROJECT_DIR$/src/assets/src/coffee/templates/pager.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/views/ClientPricelistDetailProductsPagerView.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/collections/ClientPricelistProductsCollection.coffee" />
         <option value="$PROJECT_DIR$/src/templates/apps/client/pricelist/detail.html" />
         <option value="$PROJECT_DIR$/src/assets/src/less/pages/pricelist-detail.less" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/views/ClientPricelistDetailProductsCollectionView.coffee" />
         <option value="$PROJECT_DIR$/src/assets/src/coffee/templates/client/PricelistProducts.coffee" />
+        <option value="$PROJECT_DIR$/src/assets/src/coffee/templates/pager.coffee" />
       </list>
     </option>
   </component>
@@ -1125,18 +1125,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/templates/pager.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-          <caret line="7" column="63" selection-start-line="7" selection-start-column="57" selection-end-line="7" selection-end-column="63" />
-          <folding>
-            <marker date="1436174500000" expanded="true" signature="1060:1087" placeholder="..." />
-            <marker date="1436174500000" expanded="true" signature="1060:1087" placeholder="..." />
-            <marker date="1436174500000" expanded="true" signature="1064:1087" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/client/pricelist/detail/views/ClientPricelistDetailProductsPagerView.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="98" max-vertical-offset="945">
@@ -1179,8 +1167,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/templates/client/PricelistProducts.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.035419125" vertical-offset="0" max-vertical-offset="847">
-          <caret line="2" column="69" selection-start-line="2" selection-start-column="69" selection-end-line="2" selection-end-column="69" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
           <folding>
             <marker date="1436177189000" expanded="true" signature="65:85" placeholder="..." />
             <marker date="1436177189000" expanded="true" signature="65:98" placeholder="..." />
@@ -1193,6 +1181,18 @@
             <marker date="1436177189000" expanded="true" signature="209:355" placeholder="..." />
             <marker date="1436177189000" expanded="true" signature="222:342" placeholder="..." />
             <marker date="1436177189000" expanded="true" signature="367:380" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/src/coffee/templates/pager.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4781582" vertical-offset="0" max-vertical-offset="847">
+          <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
+          <folding>
+            <marker date="1436177580000" expanded="true" signature="1157:1184" placeholder="..." />
+            <marker date="1436177580000" expanded="true" signature="1157:1184" placeholder="..." />
+            <marker date="1436177580000" expanded="true" signature="1161:1184" placeholder="..." />
           </folding>
         </state>
       </provider>
