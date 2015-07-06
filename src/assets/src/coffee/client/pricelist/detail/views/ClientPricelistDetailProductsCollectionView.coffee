@@ -12,6 +12,12 @@ module.exports = class ClientPricelistDetailProductsCollectionView extends Mario
 
     template: PricelistProductsTemplate
 
+    ui:
+        'countInformer': '.all-counter'
+
+    collectionEvents:
+        sync: 'onSync'
+
     initialize: (options) =>
         @channel = options.channel
 
@@ -20,3 +26,8 @@ module.exports = class ClientPricelistDetailProductsCollectionView extends Mario
 
     childViewOptions: (model, index) =>
         return {channel: @channel}
+
+    onSync: (options) =>
+        console.log 'asd1'
+        console.log options
+        @$(@ui.countInformer).find('div.value').text options.state.totalRecords

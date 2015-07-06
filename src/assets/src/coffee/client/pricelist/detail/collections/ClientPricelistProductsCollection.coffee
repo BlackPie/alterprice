@@ -10,7 +10,7 @@ module.exports = class ClientPricelistProductsCollection extends PageableCollect
     state:
         firstPage: 1
         currentPage: 1
-        pageSize: 10
+        pageSize: 20
 
     queryParams:
         currentPage: "page"

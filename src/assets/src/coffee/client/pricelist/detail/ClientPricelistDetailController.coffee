@@ -2,6 +2,7 @@ $ = require 'jquery'
 _ = require 'underscore'
 Marionette = require 'backbone.marionette'
 Backbone = require 'backbone'
+Events = require 'client/Events'
 
 LeftMenuView = require 'base/views/LeftMenuView'
 ClientHeaderView = require 'client/profile/views/ClientHeaderView'
@@ -48,6 +49,8 @@ module.exports = class ClientPricelistDetailController extends Marionette.Contro
         @clientPricelistDetailLayout.productsList.show @clientPricelistDetailProductsCollectionView
         @fetchProducts()
 
+        @channel.vent.on Events.PRICELIST_PRODUCTS_PAGER,  @onChangeProductPage
+
 
     index: () =>
         console.log 'index'
@@ -55,6 +58,13 @@ module.exports = class ClientPricelistDetailController extends Marionette.Contro
 
     fetchProducts: =>
         @clientPricelistDetailProductsPagerView = new ClientPricelistDetailProductsPagerView {channel: @channel}
-        pager = @clientPricelistDetailProductsPagerView
+        #pager = @clientPricelistDetailProductsPagerView
+        options =
+            pageSize: @clientPricelistProductsCollection.state.pageSize
+            currentPage: @clientPricelistProductsCollection.state.currentPage
         @clientPricelistProductsCollection.fetch().done (response) =>
-            @clientPricelistDetailProductsPagerView.render response
+            @clientPricelistDetailProductsPagerView.render response, options
+
+
+    onChangeProductPage: (page) =>
+        @clientPricelistProductsCollection.getPage(page)
