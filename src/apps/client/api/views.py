@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.response import Response
@@ -6,11 +8,16 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.hashers import make_password
 # Project imports
 from catalog import models as catalogmodels
 from apuser import models
 from client.api import serializers
 from utils.views import APIView
+from django.contrib.auth import update_session_auth_hash
+
+
+logger = logging.getLogger(__name__)
 
 
 class SignInAPIView(APIView):
@@ -89,4 +96,34 @@ class RecoveryPassword(APIView):
         response = {}
         response['message'] = _('Ваш пароль успешно изменен')
         response['redirect_to'] = reverse('client:login')
+        return response
+
+
+class Profile(APIView):
+    serializer_class = serializers.ProfileSerializer
+
+    def success_action(self, request, serializer):
+        phone = serializer.validated_data.get('phone')
+        request.user.client_user.phone = phone
+        request.user.client_user.save()
+
+    def success_data(self, serializers):
+        response = {}
+        response['status'] = 'success'
+        return response
+
+
+class ProfilePassword(APIView):
+    serializer_class = serializers.ProfilePasswordSerializer
+
+    def success_action(self, request, serializer):
+        password = serializer.validated_data.get('password')
+        request.user.set_password(password)
+        request.user.save()
+        update_session_auth_hash(request, request.user)
+
+    def success_data(self, serializers):
+        response = {}
+        response['status'] = 'success'
+        response['message'] = _('Ваш пароль успешно изменен')
         return response

@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
@@ -9,6 +11,9 @@ User = get_user_model()
 from client.api import messages
 from catalog.models import EmailValidation, PasswordRecovery
 from apuser import models
+
+
+logger = logging.getLogger(__name__)
 
 
 def create_username_field():
@@ -160,3 +165,38 @@ class RecoveryPasswordSerializer(serializers.ModelSerializer):
         if not qs:
             raise serializers.ValidationError(_('Не валидный токен'))
         return value
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    phone = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('phone',)
+
+    def validate(self, attrs):
+        phone = attrs.get('phone')
+        if not phone:
+            raise serializers.ValidationError(_('Укажите телефон'))
+        return attrs
+
+
+class ProfilePasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(write_only=True)
+    confirm_password = serializers.CharField(write_only=True, max_length=128)
+    old_password = serializers.CharField(write_only=True, max_length=128)
+
+    def validate_old_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            raise serializers.ValidationError(_('Пароль не подходит'))
+        return value
+
+    def validate(self, attrs):
+        pwd = attrs.get('password')
+        confirm_pwd = attrs.get('confirm_password')
+        if not constant_time_compare(pwd, confirm_pwd):
+            raise serializers.ValidationError({
+                'confirm_password': _('Пароли не совпадают'),
+            })
+        return attrs
