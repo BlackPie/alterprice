@@ -1,3 +1,5 @@
+import logging
+
 from django.core.urlresolvers import reverse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
@@ -7,6 +9,9 @@ from rest_framework.response import Response
 from shop import models
 from product import models as productmodels
 from shop.api import serializers
+
+
+logger = logging.getLogger(__name__)
 
 
 class ShopCreate(CreateAPIView):
@@ -105,6 +110,8 @@ class YMLUnPublish(UpdateAPIView):
 
 class YMLUpdate(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
+    serializer_class = serializers.YMLUpdateSerializer
+    queryset = models.ShopYML.objects.all()
 
 
 class YMLCategoryList(ListAPIView):
@@ -114,13 +121,33 @@ class YMLCategoryList(ListAPIView):
 
     def get_queryset(self):
         yml_id = self.kwargs.get('pk')
-        qs = self.model.objects.filter(
-            shopyml_id=yml_id)
-        return qs.select_related('category')
+        qs = self.model.objects.filter(shopyml_id=yml_id)
+        return qs.select_related('category').order_by('category')
 
 
 class YMLCategoryUpdate(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
+    queryset = models.OfferCategories.objects.all()
+    serializer_class = serializers.YMLCategoryUpdateSerializer
+    model = models.OfferCategories
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        response = {}
+        if serializer.is_valid():
+            self.perform_update(serializer)
+            response['status'] = 'success'
+            api_status = status.HTTP_200_OK
+        else:
+            response['status'] = 'fail'
+            response['errors'] = serializer.errors
+            api_status = status.HTTP_400_BAD_REQUEST
+
+        return Response(response, status=api_status)
 
 
 class YMLProductList(ListAPIView):
@@ -130,8 +157,7 @@ class YMLProductList(ListAPIView):
 
     def get_queryset(self):
         yml_id = self.kwargs.get('pk')
-        qs = self.model.objects.filter(
-            shopyml_id=yml_id)
+        qs = self.model.objects.filter(shopyml_id=yml_id)
         # qs = qs.select_related('category')
         # qs = qs.prefetch_related('productshop_set')
         return qs.order_by('-product__category').distinct()

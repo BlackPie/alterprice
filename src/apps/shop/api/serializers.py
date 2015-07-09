@@ -63,10 +63,16 @@ class YMLCategoryListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.OfferCategories
-        fields = ('category', 'price', 'lead_price')
+        fields = ('id', 'category', 'price', 'lead_price')
 
     def get_lead_price(self, obj):
         return '123'
+
+
+class YMLCategoryUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OfferCategories
+        fields = ('price',)
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -85,4 +91,10 @@ class YMLProductListserializer(serializers.ModelSerializer):
 
     def get_category(self, obj):
         # or pass it trough CategorySerializer
-        return obj.product.category.name 
+        return obj.product.category.name
+
+
+class YMLUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ShopYML
+        fields = ('name', )
