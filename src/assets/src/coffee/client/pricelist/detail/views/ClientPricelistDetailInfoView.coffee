@@ -23,12 +23,12 @@ module.exports = class ClientPricelistDetailInfoView extends Marionette.ItemView
         new Switcher @$(@ui.switcher),
             onCheck: =>
                 $.ajax
-                    type: 'POST'
+                    type: 'PUT'
                     dataType: 'json'
                     url: "/api/shop/yml/#{@pricelistId}/publish/"
             onUncheck: =>
                 $.ajax
-                    type: 'POST'
+                    type: 'PUT'
                     dataType: 'json'
                     url: "/api/shop/yml/#{@pricelistId}/unpublish/"
 

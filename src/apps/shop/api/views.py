@@ -102,10 +102,40 @@ class AddYML(CreateAPIView):
 
 class YMLPublish(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
+    model = models.ShopYML
+
+    def get_queryset(self):
+        yml_id = self.kwargs.get('pk')
+        qs = self.model.objects.filter(pk=yml_id)
+        return qs
+
+    def update(self, request, *args, **kwargs):
+        response = {}
+        instance = self.get_object()
+        instance.published = True
+        instance.save()
+        response['status'] = 'success'
+        api_status = status.HTTP_200_OK
+        return Response(response, status=api_status)
 
 
 class YMLUnPublish(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
+    model = models.ShopYML
+
+    def get_queryset(self):
+        yml_id = self.kwargs.get('pk')
+        qs = self.model.objects.filter(pk=yml_id)
+        return qs
+
+    def update(self, request, *args, **kwargs):
+        response = {}
+        instance = self.get_object()
+        instance.published = False
+        instance.save()
+        response['status'] = 'success'
+        api_status = status.HTTP_200_OK
+        return Response(response, status=api_status)
 
 
 class YMLUpdate(UpdateAPIView):

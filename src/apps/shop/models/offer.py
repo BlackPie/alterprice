@@ -112,6 +112,8 @@ class ShopYML(PublishModel):
                                  blank=True,
                                  verbose_name=_('Валюта'))
 
+    published = models.BooleanField(verbose_name=_('Опублкован?'), default=False)
+
     objects = ShopYMLManager()
 
     def parse_yml(self):
@@ -119,6 +121,9 @@ class ShopYML(PublishModel):
         data = yml_file.read()
         yml_file.close()
         return xmltodict.parse(data)
+
+    def is_published(self):
+        return self.published
 
     def __str__(self):
         return self.name
