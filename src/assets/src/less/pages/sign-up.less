@@ -32,11 +32,23 @@
 
     .checkbox-wrapper {
         margin-top: 20px;
+
+        .error-text {
+            bottom: -15px;
+        }
     }
 
     .operator-code {
         .field-value {
             display: none;
+        }
+    }
+
+    .checkbox {
+        &:before {
+            background-color: #FFF;
+            box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .2);
+            border-radius: 3px;
         }
     }
 }

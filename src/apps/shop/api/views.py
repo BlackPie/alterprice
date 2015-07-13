@@ -143,6 +143,24 @@ class YMLUpdate(UpdateAPIView):
     serializer_class = serializers.YMLUpdateSerializer
     queryset = models.ShopYML.objects.all()
 
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        response = {}
+        if serializer.is_valid():
+            self.perform_update(serializer)
+            response['status'] = 'success'
+            api_status = status.HTTP_200_OK
+        else:
+            response['status'] = 'fail'
+            response['errors'] = serializer.errors
+            api_status = status.HTTP_400_BAD_REQUEST
+
+        return Response(response, status=api_status)
+
 
 class YMLDelete(DestroyAPIView):
     permission_classes = (IsAuthenticated, )
