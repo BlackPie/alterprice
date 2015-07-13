@@ -2,7 +2,7 @@ import logging
 
 from django.core.urlresolvers import reverse
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework import status
 from rest_framework.response import Response
 # Project imports
@@ -142,6 +142,21 @@ class YMLUpdate(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = serializers.YMLUpdateSerializer
     queryset = models.ShopYML.objects.all()
+
+
+class YMLDelete(DestroyAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = serializers.YMLUpdateSerializer
+    queryset = models.ShopYML.objects.all()
+
+    def delete(self, request, pk):
+        response = {}
+        instance = self.get_object()
+        instance.delete()
+        response['status'] = 'success'
+        response['redirect_to'] = reverse('client:profile')
+        api_status = status.HTTP_200_OK
+        return Response(response, status=api_status)
 
 
 class YMLCategoryList(ListAPIView):
