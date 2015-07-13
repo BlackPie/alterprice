@@ -20,7 +20,7 @@
                 {% cycle '<div class="row">' '' '' %}
                 <div class="block-03-x">
                     <a href="{% url 'catalog:category_categories_list' category.pk %}">
-                        <div class="image" style="background-image: url({{ category.get_preview }})"></div>
+                        <div class="image" {% if category.get_preview %}style="background-image: url({{ category.get_preview }})"{% endif %}></div>
                         <div class="title">{{ category.name }}</div>
                     </a>
                     <ul>
