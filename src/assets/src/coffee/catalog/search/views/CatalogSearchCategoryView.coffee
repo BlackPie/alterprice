@@ -17,7 +17,6 @@ module.exports = class CatalogSearchCategoryView extends Marionette.ItemView
         return data
 
     initialize: (options) =>
-        console.log options
         @channel = options.channel
 
     template: (object) ->
@@ -25,5 +24,8 @@ module.exports = class CatalogSearchCategoryView extends Marionette.ItemView
 
     onClickBtn: (e) =>
         e.preventDefault()
-        categoryId = @$(@ui.btn).attr 'data-category'
+        if @$(e.target).hasClass 'active'
+            categoryId = ''
+        else
+            categoryId = @$(@ui.btn).attr 'data-category'
         @channel.vent.trigger Events.SET_CATEGORY, categoryId

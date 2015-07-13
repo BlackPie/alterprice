@@ -73,5 +73,6 @@ module.exports = class CatalogSearchController extends Marionette.Controller
 
     onSetCategory: (categoryId) =>
         @catalogItemsListFilterView.setCategory categoryId
+        $('#catalog-search-categories-list-view').find('a.btn-sea.active').removeClass('active')
+        $('#catalog-search-categories-list-view').find("a.btn-sea[data-category=\"#{categoryId}\"]").addClass('active')
         @onSetFilter()
-        console.log categoryId

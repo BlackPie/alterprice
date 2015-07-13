@@ -112,7 +112,7 @@ class YMLPublish(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         response = {}
         instance = self.get_object()
-        instance.published = True
+        instance.publish_status = 1
         instance.save()
         response['status'] = 'success'
         api_status = status.HTTP_200_OK
@@ -131,7 +131,7 @@ class YMLUnPublish(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         response = {}
         instance = self.get_object()
-        instance.published = False
+        instance.publish_status = 0
         instance.save()
         response['status'] = 'success'
         api_status = status.HTTP_200_OK

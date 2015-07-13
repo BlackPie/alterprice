@@ -11,10 +11,6 @@ module.exports = class CatalogSearchLayout extends Marionette.LayoutView
         categoriesList: "#catalog-search-categories-list-view"
 
 
-    #initialize: (options) =>
-    #    console.log '-'
-
-
     hide: =>
         $(@el).hide()
 

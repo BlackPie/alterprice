@@ -30,11 +30,16 @@
                         <a href="#" class="show-all" style="display: none;">Все {{ children_categories|length }} категорий</a>
                     </div>
                 {% endif %}
-                <div id="catalog-products-layout">
-                    <div id="catalog-products-list-view" class="items-wrapper"></div>
-                </div>
-                <div id="catalog-products-pager-view">
-                    <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
+                <div class="items-list-page-wrapper">
+                    <div id="catalog-products-layout">
+                        <div id="catalog-products-list-view" class="items-wrapper"></div>
+                    </div>
+                    <div id="catalog-products-pager-view">
+                        <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
+                    </div>
+                    <div id="categories-list-page" class="not-found-products">
+                        <p>По вашему запросу ничего не нашлось.</p>
+                    </div>
                 </div>
             </div>
             <div class="pure-u-1-4 text-right">
