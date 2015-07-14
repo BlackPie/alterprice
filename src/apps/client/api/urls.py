@@ -10,4 +10,5 @@ urlpatterns = patterns(
     url(r'^profile/password/$', views.ProfilePassword.as_view(), name='profile-password'),
     url(r'^recovery/$', views.Recovery.as_view(), name='recovery'),
     url(r'^recovery/password/$', views.RecoveryPassword.as_view(), name='recovery-password'),
+    url(r'^email/update/$', views.UpdateEmail.as_view(), name='email-update'),
 )
