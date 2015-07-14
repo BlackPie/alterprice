@@ -82,7 +82,7 @@ class ClientProfileManager(models.Manager):
         return obj
 
 
-class ClientProfile(Profile, ApprovedModel):
+class ClientProfile(Profile):
     ENTITY = 0
     INDIVIDUAL = 1
 
@@ -113,8 +113,9 @@ class ClientProfile(Profile, ApprovedModel):
                                  default=None,
                                  related_name='operator',
                                  verbose_name=_('Оператор'))
-
+    checked = models.BooleanField(default=False, verbose_name=_('Проверено'), help_text=_('Модератор проверил и одобрил'))
     objects = ClientProfileManager()
+
 
     def __str__(self):
         return "%s" % self.user.email

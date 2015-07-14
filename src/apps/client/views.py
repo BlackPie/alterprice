@@ -66,8 +66,9 @@ class ActivateView(RedirectView):
         emv = emvs.first()
         emv.confirm()
         user = emv.user
-        if not user.active():
-            user.activate()
+        if not user.is_active:
+            user.is_active = True
+            user.save()
         return '%s?welcome' % reverse('client:login')
 
 

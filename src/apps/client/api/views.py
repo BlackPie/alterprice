@@ -61,7 +61,7 @@ class Recovery(APIView):
 
     def success_action(self, request, serializer):
         email = serializer.validated_data.get('email')
-        user = models.AlterPriceUser.objects.by_email(email).first()
+        user = models.AlterPriceUser.objects.get(email=email)
         catalogmodels.PasswordRecovery.objects.make(user=user)
 
     def success_data(self, serializer):
@@ -90,3 +90,13 @@ class RecoveryPassword(APIView):
         response['message'] = _('Ваш пароль успешно изменен')
         response['redirect_to'] = reverse('client:login')
         return response
+
+
+class UpdateEmail(APIView):
+    serializer_class = serializers.UpdateEmailSerializer
+    permission_classes = (permissions.AllowAny, )
+
+    def success_action(self, request, serializer):
+        user = serializer.validated_data.get('user')
+        user.email = serializer.validated_data.get('email')
+        user.save()

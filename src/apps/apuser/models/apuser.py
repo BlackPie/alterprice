@@ -3,13 +3,6 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
-# Project imports
-from utils.abstract_models import StatusModel
-
-
-class AlterPriceUserQueryset(QuerySet):
-    def by_email(self, email):
-        return self.filter(email=email)
 
 
 class AlterPriceUserManager(models.Manager):
@@ -37,28 +30,29 @@ class AlterPriceUserManager(models.Manager):
         obj.save()
         return obj
 
-    def make_client(self):
-        obj = self.make()
+    def make_client(self, email, password):
+        obj = self.make(email, password)
         obj.user_type = self.model.CLIENT
         obj.save()
         return obj
 
-    def make_operator(self):
-        obj = self.make()
+    def make_operator(self, email, password):
+        obj = self.make(email, password)
         obj.user_type = self.model.OPERATOR
         obj.is_staff = True
         obj.save()
         return obj
 
-    def make_admin(self):
-        obj = self.make()
+    def make_admin(self, email, password):
+        obj = self.make(email, password)
         obj.user_type = self.model.ADMIN
         obj.is_staff = True
+        obj.is_superuser = True
         obj.save()
         return obj
 
 
-class AlterPriceUser(AbstractBaseUser, PermissionsMixin, StatusModel):
+class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
 
     CLIENT = 0
     OPERATOR = 1
@@ -69,6 +63,9 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin, StatusModel):
         (OPERATOR, _('Оператор')),
         (ADMIN, _('Администратор')),
     )
+
+    verified = models.BooleanField(default=False,
+                                   verbose_name=_(u'Email подтвержден'))
 
     email = models.EmailField(max_length=100,
                               db_index=True,
@@ -84,7 +81,7 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin, StatusModel):
 
     USERNAME_FIELD = 'email'
 
-    objects = AlterPriceUserManager.from_queryset(AlterPriceUserQueryset)()
+    objects = AlterPriceUserManager()
 
     def __unicode__(self):
         return self.email
@@ -102,7 +99,7 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin, StatusModel):
         return True if self.user_type is self.OPERATOR else False
 
     def is_admin(self):
-        return True if self.user_type is self.ADMI else False
+        return True if self.user_type is self.ADMIN else False
 
     def get_shops(self):
         return self.owner.all()

@@ -89,7 +89,7 @@ web:
 
 
 worker:
-  build: .
+  image: alterprice_web
   links:
    - db:db
    - rabbitmq:rabbit
