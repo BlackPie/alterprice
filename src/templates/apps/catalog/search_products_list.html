@@ -7,15 +7,18 @@
                 <div class="h1">Результаты поиска по запросу - "{{ search }}"</div>
                 <div class="pure-g">
                     <div class="pure-u-3-4">
-                        <div id="catalog-products-layout">
-                            <div class="categories-filter-wrapper">
-                                <div id="catalog-search-categories-list-view" class="categories-filter"></div>
-                                <a href="#" class="show-all" style="display: none;">Все {{ children_categories|length }} категорий</a>
+                        <div id="catalog-products-layout-wrapper">
+                            <div id="catalog-products-layout">
+                                <div class="categories-filter-wrapper">
+                                    <div id="catalog-search-categories-list-view-wrapper">
+
+                                    </div>
+                                </div>
+                                <div id="catalog-products-list-view" class="items-wrapper"></div>
                             </div>
-                            <div id="catalog-products-list-view" class="items-wrapper"></div>
-                        </div>
-                        <div id="catalog-products-pager-view">
-                            <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
+                            <div id="catalog-products-pager-view">
+                                <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
+                            </div>
                         </div>
                     </div>
                     <div class="pure-u-1-4 text-right">

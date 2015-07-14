@@ -8,7 +8,7 @@ module.exports = class CatalogSearchLayout extends Marionette.LayoutView
     regions:
         offersFilter:  "#product-offers-filter-view"
         productsList: "#catalog-products-list-view"
-        categoriesList: "#catalog-search-categories-list-view"
+        categoriesList: "#catalog-search-categories-list-view-wrapper"
 
 
     hide: =>

@@ -24,9 +24,9 @@ module.exports = class CatalogProductsCategoriesListView extends Marionette.Item
         width = 0
         number = 0
         categoriesWrapper.find('a').each (i, el) =>
-            width = width + $(el).outerWidth() + 8
+            width = width + $(el).outerWidth() + 5
             number = number + 1
-        if width > maxWidth - @$(@ui.showAllBtn).outerWidth()
+        if width > maxWidth
             str = DeclensionOfNumber.run(number, ['категория', 'категории', 'категорий'])
             @$(@ui.showAllBtn).text("Все #{number} #{str}").fadeIn 'slow'
 

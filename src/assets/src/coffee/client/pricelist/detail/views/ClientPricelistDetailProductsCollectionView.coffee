@@ -6,8 +6,6 @@ PricelistProductsTemplate = require 'templates/client/PricelistProducts'
 
 
 module.exports = class ClientPricelistDetailProductsCollectionView extends Marionette.CompositeView
-    template: false
-
     childViewContainer: 'tbody'
 
     template: PricelistProductsTemplate
