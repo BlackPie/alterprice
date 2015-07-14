@@ -1,10 +1,10 @@
 Marionette   = require 'backbone.marionette'
 
-PaymentTrTemplate = require 'templates/client/PaymentTr'
+BillTrTemplate = require 'templates/client/BillTr'
 Events = require 'catalog/Events'
 
 
-module.exports = class ClientWalletPaymentView extends Marionette.ItemView
+module.exports = class ClientWalletBillView extends Marionette.ItemView
     tagName: 'tr'
 
     serializeModel: (model) ->
@@ -16,4 +16,4 @@ module.exports = class ClientWalletPaymentView extends Marionette.ItemView
         @channel = options.channel
 
     template: (object) ->
-        return PaymentTrTemplate(object)
+        return BillTrTemplate(object)

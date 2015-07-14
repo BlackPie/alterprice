@@ -1,11 +1,11 @@
 PageableCollection = require "backbone.paginator"
 
-ClientWalletPaymentModel = require '../models/ClientWalletPaymentModel'
+ClientWalletBillModel = require '../models/ClientWalletBillModel'
 
 
-module.exports = class ClientWalletPaymentsCollection extends PageableCollection
-    model: ClientWalletPaymentModel
-    url: "/api/user/payment/list/"
+module.exports = class ClientWalletBillsCollection extends PageableCollection
+    model: ClientWalletBillModel
+    url: "/api/user/bill/list/"
 
     state:
         firstPage: 1

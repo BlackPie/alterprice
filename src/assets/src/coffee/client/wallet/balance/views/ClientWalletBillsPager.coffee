@@ -5,8 +5,8 @@ Events = require 'client/Events'
 PagerTemplate = require 'templates/pager'
 
 
-module.exports = class ClientWalletPaymentsPager extends Marionette.ItemView
-    el: $('.client-wallet-payments-pager')
+module.exports = class ClientWalletBillsPager extends Marionette.ItemView
+    el: $('.client-wallet-bills-pager')
 
     ui:
         'links': 'a'
@@ -53,4 +53,4 @@ module.exports = class ClientWalletPaymentsPager extends Marionette.ItemView
 
         @$(@ui.prevBtn).find('a').attr 'data-page', page - 1
         @$(@ui.nextBtn).find('a').attr 'data-page', page + 1
-        @channel.vent.trigger Events.WALLET_PAYMENT_PAGER, page
+        @channel.vent.trigger Events.WALLET_BILLS_PAGER, page
