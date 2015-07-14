@@ -7,7 +7,7 @@ from catalog.api.serializers import CurrencySerializer
 class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Bill
-        fields = ('amount', 'created')
+        fields = ('id', 'amount', 'created')
 
 
 class PaymentSerializer(serializers.ModelSerializer):

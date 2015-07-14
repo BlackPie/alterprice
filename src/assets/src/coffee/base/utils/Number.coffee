@@ -16,6 +16,7 @@ module.exports = class Number
             e.preventDefault()
             _.value = _.value + 1
             _.input.val _.value
+            @input.change()
 
 
         @decrement.on 'click', (e) =>
@@ -23,6 +24,7 @@ module.exports = class Number
             if _.value > 0
                 _.value = _.value - 1
                 _.input.val _.value
+                @input.change()
 
 
         @input.on 'keypress', (e) =>

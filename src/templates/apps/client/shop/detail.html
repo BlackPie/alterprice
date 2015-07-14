@@ -11,6 +11,15 @@
                             <a href="#" id="shop-edit-btn"></a>
                             <div class="name">
                                 <span>{{ object.name }}</span>
+                                {% if object.active %}
+                                    <div class="status ok">
+                                        <div class="tooltip">Магазин активен</div>
+                                    </div>
+                                {% else %}
+                                    <div class="status not-ok">
+                                        <div class="tooltip">Магазин еще не проверен администратором</div>
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="pure-g field-wrapper no-edit">
                                 <div class="pure-u-2-5 field-name">Юридическое лицо</div>

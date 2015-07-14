@@ -2,42 +2,64 @@
 
 {% block content%}
     <div id="items-list-page">
-        <div class="h1">Результаты поиска по запросу - "{{ search }}"</div>
-        <div class="pure-g">
-            <div class="pure-u-3-4">
-                <div id="catalog-products-layout">
-                    <div class="categories-filter-wrapper">
-                        <div id="catalog-search-categories-list-view" class="categories-filter"></div>
-                        <a href="#" class="show-all" style="display: none;">Все {{ children_categories|length }} категорий</a>
-                    </div>
-                    <div id="catalog-products-list-view" class="items-wrapper"></div>
-                </div>
-                <div id="catalog-products-pager-view">
-                    <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
-                </div>
-            </div>
-            <div class="pure-u-1-4 text-right">
-                <div class="block-1-x text-left">
-                    <div id="catalog-products-filter-view">
-                        <form class="items-filter">
-                            <input type="hidden" name="category" id="category" value="" />
-                            <input type="hidden" name="search" id="search" value="{{ search }}" />
-                            <div class="price" style="border: none; margin-bottom: 0;">
-                                <span class="title">Цена, руб</span>
-                                <div class="pure-g">
-                                    <div class="pure-u-1-2">
-                                        <label>от <input type="text" id="price_from" placeholder="0" /></label>
-                                    </div>
-                                    <div class="pure-u-1-2">
-                                        <label>до <input type="text" id="price_till" placeholder="9999" /></label>
+        <div class="items-list-page-wrapper">
+            <div class="found-products">
+                <div class="h1">Результаты поиска по запросу - "{{ search }}"</div>
+                <div class="pure-g">
+                    <div class="pure-u-3-4">
+                        <div id="catalog-products-layout-wrapper">
+                            <div id="catalog-products-layout">
+                                <div class="categories-filter-wrapper">
+                                    <div id="catalog-search-categories-list-view-wrapper">
+
                                     </div>
                                 </div>
+                                <div id="catalog-products-list-view" class="items-wrapper"></div>
                             </div>
-                            <button class="submit" type="submit">Показать <span>(40)</span></button>
-                        </form>
+                            <div id="catalog-products-pager-view">
+                                <button type="button" class="btn btn-grey btn-full-width" style="display: none;">Показать еще</button>
+                            </div>
+                        </div>
                     </div>
+                    <div class="pure-u-1-4 text-right">
+                        <div class="block-1-x text-left">
+                            <div id="catalog-products-filter-view">
+                                <form class="items-filter">
+                                    <input type="hidden" name="category" id="category" value="" />
+                                    <input type="hidden" name="search" id="search" value="{{ search }}" />
+                                    <div class="price" style="border: none; margin-bottom: 0;">
+                                        <span class="title">Цена, руб</span>
+                                        <div class="pure-g">
+                                            <div class="pure-u-1-2">
+                                                <label>от <input type="text" id="price_from" placeholder="0" /></label>
+                                            </div>
+                                            <div class="pure-u-1-2">
+                                                <label>до <input type="text" id="price_till" placeholder="9999" /></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="submit" type="submit">Показать <span>(40)</span></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="categories-list-page" class="not-found-products">
+                <div class="h1">По вашему запросу ничего не нашлось.</div>
+                <p>Попробуйте упростить формулировку или воспользуйтесь поиском по категориям.</p>
+                <hr>
+                <div class="h1">Все категории</div>
+                <div>
+                    {% for category in categories  %}
+                        <a href="{% url 'catalog:category_categories_list' category.pk %}" class="block-1-1">
+                            <div class="image" {% if category.get_preview %}style="background-image: url({{ category.get_preview }})"{% endif %}></div>
+                            <div class="title">{{ category.name }}</div>
+                        </a>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock content %}

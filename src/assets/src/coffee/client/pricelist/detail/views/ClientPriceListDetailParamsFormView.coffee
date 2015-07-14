@@ -1,6 +1,7 @@
 $ = require 'jquery'
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
+Events = require 'client/Events'
 
 Form = require 'base/utils/Form'
 
@@ -28,6 +29,7 @@ module.exports = class ClientPriceListDetailParamsFormView extends Marionette.It
             success: =>
                 inputs.attr 'disabled', 'disabled'
                 form.removeClass 'edit'
+                @channel.vent.trigger Events.PRICELIST_CHANGE_TITLE, form.find('input[name="name"]').val()
 
 
     onClickEditBtn: (e) =>

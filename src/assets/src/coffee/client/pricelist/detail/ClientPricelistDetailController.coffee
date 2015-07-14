@@ -50,6 +50,7 @@ module.exports = class ClientPricelistDetailController extends Marionette.Contro
         @fetchProducts()
 
         @channel.vent.on Events.PRICELIST_PRODUCTS_PAGER,  @onChangeProductPage
+        @channel.vent.on Events.PRICELIST_CHANGE_TITLE,  @onChangePricelistTitle
 
 
     index: () =>
@@ -67,3 +68,7 @@ module.exports = class ClientPricelistDetailController extends Marionette.Contro
 
     onChangeProductPage: (page) =>
         @clientPricelistProductsCollection.getPage(page)
+
+
+    onChangePricelistTitle: (title) =>
+        $('#price-list-name').text title

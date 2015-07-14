@@ -5,9 +5,6 @@ Events = require 'catalog/Events'
 
 
 module.exports = class ClientWalletPaymentView extends Marionette.ItemView
-    #ui:
-    #    btn: ".btn"
-
     tagName: 'tr'
 
     serializeModel: (model) ->

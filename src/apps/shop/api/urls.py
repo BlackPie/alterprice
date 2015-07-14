@@ -12,7 +12,8 @@ urlpatterns = patterns(
     url(r'^yml/(?P<pk>\d+)/publish/$', views.YMLPublish.as_view(), name='yml-publish'),
     url(r'^yml/(?P<pk>\d+)/unpublish/$', views.YMLUnPublish.as_view(), name='yml-unpulish'),
     url(r'^yml/(?P<pk>\d+)/update/$', views.YMLUpdate.as_view(), name='yml-update'),
+    url(r'^yml/(?P<pk>\d+)/delete/$', views.YMLDelete.as_view(), name='yml-delete'),
     url(r'^yml/(?P<pk>\d+)/category/list/$', views.YMLCategoryList.as_view(), name='yml-category-list'),
-    url(r'^yml/(?P<pk>\d+)/category/update/$', views.YMLCategoryUpdate.as_view(), name='yml-category-update'),
     url(r'^yml/(?P<pk>\d+)/product/list/$', views.YMLProductList.as_view(), name='yml-product-list'),
+    url(r'^category/(?P<pk>\d+)/update/$', views.YMLCategoryUpdate.as_view(), name='yml-category-update'),
 )

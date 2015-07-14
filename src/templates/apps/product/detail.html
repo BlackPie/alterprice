@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
-{% load humanize %}
+
+{% load humanize product_utils %}
+
 {% block content%}
     <div id="item-detail-page">
         <div id="block-breadcrumbs">
             <ul>
                 <li><a href="{% url 'catalog:categories_list' %}">Все категории</a></li>
+                {% for item in object|get_breadcrumbs_by_product %}
+                    {% if forloop.last %}
+                        <li><span>{{ item.object.name }}</span></li>
+                    {% else %}
+                        <li><a href="{{ item.url }}">{{ item.object.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
 
-                {% if object.category %}
+                {% comment %}{% if object.category %}
                     {% if object.parent %}
                         {% if object.parent.parent %}
                             <li><a href="{% url 'catalog:category_categories_list' object.parent.parent.pk %}">{{ object.parent.parent.name }}</a></li>
@@ -14,7 +23,7 @@
                         <li><a href="{% url 'catalog:category_categories_list' object.parent.pk %}">{{ object.parent.name }}</a></li>
                     {% endif %}
                 {% endif %}
-                <li><span>{{ object.name }}</span></li>
+                <li><span>{{ object.name }}</span></li>{% endcomment %}
             </ul>
         </div>
 

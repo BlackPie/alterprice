@@ -6,7 +6,7 @@
         <div>
             {% for category in categories  %}
                 <a href="{% url 'catalog:category_categories_list' category.pk %}" class="block-1-1">
-                    <div class="image" style="background-image: url({{ category.get_preview }})"></div>
+                    <div class="image" {% if category.get_preview %}style="background-image: url({{ category.get_preview }})"{% endif %}></div>
                     <div class="title">{{ category.name }}</div>
                 </a>
             {% endfor %}

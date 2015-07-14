@@ -6,6 +6,7 @@ Backbone = require 'backbone'
 LeftMenuView = require 'base/views/LeftMenuView'
 ClientProfileFormView = require './views/ClientProfileFormView'
 ClientHeaderView = require 'client/profile/views/ClientHeaderView'
+ClientProfilePasswordFormView = require './views/ClientProfilePasswordFormView'
 
 
 module.exports = class ClientProfileController extends Marionette.Controller
@@ -15,6 +16,7 @@ module.exports = class ClientProfileController extends Marionette.Controller
         @leftMenuView = new LeftMenuView {channel: @channel}
         @clientProfileFormView = new ClientProfileFormView {channel: @channel}
         @clientHeaderView = new ClientHeaderView {channel: @channel}
+        @clientProfilePasswordFormView = new ClientProfilePasswordFormView {channel: @channel}
 
 
     index: () =>

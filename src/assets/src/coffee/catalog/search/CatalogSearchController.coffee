@@ -48,6 +48,9 @@ module.exports = class CatalogSearchController extends Marionette.Controller
         catalogProductsFilterState = CatalogProductsFilterState.fromArray filterData
         @catalogSearchCategoryLinksCollection.fetchFiltered catalogProductsFilterState
 
+        @catalogSearchCategoryLinksCollection.on "sync", (collection) =>
+            @catalogSearchCategoriesListView.initMoreBtn()
+
         @channel.vent.on Events.SET_FILTER, @onSetFilter
         @channel.vent.on Events.SHOW_MORE, @onShowMore
         @channel.vent.on Events.SET_CATEGORY, @onSetCategory
@@ -73,5 +76,6 @@ module.exports = class CatalogSearchController extends Marionette.Controller
 
     onSetCategory: (categoryId) =>
         @catalogItemsListFilterView.setCategory categoryId
+        $('#catalog-search-categories-list-view').find('a.btn-sea.active').removeClass('active')
+        $('#catalog-search-categories-list-view').find("a.btn-sea[data-category=\"#{categoryId}\"]").addClass('active')
         @onSetFilter()
-        console.log categoryId

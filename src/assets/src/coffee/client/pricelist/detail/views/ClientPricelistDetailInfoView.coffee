@@ -12,9 +12,10 @@ module.exports = class ClientPricelistDetailInfoView extends Marionette.ItemView
 
     ui:
         switcher: '.switcher-wrapper'
+        deleteBtn: '#client-pricelist-remove'
 
-    #events:
-
+    events:
+        "click @ui.deleteBtn": "onClickDeleteBtn"
 
 
     initialize: (options) =>
@@ -23,12 +24,25 @@ module.exports = class ClientPricelistDetailInfoView extends Marionette.ItemView
         new Switcher @$(@ui.switcher),
             onCheck: =>
                 $.ajax
-                    type: 'POST'
+                    type: 'PUT'
                     dataType: 'json'
                     url: "/api/shop/yml/#{@pricelistId}/publish/"
             onUncheck: =>
                 $.ajax
-                    type: 'POST'
+                    type: 'PUT'
                     dataType: 'json'
                     url: "/api/shop/yml/#{@pricelistId}/unpublish/"
+
+
+    onClickDeleteBtn: (e) =>
+        e.preventDefault()
+
+        deleteUrl = @$(@ui.deleteBtn).attr 'data-url'
+        $.ajax
+            url: deleteUrl
+            type: 'DELETE'
+            dataType: 'json'
+            success: (response) =>
+                if response.redirect_to
+                    window.location.href = response.redirect_to
 

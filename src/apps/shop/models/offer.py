@@ -156,6 +156,12 @@ class OfferCategories(models.Model):
 
     objects = OfferCategoriesManager()
 
+    def __str__(self):
+        return "%d %s" % (self.pk, self.category.name)
+
+    def __unicode__(self):
+        return "%d %s" % (self.pk, self.category.name)
+
     class Meta:
         verbose_name = _('Категории предложения')
         verbose_name_plural = _('Категории предложений')

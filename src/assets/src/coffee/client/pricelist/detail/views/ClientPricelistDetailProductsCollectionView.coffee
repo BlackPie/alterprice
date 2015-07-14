@@ -6,8 +6,6 @@ PricelistProductsTemplate = require 'templates/client/PricelistProducts'
 
 
 module.exports = class ClientPricelistDetailProductsCollectionView extends Marionette.CompositeView
-    template: false
-
     childViewContainer: 'tbody'
 
     template: PricelistProductsTemplate
@@ -28,6 +26,4 @@ module.exports = class ClientPricelistDetailProductsCollectionView extends Mario
         return {channel: @channel}
 
     onSync: (options) =>
-        console.log 'asd1'
-        console.log options
         @$(@ui.countInformer).find('div.value').text options.state.totalRecords

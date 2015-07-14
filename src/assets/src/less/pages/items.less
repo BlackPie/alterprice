@@ -38,11 +38,20 @@
             &> div > div {
                 display: inline-block;
             }
+
+            &> div {
+                display: inline-block;
+            }
         }
 
         .btn-sea {
             margin-bottom: 8px;
             margin-right: 5px;
+
+            &.active {
+                box-shadow: none;
+                background: #53A99F;
+            }
         }
 
         .show-all {
@@ -160,6 +169,29 @@
                 top: -1px;
                 margin-right: 4px;
             }
+        }
+    }
+
+    .not-found-products {
+        display: none;
+
+        p {
+            color: #86888E;
+        }
+
+        hr {
+            border-top: 2px solid #E7E7E7;
+            margin: 60px 0 20px 0;
+        }
+    }
+
+    .items-list-page-wrapper.empty {
+        .not-found-products {
+            display: block;
+        }
+
+        .found-products {
+            display: none;
         }
     }
 

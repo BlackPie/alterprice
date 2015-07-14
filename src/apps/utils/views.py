@@ -17,7 +17,7 @@ class APIView(RestAPIView):
 
     def post(self, request, *args, **kwargs):
         data = self.prepare_data(request)
-        serializer = self.serializer_class(data=data)
+        serializer = self.serializer_class(data=data, context=dict(request=request))
         response = {}
         if serializer.is_valid():
             self.success_action(request, serializer)

@@ -10,10 +10,6 @@ module.exports = class ProductOffersLayout extends Marionette.LayoutView
         productsList: "#catalog-products-list-view"
 
 
-    #initialize: (options) =>
-    #    console.log '-'
-
-
     hide: =>
         $(@el).hide()
 

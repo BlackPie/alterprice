@@ -1,32 +1,56 @@
 $ = require 'jquery'
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
-Events = require 'product/Events'
+Events = require 'client/Events'
+PagerTemplate = require 'templates/pager'
 
 
 module.exports = class ClientWalletPaymentsPager extends Marionette.ItemView
-    el: $('#product-offers-pager-view')
-
-    template: false
+    el: $('.client-wallet-payments-pager')
 
     ui:
-        showMoreBtn: '.show-more'
+        'links': 'a'
+        'prevBtn': '.prev'
+        'nextBtn': '.next'
 
     events:
-        "click @ui.showMoreBtn": "onClickShowMoreBtn"
+        "click @ui.links": "onClickLink"
+
+    template: (object) ->
+        return PagerTemplate(object)
 
 
     initialize: (options) =>
         @channel = options.channel
 
 
-    onClickShowMoreBtn: (e) =>
+    render: (response, options) =>
+        locals = {
+            pageSize: options.pageSize
+            currentPage: options.currentPage
+            count: response.count
+            countPages: Math.ceil(response.count / options.pageSize)
+        }
+        @$el.html @template(locals)
+
+
+    onClickLink: (e) =>
         e.preventDefault()
-        @channel.vent.trigger Events.OFFERS_SHOW_MORE
+        @$el.find('.active').removeClass 'active'
+        link = @$(e.target)
+        page = parseInt link.attr('data-page')
+        @$el.find("a.toPage[data-page=\"#{page}\"]").closest('li').addClass('active')
 
+        if page > 1
+            @$(@ui.prevBtn).removeClass 'hide'
+        else
+            @$(@ui.prevBtn).addClass 'hide'
 
-    show: =>
-        @$(@ui.showMoreBtn).show()
+        if page < @$el.find('.toPage').size()
+            @$(@ui.nextBtn).removeClass 'hide'
+        else
+            @$(@ui.nextBtn).addClass 'hide'
 
-    hide: =>
-        @$(@ui.showMoreBtn).hide()
+        @$(@ui.prevBtn).find('a').attr 'data-page', page - 1
+        @$(@ui.nextBtn).find('a').attr 'data-page', page + 1
+        @channel.vent.trigger Events.WALLET_PAYMENT_PAGER, page

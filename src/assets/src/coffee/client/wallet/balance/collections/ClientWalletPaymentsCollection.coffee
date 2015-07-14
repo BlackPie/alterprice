@@ -10,7 +10,7 @@ module.exports = class ClientWalletPaymentsCollection extends PageableCollection
     state:
         firstPage: 1
         currentPage: 1
-        pageSize: 3
+        pageSize: 10
 
     queryParams:
         currentPage: "page"
