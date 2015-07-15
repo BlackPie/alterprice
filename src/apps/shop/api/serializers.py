@@ -1,8 +1,10 @@
 from rest_framework import serializers
 # Project imports
+from rest_framework.exceptions import ValidationError
 from shop import models
 from product import models as productmodels
 from catalog.api.serializers import CategorySerializer
+from shop.models.offer import MakeException
 
 
 class ShopSerializer(serializers.ModelSerializer):
@@ -49,11 +51,14 @@ class YMLCreateSerialzier(serializers.ModelSerializer):
         fields = ('yml_url', 'name')
 
     def create(self, validated_data):
-        obj = models.ShopYML.objects.make(
-            shop=validated_data.get('shop'),
-            yml=validated_data.get('yml_url'),
-            name=validated_data.get('name')
-        )
+        try:
+            obj = models.ShopYML.objects.make(
+                shop=validated_data.get('shop'),
+                yml=validated_data.get('yml_url'),
+                name=validated_data.get('name')
+            )
+        except MakeException as e:
+            raise ValidationError(str(e))
         return obj
 
 
