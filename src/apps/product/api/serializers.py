@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from django.core.urlresolvers import reverse
 # Project imports
+from catalog.models.category import Category
 from product import models
 from shop.api.serializers import ShopSerializer
 from catalog.api.serializers import CategorySerializer
-from catalog.models import Category
 from brand.models import Brand
 
 

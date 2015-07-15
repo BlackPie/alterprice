@@ -1,16 +1,18 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, FormView, RedirectView
 from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 import json
+from django.core.servers.basehttp import FileWrapper
 # Project imports
+from apuser.models.payment import InvoiceRequest
+from catalog.models.token import EmailValidation, PasswordRecovery
 from shop.models import Shop, ShopYML
 from client import decorators
 from client import forms
 from apuser.models import Payment, Bill
-from catalog.models import EmailValidation, PasswordRecovery
 
 
 class ClientIndexPageView(TemplateView):
@@ -222,3 +224,15 @@ class ClientStatisticsDetailPageView(TemplateView):
         context = super(ClientStatisticsDetailPageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-pricelist-detail'
         return context
+
+
+def download_invoice(request, pk):
+    try:
+        invoicefile = InvoiceRequest.objects.get(id=pk)
+    except InvoiceRequest.DoesNotExist:
+        raise Http404
+
+    response = HttpResponse(FileWrapper(invoicefile.invoice_file))
+    filename = invoicefile.invoice_file.name.split('/')[-1]
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    return response

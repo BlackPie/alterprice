@@ -3,13 +3,14 @@ import logging
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListCreateAPIView
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 # Project imports
+from apuser.models.payment import InvoiceRequest
 from catalog import models as catalogmodels
 from apuser import models
 from client.api import serializers
@@ -114,9 +115,13 @@ class UpdateEmail(APIView):
         return response
 
 
-class RequestInvoice(CreateAPIView):
+class InvoiceRequestView(ListCreateAPIView):
     serializer_class = serializers.InvoiceRequestSerializer
     permission_classes = (permissions.AllowAny, )
+    model = InvoiceRequest
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save()

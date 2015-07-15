@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.loading import get_model
 
 
 class AlterPriceUserManager(models.Manager):
@@ -103,6 +104,12 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
 
     def get_shops(self):
         return self.owner.all()
+
+    @property
+    def invoices(self):
+        InvoiceRequest = get_model('apuser', 'InvoiceRequest')
+        return InvoiceRequest.objects.filter(user=self,
+                                             invoice_file__isnull=False)
 
     class Meta:
         verbose_name = _('Пользователь')

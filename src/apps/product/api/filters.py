@@ -3,9 +3,9 @@ import django_filters
 from django.forms import ModelMultipleChoiceField
 from django.core.validators import EMPTY_VALUES
 # Project imports
+from catalog.models.category import Category
 from product import models
 from brand.models import Brand
-from catalog.models import Category # NOQA
 EMPTY_VALUES = EMPTY_VALUES + ([''],)
 
 

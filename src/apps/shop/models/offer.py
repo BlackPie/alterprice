@@ -5,8 +5,9 @@ from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 # Project imports
+from catalog.models.category import Category
+from catalog.models.currency import Currency
 from utils.abstract_models import PublishModel
-from catalog.models import Category, Currency
 from product import models as productmodels
 from .shop import Shop
 

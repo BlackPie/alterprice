@@ -27,6 +27,9 @@
             <div class="pure-u-1-2 text-right">
                 <div class="block-2-x payment-block">
                     <header>Выставленные счета</header>
+                    {% for invoice in user.invoices %}
+                        <a href="{% url 'client:invoice_download' invoice.id %}">{{ invoice.id }}</a>
+                    {% endfor %}
                     <div id="client-wallet-bills-layout"></div>
                     <footer class="client-wallet-bills-pager"></footer>
                 </div>

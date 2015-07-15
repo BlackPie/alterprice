@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from catalog.models import City
+from catalog.models.city import City
 
 
 class ChangeCityForm(forms.Form):

@@ -2,6 +2,7 @@ import random
 from django.core.management.base import BaseCommand
 from apuser.models import AlterPriceUser, ClientProfile
 from brand.models import Brand
+from catalog.models.category import Category
 from shop import models as shopmodels
 from product import models as productmodels
 from catalog import models as catalogmodels
@@ -29,13 +30,13 @@ class Command(BaseCommand):
             u.set_password('123')
             users.append(u)
 
-            c = catalogmodels.Category()
+            c = Category()
             c.name = 'Category_%d' % x
             categories.append(c)
 
         AlterPriceUser.objects.bulk_create(users)
         Brand.objects.bulk_create(brands)
-        catalogmodels.Category.objects.bulk_create(categories)
+        Category.objects.bulk_create(categories)
 
         for u in AlterPriceUser.objects.all():
             c = ClientProfile()

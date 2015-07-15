@@ -3,9 +3,10 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, FormView, RedirectView
 from django.views.generic.detail import DetailView
 # Project imports
-from catalog.models import Category, City
 from catalog.forms import ChangeCityForm
 from brand.models import Brand
+from catalog.models.category import Category
+from catalog.models.city import City
 from product.models import ProductShop
 from apuser.models import Click, Balance, BalanceHistory
 

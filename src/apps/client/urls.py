@@ -32,6 +32,7 @@ urlpatterns = patterns(
     url(r'^statistics/$', views.ClientStatisticsDetailPageView.as_view(), name='statistics_detail'),
     url(r'^pricelist/(?P<pk>\d+)/$', views.ClientPricelistDetailPageView.as_view(), name='pricelist_detail'),
     url(r'^pricelist/add/$', views.ClientPricelistAddPageView.as_view(), name='pricelist_add'),
+    url(r'^invoice/download/(?P<pk>\d+)/$', views.download_invoice, name='invoice_download'),
 
     # Middleware UL
     url(r'^shop/change/$', views.ChnageShop.as_view(), name='change-shop'),

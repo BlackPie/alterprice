@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.core.validators import EMPTY_VALUES
 from django.core.management.base import BaseCommand, CommandError
-from catalog.models import Category
 import xlrd
+from catalog.models.category import Category
 
 
 class Command(BaseCommand):

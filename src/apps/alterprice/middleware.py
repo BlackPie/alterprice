@@ -1,4 +1,4 @@
-from catalog.models import City
+from catalog.models.city import City
 
 
 class CityMiddleware(object):

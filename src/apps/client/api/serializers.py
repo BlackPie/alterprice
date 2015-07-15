@@ -6,12 +6,11 @@ from django.contrib.auth import get_user_model
 from django.core.validators import EMPTY_VALUES
 from django.utils.crypto import constant_time_compare
 from django.utils.translation import ugettext_lazy as _
-from models.payment import InvoiceRequest
+from apuser.models.payment import InvoiceRequest
+from catalog.models.token import EmailValidation, PasswordRecovery
 
 User = get_user_model()
-# Project imports
 from client.api import messages
-from catalog.models import EmailValidation, PasswordRecovery
 from apuser import models
 
 

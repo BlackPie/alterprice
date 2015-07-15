@@ -170,6 +170,7 @@ class NameModel(models.Model):
 
     class Meta:
         abstract = True
+        app_label = 'catalog'
 
 
 class YMkey(models.Model):
@@ -177,6 +178,7 @@ class YMkey(models.Model):
 
     class Meta:
         abstract = True
+        app_label = 'catalog'
 
 
 def is_choice_of(status, choices):
