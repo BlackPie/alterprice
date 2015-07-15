@@ -149,8 +149,8 @@ class Profile(APIView):
 
     def success_action(self, request, serializer):
         phone = serializer.validated_data.get('phone')
-        request.user.client_user.phone = phone
-        request.user.client_user.save()
+        request.user.client_profile.phone = phone
+        request.user.client_profile.save()
 
     def success_data(self, serializers):
         response = {}

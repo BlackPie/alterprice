@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from .apuser import AlterPriceUser as User
+from apuser.models import ClientProfile
 from .payment import Payment
 from .click import Click
 from shop.models import Shop
@@ -11,25 +12,25 @@ class MakeException(Exception):
 
 
 class BalanceManager(models.Manager):
-    def make(self, user):
-        if not isinstance(user, User):
-            raise MakeException('invalid user object')
-        obj = self.model(user=user)
+    def make(self, client):
+        if not isinstance(client, ClientProfile):
+            raise MakeException('invalid client object')
+        obj = self.model(client=client)
         obj.save()
         return obj
 
 
 class Balance(models.Model):
-    user = models.OneToOneField(User,
-                                verbose_name=_('Пользователь'))
+    client = models.OneToOneField(ClientProfile,
+                                verbose_name=_('Клиент'))
     value = models.IntegerField(default=0,
                                 verbose_name=_('Значние'))
 
-    def __str__(self):
-        return self.user.email
-
     def __unicode__(self):
-        return self.user.email
+        return str(self.client)
+
+    def __str__(self):
+        return str(self.client)
 
     objects = BalanceManager()
 
@@ -61,16 +62,24 @@ class BalanceHistoryManager(models.Manager):
         return obj
 
     def increase(self, balance, payment):
-        return self.make(
+        obj = self.make(
             balance=balance,
             reason=self.model.REPLISHMENT,
             payment=payment,
             previous_state=balance.value,
             value=payment.amount,
             new_state=balance.value + payment.amount)
+        if (obj.new_state > 0):
+            balance.client.is_active = True
+            balance.client.save()
+        return obj
 
     def decrease(self, balance, value, click):
         new_state = balance.value - value
+        if (new_state <= 0):
+            balance.client.is_active = False
+            balance.client.save()
+
         obj = self.make(
             balance=balance,
             reason=self.model.CLICK,
@@ -81,13 +90,19 @@ class BalanceHistoryManager(models.Manager):
         return obj
 
     def recover(self, balance, payment):
-        return self.make(
+        obj =  self.make(
             balance=balance,
             reason=self.model.RECOVERY,
             payment=payment,
             previous_state=balance.value,
             value=payment.amount,
             new_state=balance.value + payment.amount)
+        if (obj.new_state > 0):
+            balance.client.is_active = True
+        else:
+            balance.client.is_active = False
+        balance.client.save()
+        return obj
 
 
 class BalanceHistory(models.Model):

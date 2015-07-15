@@ -92,7 +92,7 @@ class ClientProfile(Profile):
     )
 
     user = models.OneToOneField(AlterPriceUser,
-                                related_name='client_user',
+                                related_name='client_profile',
                                 verbose_name=_('Пользователь'))
     ownership_type = models.PositiveSmallIntegerField(verbose_name=_(u'Форма собственности'),
                                                       default=ENTITY,
@@ -114,14 +114,14 @@ class ClientProfile(Profile):
                                  related_name='operator',
                                  verbose_name=_('Оператор'))
     checked = models.BooleanField(default=False, verbose_name=_('Проверено'), help_text=_('Модератор проверил и одобрил'))
+    is_active = models.BooleanField(default=False, verbose_name=_('Активен'), help_text=_('Неактивен если закончились деньги на балансе'))
     objects = ClientProfileManager()
 
+    def __unicode__(self):
+        return 'company %d' % self.id
 
     def __str__(self):
-        return "%s" % self.user.email
-
-    def __unicode__(self):
-        return "%s" % self.user.email
+        return 'company %d' % self.id
 
     class Meta:
         verbose_name = _('Клиент')

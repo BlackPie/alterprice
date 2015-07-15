@@ -81,7 +81,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         EmailValidation.objects.make(user=user, email=email)
         code = validated_data.get('operator_code')
         op_qs = models.OperatorProfile.objects.filter(code=code)
-        models.ClientProfile.objects.make(
+        client = models.ClientProfile.objects.make(
             user=user,
             operator=op_qs.first() if op_qs.exists() else None,
             city=validated_data.get('city'),
@@ -89,7 +89,7 @@ class SignUpSerializer(serializers.ModelSerializer):
             name=validated_data.get('first_name'),
             last_name=validated_data.get('last_name'),
             ownership_type=validated_data.get('ownership_type'))
-        models.Balance.objects.make(user=user)
+        models.Balance.objects.make(client=client)
         return user
 
     def validate(self, attrs):
