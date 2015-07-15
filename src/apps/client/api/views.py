@@ -107,8 +107,38 @@ class UpdateEmail(APIView):
         user = serializer.validated_data.get('user')
         user.email = serializer.validated_data.get('email')
         user.save()
-        
-        
+
+    def success_data(self, serializers):
+        response = {}
+        response['status'] = 'success'
+        return response
+
+
+class RequestInvoice(CreateAPIView):
+    serializer_class = serializers.InvoiceRequestSerializer
+    permission_classes = (permissions.AllowAny, )
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        response = {}
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            response['status'] = 'success'
+            response['message'] = _('Запрос на счет отправлен.')
+            return Response(response, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            response['status'] = 'fail'
+            response['errors'] = serializer.errors
+            headers = self.get_success_headers(serializer.data)
+            return Response(response,
+                            status=status.HTTP_400_BAD_REQUEST,
+                            headers=headers)
+
+
 class Profile(APIView):
     serializer_class = serializers.ProfileSerializer
 

@@ -86,3 +86,19 @@ class Payment(models.Model):
     class Meta:
         verbose_name = _('Оплата')
         verbose_name_plural = _('Оплаты')
+
+
+class InvoiceRequest(models.Model):
+    user = models.ForeignKey(User, verbose_name=_('Клиент'))
+    invoice_file = models.FileField(blank=True, null=True, verbose_name=_('Файл счета'))
+    company_name = models.CharField(verbose_name=_('Компания'), max_length=255)
+    inn = models.CharField(verbose_name=_('ИНН'), max_length=255)
+    kpp = models.CharField(verbose_name=_('КПП'), max_length=255)
+    bik = models.CharField(verbose_name=_('БИК'), max_length=255)
+    rs = models.CharField(verbose_name=_('Рассчетный счет'), max_length=255)
+    ks = models.CharField(verbose_name=_('Корреспондетский счет'), max_length=255)
+    bank_name = models.CharField(verbose_name=_('Название банка'), max_length=255)
+    fio = models.CharField(verbose_name=_('ФИО контактного лица'), max_length=255)
+    phone = models.CharField(verbose_name=_('Телефон контактного лица'), max_length=255)
+    legal_address = models.CharField(verbose_name=_('Юридический адрес'), max_length=255)
+    post_address = models.CharField(verbose_name=_('Почтовый адрес'), max_length=255)

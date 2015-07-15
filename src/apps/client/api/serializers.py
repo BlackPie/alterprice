@@ -6,6 +6,8 @@ from django.contrib.auth import get_user_model
 from django.core.validators import EMPTY_VALUES
 from django.utils.crypto import constant_time_compare
 from django.utils.translation import ugettext_lazy as _
+from models.payment import InvoiceRequest
+
 User = get_user_model()
 # Project imports
 from client.api import messages
@@ -221,3 +223,13 @@ class ProfilePasswordSerializer(serializers.Serializer):
                 'confirm_password': _('Пароли не совпадают'),
             })
         return attrs
+
+
+class InvoiceRequestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = InvoiceRequest
+        exclude = ('user', 'invoice_file')
+
+    def create(self, validated_data):
+        return InvoiceRequest(**validated_data)
