@@ -1,7 +1,9 @@
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from .apuser import AlterPriceUser as User
 from apuser.models import ClientProfile
+from django.db.models.signals import post_save
 from .payment import Payment
 from .click import Click
 from shop.models import Shop
@@ -39,6 +41,14 @@ class Balance(models.Model):
         verbose_name_plural = _('Баланс')
 
 
+@receiver(post_save, sender=Balance)
+def balance_change_callback(sender, instance, **kwargs):
+    active = bool(instance.value > 0)
+    if (instance.client.is_active != active):
+        instance.client.is_active = active
+        instance.client.save()
+
+
 class BalanceHistoryManager(models.Manager):
     def make(self, balance, value, previous_state, new_state, reason,
              payment=None, click=None):
@@ -62,47 +72,33 @@ class BalanceHistoryManager(models.Manager):
         return obj
 
     def increase(self, balance, payment):
-        obj = self.make(
+        return self.make(
             balance=balance,
             reason=self.model.REPLISHMENT,
             payment=payment,
             previous_state=balance.value,
             value=payment.amount,
             new_state=balance.value + payment.amount)
-        if (obj.new_state > 0):
-            balance.client.is_active = True
-            balance.client.save()
-        return obj
 
     def decrease(self, balance, value, click):
         new_state = balance.value - value
-        if (new_state <= 0):
-            balance.client.is_active = False
-            balance.client.save()
 
-        obj = self.make(
+        return self.make(
             balance=balance,
             reason=self.model.CLICK,
             click=click,
             previous_state=balance.value,
             value=value,
             new_state=new_state)
-        return obj
 
     def recover(self, balance, payment):
-        obj =  self.make(
+        return self.make(
             balance=balance,
             reason=self.model.RECOVERY,
             payment=payment,
             previous_state=balance.value,
             value=payment.amount,
             new_state=balance.value + payment.amount)
-        if (obj.new_state > 0):
-            balance.client.is_active = True
-        else:
-            balance.client.is_active = False
-        balance.client.save()
-        return obj
 
 
 class BalanceHistory(models.Model):
