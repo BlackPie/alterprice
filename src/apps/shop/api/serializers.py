@@ -56,7 +56,8 @@ class YMLCreateSerialzier(serializers.ModelSerializer):
             obj = models.ShopYML.objects.make(
                 shop=validated_data.get('shop'),
                 yml=validated_data.get('yml_url'),
-                name=validated_data.get('name')
+                name=validated_data.get('name'),
+                region_id=validated_data.get('region_id'),
             )
         except MakeException as e:
             raise ValidationError(str(e))
@@ -109,4 +110,4 @@ class YMLProductListserializer(serializers.ModelSerializer):
 class YMLUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ShopYML
-        fields = ('name', )
+        fields = ('name', 'region_id')
