@@ -45,6 +45,9 @@ class Balance(models.Model):
 def balance_change_callback(sender, instance, **kwargs):
     active = bool(instance.value > 0)
     if (instance.client.is_active != active):
+        shops = Shop.objects.filter(user=instance.client.user)
+        status = Shop.ENABLED if active else Shop.DISABLED
+        shops.update(status=status)
         instance.client.is_active = active
         instance.client.save()
 
