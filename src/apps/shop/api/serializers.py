@@ -4,6 +4,7 @@ from rest_framework.exceptions import ValidationError
 from shop import models
 from product import models as productmodels
 from catalog.api.serializers import CategorySerializer
+from shop.models import Shop
 from shop.models.offer import MakeException
 
 
@@ -71,7 +72,13 @@ class YMLCategoryListSerializer(serializers.ModelSerializer):
         fields = ('id', 'category', 'price', 'lead_price')
 
     def get_lead_price(self, obj):
-        return '123'
+        try:
+            max_price = models.OfferCategories.objects.filter(category=obj.category,
+                              shopyml__shop__status=Shop.ENABLED) \
+                .order_by('price')[0]
+            return max_price.price
+        except IndexError:
+            return 0
 
 
 class YMLCategoryUpdateSerializer(serializers.ModelSerializer):
