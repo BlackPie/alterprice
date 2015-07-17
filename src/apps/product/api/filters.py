@@ -72,14 +72,21 @@ class ProductSearchFilter(django_filters.CharFilter):
         return qs
 
 
+class ProductSearchFilterSet(django_filters.FilterSet):
+    search = ProductSearchFilter()
+
+    class Meta:
+        model = models.Product
+        fields = ['search']
+
+
 class ProductListFilter(django_filters.FilterSet):
     price_max = PriceMaxFilter()
     price_min = PriceMinFilter()
     brand = BrandFilter(queryset=Brand.objects.all(),
                         required=False)
     category = CategoryFilter(queryset=Category.objects.all(), required=False)
-    search = ProductSearchFilter()
 
     class Meta:
         model = models.Product
-        fields = ['price_min', 'price_max', 'brand', 'search', 'category']
+        fields = ['price_min', 'price_max', 'brand', 'category']
