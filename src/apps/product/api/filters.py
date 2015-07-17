@@ -52,8 +52,7 @@ class ModelMultipleChoiceField(ModelMultipleChoiceField):
 class CategoryFilter(django_filters.ModelChoiceFilter):
     def filter(self, qs, value):
         if value not in EMPTY_VALUES:
-            if isinstance(value, Category):
-                qs = qs.by_category(value)
+            qs = qs.by_category(value)
         return qs
 
 
