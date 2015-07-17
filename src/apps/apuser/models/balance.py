@@ -71,7 +71,7 @@ class BalanceHistoryManager(models.Manager):
         balance.save()
         if new_state <= 0:
             # Turns off (status=Disabled) all shops of balance.user
-            Shop.objects.turn_off_debtor(balance.user)
+            Shop.objects.turn_off_debtor(balance.client.user)
         return obj
 
     def increase(self, balance, payment):
@@ -143,10 +143,10 @@ class BalanceHistory(models.Model):
     objects = BalanceHistoryManager()
 
     def __str__(self):
-        return self.balance.user.email
+        return str(self.balance.client)
 
     def __unicode__(self):
-        return self.balance.user.email
+        return (self.balance.client)
 
     class Meta:
         verbose_name = _('Изменение баланса')

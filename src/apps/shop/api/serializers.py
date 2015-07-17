@@ -1,6 +1,7 @@
 from rest_framework import serializers
 # Project imports
 from rest_framework.exceptions import ValidationError
+from product.models import ProductShop
 from shop import models
 from product import models as productmodels
 from catalog.api.serializers import CategorySerializer
@@ -49,7 +50,7 @@ class UpdateShopSerializer(serializers.ModelSerializer):
 class YMLCreateSerialzier(serializers.ModelSerializer):
     class Meta:
         model = models.ShopYML
-        fields = ('yml_url', 'name')
+        fields = ('yml_url', 'name', 'region_id')
 
     def create(self, validated_data):
         try:
@@ -111,3 +112,27 @@ class YMLUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ShopYML
         fields = ('name', 'region_id')
+
+
+class StatisticSerializer(serializers.ModelSerializer):
+    # sum = serializers.IntegerField()
+    # count = serializers.IntegerField()
+    # name = serializers.CharField()
+    # id = serializers.IntegerField()
+    # category = serializers.IntegerField()
+
+    class Meta:
+        model = ProductShop
+        fields = ('sum', 'count', 'name', 'id', 'category')
+
+    def get_name(self, obj):
+        return obj.product.name
+
+    def get_category(self, obj):
+        return obj.category.category_id
+
+    def get_sum(self, obj):
+        return obj.sum
+
+    def get_count(self, obj):
+        return obj.count

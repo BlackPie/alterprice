@@ -93,13 +93,13 @@ class ClickOffer(RedirectView):
         user = ps.shop.user
 
         try:
-            balance = user.balance
+            balance = user.user.client_profile
         except:
-            balance = Balance.objects.make(user=user)
+            balance = Balance.objects.make(client=user.client_profile)
         BalanceHistory.objects.decrease(
             balance=balance,
             click=click,
-            value=ps.price)
+            value=ps.click_price)
         return ps.url
 
     # def get(self, request, *args, **kwargs):
