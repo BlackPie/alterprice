@@ -86,27 +86,29 @@
             <div class="pure-u-1-2 text-right">
                 <div class="block-2-x text-left">
                     <header>Смена email</header>
-                    <form id="" class="form-block">
-                        <label class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name">Текущий Email</div>
-                            <div class="pure-u-3-5 field-value">
-                                <input type="password" class="b_input_text" value="" />
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name">Новый Email</div>
-                            <div class="pure-u-3-5 field-value">
-                                <input type="password" class="b_input_text" value="" />
-                            </div>
-                        </label>
-                        <label class="pure-g field-wrapper">
-                            <div class="pure-u-2-5 field-name"></div>
-                            <div class="pure-u-3-5 field-value"></div>
-                        </label>
-                        <footer>
-                            <button type="submit" class="btn btn-purple">Сменить Email</button>
-                        </footer>
-                    </form>
+                    <div id="client-profile-email-form-view">
+                        <form action="{% url 'client-api:email-update' %}" method="post" class="form-block">
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name">Текущий Email</div>
+                                <div class="pure-u-3-5 field-value">
+                                    <input type="text" name="email" class="b_input_text" value="" />
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name">Новый Email</div>
+                                <div class="pure-u-3-5 field-value">
+                                    <input type="text" name="new_email" class="b_input_text" value="" />
+                                </div>
+                            </label>
+                            <label class="pure-g field-wrapper">
+                                <div class="pure-u-2-5 field-name"></div>
+                                <div class="pure-u-3-5 field-value"></div>
+                            </label>
+                            <footer>
+                                <button type="submit" class="btn btn-purple">Сменить Email</button>
+                            </footer>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
