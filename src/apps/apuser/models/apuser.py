@@ -105,12 +105,6 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
     def get_shops(self):
         return self.owner.all()
 
-    @property
-    def invoices(self):
-        InvoiceRequest = get_model('apuser', 'InvoiceRequest')
-        return InvoiceRequest.objects.filter(user=self,
-                                             invoice_file__isnull=False)
-
     class Meta:
         verbose_name = _('Пользователь')
         verbose_name_plural = _('Пользователи')

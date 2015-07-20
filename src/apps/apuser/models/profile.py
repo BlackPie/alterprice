@@ -3,6 +3,7 @@ from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 # Project imports
 from .apuser import AlterPriceUser
+from apuser.models.payment import InvoiceRequest
 from utils.helpers import generate_code
 from utils.abstract_models import ApprovedModel, is_choice_of
 
@@ -118,10 +119,16 @@ class ClientProfile(Profile):
     objects = ClientProfileManager()
 
     def __unicode__(self):
-        return 'company %d' % self.id
+        return self.company or 'Client %d' % self.id
 
     def __str__(self):
-        return 'company %d' % self.id
+        return self.company or 'Client %d' % self.id
+
+    @property
+    def invoices(self):
+        return InvoiceRequest.objects.filter(client=self) \
+            .exclude(invoice_file='')
+
 
     class Meta:
         verbose_name = _('Клиент')

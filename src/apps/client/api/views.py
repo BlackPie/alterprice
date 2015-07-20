@@ -124,7 +124,10 @@ class InvoiceRequestView(ListCreateAPIView):
         return self.model.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save()
+        ir = serializer.save()
+        ir.client = self.request.user.client_profile
+        ir.save()
+
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
