@@ -12,7 +12,7 @@ class ProductQuerySet(query.QuerySet):
     def active(self):
         return self.filter(
             productshop__shop__status=1,
-            productshop__shopyml__publish_status=1)
+            productshop__pricelist__publish_status=1)
 
     def by_ymid(self, ym_id):
         # return self.active().filter(ym_id=ym_id)

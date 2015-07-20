@@ -12,14 +12,11 @@ from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, D
 from rest_framework import status
 from rest_framework.response import Response
 # Project imports
-from rest_framework.settings import api_settings
-from rest_framework.views import APIView
 from apuser.models import BalanceHistory
 from product.models import ProductShop
-from shop import models
-from product import models as productmodels
 from shop.api import serializers
-from shop.models import ShopYML
+from shop.models.offer import OfferCategories, Pricelist
+from shop.models.shop import Shop
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +47,7 @@ class ShopCreate(CreateAPIView):
 
 class ShopUpdate(UpdateAPIView):
     serializer_class = serializers.UpdateShopSerializer
-    queryset = models.Shop.objects.all()
+    queryset = Shop.objects.all()
     permission_classes = (
         IsAuthenticated,
         # TODO: permission that only owner ( or admin can update shop)
@@ -77,7 +74,7 @@ class ShopUpdate(UpdateAPIView):
 
 class ShopClientList(ListAPIView):
     serializer_class = serializers.ShopSerializer
-    model = models.Shop
+    model = Shop
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
@@ -112,7 +109,7 @@ class AddYML(CreateAPIView):
 
 class YMLPublish(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
-    model = models.ShopYML
+    model = Pricelist
 
     def get_queryset(self):
         yml_id = self.kwargs.get('pk')
@@ -131,7 +128,7 @@ class YMLPublish(UpdateAPIView):
 
 class YMLUnPublish(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
-    model = models.ShopYML
+    model = Pricelist
 
     def get_queryset(self):
         yml_id = self.kwargs.get('pk')
@@ -151,7 +148,7 @@ class YMLUnPublish(UpdateAPIView):
 class YMLUpdate(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = serializers.YMLUpdateSerializer
-    queryset = models.ShopYML.objects.all()
+    queryset = Pricelist.objects.all()
 
     def perform_update(self, serializer):
         serializer.save()
@@ -175,7 +172,7 @@ class YMLUpdate(UpdateAPIView):
 class YMLDelete(DestroyAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = serializers.YMLUpdateSerializer
-    queryset = models.ShopYML.objects.all()
+    queryset = Pricelist.objects.all()
 
     def delete(self, request, pk):
         response = {}
@@ -190,19 +187,19 @@ class YMLDelete(DestroyAPIView):
 class YMLCategoryList(ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = serializers.YMLCategoryListSerializer
-    model = models.OfferCategories
+    model = OfferCategories
 
     def get_queryset(self):
         yml_id = self.kwargs.get('pk')
-        qs = self.model.objects.filter(shopyml_id=yml_id)
+        qs = self.model.objects.filter(pricelist_id=yml_id)
         return qs.select_related('category').order_by('category')
 
 
 class YMLCategoryUpdate(UpdateAPIView):
     permission_classes = (IsAuthenticated, )
-    queryset = models.OfferCategories.objects.all()
+    queryset = OfferCategories.objects.all()
     serializer_class = serializers.YMLCategoryUpdateSerializer
-    model = models.OfferCategories
+    model = OfferCategories
 
     def perform_update(self, serializer):
         serializer.save()
@@ -226,11 +223,11 @@ class YMLCategoryUpdate(UpdateAPIView):
 class YMLProductList(ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = serializers.YMLProductListserializer
-    model = productmodels.ProductShop
+    model = ProductShop
 
     def get_queryset(self):
         yml_id = self.kwargs.get('pk')
-        qs = self.model.objects.filter(shopyml_id=yml_id)
+        qs = self.model.objects.filter(pricelist_id=yml_id)
         # qs = qs.select_related('category')
         # qs = qs.prefetch_related('productshop_set')
         return qs.order_by('-product__category').distinct()
@@ -262,8 +259,8 @@ class StatisticShop(ListAPIView):
 
     def _get_shop(self):
         try:
-            return ShopYML.objects.get(pk=self.request.query_params.get('shop'))
-        except ShopYML.DoesNotExist:
+            return Shop.objects.get(pk=self.request.query_params.get('shop'))
+        except Pricelist.DoesNotExist:
             raise Http404
 
     def get_queryset(self):
@@ -284,7 +281,7 @@ class StatisticShop(ListAPIView):
             query = BalanceHistory.objects.filter(created__gte=start,
                                                   created__lt=end,
                                                   reason=BalanceHistory.CLICK,
-                                                  click__productshop__shopyml=shop,
+                                                  click__productshop__shop=shop,
                                                   balance__client__user=self.request.user)
             clicks_count = query.count()
             money_sum = query.aggregate(Sum('change_value'))

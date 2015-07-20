@@ -9,23 +9,15 @@ from catalog.models.currency import Currency
 from catalog.models.property import Property
 
 
-class ProductFK(models.Model):
-    product = models.ForeignKey('product.Product',
-                                verbose_name=_('Продукт'))
-
-    class Meta:
-        abstract = True
-
-
 class ProductShopManager(models.Manager):
     def make_from_yml(self, yml_obj, shop, product, currency,
-                      offercats, shopyml):
+                      offercats, pricelist):
         obj = self.model()
         # check instances ( or useless method almost private)
         obj.product = product
         obj.shop = shop
         obj.currency = currency
-        obj.shopyml = shopyml
+        obj.pricelist = pricelist
         price = yml_obj.get('price')
 
         if '.' in price:
@@ -38,10 +30,12 @@ class ProductShopManager(models.Manager):
         return obj
 
 
-class ProductShop(ProductFK):
+class ProductShop(models.Model):
+    product = models.ForeignKey('product.Product',
+                                verbose_name=_('Продукт'))
     shop = models.ForeignKey('shop.Shop',
                              verbose_name=_('Магазин'))
-    shopyml = models.ForeignKey('shop.ShopYML',
+    pricelist = models.ForeignKey('shop.Pricelist',
                                 null=True,
                                 blank=True,
                                 default=None,
@@ -124,7 +118,9 @@ class ProductPropertyManager(models.Manager):
         pass
 
 
-class ProductProperty(ProductFK):
+class ProductProperty(models.Model):
+    product = models.ForeignKey('product.Product',
+                                verbose_name=_('Продукт'))
     value = models.CharField(max_length=255,
                              verbose_name=_('Значение свойства'))
     prop = models.ForeignKey(Property,
@@ -150,7 +146,9 @@ def get_photo_path(instance, filename):
     return os.path.join("product/", filename)
 
 
-class ProductPhoto(ProductFK):
+class ProductPhoto(models.Model):
+    product = models.ForeignKey('product.Product',
+                                verbose_name=_('Продукт'))
     photo = ThumbnailerField(blank=True,
                              null=True,
                              default=None,

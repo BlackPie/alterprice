@@ -2,7 +2,7 @@ import random
 from django.views.generic.detail import DetailView
 from product.models import Product
 import json
-from shop.models import Shop, ShopYML
+
 
 
 class ProductDetailPageView(DetailView):

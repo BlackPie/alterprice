@@ -2,8 +2,10 @@ from django.db.models import Q
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
-# Project imports
+
 from shop import models
+from shop.models.offer import Pricelist
+from shop.models.shop import Shop
 from utils.admin_filters import RegDateFilter
 User = get_user_model()
 
@@ -26,7 +28,7 @@ class OperatorFilter(admin.SimpleListFilter):
 
 
 class ShopYMLInline(admin.StackedInline):
-    model = models.ShopYML
+    model = Pricelist
 
 
 class ShopAdmin(admin.ModelAdmin):
@@ -50,4 +52,4 @@ class ShopAdmin(admin.ModelAdmin):
         return qs
 
 
-admin.site.register(models.Shop, ShopAdmin)
+admin.site.register(Shop, ShopAdmin)

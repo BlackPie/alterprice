@@ -9,10 +9,12 @@ from django.core.servers.basehttp import FileWrapper
 # Project imports
 from apuser.models.payment import InvoiceRequest
 from catalog.models.token import EmailValidation, PasswordRecovery
-from shop.models import Shop, ShopYML
+
 from client import decorators
 from client import forms
 from apuser.models import Payment, Bill
+from shop.models.offer import Pricelist
+from shop.models.shop import Shop
 
 
 class ClientIndexPageView(TemplateView):
@@ -203,7 +205,7 @@ class ClientPricelistDetailPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ClientPricelistDetailPageView, self).get_context_data(**kwargs)
         context['context'] = json.dumps({'pricelistId': self.kwargs['pk']})
-        context['object'] = ShopYML.objects.get(pk=self.kwargs['pk']) #self.kwargs['pk']
+        context['object'] = Pricelist.objects.get(pk=self.kwargs['pk']) #self.kwargs['pk']
         context['current_app'] = 'client-pricelist-detail'
         return context
 

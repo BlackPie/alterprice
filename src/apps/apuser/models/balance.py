@@ -6,7 +6,7 @@ from apuser.models import ClientProfile
 from django.db.models.signals import post_save
 from .payment import Payment
 from .click import Click
-from shop.models import Shop
+from shop.models.shop import Shop
 
 
 class MakeException(Exception):

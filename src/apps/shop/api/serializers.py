@@ -5,13 +5,13 @@ from product.models import ProductShop
 from shop import models
 from product import models as productmodels
 from catalog.api.serializers import CategorySerializer
-from shop.models import Shop
-from shop.models.offer import MakeException
+from shop.models.offer import MakeException, OfferCategories, Pricelist
+from shop.models.shop import Shop
 
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Shop
+        model = Shop
         fields = ('id', 'name')
 
 
@@ -19,12 +19,12 @@ class CreateShopSerializer(serializers.ModelSerializer):
     yml_url = serializers.CharField(allow_blank=True, write_only=True)
 
     class Meta:
-        model = models.Shop
+        model = Shop
         fields = ('city', 'phone', 'address', 'site', 'name', 'ogrn',
-                  'entity', 'yml_url')
+                  'entity', 'yml_url', 'region')
 
     def create(self, validated_data):
-        shop = models.Shop.objects.make(
+        shop = Shop.objects.make(
             user=validated_data.get('user'),
             city=validated_data.get('city'),
             phone=validated_data.get('phone'),
@@ -32,33 +32,36 @@ class CreateShopSerializer(serializers.ModelSerializer):
             site=validated_data.get('site'),
             name=validated_data.get('name'),
             ogrn=validated_data.get('ogrn'),
+            region_id=validated_data.get('region'),
             entity=validated_data.get('entity'))
         yml_url = validated_data.get('yml_url', None)
         if yml_url:
-            models.ShopYML.objects.make(
+            Pricelist.objects.make(
                 shop=shop,
-                yml=yml_url)
+                yml=yml_url,
+                region_id=validated_data.get('region'),
+            )
         return shop
 
 
 class UpdateShopSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Shop
+        model = Shop
         fields = ('phone', 'city', 'address', 'site')
 
 
 class YMLCreateSerialzier(serializers.ModelSerializer):
     class Meta:
-        model = models.ShopYML
-        fields = ('yml_url', 'name', 'region_id')
+        model = Pricelist
+        fields = ('yml_url', 'name', 'region')
 
     def create(self, validated_data):
         try:
-            obj = models.ShopYML.objects.make(
+            obj = Pricelist.objects.make(
                 shop=validated_data.get('shop'),
                 yml=validated_data.get('yml_url'),
                 name=validated_data.get('name'),
-                region_id=validated_data.get('region_id'),
+                region_id=validated_data.get('region'),
             )
         except MakeException as e:
             raise ValidationError(str(e))
@@ -70,13 +73,13 @@ class YMLCategoryListSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
 
     class Meta:
-        model = models.OfferCategories
+        model = OfferCategories
         fields = ('id', 'category', 'price', 'lead_price')
 
     def get_lead_price(self, obj):
         try:
-            max_price = models.OfferCategories.objects.filter(category=obj.category,
-                              shopyml__shop__status=Shop.ENABLED) \
+            max_price = OfferCategories.objects.filter(category=obj.category,
+                              pricelist__shop__status=Shop.ENABLED) \
                 .order_by('price')[0]
             return max_price.price
         except IndexError:
@@ -85,7 +88,7 @@ class YMLCategoryListSerializer(serializers.ModelSerializer):
 
 class YMLCategoryUpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.OfferCategories
+        model = OfferCategories
         fields = ('price',)
 
 
@@ -110,8 +113,8 @@ class YMLProductListserializer(serializers.ModelSerializer):
 
 class YMLUpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.ShopYML
-        fields = ('name', 'region_id')
+        model = Pricelist
+        fields = ('name', 'region')
 
 
 class StatisticSerializer(serializers.Serializer):

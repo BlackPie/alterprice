@@ -18,7 +18,7 @@ class MakeException(Exception):
     ""
 
 
-class ShopYMLManager(models.Manager):
+class PricelistManager(models.Manager):
     def get_data(self, data):
         if data in EMPTY_VALUES:
             raise MakeException('Empty yml')
@@ -80,14 +80,14 @@ class ShopYMLManager(models.Manager):
 
         obj.save()
         # create OfferCategories rows
-        offercats = OfferCategories.objects.make_from_parsed_list(shopyml=obj,
+        offercats = OfferCategories.objects.make_from_parsed_list(pricelist=obj,
                                                                   plist=categories)
 
         for offer in offers:
             product = productmodels.Product.objects.make_from_yml(offer)
 
             productshop = productmodels.ProductShop.objects.make_from_yml(
-                shopyml=obj,
+                pricelist=obj,
                 product=product,
                 shop=shop,
                 currency=obj.currency,
@@ -100,11 +100,11 @@ class ShopYMLManager(models.Manager):
         return obj
 
 
-class ShopYML(PublishModel):
+class Pricelist(PublishModel):
     shop = models.ForeignKey(Shop,
                              verbose_name=_('Магазин'))
     name = models.CharField(max_length=255,
-                            verbose_name=_('Название YML'))
+                            verbose_name=_('Название'))
     yml_url = models.URLField(verbose_name=_('YMl url'))
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
@@ -115,7 +115,7 @@ class ShopYML(PublishModel):
                                  blank=True,
                                  verbose_name=_('Валюта'))
     region = models.ForeignKey(City)
-    objects = ShopYMLManager()
+    objects = PricelistManager()
 
     def parse_yml(self):
         yml_file = urllib.request.urlopen(self.yml_url)
@@ -130,26 +130,26 @@ class ShopYML(PublishModel):
         return self.name
 
     class Meta:
-        verbose_name = _('YML файл магазина')
-        verbose_name_plural = _('YML файлы магазинов')
+        verbose_name = _('Прайс лист магазина')
+        verbose_name_plural = _('Прайс листы магазинов')
 
 
 class OfferCategoriesManager(models.Manager):
-    def make_from_parsed_list(self, plist, shopyml):
+    def make_from_parsed_list(self, plist, pricelist):
         offercats = list()
         for cats in plist:
             offercats.append(
-                self.model(category=cats.get('system_cat'), shopyml=shopyml))
+                self.model(category=cats.get('system_cat'), pricelist=pricelist))
         if len(offercats) > 0:
             self.bulk_create(offercats)
-            return self.filter(shopyml=shopyml)
+            return self.filter(pricelist=pricelist)
         else:
             return None
 
 
 class OfferCategories(models.Model):
-    shopyml = models.ForeignKey(ShopYML,
-                                verbose_name=_('Предложение'))
+    pricelist = models.ForeignKey(Pricelist,
+                                verbose_name=_('Прайс лист'))
     category = models.ForeignKey(Category,
                                  verbose_name=_('Категория'))
     price = models.IntegerField(null=True,

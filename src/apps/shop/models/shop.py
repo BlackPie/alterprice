@@ -17,7 +17,7 @@ class ShopManager(models.Manager):
     def get_list(self):
         return self.all()
 
-    def make(self, user, name, ogrn, entity,
+    def make(self, user, name, ogrn, entity, region_id,
              phone=None, address=None, site=None, city=None):
         if not hasattr(user, 'is_client'):
             if not user.is_client():
@@ -31,6 +31,7 @@ class ShopManager(models.Manager):
         obj.site = site
         obj.name = name
         obj.ogrn = ogrn
+        obj.region_id = region_id
         obj.entity = entity
         obj.save()
         return obj
@@ -80,7 +81,7 @@ class Shop(StatusModel):
         return self.name
 
     def get_ymls(self):
-        return self.shopyml_set.all()
+        return self.pricelist_set.all()
 
     class Meta:
         verbose_name = _('Магазин')

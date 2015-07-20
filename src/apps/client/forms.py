@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 # PRoject imports
-from shop.models import Shop
+from shop.models.shop import Shop
 
 
 class ChangeShopForm(forms.Form):

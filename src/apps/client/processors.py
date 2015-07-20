@@ -1,4 +1,4 @@
-from shop.models import Shop
+from shop.models.shop import Shop
 
 
 def shop_processor(request):
