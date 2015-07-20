@@ -176,7 +176,7 @@ class UpdateEmailSerializer(serializers.Serializer):
     new_email = serializers.EmailField(max_length=255,
                                    error_messages=messages.email_errors)
 
-    def validate_email(self, attrs):
+    def validate(self, attrs):
         if attrs.get('email') in EMPTY_VALUES or attrs.get('new_email') in EMPTY_VALUES:
             raise serializers.ValidationError(messages.email_errors.get('blank'))
         try:
