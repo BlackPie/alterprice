@@ -2,10 +2,10 @@ from django.core.validators import EMPTY_VALUES
 from rest_framework.generics import ListAPIView
 from django.db.models import Count
 # Project imports
+from catalog.models.category import Category
 from product import models
 from product.api import serializers, filters
 from utils.views import APIView
-from catalog.models import Category
 from catalog.api.serializers import CategorySerializer
 
 

@@ -6,7 +6,58 @@
     <bookmark url="file://$PROJECT_DIR$/src/apps/shop/api/views.py" line="142" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76525841-b2eb-40ad-aab8-562f41bb6254" name="Default" comment="" />
+    <list default="true" id="76525841-b2eb-40ad-aab8-562f41bb6254" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/apps/catalog/migrations/0011_auto_20150715_1342.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/apps/shop/migrations/0022_shopyml_region.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/apps/apuser/migrations/0036_auto_20150713_1918.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/apps/apuser/migrations/0037_invoicerequest.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/apps/apuser/migrations/0038_auto_20150715_1922.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/apps/apuser/migrations/0039_clientprofile_is_active.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/alterprice.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/apuser/models/__init__.py" afterPath="$PROJECT_DIR$/src/apps/apuser/models/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/catalog/models/__init__.py" afterPath="$PROJECT_DIR$/src/apps/catalog/models/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/utils/abstract_models.py" afterPath="$PROJECT_DIR$/src/apps/utils/abstract_models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/apuser/admin.py" afterPath="$PROJECT_DIR$/src/apps/apuser/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/catalog/admin.py" afterPath="$PROJECT_DIR$/src/apps/catalog/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/apuser/models/apuser.py" afterPath="$PROJECT_DIR$/src/apps/apuser/models/apuser.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/apps/client/wallet/balance.html" afterPath="$PROJECT_DIR$/src/templates/apps/client/wallet/balance.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/apuser/models/balance.py" afterPath="$PROJECT_DIR$/src/apps/apuser/models/balance.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/catalog/management/commands/categories_from_excel.py" afterPath="$PROJECT_DIR$/src/apps/catalog/management/commands/categories_from_excel.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/blocks/header/client_header.html" afterPath="$PROJECT_DIR$/src/templates/blocks/header/client_header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/apps/client/pricelist/detail.html" afterPath="$PROJECT_DIR$/src/templates/apps/client/pricelist/detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker-compose.yml" afterPath="$PROJECT_DIR$/docker-compose.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/alterprice/management/commands/fill_db.py" afterPath="$PROJECT_DIR$/src/apps/alterprice/management/commands/fill_db.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/product/api/filters.py" afterPath="$PROJECT_DIR$/src/apps/product/api/filters.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/catalog/forms.py" afterPath="$PROJECT_DIR$/src/apps/catalog/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/alterprice/middleware.py" afterPath="$PROJECT_DIR$/src/apps/alterprice/middleware.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/shop/models/offer.py" afterPath="$PROJECT_DIR$/src/apps/shop/models/offer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/product/models/other.py" afterPath="$PROJECT_DIR$/src/apps/product/models/other.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/apuser/models/payment.py" afterPath="$PROJECT_DIR$/src/apps/apuser/models/payment.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/alterprice/processors.py" afterPath="$PROJECT_DIR$/src/apps/alterprice/processors.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/product/models/product.py" afterPath="$PROJECT_DIR$/src/apps/product/models/product.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/apps/client/profile.html" afterPath="$PROJECT_DIR$/src/templates/apps/client/profile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/apuser/models/profile.py" afterPath="$PROJECT_DIR$/src/apps/apuser/models/profile.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/catalog/api/serializers.py" afterPath="$PROJECT_DIR$/src/apps/catalog/api/serializers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/client/api/serializers.py" afterPath="$PROJECT_DIR$/src/apps/client/api/serializers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/product/api/serializers.py" afterPath="$PROJECT_DIR$/src/apps/product/api/serializers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/shop/api/serializers.py" afterPath="$PROJECT_DIR$/src/apps/shop/api/serializers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/catalog/api/urls.py" afterPath="$PROJECT_DIR$/src/apps/catalog/api/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/client/urls.py" afterPath="$PROJECT_DIR$/src/apps/client/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/client/api/urls.py" afterPath="$PROJECT_DIR$/src/apps/client/api/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/shop/api/urls.py" afterPath="$PROJECT_DIR$/src/apps/shop/api/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/catalog/views.py" afterPath="$PROJECT_DIR$/src/apps/catalog/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/catalog/api/views.py" afterPath="$PROJECT_DIR$/src/apps/catalog/api/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/client/views.py" afterPath="$PROJECT_DIR$/src/apps/client/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/client/api/views.py" afterPath="$PROJECT_DIR$/src/apps/client/api/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/product/api/views.py" afterPath="$PROJECT_DIR$/src/apps/product/api/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/apps/shop/api/views.py" afterPath="$PROJECT_DIR$/src/apps/shop/api/views.py" />
+    </list>
     <ignored path="alterprice.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,6 +84,9 @@
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="true" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -123,7 +177,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -194,6 +247,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -306,6 +360,9 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -327,9 +384,6 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -387,12 +441,12 @@
     <frame x="41" y="46" width="1851" height="990" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2498618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22443339" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22664456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17302378" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -798,9 +852,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.9059633" vertical-offset="633" max-vertical-offset="3435">
           <caret line="153" column="46" selection-start-line="153" selection-start-column="46" selection-end-line="153" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>

@@ -22,7 +22,7 @@
                             <label class="pure-g field-wrapper">
                                 <div class="pure-u-2-5 field-name">Телефон</div>
                                 <div class="pure-u-3-5 field-value">
-                                    <input name="phone" type="text" class="b_input_text phone-mask" disabled="disabled" value="{{ user.client_user.phone }}" />
+                                    <input name="phone" type="text" class="b_input_text phone-mask" disabled="disabled" value="{{ user.client_profile.phone }}" />
                                 </div>
                             </label>
                             <div class="pure-g field-wrapper no-edit">
@@ -39,7 +39,7 @@
                             </div>
                             <div class="pure-g field-wrapper no-edit">
                                 <div class="pure-u-2-5 field-name">Название компании</div>
-                                <div class="pure-u-3-5 field-value">{{ user.client_user.org_name }}</div>
+                                <div class="pure-u-3-5 field-value">{{ user.client_profile.org_name }}</div>
                             </div>
                             <footer>
                                 <button type="submit" class="btn btn-purple">Сохранить</button>

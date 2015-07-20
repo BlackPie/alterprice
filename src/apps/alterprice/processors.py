@@ -1,4 +1,5 @@
-from catalog.models import Category, City
+from catalog.models.category import Category
+from catalog.models.city import City
 
 
 def categories(request):

@@ -32,7 +32,7 @@ class BalanceInline(admin.TabularInline):
 class UserAdmin(admin.ModelAdmin):
     list_filter = ('user_type', RegDateFilter)
     fields = ('email', 'user_type', 'password')
-    inlines = [BalanceInline, ]
+    # inlines = [BalanceInline, ]
 
     def queryset(self, request):
         qs = super(UserAdmin, self).queryset(request)
@@ -54,12 +54,12 @@ class PaymentInfoInline(admin.StackedInline):
 
 class ClientAdmin(admin.ModelAdmin):
     # list_display = ('__str__', 'operator', 'approved')
-    list_display = ('__str__', 'approved')
+    list_display = ('__str__', 'checked', 'is_active')
     # readonly_fields = ('user', )
     list_filter = (RegDateFilter, OperatorFilter)
     search_fields = ['user__email', 'phone']
-    fields = ('user', 'name', 'last_name', 'phone')
-    inlines = [PaymentInfoInline, ]
+    fields = ('user', 'name', 'last_name', 'phone', 'checked', 'is_active')
+    inlines = [PaymentInfoInline, BalanceInline]
 
     def queryset(self, request):
         qs = super(ClientAdmin, self).queryset(request)
@@ -128,3 +128,5 @@ admin.site.register(models.AlterPriceUser, UserAdmin)
 admin.site.register(models.ClientProfile, ClientAdmin)
 admin.site.register(models.OperatorProfile, OperatorAdmin)
 admin.site.register(models.AdminProfile, AdminProfileAdmin)
+admin.site.register(models.InvoiceRequest)
+admin.site.register(models.Balance)

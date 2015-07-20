@@ -4,8 +4,9 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerField
 # from .product import Product
-from catalog.models import Property, Currency
 # from shop.models import OfferCategories
+from catalog.models.currency import Currency
+from catalog.models.property import Property
 
 
 class ProductFK(models.Model):

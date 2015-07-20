@@ -3,9 +3,9 @@ import django_filters
 from django.forms import ModelMultipleChoiceField
 from django.core.validators import EMPTY_VALUES
 # Project imports
+from catalog.models.category import Category
 from product import models
 from brand.models import Brand
-from catalog.models import Category # NOQA
 EMPTY_VALUES = EMPTY_VALUES + ([''],)
 
 
@@ -52,8 +52,7 @@ class ModelMultipleChoiceField(ModelMultipleChoiceField):
 class CategoryFilter(django_filters.ModelChoiceFilter):
     def filter(self, qs, value):
         if value not in EMPTY_VALUES:
-            if isinstance(value, Category):
-                qs = qs.by_category(value)
+            qs = qs.by_category(value)
         return qs
 
 

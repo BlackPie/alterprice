@@ -1,8 +1,7 @@
 from django.db import models
 from django.db.models.query import QuerySet
 from django.utils.translation import ugettext_lazy as _
-from .apuser import AlterPriceUser as User
-from catalog.models import Currency
+from catalog.models.currency import Currency
 
 
 class BillQueryset(QuerySet):
@@ -16,7 +15,7 @@ class BillManager(models.Manager):
 
 
 class Bill(models.Model):
-    user = models.ForeignKey(User,
+    user = models.ForeignKey('apuser.AlterPriceUser',
                              verbose_name=_('Пользователь'))
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
@@ -67,7 +66,7 @@ class Payment(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
                                    verbose_name=_(u'Дата создания'))
-    user = models.ForeignKey(User,
+    user = models.ForeignKey('apuser.AlterPriceUser',
                              verbose_name=_('Пользователь'))
     amount = models.IntegerField(default=0,
                                  verbose_name=_('Сумма'))
@@ -86,3 +85,19 @@ class Payment(models.Model):
     class Meta:
         verbose_name = _('Оплата')
         verbose_name_plural = _('Оплаты')
+
+
+class InvoiceRequest(models.Model):
+    user = models.ForeignKey('apuser.AlterPriceUser', verbose_name=_('Клиент'))
+    invoice_file = models.FileField(blank=True, null=True, verbose_name=_('Файл счета'))
+    company_name = models.CharField(verbose_name=_('Компания'), max_length=255)
+    inn = models.CharField(verbose_name=_('ИНН'), max_length=255)
+    kpp = models.CharField(verbose_name=_('КПП'), max_length=255)
+    bik = models.CharField(verbose_name=_('БИК'), max_length=255)
+    rs = models.CharField(verbose_name=_('Рассчетный счет'), max_length=255)
+    ks = models.CharField(verbose_name=_('Корреспондетский счет'), max_length=255)
+    bank_name = models.CharField(verbose_name=_('Название банка'), max_length=255)
+    fio = models.CharField(verbose_name=_('ФИО контактного лица'), max_length=255)
+    phone = models.CharField(verbose_name=_('Телефон контактного лица'), max_length=255)
+    legal_address = models.CharField(verbose_name=_('Юридический адрес'), max_length=255)
+    post_address = models.CharField(verbose_name=_('Почтовый адрес'), max_length=255)

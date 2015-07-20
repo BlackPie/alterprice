@@ -1,6 +1,9 @@
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from .apuser import AlterPriceUser as User
+from apuser.models import ClientProfile
+from django.db.models.signals import post_save
 from .payment import Payment
 from .click import Click
 from shop.models import Shop
@@ -11,31 +14,42 @@ class MakeException(Exception):
 
 
 class BalanceManager(models.Manager):
-    def make(self, user):
-        if not isinstance(user, User):
-            raise MakeException('invalid user object')
-        obj = self.model(user=user)
+    def make(self, client):
+        if not isinstance(client, ClientProfile):
+            raise MakeException('invalid client object')
+        obj = self.model(client=client)
         obj.save()
         return obj
 
 
 class Balance(models.Model):
-    user = models.OneToOneField(User,
-                                verbose_name=_('Пользователь'))
+    client = models.OneToOneField(ClientProfile,
+                                verbose_name=_('Клиент'))
     value = models.IntegerField(default=0,
                                 verbose_name=_('Значние'))
 
-    def __str__(self):
-        return self.user.email
-
     def __unicode__(self):
-        return self.user.email
+        return str(self.client)
+
+    def __str__(self):
+        return str(self.client)
 
     objects = BalanceManager()
 
     class Meta:
         verbose_name = _('Баланс')
         verbose_name_plural = _('Баланс')
+
+
+@receiver(post_save, sender=Balance)
+def balance_change_callback(sender, instance, **kwargs):
+    active = bool(instance.value > 0)
+    if (instance.client.is_active != active):
+        shops = Shop.objects.filter(user=instance.client.user)
+        status = Shop.ENABLED if active else Shop.DISABLED
+        shops.update(status=status)
+        instance.client.is_active = active
+        instance.client.save()
 
 
 class BalanceHistoryManager(models.Manager):
@@ -57,7 +71,7 @@ class BalanceHistoryManager(models.Manager):
         balance.save()
         if new_state <= 0:
             # Turns off (status=Disabled) all shops of balance.user
-            Shop.objects.turn_off_debtor(balance.user)
+            Shop.objects.turn_off_debtor(balance.client.user)
         return obj
 
     def increase(self, balance, payment):
@@ -71,14 +85,14 @@ class BalanceHistoryManager(models.Manager):
 
     def decrease(self, balance, value, click):
         new_state = balance.value - value
-        obj = self.make(
+
+        return self.make(
             balance=balance,
             reason=self.model.CLICK,
             click=click,
             previous_state=balance.value,
             value=value,
             new_state=new_state)
-        return obj
 
     def recover(self, balance, payment):
         return self.make(
@@ -129,10 +143,10 @@ class BalanceHistory(models.Model):
     objects = BalanceHistoryManager()
 
     def __str__(self):
-        return self.balance.user.email
+        return str(self.balance.client)
 
     def __unicode__(self):
-        return self.balance.user.email
+        return (self.balance.client)
 
     class Meta:
         verbose_name = _('Изменение баланса')

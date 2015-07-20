@@ -1,8 +1,12 @@
 from rest_framework import serializers
 # Project imports
+from rest_framework.exceptions import ValidationError
+from product.models import ProductShop
 from shop import models
 from product import models as productmodels
 from catalog.api.serializers import CategorySerializer
+from shop.models import Shop
+from shop.models.offer import MakeException
 
 
 class ShopSerializer(serializers.ModelSerializer):
@@ -46,14 +50,18 @@ class UpdateShopSerializer(serializers.ModelSerializer):
 class YMLCreateSerialzier(serializers.ModelSerializer):
     class Meta:
         model = models.ShopYML
-        fields = ('yml_url', 'name')
+        fields = ('yml_url', 'name', 'region_id')
 
     def create(self, validated_data):
-        obj = models.ShopYML.objects.make(
-            shop=validated_data.get('shop'),
-            yml=validated_data.get('yml_url'),
-            name=validated_data.get('name')
-        )
+        try:
+            obj = models.ShopYML.objects.make(
+                shop=validated_data.get('shop'),
+                yml=validated_data.get('yml_url'),
+                name=validated_data.get('name'),
+                region_id=validated_data.get('region_id'),
+            )
+        except MakeException as e:
+            raise ValidationError(str(e))
         return obj
 
 
@@ -66,7 +74,13 @@ class YMLCategoryListSerializer(serializers.ModelSerializer):
         fields = ('id', 'category', 'price', 'lead_price')
 
     def get_lead_price(self, obj):
-        return '123'
+        try:
+            max_price = models.OfferCategories.objects.filter(category=obj.category,
+                              shopyml__shop__status=Shop.ENABLED) \
+                .order_by('price')[0]
+            return max_price.price
+        except IndexError:
+            return 0
 
 
 class YMLCategoryUpdateSerializer(serializers.ModelSerializer):
@@ -97,4 +111,28 @@ class YMLProductListserializer(serializers.ModelSerializer):
 class YMLUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ShopYML
-        fields = ('name', )
+        fields = ('name', 'region_id')
+
+
+class StatisticSerializer(serializers.ModelSerializer):
+    # sum = serializers.IntegerField()
+    # count = serializers.IntegerField()
+    # name = serializers.CharField()
+    # id = serializers.IntegerField()
+    # category = serializers.IntegerField()
+
+    class Meta:
+        model = ProductShop
+        fields = ('sum', 'count', 'name', 'id', 'category')
+
+    def get_name(self, obj):
+        return obj.product.name
+
+    def get_category(self, obj):
+        return obj.category.category_id
+
+    def get_sum(self, obj):
+        return obj.sum
+
+    def get_count(self, obj):
+        return obj.count

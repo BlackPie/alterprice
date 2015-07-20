@@ -2,7 +2,7 @@ from django.core.validators import EMPTY_VALUES
 from django.db import models
 from django.db.models import query, Min, Max, Q
 from django.utils.translation import ugettext_lazy as _
-from catalog.models import Category
+from catalog.models.category import Category
 from utils.abstract_models import YMkey
 from brand.models import Brand
 

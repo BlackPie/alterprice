@@ -3,13 +3,14 @@ import logging
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListCreateAPIView
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 # Project imports
+from apuser.models.payment import InvoiceRequest
 from catalog import models as catalogmodels
 from apuser import models
 from client.api import serializers
@@ -68,7 +69,7 @@ class Recovery(APIView):
 
     def success_action(self, request, serializer):
         email = serializer.validated_data.get('email')
-        user = models.AlterPriceUser.objects.by_email(email).first()
+        user = models.AlterPriceUser.objects.get(email=email)
         catalogmodels.PasswordRecovery.objects.make(user=user)
 
     def success_data(self, serializer):
@@ -99,13 +100,57 @@ class RecoveryPassword(APIView):
         return response
 
 
+class UpdateEmail(APIView):
+    serializer_class = serializers.UpdateEmailSerializer
+    permission_classes = (permissions.AllowAny, )
+
+    def success_action(self, request, serializer):
+        user = serializer.validated_data.get('user')
+        user.email = serializer.validated_data.get('email')
+        user.save()
+
+    def success_data(self, serializers):
+        response = {}
+        response['status'] = 'success'
+        return response
+
+
+class InvoiceRequestView(ListCreateAPIView):
+    serializer_class = serializers.InvoiceRequestSerializer
+    permission_classes = (permissions.AllowAny, )
+    model = InvoiceRequest
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        response = {}
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            response['status'] = 'success'
+            response['message'] = _('Запрос на счет отправлен.')
+            return Response(response, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            response['status'] = 'fail'
+            response['errors'] = serializer.errors
+            headers = self.get_success_headers(serializer.data)
+            return Response(response,
+                            status=status.HTTP_400_BAD_REQUEST,
+                            headers=headers)
+
+
 class Profile(APIView):
     serializer_class = serializers.ProfileSerializer
 
     def success_action(self, request, serializer):
         phone = serializer.validated_data.get('phone')
-        request.user.client_user.phone = phone
-        request.user.client_user.save()
+        request.user.client_profile.phone = phone
+        request.user.client_profile.save()
 
     def success_data(self, serializers):
         response = {}

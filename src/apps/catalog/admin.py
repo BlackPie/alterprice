@@ -1,5 +1,5 @@
 from django.contrib import admin
-from catalog import models
+from catalog.models import category, city, token
 
 
 class PasswordRecoveryAdmin(admin.ModelAdmin):
@@ -10,7 +10,7 @@ class EmailValidationAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'created', 'status', 'sending_status')
 
 
-admin.site.register(models.City)
-admin.site.register(models.Category)
-admin.site.register(models.PasswordRecovery, PasswordRecoveryAdmin)
-admin.site.register(models.EmailValidation, EmailValidationAdmin)
+admin.site.register(city.City)
+admin.site.register(category.Category)
+admin.site.register(token.PasswordRecovery, PasswordRecoveryAdmin)
+admin.site.register(token.EmailValidation, EmailValidationAdmin)

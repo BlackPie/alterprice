@@ -6,10 +6,11 @@ from django.contrib.auth import get_user_model
 from django.core.validators import EMPTY_VALUES
 from django.utils.crypto import constant_time_compare
 from django.utils.translation import ugettext_lazy as _
+from apuser.models.payment import InvoiceRequest
+from catalog.models.token import EmailValidation, PasswordRecovery
+
 User = get_user_model()
-# Project imports
 from client.api import messages
-from catalog.models import EmailValidation, PasswordRecovery
 from apuser import models
 
 
@@ -38,9 +39,9 @@ class SignInSerializer(serializers.ModelSerializer):
         self.object = authenticate(username=attrs[User.USERNAME_FIELD],
                                    password=attrs['password'])
         if not self.object:
-            raise serializers.ValidationError(_(u'Не валидная пара логин-пароль'))
-        if not self.object.active():
-            raise serializers.ValidationError(_(u'Не активный пользователь'))
+            raise serializers.ValidationError(_(u'Неверный email или пароль'))
+        if not self.object.is_active:
+            raise serializers.ValidationError(_(u'Пользователь не активен'))
         return attrs
 
 
@@ -80,7 +81,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         EmailValidation.objects.make(user=user, email=email)
         code = validated_data.get('operator_code')
         op_qs = models.OperatorProfile.objects.filter(code=code)
-        models.ClientProfile.objects.make(
+        client = models.ClientProfile.objects.make(
             user=user,
             operator=op_qs.first() if op_qs.exists() else None,
             city=validated_data.get('city'),
@@ -88,7 +89,7 @@ class SignUpSerializer(serializers.ModelSerializer):
             name=validated_data.get('first_name'),
             last_name=validated_data.get('last_name'),
             ownership_type=validated_data.get('ownership_type'))
-        models.Balance.objects.make(user=user)
+        models.Balance.objects.make(client=client)
         return user
 
     def validate(self, attrs):
@@ -107,8 +108,9 @@ class SignUpSerializer(serializers.ModelSerializer):
         if value in EMPTY_VALUES:
             raise serializers.ValidationError(
                 messages.email_errors.get('blank'))
-        qs = User.objects.by_email(value)
-        if qs.exists():
+        try:
+            User.objects.get(email=value)
+        except User.DoesNotExist:
             raise serializers.ValidationError(
                 messages.email_errors.get('already_exist'))
         emvs = EmailValidation.objects.get_list(email=value)
@@ -134,11 +136,12 @@ class RecoverySerializer(serializers.Serializer):
         if value in EMPTY_VALUES:
             raise serializers.ValidationError(
                 messages.email_errors.get('blank'))
-        qs = User.objects.by_email(value)
-        if not qs.exists():
+        try:
+            u = User.objects.get(email=value)
+        except User.DoesNotExist:
             raise serializers.ValidationError(
-                messages.email_errors.get('not_exists'))
-        rcvs = PasswordRecovery.objects.get_list(user=qs.first(), initial=True)
+                messages.email_errors.get('already_exist'))
+        rcvs = PasswordRecovery.objects.get_list(user=u, initial=True)
         if rcvs.exists():
             raise serializers.ValidationError(
                 messages.email_errors.get('already_sent'))
@@ -167,6 +170,25 @@ class RecoveryPasswordSerializer(serializers.ModelSerializer):
         return value
 
 
+class UpdateEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=255,
+                                   error_messages=messages.email_errors)
+    new_email = serializers.EmailField(max_length=255,
+                                   error_messages=messages.email_errors)
+
+    def validate_email(self, attrs):
+        if attrs.get('email') in EMPTY_VALUES or attrs.get('new_email') in EMPTY_VALUES:
+            raise serializers.ValidationError(messages.email_errors.get('blank'))
+        try:
+            u = User.objects.get(email=attrs.get('email'))
+        except User.DoesNotExist:
+            raise serializers.ValidationError(
+                messages.email_errors.get('already_exist'))
+        attrs.update({'user': u})
+
+        return attrs
+        
+        
 class ProfileSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(write_only=True)
 
@@ -200,3 +222,13 @@ class ProfilePasswordSerializer(serializers.Serializer):
                 'confirm_password': _('Пароли не совпадают'),
             })
         return attrs
+
+
+class InvoiceRequestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = InvoiceRequest
+        exclude = ('user', 'invoice_file')
+
+    def create(self, validated_data):
+        return InvoiceRequest(**validated_data)
