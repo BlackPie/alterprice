@@ -114,25 +114,10 @@ class YMLUpdateSerializer(serializers.ModelSerializer):
         fields = ('name', 'region_id')
 
 
-class StatisticSerializer(serializers.ModelSerializer):
-    # sum = serializers.IntegerField()
-    # count = serializers.IntegerField()
-    # name = serializers.CharField()
-    # id = serializers.IntegerField()
-    # category = serializers.IntegerField()
+class StatisticSerializer(serializers.Serializer):
+    sum = serializers.IntegerField()
+    count = serializers.IntegerField()
+    name = serializers.CharField(source='product.name')
+    id = serializers.IntegerField()
+    category = serializers.IntegerField(source='product.category.id')
 
-    class Meta:
-        model = ProductShop
-        fields = ('sum', 'count', 'name', 'id', 'category')
-
-    def get_name(self, obj):
-        return obj.product.name
-
-    def get_category(self, obj):
-        return obj.category.category_id
-
-    def get_sum(self, obj):
-        return obj.sum
-
-    def get_count(self, obj):
-        return obj.count
