@@ -51,7 +51,7 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
             data: @getFilterData()
             success: (response) =>
                 if response.status == 'success'
-                    _.showSubmitBtn response.data.product_count, offset.top
+                    _.showSubmitBtn response.product_count, offset.top
 
 
     getFilterData: =>
@@ -86,7 +86,7 @@ module.exports = class CatalogItemsListFilterView extends Marionette.ItemView
             success: (response) =>
                 if response.status == 'success'
                     offset = priceFromInput.position()
-                    _.showSubmitBtn response.data.product_count, offset.top - 8
+                    _.showSubmitBtn response.product_count, offset.top - 8
 
 
     showSubmitBtn: (count, offset) =>
