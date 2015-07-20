@@ -67,43 +67,43 @@
         </div>
         <div id="client-wallet-refill-card-form-view">
             <div class="block-ful-x tab-content card">
-                <form id="client-wallet-refill-card-form" class="form-block" data-tab="online">
+                <form action="{% url 'client-api:invoice-add' %}" method="post" id="client-wallet-refill-card-form" class="form-block" data-tab="online">
                     <div class="pure-g">
                         <div class="pure-u-1-2 left-column">
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">НАЗВАНИЕ ОРГАНИЗАЦИИ</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="name" type="text" class="b_input_text" value="">
+                                    <input name="company_name" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">ИНН</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="entity" type="text" class="b_input_text" value="">
+                                    <input name="inn" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">КПП</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="ogrn" type="text" class="b_input_text" value="">
+                                    <input name="kpp" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">БИК</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="ogrn" type="text" class="b_input_text" value="">
+                                    <input name="bik" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">Р/С</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="ogrn" type="text" class="b_input_text" value="">
+                                    <input name="rs" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">КОРРЕСПОНДЕНТСКИЙ СЧЕТ</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="ogrn" type="text" class="b_input_text" value="">
+                                    <input name="ks" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                         </div>
@@ -111,31 +111,31 @@
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">НАЗВАНИЕ БАНКА</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="phone" type="text" class="b_input_text phone-mask" value="">
+                                    <input name="bank_name" type="text" class="b_input_text phone-mask" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">ФИО КОНТАКТНОГО ЛИЦА</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="address" type="text" class="b_input_text" value="">
+                                    <input name="fio" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">ТЕЛЕФОН КОНТАКТНОГО ЛИЦА</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="site" type="text" class="b_input_text" value="">
+                                    <input name="phone" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">ЮРИДИЧЕСКИЙ АДРЕС</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="yml-url" type="text" class="b_input_text" value="">
+                                    <input name="legal_address" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <label class="pure-g field-wrapper vertical-field">
                                 <div class="pure-u-1-1 field-name">ПОЧТОВЫЙ АДРЕС</div>
                                 <div class="pure-u-1-1 field-value">
-                                    <input name="yml-url" type="text" class="b_input_text" value="">
+                                    <input name="post_address" type="text" class="b_input_text" value="">
                                 </div>
                             </label>
                             <div class="form-footer">
