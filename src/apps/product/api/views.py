@@ -5,6 +5,7 @@ from django.db.models import Count
 from catalog.models.category import Category
 from product import models
 from product.api import serializers, filters
+from product.models import Product
 from utils.views import APIView
 from catalog.api.serializers import CategorySerializer
 
@@ -76,3 +77,29 @@ class ProductOffers(ListAPIView):
         product_id = self.kwargs.get('pk', None)
         qs = self.model.objects.filter(product_id=product_id)
         return qs
+
+
+class SearchView(ListAPIView):
+    model = Product
+    serializer_class = serializers.ProductSerializer
+    filter_class = filters.ProductSearchFilterSet
+
+    def get_queryset(self):
+        qs = self.model.objects.get_list()
+        qs = qs.annotate(offers_count=Count('productshop'))
+        qs = qs.prefetch_related('productshop_set')
+        qs = qs.prefetch_related('productphoto_set')
+        return qs
+
+    def _search_categories(self):
+        search = self.request.query_params.get('search', '')
+        queryset = Category.objects.filter(name__icontains=search)
+        serializer = CategorySerializer(queryset, many=True)
+        return serializer.data
+
+    def get(self, *args, **kwargs):
+        response = super(SearchView, self).get(*args, **kwargs)
+        response.data['categories'] = self._search_categories()
+        return response
+
+

@@ -8,4 +8,5 @@ urlpatterns = patterns(
     url(r'^list/categories/$', views.ProductListCategories.as_view(), name='list-categories'),
     url(r'^list/count/$', views.ProductCount.as_view(), name='list-count'),
     url(r'^detail/(?P<pk>\d+)/offers/$', views.ProductOffers.as_view(), name='offers'),
+    url(r'^search/$', views.SearchView.as_view(), name='search'),
 )
