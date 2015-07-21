@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from .apuser import AlterPriceUser as User
 from apuser.models import ClientProfile
 from django.db.models.signals import post_save
-from .payment import Payment
+from apuser.models.payment import Payment
 from .click import Click
 from shop.models.shop import Shop
 

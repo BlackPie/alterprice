@@ -4,42 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from catalog.models.currency import Currency
 
 
-class BillQueryset(QuerySet):
-    def by_user(self, user):
-        return self.filter(user=user)
-
-
-class BillManager(models.Manager):
-    def make(self, user):
-        return True
-
-
-class Bill(models.Model):
-    user = models.ForeignKey('apuser.AlterPriceUser',
-                             verbose_name=_('Пользователь'))
-    created = models.DateTimeField(auto_now_add=True,
-                                   editable=False,
-                                   verbose_name=_(u'Дата создания'))
-    amount = models.IntegerField(default=0,
-                                 verbose_name=_('Сумма'))
-
-    objects = BillManager.from_queryset(BillQueryset)()
-
-    class Meta:
-        verbose_name = _('Счет')
-        verbose_name_plural = _('Счета')
-
-
-class PaymentQueryset(QuerySet):
-    def by_user(self, user):
-        return self.filter(user=user).select_related('currency')
-
-
-class PaymentManager(models.Manager):
-    def make(self):
-        return True
-
-
 class Payment(models.Model):
     BILL = 0
     ONLINE = 1
@@ -66,15 +30,14 @@ class Payment(models.Model):
     created = models.DateTimeField(auto_now_add=True,
                                    editable=False,
                                    verbose_name=_(u'Дата создания'))
-    user = models.ForeignKey('apuser.AlterPriceUser',
-                             verbose_name=_('Пользователь'))
+    client = models.ForeignKey('apuser.ClientProfile',
+                             verbose_name=_('Клиент'))
     amount = models.IntegerField(default=0,
                                  verbose_name=_('Сумма'))
 
     currency = models.ForeignKey(Currency,
                                  verbose_name=_('Валюта'))
-
-    objects = PaymentManager.from_queryset(PaymentQueryset)()
+    robokassa_success = models.BooleanField(default=False)
 
     def is_payment(self):
         return True if self.payment_detail is self.PAYMENT else False
