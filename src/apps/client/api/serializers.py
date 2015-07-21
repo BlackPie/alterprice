@@ -233,7 +233,7 @@ class InvoiceRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InvoiceRequest
-        exclude = ('client', 'invoice_file')
+        fields = ('id', 'created')
 
     def create(self, validated_data):
         return InvoiceRequest(**validated_data)

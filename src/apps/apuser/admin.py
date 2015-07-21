@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from apuser import models
+from apuser.models.payment import Payment
 from utils.admin_filters import RegDateFilter
 
 
@@ -95,14 +96,14 @@ class AdminProfileAdmin(admin.ModelAdmin):
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'amount', 'payment_type', 'created')
+    list_display = ('client', 'amount', 'payment_type', 'created')
 
     def save_model(self, request, obj, form, change):
         obj.save()
         try:
             balance = obj.user.balance
-        except:
-            balance = models.Balance.objects.make(user=obj.user)
+        except AttributeError:
+            balance = models.Balance.objects.make(client=obj.user.client_profile)
         if obj.is_payment():
             models.BalanceHistory.objects.increase(
                 payment=obj,
@@ -113,17 +114,12 @@ class PaymentAdmin(admin.ModelAdmin):
                 payment=obj)
 
 
-class BillAdmin(admin.ModelAdmin):
-    list_display = ('user', 'amount', 'created')
-
-
 class BalanceHistoryAdmin(admin.ModelAdmin):
     list_display = ('balance', 'change_value', 'reason', 'created')
 
 
 admin.site.register(models.BalanceHistory, BalanceHistoryAdmin)
-admin.site.register(models.Bill, BillAdmin)
-admin.site.register(models.Payment, PaymentAdmin)
+admin.site.register(Payment, PaymentAdmin)
 admin.site.register(models.AlterPriceUser, UserAdmin)
 admin.site.register(models.ClientProfile, ClientAdmin)
 admin.site.register(models.OperatorProfile, OperatorAdmin)
