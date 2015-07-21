@@ -33,15 +33,15 @@
                                 <div class="pure-u-2-5 field-name">Город</div>
                                 <div class="pure-u-3-5 field-value">
                                     <div class="select disabled">
-                                        <select name="city">
+                                        <select name="region">
                                             <option></option>
                                             {% for city in cities %}
-                                                <option value="{{ city.id }}" {% if city.id == object.city.id %}selected{% endif %}>{{ city.name }}</option>
+                                                <option value="{{ city.id }}" {% if city.id == object.region.id %}selected{% endif %}>{{ city.name }}</option>
                                             {% endfor %}
                                         </select>
                                         <div class="overlay"></div>
                                         <div class="select-wrapper">
-                                            <a href="#" class="current-value b_input_text">{{ object.city.name|default:'' }}</a>
+                                            <a href="#" class="current-value b_input_text">{{ object.region.name|default:'' }}</a>
                                             <ul>
                                                 {% for city in cities %}
                                                     <li><a href="#" data-value="{{ city.id }}" class="choice">{{ city.name }}</a></li>
