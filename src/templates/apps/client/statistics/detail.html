@@ -2,7 +2,7 @@
 
 {% block content%}
     <div id="client-statistics-detail">
-        <div class="h1">Статистика по магазину</div>
+        <div class="h1">Статистика по магазину "{{ current_shop.name }}"</div>
         <div class="pure-g">
             <div class="pure-u-1-1 short-brief">
                 <div class="block-ful-x">
@@ -48,28 +48,39 @@
             </div>
             <div class="pure-u-1-1 full-statistics">
                 <div class="block-ful-x">
-                    <form class="filter-form">
-                        <div class="pure-g header">
-                            <div class="pure-u-1-2">
-                                <label class="active">
-                                    <input type="radio">
-                                    <span>По товарам</span>
-                                </label>
-                                <label>
-                                    <input type="radio">
-                                    <span>По категориям</span>
-                                </label>
+                    <div id="client-statistics-product-filter-view">
+                        <form class="filter-form">
+                            <div class="pure-g header">
+                                <div class="pure-u-1-2">
+                                    <label class="active">
+                                        <input name="type" class="type-switcher" type="radio" checked="checked">
+                                        <span>По товарам</span>
+                                    </label>
+                                    <label>
+                                        <input name="type" class="type-switcher" type="radio">
+                                        <span>По категориям</span>
+                                    </label>
+                                </div>
+                                <div class="pure-u-1-2 period-wrapper">
+                                    <span>Показать:</span>
+                                    <a href="#" class="btn btn-link dropdown-btn choose-period-btn">за неделю</a>
+                                    <input id="period-input" type="hidden" name="period" value="week" />
+                                    <div class="overlay"></div>
+                                    <div class="choices">
+                                        <ul>
+                                            <li><a class="choice" data-value="yesterday" href="#">за вчера</a></li>
+                                            <li class="active"><a class="choice" data-value="week" href="#">за неделю</a></li>
+                                            <li><a class="choice" data-value="month" href="#">за месяц</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="pure-u-1-2 period-wrapper">
-                                <span>Показать за:</span>
-                                <a href="#" class="btn btn-link dropdown-btn">за неделю</a>
-                            </div>
-                        </div>
-                        <div class="counter-wrapper">
-                            <div class="click-counter">486<div>Кликов</div></div>
-                            <div class="expense-counter">210<span>руб.</span><div>Расход</div></div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="counter-wrapper">
+                        <div class="click-counter">486<div>Кликов</div></div>
+                        <div class="expense-counter">210<span>руб.</span><div>Расход</div></div>
+                    </div>
                     <table>
                         <thead>
                             <tr>

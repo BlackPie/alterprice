@@ -222,7 +222,7 @@ class ClientStatisticsDetailPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientStatisticsDetailPageView, self).get_context_data(**kwargs)
-        context['current_app'] = 'client-pricelist-detail'
+        context['current_app'] = 'client-statistics'
         return context
 
 

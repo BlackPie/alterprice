@@ -2,8 +2,8 @@
      <li class="has-submenu">
         <a href="#">Статистика</a>
         <ul>
-            <li><a href="/client/statistics/">По магазину</a></li>
-            <li><a href="/client/statistics/">По прайс-листу</a></li>
+            <li><a href="{% url 'client:statistics_shop_detail' %}">По магазину</a></li>
+            <li><a href="{% url 'client:statistics_pricelist_detail' %}">По прайс-листу</a></li>
         </ul>
     </li>
     <li class="has-submenu">
@@ -12,7 +12,7 @@
 
             {% for yml in current_shop.get_ymls %}
                 <li>
-                    <a href='{% url "client:pricelist_detail" yml.id%}'>
+                    <a href="{% url 'client:pricelist_detail' yml.id %}">
                         {{ yml.name }}
                     </a>
                 </li>
