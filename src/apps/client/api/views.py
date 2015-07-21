@@ -9,10 +9,10 @@ from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
-# Project imports
+
 from apuser.models.payment import InvoiceRequest
-from catalog import models as catalogmodels
 from apuser import models
+from catalog.models.token import PasswordRecovery
 from client.api import serializers
 from utils.views import APIView
 from django.contrib.auth import update_session_auth_hash
@@ -70,7 +70,7 @@ class Recovery(APIView):
     def success_action(self, request, serializer):
         email = serializer.validated_data.get('email')
         user = models.AlterPriceUser.objects.get(email=email)
-        catalogmodels.PasswordRecovery.objects.make(user=user)
+        PasswordRecovery.objects.make(user=user)
 
     def success_data(self, serializer):
         response = {}
@@ -86,7 +86,7 @@ class RecoveryPassword(APIView):
 
     def success_action(self, request, serializer):
         password = serializer.validated_data.get('password')
-        pr = catalogmodels.PasswordRecovery.objects.get_valid(
+        pr = PasswordRecovery.objects.get_valid(
             token=serializer.validated_data.get('token'))
         pr.recover()
         user = pr.user

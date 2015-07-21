@@ -20,7 +20,7 @@ class CreateShopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shop
-        fields = ('city', 'phone', 'address', 'site', 'name', 'ogrn',
+        fields = ('phone', 'address', 'site', 'name', 'ogrn',
                   'entity', 'yml_url', 'region')
 
     def create(self, validated_data):
