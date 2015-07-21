@@ -1,37 +1,46 @@
 <ul class="catalog-menu">
-    {% url 'client:statistics_shop_detail' as statistics_shop_detail_url %}
-    {% url 'client:statistics_pricelist_detail' as statistics_pricelist_detail_url %}
-    <li class="has-submenu {% if statistics_shop_detail_url == current_url or statistics_pricelist_detail_url == current_url %}open{% endif %}">
-        <a href="#">Статистика</a>
-        <ul>
-            <li {% if statistics_shop_detail_url == current_url %}class="active"{% endif %}>
-                <a href="{{ statistics_shop_detail_url }}">По магазину</a>
-            </li>
-            <li {% if statistics_pricelist_detail_url == current_url %}class="active"{% endif %}>
-                <a href="{{ statistics_pricelist_detail_url }}">По прайс-листу</a>
-            </li>
-        </ul>
-    </li>
-    {% url 'client:pricelist_add' as pricelist_add_url %}
-    <li class="has-submenu {% if pricelist_add_url == current_url %}open{% endif %}">
-        <a href="#">Прайс-листы</a>
-        <ul>
-            {% for yml in current_shop.get_ymls %}
-                <li>
-                    <a href="{% url 'client:pricelist_detail' yml.id %}">
-                        {{ yml.name }}
-                    </a>
-                </li>
-            {% endfor %}
-            <li {% if pricelist_add_url == current_url %}class="active"{% endif %}>
-                <a href="{{ pricelist_add_url }}">Добавить прайс-лист</a>
-            </li>
-        </ul>
-    </li>
     {% if current_shop %}
-        {% url 'client:shop_detail' current_shop.pk as shop_detail_url %}
-        <li {% if shop_detail_url == current_url %}class="active"{% endif %}>
-            <a href="{{ shop_detail_url }}">Данные магазина</a>
+        {% url 'client:statistics_shop_detail' as statistics_shop_detail_url %}
+        {% url 'client:statistics_pricelist_detail' as statistics_pricelist_detail_url %}
+        <li class="has-submenu {% if statistics_shop_detail_url == current_url or statistics_pricelist_detail_url == current_url %}open{% endif %}">
+            <a href="#">Статистика</a>
+            <ul>
+                <li {% if statistics_shop_detail_url == current_url %}class="active"{% endif %}>
+                    <a href="{{ statistics_shop_detail_url }}">По магазину</a>
+                </li>
+                {% for yml in current_shop.get_ymls %}
+                    <li {% if statistics_pricelist_detail_url == current_url %}class="active"{% endif %}>
+                        <a href="{{ statistics_pricelist_detail_url }}">По прайс-листу</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% url 'client:pricelist_add' as pricelist_add_url %}
+        <li class="has-submenu {% if pricelist_add_url == current_url %}open{% endif %}">
+            <a href="#">Прайс-листы</a>
+            <ul>
+                {% for yml in current_shop.get_ymls %}
+                    <li>
+                        <a href="{% url 'client:pricelist_detail' yml.id %}">
+                            {{ yml.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <li {% if pricelist_add_url == current_url %}class="active"{% endif %}>
+                    <a href="{{ pricelist_add_url }}">Добавить прайс-лист</a>
+                </li>
+            </ul>
+        </li>
+        {% if current_shop %}
+            {% url 'client:shop_detail' current_shop.pk as shop_detail_url %}
+            <li {% if shop_detail_url == current_url %}class="active"{% endif %}>
+                <a href="{{ shop_detail_url }}">Данные магазина</a>
+            </li>
+        {% endif %}
+    {% else %}
+        {% url 'client:shop_add' as shop_add_url %}
+        <li {% if shop_add_url == current_url %}class="active"{% endif %}>
+            <a href="{{ shop_add_url }}">Добавить магазин</a>
         </li>
     {% endif %}
 </ul>

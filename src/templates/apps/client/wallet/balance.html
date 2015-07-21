@@ -6,14 +6,12 @@
     <div id="payments-page">
         <div class="h1">Оплаты</div>
         <div class="pure-g">
-            <div class="pure-u-1-4">
+            <div class="pure-u-1-2">
                 <div class="block-1-x user-balance-informer">
                     <span>Текущий баланс</span>
                     <div><span>{{ user.client_profile.balance.value|intcomma }}</span> руб.</div>
+                    <a class="refill-link" href="{% url 'client:wallet_refill' %}">Перейти к пополнению</a>
                 </div>
-            </div>
-            <div class="pure-u-3-4 refill-link-wrapper">
-                <a class="refill-link" href="{% url 'client:wallet_refill' %}">Перейти к пополнению</a>
             </div>
         </div>
         <div class="pure-g">
