@@ -3,28 +3,11 @@
         text-align: right;
     }
 
-    .refill-link-wrapper {
-        height: 151px;
-        position: relative;
-
-        .refill-link {
-            position: absolute;
-            bottom: 25px;
-            margin-left: 3px;
-
-            &:before {
-                display: block;
-                content: '';
-                .icon-link-bullit;
-                margin-right: 7px;
-            }
-        }
-    }
-
-
     .user-balance-informer {
         padding: 20px 20px 20px 76px;
         position: relative;
+        display: inline-block;
+        width: auto;
 
         &:before {
             .icon-wallet-big;
@@ -48,6 +31,21 @@
                 .typo_mh;
                 color: #2B303A;
                 font-weight: 400;
+            }
+        }
+
+        .refill-link {
+            position: absolute;
+            bottom: 12px;
+            white-space: nowrap;
+            left: 100%;
+            margin-left: 20px;
+
+            &:before {
+                display: block;
+                content: '';
+                .icon-link-bullit;
+                margin-right: 7px;
             }
         }
     }
