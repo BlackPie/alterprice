@@ -26,6 +26,7 @@ ClientShopDetailApp = require 'client/shop/detail/ClientShopDetailApp'
 ClientWalletRefillApp  = require 'client/wallet/refill/ClientWalletRefillApp'
 ClientPricelistDetailApp = require 'client/pricelist/detail/ClientPricelistDetailApp'
 ClientWalletBalanceApp = require 'client/wallet/balance/ClientWalletBalanceApp'
+ClientStatisticsApp = require 'client/statistics/ClientStatisticsApp'
 
 
 getEntryPoint = ->
@@ -53,6 +54,7 @@ entryPoints =
     'client-pricelist-detail': ClientPricelistDetailApp
     'client-reset-password': ClientPasswordResetApp
     'client-wallet-balance': ClientWalletBalanceApp
+    'client-statistics': ClientStatisticsApp
 
 if window.context != undefined
     context = JSON.parse window.context
