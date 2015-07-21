@@ -31,14 +31,14 @@ class CreateShopSerializer(serializers.ModelSerializer):
             site=validated_data.get('site'),
             name=validated_data.get('name'),
             ogrn=validated_data.get('ogrn'),
-            region_id=validated_data.get('region'),
+            region=validated_data.get('region'),
             entity=validated_data.get('entity'))
         yml_url = validated_data.get('yml_url', None)
         if yml_url:
             Pricelist.objects.make(
                 shop=shop,
                 yml=yml_url,
-                region_id=validated_data.get('region'),
+                region=validated_data.get('region'),
             )
         return shop
 
@@ -60,7 +60,7 @@ class YMLCreateSerialzier(serializers.ModelSerializer):
                 shop=validated_data.get('shop'),
                 yml=validated_data.get('yml_url'),
                 name=validated_data.get('name'),
-                region_id=validated_data.get('region'),
+                region=validated_data.get('region'),
             )
         except MakeException as e:
             raise ValidationError(str(e))

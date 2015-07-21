@@ -42,7 +42,7 @@ class PricelistManager(models.Manager):
         currency = shop.get('currencies').get('currency')
         return categories, currency, offers
 
-    def make(self, shop, yml, region_id, name=None):
+    def make(self, shop, yml, region, name=None):
         if not isinstance(shop, Shop):
             raise MakeException(_('invalid shop object'))
         # TODO: check - shop is active
@@ -51,7 +51,7 @@ class PricelistManager(models.Manager):
             obj = self.model()
             obj.shop = shop
             obj.yml_url = yml
-            obj.region_id = region_id
+            obj.region = region
             if not name:
                 name = 'Прайс-лист #%d' % shop.id
             obj.name = name

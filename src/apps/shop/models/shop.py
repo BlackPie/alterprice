@@ -17,7 +17,7 @@ class ShopManager(models.Manager):
     def get_list(self):
         return self.all()
 
-    def make(self, user, name, ogrn, entity, region_id,
+    def make(self, user, name, ogrn, entity, region,
              phone=None, address=None, site=None):
         if not hasattr(user, 'is_client'):
             if not user.is_client():
@@ -30,7 +30,7 @@ class ShopManager(models.Manager):
         obj.site = site
         obj.name = name
         obj.ogrn = ogrn
-        obj.region_id = region_id
+        obj.region = region
         obj.entity = entity
         obj.save()
         return obj
