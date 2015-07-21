@@ -52,7 +52,7 @@ class Shop(StatusModel):
                               verbose_name=_('Название юридического лица'))
     ogrn = models.CharField(max_length=255,
                             verbose_name=_('ОГРН'))
-    city = models.ForeignKey('catalog.City',
+    region = models.ForeignKey('catalog.City',
                              null=True,
                              blank=True,
                              default=None,
