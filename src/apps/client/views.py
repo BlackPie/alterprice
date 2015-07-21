@@ -6,7 +6,7 @@ from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 import json
 from django.core.servers.basehttp import FileWrapper
-# Project imports
+
 from apuser.models.payment import InvoiceRequest
 from catalog.models.token import EmailValidation, PasswordRecovery
 

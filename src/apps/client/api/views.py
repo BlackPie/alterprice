@@ -1,7 +1,9 @@
 import logging
+from hashlib import md5
 
 from rest_framework import permissions
 from rest_framework import status
+from rest_framework.renderers import StaticHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListCreateAPIView
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -9,11 +11,13 @@ from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
+from apuser.models import BalanceHistory
 
-from apuser.models.payment import InvoiceRequest
+from apuser.models.payment import InvoiceRequest, Payment
 from apuser import models
 from catalog.models.token import PasswordRecovery
 from client.api import serializers
+from django.conf import settings
 from utils.views import APIView
 from django.contrib.auth import update_session_auth_hash
 
@@ -175,3 +179,49 @@ class ProfilePassword(APIView):
         response['status'] = 'success'
         response['message'] = _('Ваш пароль успешно изменен')
         return response
+
+
+class RobokassaResultAPIView(APIView):
+    serializer_class = serializers.RobokassaResultSerializer
+    renderer_classes = (StaticHTMLRenderer, )
+
+    def post(self, request, *args, **kwargs):
+        data = self.prepare_data(request)
+        serializer = self.serializer_class(data=data, context=dict(request=request))
+        response = ''
+        if serializer.is_valid():
+            payment_id = serializer.validated_data.get('InvId')
+            payment = Payment.objects.get(id=payment_id)
+            payment.robokassa_success = True
+            payment.save()
+            BalanceHistory.objects.increase(
+                balance=payment.client.balance,
+                payment=payment,
+            )
+            self.success_action(request, serializer)
+            response = 'OK%d' % payment_id
+        return Response(response, status=200)
+
+
+class RobokassaCreatePaymentAPIView(APIView):
+    model = Payment
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def perform_create(self):
+        payment = self.model(
+            client=self.request.user.client_profile,
+            # amount=serializer.validated_data.get('OutSum'),
+            payment_type=Payment.ONLINE,
+            payment_detail=Payment.PAYMENT,
+        )
+        payment.save()
+        return payment
+
+    def post(self, request, *args, **kwargs):
+        payment = self.perform_create()
+        crc_txt = '%s::%d:%s' % (settings.ROBOKASSA_LOGIN, payment.id, settings.ROBOKASSA_PASS1, )
+        response = {
+            'crc': md5(crc_txt.encode('utf-8')),
+            'id': payment.id,
+        }
+        return Response(response, status=201)

@@ -36,7 +36,7 @@ class Payment(models.Model):
                                  verbose_name=_('Сумма'))
 
     currency = models.ForeignKey(Currency,
-                                 verbose_name=_('Валюта'))
+                                 verbose_name=_('Валюта'), blank=True, null=True)
     robokassa_success = models.BooleanField(default=False)
 
     def is_payment(self):
