@@ -17,7 +17,7 @@ module.exports = class ClientStatisticsItemsCollection extends PageableCollectio
 
 
     url: =>
-        return "/api/shop/yml/#{@pricelistId}/category/list/"
+        return "/api/shop/statistic/shop/"
 
 
     stateToParams: (filterState) ->
