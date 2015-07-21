@@ -4,3 +4,4 @@ module.exports = class ClientEvents
     @PRICELIST_CHANGE_TITLE: "client:pricelist:change:title"
     @WALLET_PAYMENT_PAGER: "client:wallet:payment:pager"
     @WALLET_BILLS_PAGER: "client:wallet:bills:pager"
+    @PROFILE_CHANGE_EMAIL: "client:profile:change:email"

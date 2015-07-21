@@ -17,6 +17,7 @@ module.exports = class ClientProfileFormView extends Marionette.ItemView
         inputs: 'input'
         status: '.status'
         phoneInput: '.phone-mask'
+        emailValue: '.email-field'
 
     events:
         "click @ui.editBtn": "onClickEditBtn"
@@ -48,3 +49,7 @@ module.exports = class ClientProfileFormView extends Marionette.ItemView
 
     onMouseleaveStatus: (e) =>
         @$(@ui.status).find('.tooltip').fadeOut 'fast'
+
+
+    setEmail: (email) =>
+        @$(@ui.emailValue).text email

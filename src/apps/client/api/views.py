@@ -95,7 +95,7 @@ class RecoveryPassword(APIView):
 
     def success_data(self, serializers):
         response = {}
-        response['message'] = _('Ваш пароль успешно изменен')
+        response['message'] = _('Ваш пароль был успешно изменен.')
         response['redirect_to'] = reverse('client:login')
         return response
 
@@ -111,6 +111,7 @@ class UpdateEmail(APIView):
 
     def success_data(self, serializers):
         response = {}
+        response['message'] = _('Ваш email был успешно изменен.')
         response['status'] = 'success'
         return response
 
