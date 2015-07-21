@@ -51,6 +51,7 @@ class Payment(models.Model):
 
 
 class InvoiceRequest(models.Model):
+    created = models.DateTimeField(auto_now=True)
     client = models.ForeignKey('apuser.ClientProfile', verbose_name=_('Клиент'))
     invoice_file = models.FileField(blank=True, null=True, verbose_name=_('Файл счета'))
     company_name = models.CharField(verbose_name=_('Компания'), max_length=255)

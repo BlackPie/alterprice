@@ -12,7 +12,6 @@ from catalog.models.token import EmailValidation, PasswordRecovery
 
 from client import decorators
 from client import forms
-from apuser.models import Payment, Bill
 from shop.models.offer import Pricelist
 from shop.models.shop import Shop
 
