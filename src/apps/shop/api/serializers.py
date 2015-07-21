@@ -26,7 +26,6 @@ class CreateShopSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         shop = Shop.objects.make(
             user=validated_data.get('user'),
-            city=validated_data.get('city'),
             phone=validated_data.get('phone'),
             address=validated_data.get('address'),
             site=validated_data.get('site'),
@@ -47,7 +46,7 @@ class CreateShopSerializer(serializers.ModelSerializer):
 class UpdateShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
-        fields = ('phone', 'city', 'address', 'site')
+        fields = ('phone', 'region', 'address', 'site')
 
 
 class YMLCreateSerialzier(serializers.ModelSerializer):

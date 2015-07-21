@@ -18,14 +18,13 @@ class ShopManager(models.Manager):
         return self.all()
 
     def make(self, user, name, ogrn, entity, region_id,
-             phone=None, address=None, site=None, city=None):
+             phone=None, address=None, site=None):
         if not hasattr(user, 'is_client'):
             if not user.is_client():
                 raise MakeException("Invalid user")
             raise MakeException("Invalid user")
         obj = self.model()
         obj.user = user
-        obj.city = city
         obj.phone = phone
         obj.address = address
         obj.site = site
