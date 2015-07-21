@@ -1,6 +1,7 @@
 $ = require 'jquery'
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
+Events = require 'client/Events'
 
 Form = require 'base/utils/Form'
 require 'jquery-maskedinput'
@@ -13,6 +14,10 @@ module.exports = class ClientProfileEmailFormView extends Marionette.ItemView
 
     ui:
         form: 'form'
+        newEmail: '.new-email'
+
+    events:
+        "keyup @ui.newEmail": "onChangeNewEmail"
 
 
     initialize: (options) =>
@@ -21,3 +26,9 @@ module.exports = class ClientProfileEmailFormView extends Marionette.ItemView
         form = @$(@ui.form)
         new Form
             form: form
+            success: =>
+                @channel.vent.trigger Events.PROFILE_CHANGE_EMAIL, @newEmail
+
+
+    onChangeNewEmail: (e) =>
+        @newEmail =  @$(@ui.newEmail).val()

@@ -2,6 +2,7 @@ $ = require 'jquery'
 _ = require 'underscore'
 Marionette = require 'backbone.marionette'
 Backbone = require 'backbone'
+Events = require 'client/Events'
 
 LeftMenuView = require 'base/views/LeftMenuView'
 ClientProfileFormView = require './views/ClientProfileFormView'
@@ -20,6 +21,12 @@ module.exports = class ClientProfileController extends Marionette.Controller
         @clientProfilePasswordFormView = new ClientProfilePasswordFormView {channel: @channel}
         @clientProfileEmailFormView = new ClientProfileEmailFormView {channel: @channel}
 
+        @channel.vent.on Events.PROFILE_CHANGE_EMAIL,  @onChangeEmail
+
 
     index: () =>
         console.log 'index'
+
+
+    onChangeEmail: (email) =>
+        @clientProfileFormView.setEmail email
