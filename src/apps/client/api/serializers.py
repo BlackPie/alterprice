@@ -176,17 +176,22 @@ class UpdateEmailSerializer(serializers.Serializer):
     new_email = serializers.EmailField(max_length=255,
                                    error_messages=messages.email_errors)
 
-    def validate(self, attrs):
-        if attrs.get('email') in EMPTY_VALUES or attrs.get('new_email') in EMPTY_VALUES:
+    def validate_email(self, value):
+        if value in EMPTY_VALUES:
+            raise serializers.ValidationError(messages.email_errors.get('blank'))
+        if self.context['request'].user.email != value:
+            raise serializers.ValidationError('Введенный email не совпадает с'
+                                              ' email пользователя.')
+        return value
+
+    def validate_new_email(self, value):
+        if value in EMPTY_VALUES:
             raise serializers.ValidationError(messages.email_errors.get('blank'))
         try:
-            u = User.objects.get(email=attrs.get('email'))
+            User.objects.get(email=value)
         except User.DoesNotExist:
-            raise serializers.ValidationError(
-                messages.email_errors.get('already_exist'))
-        attrs.update({'user': u})
-
-        return attrs
+            return value
+        raise serializers.ValidationError(messages.email_errors.get('already_exist'))
         
         
 class ProfileSerializer(serializers.ModelSerializer):

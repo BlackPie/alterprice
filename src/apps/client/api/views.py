@@ -105,9 +105,8 @@ class UpdateEmail(APIView):
     permission_classes = (permissions.AllowAny, )
 
     def success_action(self, request, serializer):
-        user = serializer.validated_data.get('user')
-        user.email = serializer.validated_data.get('new_email')
-        user.save()
+        self.request.user.email = serializer.validated_data.get('new_email')
+        self.request.user.save()
 
     def success_data(self, serializers):
         response = {}
