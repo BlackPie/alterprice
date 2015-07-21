@@ -8,9 +8,11 @@
                 <li {% if statistics_shop_detail_url == current_url %}class="active"{% endif %}>
                     <a href="{{ statistics_shop_detail_url }}">По магазину</a>
                 </li>
-                <li {% if statistics_pricelist_detail_url == current_url %}class="active"{% endif %}>
-                    <a href="{{ statistics_pricelist_detail_url }}">По прайс-листу</a>
-                </li>
+                {% for yml in current_shop.get_ymls %}
+                    <li {% if statistics_pricelist_detail_url == current_url %}class="active"{% endif %}>
+                        <a href="{{ statistics_pricelist_detail_url }}">По прайс-листу</a>
+                    </li>
+                {% endfor %}
             </ul>
         </li>
         {% url 'client:pricelist_add' as pricelist_add_url %}
