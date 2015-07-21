@@ -41,7 +41,7 @@ module.exports = class ClientPricelistProductsCollection extends PageableCollect
                     is_category: true
 
             results.push
-                viewURL: result.viewURL
+                product_url: result.product_url
                 product: result.product
                 click_price: result.click_price
                 category: result.category

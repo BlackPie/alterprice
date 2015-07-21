@@ -99,15 +99,19 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class YMLProductListserializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
+    product_url = serializers.SerializerMethodField()
     product = ProductSerializer()
 
     class Meta:
         model = productmodels.ProductShop
-        fields = ('product', 'category', 'click_price',)
+        fields = ('product', 'category', 'click_price', 'product_url')
 
     def get_category(self, obj):
         # or pass it trough CategorySerializer
         return obj.product.category.name
+
+    def get_product_url(self, obj):
+        return "/product/detail/%d/" % obj.id
 
 
 class YMLUpdateSerializer(serializers.ModelSerializer):
