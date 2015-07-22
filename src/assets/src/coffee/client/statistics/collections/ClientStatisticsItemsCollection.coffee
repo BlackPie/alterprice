@@ -9,7 +9,7 @@ module.exports = class ClientStatisticsItemsCollection extends PageableCollectio
     state:
         firstPage: 1
         currentPage: 1
-        pageSize: 999
+        pageSize: 1
 
     queryParams:
         currentPage: "page"

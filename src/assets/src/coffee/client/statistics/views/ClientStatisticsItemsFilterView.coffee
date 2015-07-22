@@ -1,6 +1,7 @@
 $ = require 'jquery'
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
+Events = require 'client/Events'
 
 
 module.exports = class ClientStatisticsItemsFilterView extends Marionette.ItemView
@@ -16,6 +17,7 @@ module.exports = class ClientStatisticsItemsFilterView extends Marionette.ItemVi
         periodChoices: '.choices'
         periodChoiceLink: '.choice'
         periodInput: '#period-input'
+        shopInput: '.current-shop'
 
     events:
         "change @ui.typeSwitcher": "onChangeTypeSwitcher"
@@ -33,6 +35,7 @@ module.exports = class ClientStatisticsItemsFilterView extends Marionette.ItemVi
         switchers = @$(@ui.typeSwitcher)
         switchers.closest('label').removeClass 'active'
         el.closest('label').addClass 'active'
+        @channel.vent.trigger Events.STATISTICS_ITEMS_FILTERED
 
 
     onClickPeriodDropdownBtn: (e) =>
@@ -58,6 +61,11 @@ module.exports = class ClientStatisticsItemsFilterView extends Marionette.ItemVi
         @$(@ui.periodChoices).fadeOut 80, =>
             @$(@ui.periodWrapper).find('.active').removeClass 'active'
             el.closest('li').addClass 'active'
+            @channel.vent.trigger Events.STATISTICS_ITEMS_FILTERED
 
 
-
+    getFilterData: =>
+        data =
+            period: @$(@ui.periodInput).val()
+            shop: @$(@ui.shopInput).val()
+        return data
