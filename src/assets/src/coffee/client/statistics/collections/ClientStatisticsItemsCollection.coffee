@@ -9,7 +9,7 @@ module.exports = class ClientStatisticsItemsCollection extends PageableCollectio
     state:
         firstPage: 1
         currentPage: 1
-        pageSize: 999
+        pageSize: 1
 
     queryParams:
         currentPage: "page"
@@ -17,7 +17,10 @@ module.exports = class ClientStatisticsItemsCollection extends PageableCollectio
 
 
     url: =>
-        return "/api/shop/statistic/shop/"
+        if @pricelistId
+            return "/api/shop/statistic/pricelist/"
+        else
+            return "/api/shop/statistic/shop/"
 
 
     stateToParams: (filterState) ->
@@ -43,4 +46,8 @@ module.exports = class ClientStatisticsItemsCollection extends PageableCollectio
 
 
     setPricelistId: (id) =>
+        @pricelistId = id
+
+
+    setShopId: (id) =>
         @pricelistId = id

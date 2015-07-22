@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-from django.db.models import Sum
 from django.http import Http404, HttpResponse
 from django.contrib import auth
 from django.core.urlresolvers import reverse
@@ -9,6 +7,9 @@ from django.utils.decorators import method_decorator
 import json
 from django.core.servers.basehttp import FileWrapper
 from apuser.models import BalanceHistory
+from datetime import datetime
+from datetime import timedelta
+from django.db.models import Sum
 
 from apuser.models.payment import InvoiceRequest
 from catalog.models.token import EmailValidation, PasswordRecovery
@@ -222,10 +223,10 @@ class ClientPricelistAddPageView(TemplateView):
 
 
 class ClientStatisticShopView(TemplateView):
-    template_name = "apps/client/statistics/detail.html"
+    template_name = "apps/client/statistics/shop.html"
     model = Shop
 
-    def  _get_period_range(self, starting_point, day_num, duration):
+    def _get_period_range(self, starting_point, day_num, duration):
         start = starting_point - timedelta(days=day_num)
         start = self._reset_time(start)
         end = start + timedelta(days=duration)
@@ -274,6 +275,7 @@ class ClientStatisticShopView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ClientStatisticShopView, self).get_context_data(**kwargs)
+        context['context'] = json.dumps({'shopId': self.request.session['shop_id'], 'pricelistId': False})
         context['current_app'] = 'client-statistics'
         context['by_date'] = self._get_statistic_by_date()
         return context
@@ -281,6 +283,7 @@ class ClientStatisticShopView(TemplateView):
 
 class ClientStatisticPricelistView(ClientStatisticShopView):
     model = Pricelist
+    template_name = "apps/client/statistics/pricelist.html"
 
     def _get_statistic_by_date(self):
         pricelist = self._get_obj()
@@ -302,6 +305,14 @@ class ClientStatisticPricelistView(ClientStatisticShopView):
             })
         result.reverse()
         return result
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientStatisticPricelistView, self).get_context_data(**kwargs)
+        context['object'] = self._get_obj()
+        context['context'] = json.dumps({'shopId': False, 'pricelistId': context['object'].pk})
+        context['current_app'] = 'client-statistics'
+        context['by_date'] = self._get_statistic_by_date()
+        return context
 
 
 def download_invoice(request, pk):

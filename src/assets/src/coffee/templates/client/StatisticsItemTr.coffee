@@ -1,12 +1,9 @@
 Number = require 'base/utils/Number'
 
 template = (locals) =>
-
-    return "<tr>
-    <td>Фото и видео камеры</td>
-    <th class=\"text-center\">11</th>
-    <th class=\"text-center\">11</th>
-</tr>"
+    return "<td><a href=\"/product/detail/#{locals.id}/\" target=\"_blank\">#{locals.name}</a></td>
+    <th class=\"text-center\">#{locals.count}</th>
+    <th class=\"text-center\">#{locals.sum}</th>"
 
 
 module.exports = template

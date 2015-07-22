@@ -38,7 +38,7 @@
                 <div class="block-ful-x">
                     <div id="client-statistics-product-filter-view">
                         <form class="filter-form">
-                            <input type="hidden" name="shop" value="{{ current_shop.pk }}" />
+                            <input type="hidden" class="current-shop" name="shop" value="{{ current_shop.pk }}" />
                             <div class="pure-g header">
                                 <div class="pure-u-1-2">
                                     <label class="active">
@@ -67,61 +67,7 @@
                         </form>
                     </div>
                     <div id="client-statistics-items-region"></div>
-                    <!--<div class="counter-wrapper">-->
-                        <!--<div class="click-counter">486<div>Кликов</div></div>-->
-                        <!--<div class="expense-counter">210<span>руб.</span><div>Расход</div></div>-->
-                    <!--</div>-->
-                    <!--<table>-->
-                        <!--<thead>-->
-                            <!--<tr>-->
-                                <!--<th>Название товара</th>-->
-                                <!--<th class="text-center" width="170px">Количество кликов</th>-->
-                                <!--<th class="text-center" width="170px">Расход, р</th>-->
-                            <!--</tr>-->
-                        <!--</thead>-->
-                        <!--<tbody>-->
-                            <!--<tr>-->
-                                <!--<td>Фото и видео камеры</td>-->
-                                <!--<th class="text-center">11</th>-->
-                                <!--<th class="text-center">11</th>-->
-                            <!--</tr>-->
-                             <!--<tr>-->
-                                <!--<td>Фото и видео камеры</td>-->
-                                <!--<th class="text-center">11</th>-->
-                                <!--<th class="text-center">11</th>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>Фото и видео камеры</td>-->
-                                <!--<th class="text-center">11</th>-->
-                                <!--<th class="text-center">11</th>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>Фото и видео камеры</td>-->
-                                <!--<th class="text-center">11</th>-->
-                                <!--<th class="text-center">11</th>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>Фото и видео камеры</td>-->
-                                <!--<th class="text-center">11</th>-->
-                                <!--<th class="text-center">11</th>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>Фото и видео камеры</td>-->
-                                <!--<th class="text-center">11</th>-->
-                                <!--<th class="text-center">11</th>-->
-                            <!--</tr>-->
-                        <!--</tbody>-->
-                    <!--</table>-->
-                    <!--<footer>-->
-                        <!--<div class="pager">-->
-                            <!--<ul>-->
-                                <!--<li><a href="#">< Предыдущая</a></li>-->
-                                <!--<li class="active"><a href="#">1</a></li>-->
-                                <!--<li><a href="#">2</a></li>-->
-                                <!--<li><a href="#">Следующая ></a></li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-                    <!--</footer>-->
+                    <footer id="client-statistics-items-pager-view"></footer>
                 </div>
             </div>
         </div>

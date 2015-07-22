@@ -1,27 +1,39 @@
 <ul class="catalog-menu">
     {% if current_shop %}
-        {% url 'client:statistics_shop_detail' as statistics_shop_detail_url %}
+        {% url 'client:statistics_shop' current_shop.pk as statistics_shop_detail_url %}
         {% url 'client:statistics_pricelist_detail' as statistics_pricelist_detail_url %}
-        <li class="has-submenu {% if statistics_shop_detail_url == current_url or statistics_pricelist_detail_url == current_url %}open{% endif %}">
+        <li class="has-submenu {% if statistics_shop_detail_url == current_url or statistics_pricelist_detail_url == current_url %}open{% endif %}
+        {% for yml in current_shop.get_ymls %}
+            {% url 'client:statistics_pricelist' yml.id as statistics_pricelist_url %}
+            {% if current_url == statistics_pricelist_url %}open{% endif %}
+        {% endfor %}
+        ">
             <a href="#">Статистика</a>
             <ul>
                 <li {% if statistics_shop_detail_url == current_url %}class="active"{% endif %}>
                     <a href="{{ statistics_shop_detail_url }}">По магазину</a>
                 </li>
                 {% for yml in current_shop.get_ymls %}
-                    <li {% if statistics_pricelist_detail_url == current_url %}class="active"{% endif %}>
-                        <a href="{{ statistics_pricelist_detail_url }}">По прайс-листу</a>
+                    {% url 'client:statistics_pricelist' yml.id as statistics_pricelist_url %}
+                    <li {% if statistics_pricelist_url == current_url %}class="active"{% endif %}>
+                        <a href="{{ statistics_pricelist_url }}">По прайс-листу "{{ yml.name }}"</a>
                     </li>
                 {% endfor %}
             </ul>
         </li>
         {% url 'client:pricelist_add' as pricelist_add_url %}
-        <li class="has-submenu {% if pricelist_add_url == current_url %}open{% endif %}">
+        <li class="has-submenu {% if pricelist_add_url == current_url %}open{% endif %}
+        {% for yml in current_shop.get_ymls %}
+            {% url 'client:pricelist_detail' yml.id as pricelist_detail_url %}
+            {% if current_url == pricelist_detail_url %}open{% endif %}
+        {% endfor %}
+        ">
             <a href="#">Прайс-листы</a>
             <ul>
                 {% for yml in current_shop.get_ymls %}
-                    <li>
-                        <a href="{% url 'client:pricelist_detail' yml.id %}">
+                    {% url 'client:pricelist_detail' yml.id as pricelist_detail_url %}
+                    <li {% if pricelist_detail_url == current_url %}class="active"{% endif %}>
+                        <a href="{{ pricelist_detail_url }}">
                             {{ yml.name }}
                         </a>
                     </li>
