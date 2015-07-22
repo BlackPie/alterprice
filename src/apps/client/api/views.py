@@ -121,11 +121,11 @@ class UpdateEmail(APIView):
 
 class InvoiceRequestView(ListCreateAPIView):
     serializer_class = serializers.InvoiceRequestSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.IsAuthenticated, )
     model = InvoiceRequest
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
+        return self.model.objects.filter(client=self.request.user.client_profile)
 
     def perform_create(self, serializer):
         ir = serializer.save()

@@ -232,13 +232,18 @@ class ProfilePasswordSerializer(serializers.Serializer):
 
 
 class InvoiceRequestSerializer(serializers.ModelSerializer):
+    file_attached = serializers.SerializerMethodField()
 
     class Meta:
         model = InvoiceRequest
-        fields = ('id', 'created')
+        fields = ('id', 'created', 'file_attached')
 
     def create(self, validated_data):
         return InvoiceRequest(**validated_data)
+
+    def get_file_attached(self, obj):
+        return bool(obj.invoice_file)
+
 
 
 class RobokassaResultSerializer(serializers.Serializer):
