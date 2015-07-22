@@ -30,13 +30,13 @@ urlpatterns = patterns(
     url(r'^wallet/balance/$', views.ClientWalletBalancePageView.as_view(), name='wallet_balance'),
     url(r'^wallet/refill/$', views.ClientWalletRefillPageView.as_view(), name='wallet_refill'),
 
-    url(r'^statistics/shop/$',
-        views.ClientStatisticsDetailPageView.as_view(),
-        name='statistics_shop_detail'),
+    url(r'^statistics/shop/(?P<pk>\d+)/$',
+        views.ClientStatisticShopView.as_view(),
+        name='statistics_shop'),
 
-    url(r'^statistics/pricelist/$',
-        views.ClientStatisticsDetailPageView.as_view(),
-        name='statistics_pricelist_detail'
+    url(r'^statistics/pricelist/(?P<pk>\d+)/$',
+        views.ClientStatisticPricelistView.as_view(),
+        name='statistics_pricelist'
     ),
 
     url(r'^pricelist/(?P<pk>\d+)/$', views.ClientPricelistDetailPageView.as_view(), name='pricelist_detail'),

@@ -1,3 +1,4 @@
+from hashlib import md5
 import logging
 
 from rest_framework import serializers
@@ -6,8 +7,9 @@ from django.contrib.auth import get_user_model
 from django.core.validators import EMPTY_VALUES
 from django.utils.crypto import constant_time_compare
 from django.utils.translation import ugettext_lazy as _
-from apuser.models.payment import InvoiceRequest
+from apuser.models.payment import InvoiceRequest, Payment
 from catalog.models.token import EmailValidation, PasswordRecovery
+from django.conf import settings
 
 User = get_user_model()
 from client.api import messages
@@ -230,10 +232,32 @@ class ProfilePasswordSerializer(serializers.Serializer):
 
 
 class InvoiceRequestSerializer(serializers.ModelSerializer):
+    file_attached = serializers.SerializerMethodField()
 
     class Meta:
         model = InvoiceRequest
-        fields = ('id', 'created')
+        fields = ('id', 'created', 'file_attached')
 
     def create(self, validated_data):
         return InvoiceRequest(**validated_data)
+
+    def get_file_attached(self, obj):
+        return bool(obj.invoice_file)
+
+
+
+class RobokassaResultSerializer(serializers.Serializer):
+    InvId = serializers.IntegerField()
+    OutSum = serializers.FloatField()
+    SignatureValue = serializers.CharField(max_length=60)
+
+    def validate(self, attrs):
+        try:
+            Payment.objects.get(id=attrs.get('id'))
+        except Payment.DoesNotExist:
+            raise serializers.ValidationError(_('Не найден платеж с указанным идентификатором'))
+        crc_txt = '%d:%d:%s' % (attrs.get('OutSum'), attrs.get('InvId'), settings.ROBOKASSA_PASS2, )
+        crc = md5(crc_txt.encode('utf-8'))
+        if str(crc.hexdigest()) != attrs.get('SignatureValue').lower():
+            raise serializers.ValidationError(_('Контрольная сумма не совпадает'))
+        return attrs

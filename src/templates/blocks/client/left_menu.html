@@ -1,6 +1,6 @@
 <ul class="catalog-menu">
     {% if current_shop %}
-        {% url 'client:statistics_shop_detail' as statistics_shop_detail_url %}
+        {% url 'client:statistics_shop' current_shop.pk as statistics_shop_detail_url %}
         {% url 'client:statistics_pricelist_detail' as statistics_pricelist_detail_url %}
         <li class="has-submenu {% if statistics_shop_detail_url == current_url or statistics_pricelist_detail_url == current_url %}open{% endif %}">
             <a href="#">Статистика</a>

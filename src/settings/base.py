@@ -26,11 +26,11 @@ class Base(Configuration):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME':     os.environ['POSTGRESQL_NAME'],
-            'USER':     os.environ['POSTGRESQL_USER'],
-            'PASSWORD': os.environ['POSTGRESQL_PASS'],
-            'HOST':     os.environ['DB_PORT_5432_TCP_ADDR'],
-            'PORT':     os.environ['DB_PORT_5432_TCP_PORT'],
+            'NAME':     os.environ.get('POSTGRESQL_NAME'),
+            'USER':     os.environ.get('POSTGRESQL_USER'),
+            'PASSWORD': os.environ.get('POSTGRESQL_PASS'),
+            'HOST':     os.environ.get('DB_PORT_5432_TCP_ADDR'),
+            'PORT':     os.environ.get('DB_PORT_5432_TCP_PORT'),
         }
     }
 
@@ -346,3 +346,7 @@ class Base(Configuration):
             },
         }
     }
+
+    ROBOKASSA_PASS1 = os.environ.get('ROBOKASSA_PASS1')
+    ROBOKASSA_PASS2 = os.environ.get('ROBOKASSA_PASS2')
+    ROBOKASSA_LOGIN = os.environ.get('ROBOKASSA_LOGIN')

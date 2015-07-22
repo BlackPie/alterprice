@@ -6,7 +6,8 @@ from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 import json
 from django.core.servers.basehttp import FileWrapper
-# Project imports
+from apuser.models import BalanceHistory
+
 from apuser.models.payment import InvoiceRequest
 from catalog.models.token import EmailValidation, PasswordRecovery
 
@@ -218,14 +219,88 @@ class ClientPricelistAddPageView(TemplateView):
         return context
 
 
-class ClientStatisticsDetailPageView(TemplateView):
+class ClientStatisticShopView(TemplateView):
     template_name = "apps/client/statistics/detail.html"
+    model = Shop
+
+    def _get_period_range(self, starting_point, day_num, duration):
+        start = starting_point - timedelta(days=day_num)
+        start = self._reset_time(start)
+        end = start + timedelta(days=duration)
+        return start, end
+
+    def _reset_time(self, date):
+        return date.replace(second=0, microsecond=0, minute=0, hour=0)
+
+    def _get_period(self):
+        now = datetime.now()
+        period = self.request.query_params.get('period')
+        if period == 'month':
+            period_start, period_end = self._get_period_range(now, 30, 30)
+        elif period == 'week':
+            period_start, period_end = self._get_period_range(now, 7, 7)
+        else:
+            period_start, period_end = self._get_period_range(now, 1, 1)
+        return period_start, period_end
+
+    def _get_obj(self):
+        try:
+            return self.model.objects.get(pk=self.kwargs.get('pk'))
+        except self.model.DoesNotExist:
+            raise Http404
+
+    def _get_statistic_by_date(self):
+        shop = self._get_obj()
+        now = datetime.now()
+        result = []
+        for x in range(7):
+            start, end = self._get_period_range(now, x, 1)
+            query = BalanceHistory.objects.filter(created__gte=start,
+                                                  created__lt=end,
+                                                  reason=BalanceHistory.CLICK,
+                                                  click__productshop__shop=shop,
+                                                  balance__client__user=self.request.user)
+            clicks_count = query.count()
+            money_sum = query.aggregate(Sum('change_value'))
+            result.append({
+                'date': start.strftime('%d.%m.%y'),
+                'clicks_count': clicks_count,
+                'money_sum': money_sum['change_value__sum'],
+            })
+        result.reverse()
+        return result
 
     def get_context_data(self, **kwargs):
-        context = super(ClientStatisticsDetailPageView, self).get_context_data(**kwargs)
+        context = super(ClientStatisticShopView, self).get_context_data(**kwargs)
         context['context'] = json.dumps({'shopId': self.request.session['shop_id']})
         context['current_app'] = 'client-statistics'
+        context['by_date'] = self._get_statistic_by_date()
         return context
+
+
+class ClientStatisticPricelistView(ClientStatisticShopView):
+    model = Pricelist
+
+    def _get_statistic_by_date(self):
+        pricelist = self._get_obj()
+        now = datetime.now()
+        result = []
+        for x in range(7):
+            start, end = self._get_period_range(now, x, 1)
+            query = BalanceHistory.objects.filter(created__gte=start,
+                                                  created__lt=end,
+                                                  reason=BalanceHistory.CLICK,
+                                                  click__productshop__pricelist=pricelist,
+                                                  balance__client__user=self.request.user)
+            clicks_count = query.count()
+            money_sum = query.aggregate(Sum('change_value'))
+            result.append({
+                'date': start.strftime('%d.%m.%y'),
+                'clicks_count': clicks_count,
+                'money_sum': money_sum['change_value__sum'],
+            })
+        result.reverse()
+        return result
 
 
 def download_invoice(request, pk):

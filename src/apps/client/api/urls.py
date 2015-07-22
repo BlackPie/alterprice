@@ -13,4 +13,6 @@ urlpatterns = patterns(
     url(r'^email/update/$', views.UpdateEmail.as_view(), name='email-update'),
     url(r'^invoice/add/$', views.InvoiceRequestView.as_view(), name='invoice-add'),
     url(r'^invoice/list/$', views.InvoiceRequestView.as_view(), name='invoice-list'),
+    url(r'^robokassa/add/$', views.RobokassaCreatePaymentAPIView.as_view(), name='robokassa-add'),
+    url(r'^robokassa/result/$', views.RobokassaResultAPIView.as_view(), name='robokassa-result'),
 )
