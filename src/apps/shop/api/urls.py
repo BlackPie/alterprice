@@ -17,5 +17,6 @@ urlpatterns = patterns(
     url(r'^yml/(?P<pk>\d+)/product/list/$', views.YMLProductList.as_view(), name='yml-product-list'),
     url(r'^category/(?P<pk>\d+)/update/$', views.YMLCategoryUpdate.as_view(), name='yml-category-update'),
     url(r'^statistic/shop/$', views.StatisticShop.as_view(), name='statistic-shop'),
+    url(r'^statistic/shop/$', views.StatisticPricelist.as_view(), name='statistic-shop'),
     # url(r'^statistic/price/(?P<pk>\d+)/$', views.StatisticPrice.as_view(), name='statistic-shop'),
 )

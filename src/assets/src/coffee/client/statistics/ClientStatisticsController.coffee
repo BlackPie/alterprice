@@ -18,13 +18,17 @@ ClientStatisticsItemsFilterState = require './states/ClientStatisticsItemsFilter
 module.exports = class ClientStatisticsController extends Marionette.Controller
 
     initialize: (options) =>
+        console.log options
         @shopId = options.context['shopId']
+        @pricelistId = options.context['pricelistId']
         @channel = options.channel
         @leftMenuView = new LeftMenuView {channel: @channel}
         @clientHeaderView = new ClientHeaderView {channel: @channel}
 
         @clientStatisticsLayout = new ClientStatisticsLayout {channel: @channel}
         @clientStatisticsItemsCollection = new ClientStatisticsItemsCollection
+        @clientStatisticsItemsCollection.setShopId @shopId
+        @clientStatisticsItemsCollection.setPricelistId @pricelistId
         @clientStatisticsItemsCollectionView = new ClientStatisticsItemsCollectionView
             channel: @channel
             collection: @clientStatisticsItemsCollection
@@ -47,7 +51,7 @@ module.exports = class ClientStatisticsController extends Marionette.Controller
         options =
             pageSize: @clientStatisticsItemsCollection.state.pageSize
             currentPage: @clientStatisticsItemsCollection.state.currentPage
-
+        console.log clientStatisticsItemsFilterState
         @clientStatisticsItemsCollection.getFirstPage({data: clientStatisticsItemsFilterState, fetch: true}).done (response) =>
             @clientStatisticsItemsPagerView.render response, options
 

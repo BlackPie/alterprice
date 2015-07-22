@@ -1,8 +1,9 @@
 {% extends 'client_base.html' %}
 
 {% block content%}
+
     <div id="client-statistics-detail">
-        <div class="h1">Статистика по прайс-листу "{{ current_shop.name }}"</div>
+        <div class="h1">Статистика по прайс-листу "{{ object.name }}"</div>
         <div class="pure-g">
             <div class="pure-u-1-1 short-brief">
                 <div class="block-ful-x">
@@ -38,7 +39,7 @@
                 <div class="block-ful-x">
                     <div id="client-statistics-product-filter-view">
                         <form class="filter-form">
-                            <input type="hidden" class="current-shop" name="shop" value="{{ current_shop.pk }}" />
+                            <input type="hidden" class="current-pricelist" name="pricelist" value="{{ object.id }}" />
                             <div class="pure-g header">
                                 <div class="pure-u-1-2">
                                     <label class="active">

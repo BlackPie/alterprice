@@ -18,6 +18,7 @@ module.exports = class ClientStatisticsItemsFilterView extends Marionette.ItemVi
         periodChoiceLink: '.choice'
         periodInput: '#period-input'
         shopInput: '.current-shop'
+        pricelistInput: '.current-pricelist'
 
     events:
         "change @ui.typeSwitcher": "onChangeTypeSwitcher"
@@ -67,5 +68,8 @@ module.exports = class ClientStatisticsItemsFilterView extends Marionette.ItemVi
     getFilterData: =>
         data =
             period: @$(@ui.periodInput).val()
-            shop: @$(@ui.shopInput).val()
+        if @$(@ui.shopInput)
+            data['shop'] = @$(@ui.shopInput).val()
+        if @$(@ui.pricelistInput)
+            data['pricelist'] = @$(@ui.pricelistInput).val()
         return data
