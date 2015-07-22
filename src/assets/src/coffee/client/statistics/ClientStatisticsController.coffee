@@ -33,6 +33,7 @@ module.exports = class ClientStatisticsController extends Marionette.Controller
             collection: @clientStatisticsItemsCollection
         @clientStatisticsLayout.itemsList.show @clientStatisticsItemsCollectionView
         @clientStatisticsItemsFilterView = new ClientStatisticsItemsFilterView {channel: @channel}
+        @clientStatisticsItemsPagerView = new ClientStatisticsItemsPagerView {channel: @channel}
         @fetchItems()
 
         @channel.vent.on Events.STATISTICS_ITEMS_PAGER,  @onChangeItemsPage
@@ -44,12 +45,12 @@ module.exports = class ClientStatisticsController extends Marionette.Controller
 
 
     fetchItems: =>
-        @clientStatisticsItemsPagerView = new ClientStatisticsItemsPagerView {channel: @channel}
+
         filterData = @clientStatisticsItemsFilterView.getFilterData()
         clientStatisticsItemsFilterState = ClientStatisticsItemsFilterState.fromArray filterData
         options =
             pageSize: @clientStatisticsItemsCollection.state.pageSize
-            currentPage: @clientStatisticsItemsCollection.state.currentPage
+            currentPage: 1
         @clientStatisticsItemsCollection.getFirstPage({data: clientStatisticsItemsFilterState, fetch: true}).done (response) =>
             @clientStatisticsItemsPagerView.render response, options
 
