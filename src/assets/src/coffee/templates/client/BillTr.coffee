@@ -2,13 +2,16 @@ Number = require 'base/utils/Number'
 
 template = (locals) =>
 
+    if not locals.file_attached
+        file = "В обработке"
+
+    #<a href=\"#\" class=\"view\"><i class=\"icon-eye-grey\"></i></a>
+    #<a href=\"#\" class=\"download\"><i class=\"icon-download-grey\"></i></a>
+
     return "
         <td>Счет №#{locals.id}</td>
         <td>#{locals.created}</td>
-        <td>
-            <a href=\"#\" class=\"view\"><i class=\"icon-eye-grey\"></i></a>
-            <a href=\"#\" class=\"download\"><i class=\"icon-download-grey\"></i></a>
-        </td>
+        <td>#{file}</td>
     "
 
 

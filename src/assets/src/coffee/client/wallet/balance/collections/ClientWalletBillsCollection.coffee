@@ -5,7 +5,7 @@ ClientWalletBillModel = require '../models/ClientWalletBillModel'
 
 module.exports = class ClientWalletBillsCollection extends PageableCollection
     model: ClientWalletBillModel
-    url: "/api/user/bill/list/"
+    url: "/api/client/invoice/list/"
 
     state:
         firstPage: 1
