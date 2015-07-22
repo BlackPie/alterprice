@@ -260,6 +260,46 @@ class StatisticShop(ListAPIView):
     def _get_shop(self):
         try:
             return Shop.objects.get(pk=self.request.query_params.get('shop'))
+        except Shop.DoesNotExist:
+            raise Http404
+
+    def get_queryset(self):
+        period_start, period_end = self._get_period()
+        return ProductShop.objects.filter(click__created__lt=period_end,
+                                          click__created__gte=period_start,
+                                          shop__user=self.request.user,
+                                          shop=self._get_shop()) \
+            .annotate(sum=Sum('click__balancehistory__change_value'),
+                      count=Count('click'))
+
+
+class StatisticPricelist(ListAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = serializers.StatisticSerializer
+
+    def  _get_period_range(self, starting_point, day_num, duration):
+        start = starting_point - timedelta(days=day_num)
+        start = self._reset_time(start)
+        end = start + timedelta(days=duration)
+        return start, end
+
+    def _reset_time(self, date):
+        return date.replace(second=0, microsecond=0, minute=0, hour=0)
+
+    def _get_period(self):
+        now = datetime.now()
+        period = self.request.query_params.get('period')
+        if period == 'month':
+            period_start, period_end = self._get_period_range(now, 30, 30)
+        elif period == 'week':
+            period_start, period_end = self._get_period_range(now, 7, 7)
+        else:
+            period_start, period_end = self._get_period_range(now, 1, 1)
+        return period_start, period_end
+
+    def _get_pricelist(self):
+        try:
+            return Pricelist.objects.get(pk=self.request.query_params.get('pricelist'))
         except Pricelist.DoesNotExist:
             raise Http404
 
@@ -267,30 +307,7 @@ class StatisticShop(ListAPIView):
         period_start, period_end = self._get_period()
         return ProductShop.objects.filter(click__created__lt=period_end,
                                           click__created__gte=period_start,
-                                          shop__user=self.request.user) \
+                                          shop__user=self.request.user,
+                                          pricelist=self._get_pricelist()) \
             .annotate(sum=Sum('click__balancehistory__change_value'),
                       count=Count('click'))
-
-    def get(self, request, *args, **kwargs):
-        response = super(StatisticShop, self).get(request, *args, **kwargs)
-        shop = self._get_shop()
-        now = datetime.now()
-        by_date = {}
-        for x in range(7):
-            start, end = self._get_period_range(now, x, 1)
-            query = BalanceHistory.objects.filter(created__gte=start,
-                                                  created__lt=end,
-                                                  reason=BalanceHistory.CLICK,
-                                                  click__productshop__shop=shop,
-                                                  balance__client__user=self.request.user)
-            clicks_count = query.count()
-            money_sum = query.aggregate(Sum('change_value'))
-            by_date.update({
-                start.strftime('%d.%m.%y'): {
-                    'clicks_count': clicks_count,
-                    'money_sum': money_sum['change_value__sum'],
-                }
-            })
-        response.data['by_date'] = by_date
-
-        return response
