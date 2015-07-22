@@ -223,7 +223,7 @@ class ClientPricelistAddPageView(TemplateView):
 
 
 class ClientStatisticShopView(TemplateView):
-    template_name = "apps/client/statistics/detail.html"
+    template_name = "apps/client/statistics/shop.html"
     model = Shop
 
     def _get_period_range(self, starting_point, day_num, duration):
@@ -283,6 +283,7 @@ class ClientStatisticShopView(TemplateView):
 
 class ClientStatisticPricelistView(ClientStatisticShopView):
     model = Pricelist
+    template_name = "apps/client/statistics/pricelist.html"
 
     def _get_statistic_by_date(self):
         pricelist = self._get_obj()

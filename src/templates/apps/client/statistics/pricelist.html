@@ -1,0 +1,75 @@
+{% extends 'client_base.html' %}
+
+{% block content%}
+    <div id="client-statistics-detail">
+        <div class="h1">Статистика по прайс-листу "{{ current_shop.name }}"</div>
+        <div class="pure-g">
+            <div class="pure-u-1-1 short-brief">
+                <div class="block-ful-x">
+                    <header>Краткая сводка</header>
+                    <table>
+                        <thead>
+                            <th></th>
+                            {% for d in by_date %}
+                                <th class="text-center grey-border">{{ d.date }}</th>
+                            {% endfor %}
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Клики</td>
+                                {% for x in by_date %}
+                                    <td class="text-center grey-border">{{ x.clicks_count|default:0 }}</td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <td>Расход, руб</td>
+                                {% for d in by_date %}
+                                    <td class="text-center grey-border">{{ d.money_sum|default:0 }}</td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer>
+                        <div class="info">Данные приведены за последнюю неделю: количество кликов, которые приходятся на предложения вашего магазина, и расход средств за клики по вашим предложениям.</div>
+                    </footer>
+                </div>
+            </div>
+            <div class="pure-u-1-1 full-statistics">
+                <div class="block-ful-x">
+                    <div id="client-statistics-product-filter-view">
+                        <form class="filter-form">
+                            <input type="hidden" class="current-shop" name="shop" value="{{ current_shop.pk }}" />
+                            <div class="pure-g header">
+                                <div class="pure-u-1-2">
+                                    <label class="active">
+                                        <input name="type" class="type-switcher" type="radio" checked="checked">
+                                        <span>По товарам</span>
+                                    </label>
+                                    <label>
+                                        <input name="type" class="type-switcher" type="radio">
+                                        <span>По категориям</span>
+                                    </label>
+                                </div>
+                                <div class="pure-u-1-2 period-wrapper">
+                                    <span>Показать:</span>
+                                    <a href="#" class="btn btn-link dropdown-btn choose-period-btn">за неделю</a>
+                                    <input id="period-input" type="hidden" name="period" value="week" />
+                                    <div class="overlay"></div>
+                                    <div class="choices">
+                                        <ul>
+                                            <li><a class="choice" data-value="yesterday" href="#">за вчера</a></li>
+                                            <li class="active"><a class="choice" data-value="week" href="#">за неделю</a></li>
+                                            <li><a class="choice" data-value="month" href="#">за месяц</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="client-statistics-items-region"></div>
+                    <footer id="client-statistics-items-pager-view"></footer>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
