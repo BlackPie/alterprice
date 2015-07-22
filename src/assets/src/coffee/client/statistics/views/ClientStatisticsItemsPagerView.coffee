@@ -55,4 +55,5 @@ module.exports = class ClientStatisticsItemsPagerView extends Marionette.ItemVie
 
         @$(@ui.prevBtn).find('a').attr 'data-page', page - 1
         @$(@ui.nextBtn).find('a').attr 'data-page', page + 1
+
         @channel.vent.trigger Events.STATISTICS_ITEMS_PAGER, page
