@@ -231,12 +231,11 @@ class ProfilePasswordSerializer(serializers.Serializer):
         return attrs
 
 
-class InvoiceRequestSerializer(serializers.ModelSerializer):
-    file_attached = serializers.SerializerMethodField()
+class InvoiceRequestAddSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InvoiceRequest
-        fields = ('id', 'created', 'file_attached')
+        exclude = ('id', 'created', 'invoice_file', 'client')
 
     def create(self, validated_data):
         return InvoiceRequest(**validated_data)
@@ -244,6 +243,13 @@ class InvoiceRequestSerializer(serializers.ModelSerializer):
     def get_file_attached(self, obj):
         return bool(obj.invoice_file)
 
+
+class InvoiceRequestListSerializer(serializers.ModelSerializer):
+    file_attached = serializers.SerializerMethodField()
+
+    class Meta:
+        model = InvoiceRequest
+        fields = ('id', 'created', 'file_attached')
 
 
 class RobokassaResultSerializer(serializers.Serializer):

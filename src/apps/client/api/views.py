@@ -5,7 +5,8 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.renderers import StaticHTMLRenderer
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, UpdateAPIView, ListCreateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListCreateAPIView, \
+    ListAPIView
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
@@ -119,8 +120,19 @@ class UpdateEmail(APIView):
         return response
 
 
-class InvoiceRequestView(ListCreateAPIView):
-    serializer_class = serializers.InvoiceRequestSerializer
+class InvoiceListView(ListAPIView):
+    model = InvoiceRequest
+    serializer_class = serializers.InvoiceRequestListSerializer
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get_queryset(self):
+        queryset = super(InvoiceListView, self).get_queryset()
+        queryset.filter(client=self.request.user.client_profile)
+        return queryset
+
+
+class InvoiceCreateView(CreateAPIView):
+    serializer_class = serializers.InvoiceRequestAddSerializer
     permission_classes = (permissions.IsAuthenticated, )
     model = InvoiceRequest
 
@@ -131,7 +143,6 @@ class InvoiceRequestView(ListCreateAPIView):
         ir = serializer.save()
         ir.client = self.request.user.client_profile
         ir.save()
-
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
