@@ -1,11 +1,17 @@
 {% load humanize %}
 <div id="header-block">
     <div class="pure-g">
+        {% with user.client_profile.balance.value|default:0 as balance %}
+            <div class="pure-u-1-4">
+                <div class="user-balance">Текущий баланс: <span>{{ balance|intcomma }}</span> руб.</div>
+            </div>
+        {% endwith %}
         <div class="pure-u-1-4">
-            <div class="user-balance">Текущий баланс: <span>{{ user.client_profile.balance.value|intcomma|default:0 }}</span> руб.</div>
-        </div>
-        <div class="pure-u-1-4">
-            <div class="user-status">Статус: <span>{% if user.client_profile.is_active %}активный{% else %}неактивный{% endif %}</span></div>
+            {% if user.client_profile.is_active %}
+                <div class="user-status">Статус: <span>активный</span></div>
+            {% else %}
+                <div class="user-status not-active">Статус: <span>неактивный</span></div>
+            {% endif %}
         </div>
         <div class="pure-u-1-4">
             {% include 'blocks/client/shops_selector.html' with shops=user.get_shops  %}
