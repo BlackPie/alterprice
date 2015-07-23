@@ -2,7 +2,7 @@
 <div id="header-block">
     <div class="pure-g">
         <div class="pure-u-1-4">
-            <div class="user-balance">Текущий баланс: <span>{{ user.client_profile.balance.value|intcomma }}</span> руб.</div>
+            <div class="user-balance">Текущий баланс: <span>{{ user.client_profile.balance.value|intcomma|default:0 }}</span> руб.</div>
         </div>
         <div class="pure-u-1-4">
             <div class="user-status">Статус: <span>{% if user.client_profile.is_active %}активный{% else %}неактивный{% endif %}</span></div>

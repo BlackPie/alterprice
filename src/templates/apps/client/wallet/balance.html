@@ -9,7 +9,7 @@
             <div class="pure-u-1-2">
                 <div class="block-1-x user-balance-informer">
                     <span>Текущий баланс</span>
-                    <div><span>{{ user.client_profile.balance.value|intcomma }}</span> руб.</div>
+                    <div><span>{{ user.client_profile.balance.value|intcomma|default:0 }}</span> руб.</div>
                     <a class="refill-link" href="{% url 'client:wallet_refill' %}">Перейти к пополнению</a>
                 </div>
             </div>
