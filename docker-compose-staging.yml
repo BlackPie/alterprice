@@ -8,8 +8,8 @@ db:
    - POSTGRESQL_USER=super
    - POSTGRESQL_NAME=alterprice_staging
    - POSTGRESQL_PASS=staging
-  volumes_from:
-   - dbdata
+  volumes:
+   - ./dbdata:/data
 
 mediadata:
   image: busybox
@@ -25,11 +25,6 @@ nginx:
    - mediadata
   links:
    - web
-
-dbdata:
- image: busybox
- volumes:
- - /data
 
 elasticsearch:
   image: createdigitalspb/elasticsearch:1.0
