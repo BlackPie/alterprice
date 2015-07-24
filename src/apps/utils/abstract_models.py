@@ -174,7 +174,8 @@ class NameModel(models.Model):
 
 
 class YMkey(models.Model):
-    ym_id = models.IntegerField(verbose_name=_('Yandex Market ID'))
+    ym_id = models.IntegerField(verbose_name=_('Yandex Market ID'),
+                                blank=True, null=True)
 
     class Meta:
         abstract = True

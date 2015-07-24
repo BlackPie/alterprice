@@ -63,6 +63,7 @@ class Category(NameModel, YMkey):
                              default=None,
                              upload_to=get_photo_path,
                              verbose_name=_('Фото'))
+    full_path = models.CharField(max_length=200, blank=True, null=True)
 
     objects = CategoryManager.from_queryset(CategoryQuerySet)()
 
