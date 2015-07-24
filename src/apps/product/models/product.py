@@ -2,6 +2,7 @@ from django.core.validators import EMPTY_VALUES
 from django.db import models
 from django.db.models import query, Min, Max, Q
 from django.utils.translation import ugettext_lazy as _
+from django_extensions.db.fields.json import JSONField
 from catalog.models.category import Category
 from utils.abstract_models import YMkey
 from brand.models import Brand
@@ -92,6 +93,7 @@ class Product(YMkey):
                                    blank=True,
                                    default=None,
                                    verbose_name=_('Описание'))
+    details = JSONField(null=True, blank=True, verbose_name=_('Характеристики'))
 
     objects = ProductManager.from_queryset(ProductQuerySet)()
 
@@ -114,3 +116,16 @@ class Product(YMkey):
     class Meta:
         verbose_name = _('Продукт')
         verbose_name_plural = _('Продукты')
+
+
+class Opinion(models.Model):
+    product = models.ForeignKey(Product)
+    comment = models.CharField(max_length=10000, null=True, blank=True, verbose_name=_('Комментарий'))
+    contra = models.CharField(max_length=10000, null=True, blank=True, verbose_name=_('Недостатки'))
+    pro = models.CharField(max_length=10000, null=True, blank=True, verbose_name=_('Достоинства'))
+    author = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('Имя автора'))
+    grade = models.IntegerField(verbose_name=_('Оценка'))
+    agree = models.IntegerField(verbose_name=_('Согласно'))
+    reject = models.IntegerField(verbose_name=_('Не согласно'))
+    date = models.DateTimeField(verbose_name=_('Дата создания'))
+

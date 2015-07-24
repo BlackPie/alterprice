@@ -15,4 +15,5 @@ urlpatterns = patterns(
     url(r'^invoice/list/$', views.InvoiceListView.as_view(), name='invoice-list'),
     url(r'^robokassa/add/$', views.RobokassaCreatePaymentAPIView.as_view(), name='robokassa-add'),
     url(r'^robokassa/result/$', views.RobokassaResultAPIView.as_view(), name='robokassa-result'),
+    url(r'^market/offer/$', views.RobokassaResultAPIView.as_view(), name='robokassa-result'),
 )

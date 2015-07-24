@@ -65,3 +65,7 @@ class InvoiceRequest(models.Model):
     phone = models.CharField(verbose_name=_('Телефон контактного лица'), max_length=255)
     legal_address = models.CharField(verbose_name=_('Юридический адрес'), max_length=255)
     post_address = models.CharField(verbose_name=_('Почтовый адрес'), max_length=255)
+
+    class Meta:
+        verbose_name = _('Запрос счета')
+        verbose_name_plural = _('Запросы счетов')
