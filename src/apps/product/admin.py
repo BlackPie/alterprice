@@ -8,7 +8,7 @@ class ProductPropertyInline(admin.StackedInline):
 
 
 class ProductShopInline(admin.StackedInline):
-    model = models.ProductShop
+    model = models.Offer
 
 
 class ProductPhotoInline(admin.StackedInline):
@@ -22,4 +22,4 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Product, ProductAdmin)
-admin.site.register(models.ProductShopDelivery)
+admin.site.register(models.OfferDelivery)

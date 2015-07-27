@@ -12,8 +12,8 @@ class ProductQuerySet(query.QuerySet):
 
     def active(self):
         return self.filter(
-            productshop__shop__status=1,
-            productshop__pricelist__publish_status=1)
+            offer__shop__status=1,
+            offer__pricelist__publish_status=1)
 
     def by_ymid(self, ym_id):
         # return self.active().filter(ym_id=ym_id)
@@ -107,7 +107,7 @@ class Product(YMkey):
         return self.productphoto_set.all()
 
     def get_offers(self):
-        return self.productshop_set.filter(shop__status=1)
+        return self.offer_set.filter(shop__status=1)
 
     def get_best_offer(self):
         offers = self.get_offers()

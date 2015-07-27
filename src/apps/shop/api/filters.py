@@ -1,5 +1,5 @@
 import django_filters
-from product.models import ProductShop
+from product.models import Offer
 from shop.models.offer import Pricelist
 
 
@@ -11,5 +11,5 @@ class StatisticShopFilter(django_filters.FilterSet):
     shop = ShopFilter(queryset=Pricelist.objects.all())
 
     class Meta:
-        model = ProductShop
+        model = Offer
         fields = ('shop')

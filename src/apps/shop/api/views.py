@@ -13,7 +13,7 @@ from rest_framework import status
 from rest_framework.response import Response
 # Project imports
 from apuser.models import BalanceHistory
-from product.models import ProductShop
+from product.models import Offer
 from shop.api import serializers
 from shop.models.offer import OfferCategories, Pricelist
 from shop.models.shop import Shop
@@ -223,7 +223,7 @@ class YMLCategoryUpdate(UpdateAPIView):
 class YMLProductList(ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = serializers.YMLProductListserializer
-    model = ProductShop
+    model = Offer
 
     def get_queryset(self):
         yml_id = self.kwargs.get('pk')
@@ -265,7 +265,7 @@ class StatisticShop(ListAPIView):
 
     def get_queryset(self):
         period_start, period_end = self._get_period()
-        return ProductShop.objects.filter(click__created__lt=period_end,
+        return Offer.objects.filter(click__created__lt=period_end,
                                           click__created__gte=period_start,
                                           shop__user=self.request.user,
                                           shop=self._get_shop()) \
@@ -305,7 +305,7 @@ class StatisticPricelist(ListAPIView):
 
     def get_queryset(self):
         period_start, period_end = self._get_period()
-        return ProductShop.objects.filter(click__created__lt=period_end,
+        return Offer.objects.filter(click__created__lt=period_end,
                                           click__created__gte=period_start,
                                           shop__user=self.request.user,
                                           pricelist=self._get_pricelist()) \

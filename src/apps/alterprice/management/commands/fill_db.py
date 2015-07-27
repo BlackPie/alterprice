@@ -66,7 +66,7 @@ class Command(BaseCommand):
 
         for p in productmodels.Product.objects.all():
             for x in range(0, 3):
-                ps = productmodels.ProductShop()
+                ps = productmodels.Offer()
                 ps.product = p
                 ps.price = random.randrange(100, 10000)
                 ps.shop = random.choice(shops)
@@ -77,7 +77,7 @@ class Command(BaseCommand):
                 prop.name = 'Property_%d_%s' % (p.id, x)
                 properties.append(prop)
 
-        productmodels.ProductShop.objects.bulk_create(productshops)
+        productmodels.Offer.objects.bulk_create(productshops)
         productmodels.ProductProperty.objects.bulk_create(properties)
 
         # for prop in productmodels.ProductProperty.objects.all():
@@ -89,14 +89,14 @@ class Command(BaseCommand):
         #         prop_infos.append(pi)
         # productmodels.PropertyInfo.objects.bulk_create(prop_infos)
 
-        for ps in productmodels.ProductShop.objects.all():
-            d = productmodels.ProductShopDelivery()
+        for ps in productmodels.Offer.objects.all():
+            d = productmodels.OfferDelivery()
             d.productshop = ps
             d.pickup = random.choice((True, False))
             d.delivery = random.choice((True, False))
             d.price = random.randrange(110, 1000)
             deliveris.append(d)
-        productmodels.ProductShopDelivery.objects.bulk_create(deliveris)
+        productmodels.OfferDelivery.objects.bulk_create(deliveris)
 
         admin = AlterPriceUser()
         admin.email = 'admin@admin.com'

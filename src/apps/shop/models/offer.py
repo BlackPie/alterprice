@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-# Project imports
+
 from catalog.models.category import Category
 from catalog.models.city import City
 from catalog.models.currency import Currency
@@ -86,7 +86,7 @@ class PricelistManager(models.Manager):
         for offer in offers:
             product = productmodels.Product.objects.make_from_yml(offer)
 
-            productshop = productmodels.ProductShop.objects.make_from_yml(
+            productshop = productmodels.Offer.objects.make_from_yml(
                 pricelist=obj,
                 product=product,
                 shop=shop,
@@ -94,13 +94,22 @@ class PricelistManager(models.Manager):
                 yml_obj=offer,
                 offercats=offercats)
 
-            productmodels.ProductShopDelivery.objects.make_from_yml(
+            productmodels.OfferDelivery.objects.make_from_yml(
                 productshop=productshop,
                 yml_obj=offer)
         return obj
 
 
 class Pricelist(PublishModel):
+    NEW = 1
+    PROCESSED = 2
+    CANT_PROCESS = 3
+    STATUS_CHOICES = (
+        (NEW, "Новый"),
+        (PROCESSED, "Обработан"),
+        (CANT_PROCESS, "Невозможно обработать"),
+    )
+    status = models.IntegerField(default=NEW, choices=STATUS_CHOICES)
     shop = models.ForeignKey(Shop,
                              verbose_name=_('Магазин'))
     name = models.CharField(max_length=255,

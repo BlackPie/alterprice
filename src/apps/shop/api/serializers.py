@@ -1,7 +1,7 @@
 from rest_framework import serializers
 # Project imports
 from rest_framework.exceptions import ValidationError
-from product.models import ProductShop
+from product.models import Offer
 from shop import models
 from product import models as productmodels
 from catalog.api.serializers import CategorySerializer
@@ -103,7 +103,7 @@ class YMLProductListserializer(serializers.ModelSerializer):
     product = ProductSerializer()
 
     class Meta:
-        model = productmodels.ProductShop
+        model = productmodels.Offer
         fields = ('product', 'category', 'click_price', 'product_url')
 
     def get_category(self, obj):

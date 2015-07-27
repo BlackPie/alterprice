@@ -9,7 +9,7 @@ from catalog.models.currency import Currency
 from catalog.models.property import Property
 
 
-class ProductShopManager(models.Manager):
+class OfferManager(models.Manager):
     def make_from_yml(self, yml_obj, shop, product, currency,
                       offercats, pricelist):
         obj = self.model()
@@ -30,7 +30,7 @@ class ProductShopManager(models.Manager):
         return obj
 
 
-class ProductShop(models.Model):
+class Offer(models.Model):
     product = models.ForeignKey('product.Product',
                                 verbose_name=_('Продукт'))
     shop = models.ForeignKey('shop.Shop',
@@ -59,7 +59,7 @@ class ProductShop(models.Model):
                                       default=None,
                                       verbose_name=_('Категория предолжения'))
 
-    objects = ProductShopManager()
+    objects = OfferManager()
 
     def __str__(self):
         return "%s: %s" % (self.shop.name, self.product.name)
@@ -69,7 +69,7 @@ class ProductShop(models.Model):
         verbose_name_plural = _('магазины продуктов')
 
 
-class ProductShopDeliveryManager(models.Manager):
+class OfferDeliveryManager(models.Manager):
     def make_from_yml(self, productshop, yml_obj):
         obj = self.model()
         obj.productshop = productshop
@@ -82,8 +82,8 @@ class ProductShopDeliveryManager(models.Manager):
         return obj
 
 
-class ProductShopDelivery(models.Model):
-    productshop = models.OneToOneField(ProductShop,
+class OfferDelivery(models.Model):
+    productshop = models.OneToOneField(Offer,
                                        verbose_name=_('Магазин продукта'))
 
     pickup = models.BooleanField(default=True,
@@ -97,7 +97,7 @@ class ProductShopDelivery(models.Model):
                                 default=None,
                                 verbose_name=_('Цена доставки'))
 
-    objects = ProductShopDeliveryManager()
+    objects = OfferDeliveryManager()
 
     class Meta:
         verbose_name = _('Доставка продукта')

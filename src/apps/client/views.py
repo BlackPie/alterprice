@@ -261,7 +261,7 @@ class ClientStatisticShopView(TemplateView):
             query = BalanceHistory.objects.filter(created__gte=start,
                                                   created__lt=end,
                                                   reason=BalanceHistory.CLICK,
-                                                  click__productshop__shop=shop,
+                                                  click__offer__shop=shop,
                                                   balance__client__user=self.request.user)
             clicks_count = query.count()
             money_sum = query.aggregate(Sum('change_value'))
@@ -294,7 +294,7 @@ class ClientStatisticPricelistView(ClientStatisticShopView):
             query = BalanceHistory.objects.filter(created__gte=start,
                                                   created__lt=end,
                                                   reason=BalanceHistory.CLICK,
-                                                  click__productshop__pricelist=pricelist,
+                                                  click__offer__pricelist=pricelist,
                                                   balance__client__user=self.request.user)
             clicks_count = query.count()
             money_sum = query.aggregate(Sum('change_value'))

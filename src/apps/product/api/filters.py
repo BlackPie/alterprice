@@ -19,11 +19,11 @@ class DeliveryFilter(django_filters.CharFilter):
         return qs
 
 
-class ProductShopFilter(django_filters.FilterSet):
+class OfferFilter(django_filters.FilterSet):
     delivery_type = DeliveryFilter()
 
     class Meta:
-        model = models.ProductShop
+        model = models.Offer
         fields = ['delivery_type', ]
 
 

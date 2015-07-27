@@ -7,7 +7,7 @@ from catalog.forms import ChangeCityForm
 from brand.models import Brand
 from catalog.models.category import Category
 from catalog.models.city import City
-from product.models import ProductShop
+from product.models import Offer
 from apuser.models import Click, Balance, BalanceHistory
 
 
@@ -81,14 +81,14 @@ class ClickOffer(RedirectView):
     query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
-        productshop_id = kwargs.get('pk', None)
-        psqs = ProductShop.objects.filter(id=productshop_id)
+        offer_id = kwargs.get('pk', None)
+        psqs = Offer.objects.filter(id=offer_id)
         if not psqs.exists():
             raise Http404
         ps = psqs.first()
 
         click = Click.objects.make(
-            productshop=ps,
+            offer=ps,
             user_ip=self.request.META.get('REMOTE_ADDR'))
         user = ps.shop.user
 

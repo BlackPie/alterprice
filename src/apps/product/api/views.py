@@ -69,9 +69,9 @@ class ProductCount(APIView):
 
 
 class ProductOffers(ListAPIView):
-    serializer_class = serializers.ProductShopSerializer
-    model = models.ProductShop
-    filter_class = filters.ProductShopFilter
+    serializer_class = serializers.OfferSerializer
+    model = models.Offer
+    filter_class = filters.OfferFilter
 
     def get_queryset(self):
         product_id = self.kwargs.get('pk', None)
