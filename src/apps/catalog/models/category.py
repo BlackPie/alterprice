@@ -2,6 +2,7 @@ import os
 from django.db import models
 from django.db.models import query
 from django.utils.translation import ugettext_lazy as _
+from marketapi.api import MarketAPI
 from utils.abstract_models import NameModel, YMkey
 from easy_thumbnails.fields import ThumbnailerField
 
@@ -18,6 +19,28 @@ class CategoryManager(models.Manager):
     def get_frist_level(self):
         qs = self.filter(parent__isnull=True)
         return qs.prefetch_related('children')
+
+    def get_or_create(self, ym_id):
+        try:
+            self.get(ym_id=ym_id)
+        except self.DoesNotExist:
+            self.fetch_make(ym_id=ym_id)
+
+    def fetch_make(self, ym_id):
+        ym_category = MarketAPI.get_category(ym_id)['category']
+        if 'parentId' in ym_category:
+            try:
+                parent = self.get(ym_id=ym_category['parentId'])
+            except self.DoesNotExist:
+                parent = self.fetch_make(ym_category['parentId'])
+        else:
+            parent=None
+
+        return self.make(
+            name=ym_category['uniqName'],
+            ym_id=ym_id,
+            parent=parent,
+        )
 
     def make(self, name, ym_id, parent=None):
         obj = self.model()

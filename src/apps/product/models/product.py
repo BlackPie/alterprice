@@ -4,6 +4,7 @@ from django.db.models import query, Min, Max, Q
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields.json import JSONField
 from catalog.models.category import Category
+from marketapi.api import MarketAPI
 from utils.abstract_models import YMkey
 from brand.models import Brand
 
@@ -47,33 +48,32 @@ class ProductManager(models.Manager):
         qs = self.active()
         return qs.distinct()
 
-    def get_name(self, yml_obj):
-        if 'name' in yml_obj.keys():
-            return yml_obj.get('name')
-        if 'vendor' in yml_obj.keys():
-            return yml_obj.get('model')
-
-    def make_from_yml(self, yml_obj):
-        ym_id = yml_obj.get('@id', None)
-        if ym_id not in EMPTY_VALUES:
-            qs = self.by_ymid(ym_id)
-            if qs.exists():
-                obj = qs.first()
-            else:
-                obj = self.model()
-                obj.name = self.get_name(yml_obj)
-                obj.ym_id = yml_obj.get('@id')
-                category_id = yml_obj.get('categoryId')
-                obj.category = Category.objects.by_ymid(category_id).first()
-                obj.brand = Brand.objects.make_from_yml(yml_obj)
-                obj.description = yml_obj.get('description')
-                obj.save()
-                # delivery
-                # all other to properties!!
+    def make(self, ym_id, brand_name, name, category_id, description):
+        brand = Brand.objects.get_or_create(brand_name)
+        try:
+            category = Category.objects.get(ym_id=category_id)
+        except:
+            category = None
+        obj = self.model(
+            ym_id=ym_id,
+            brand=brand,
+            name=name,
+            category=category,
+            description=description,
+            details=self.get_details(ym_id)
+        )
+        obj.save()
         return obj
 
+    def get_details(self, ym_id):
+        result = MarketAPI.get_model_detail(model_id=ym_id)
+        return result['modelDetails']
 
-class Product(YMkey):
+
+class Product(models.Model):
+    ym_id = models.IntegerField(verbose_name=_('Yandex Market ID'),
+                                blank=True,
+                                null=True)
     brand = models.ForeignKey('brand.Brand',
                               null=True,
                               blank=True,

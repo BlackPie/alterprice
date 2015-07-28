@@ -5,7 +5,9 @@ import os
 from celery import Celery
 from django.conf import settings
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')  # TODO: make this setting global somewhere
+module = os.environ.get('DJANGO_SETTINGS_MODULE')
+if not module:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 
 from configurations import importer
 importer.install()

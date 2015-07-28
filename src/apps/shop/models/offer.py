@@ -42,7 +42,17 @@ class PricelistManager(models.Manager):
         currency = shop.get('currencies').get('currency')
         return categories, currency, offers
 
-    def make(self, shop, yml, region, name=None):
+    def make(self, shop, region, name, yml_url):
+        obj = self.model(
+            shop=shop,
+            name=name,
+            yml_url=yml_url,
+            region=region,
+        )
+        obj.save()
+        return obj
+
+    def make_old(self, shop, yml, region, name=None):
         if not isinstance(shop, Shop):
             raise MakeException(_('invalid shop object'))
         # TODO: check - shop is active

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 # Project imports
 from rest_framework.exceptions import ValidationError
+from client.tasks import process_pricelist
 from product.models import Offer
 from shop import models
 from product import models as productmodels
@@ -58,10 +59,12 @@ class YMLCreateSerialzier(serializers.ModelSerializer):
         try:
             obj = Pricelist.objects.make(
                 shop=validated_data.get('shop'),
-                yml=validated_data.get('yml_url'),
+                yml_url=validated_data.get('yml_url'),
                 name=validated_data.get('name'),
                 region=validated_data.get('region'),
             )
+            # process_pricelist.delay(pricelist_id=obj.id)
+            process_pricelist(pricelist_id=obj.id)
         except MakeException as e:
             raise ValidationError(str(e))
         return obj

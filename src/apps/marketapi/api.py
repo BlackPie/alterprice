@@ -1,4 +1,5 @@
 from json import loads
+from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import urlopen, Request
 from django.core.cache import cache
@@ -6,6 +7,9 @@ from django.conf import settings
 
 
 class MarketException(Exception):
+    pass
+
+class MarketHTTPError(Exception):
     pass
 
 
@@ -29,8 +33,11 @@ class MarketAPI(object):
             headers={'Authorization': settings.MARKET_API_KEY},
             method='GET',
         )
-        with urlopen(req) as x:
-            return loads(x.read())
+        try:
+            with urlopen(req) as x:
+                return loads(x.read())
+        except HTTPError as e:
+            raise MarketHTTPError(e.msg)
 
     @classmethod
     def get_offer(cls, offer_id, ip_addr=None, geo_id=None):
@@ -43,7 +50,7 @@ class MarketAPI(object):
             cache_key += ':ip_addr:%s' % ip_addr
         else:
             params['geo_id'] = geo_id
-            cache_key += ':geo_id:%s' % geo_id
+            cache_key += ':geo_id:%s' % str(geo_id)
         cached = cls._get_cached(cache_key)
         if cached:
             return cached
@@ -64,7 +71,7 @@ class MarketAPI(object):
             cache_key += ':ip_addr:%s' % ip_addr
         else:
             params['geo_id'] = geo_id
-            cache_key += ':geo_id:%s' % geo_id
+            cache_key += ':geo_id:%s' % str(geo_id)
         cached = cls._get_cached(cache_key)
         if cached:
             return cached
@@ -76,17 +83,22 @@ class MarketAPI(object):
         return result
 
     @classmethod
-    def search_model(cls, query, region_id):
-        params = {'query': query, 'regionId': region_id}
-        url = 'https://api.partner.market.yandex.ru/v2/models.json'
+    def search_model(cls, query, geo_id):
+        params = {'text': query, 'geo_id': geo_id,}
+        url = 'https://api.content.market.yandex.ru/v1/search.json'
         return cls._exec(params, url)
 
     @classmethod
     def get_opinions(cls, model_id):
-        url = 'https://api.content.market.yandex.ru/v1/model/%s/opinion.json' % model_id
+        url = 'https://api.content.market.yandex.ru/v1/model/%s/opinion.json' % str(model_id)
         return cls._exec({}, url)
 
     @classmethod
     def get_model_detail(cls, model_id):
-        url = 'https://api.content.market.yandex.ru/v1/model/%s/details.json' % model_id
+        url = 'https://api.content.market.yandex.ru/v1/model/%s/details.json' % str(model_id)
+        return cls._exec({}, url)
+
+    @classmethod
+    def get_category(cls, category_id):
+        url = 'https://api.content.market.yandex.ru/v1/category/%s.json' % str(category_id)
         return cls._exec({}, url)

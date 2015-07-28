@@ -86,7 +86,7 @@ class AddYML(CreateAPIView):
     permission_classes = (IsAuthenticated, )
 
     def perform_create(self, serializer):
-        # FIXIT TO shop from kwargs
+        # TODO shop from kwargs
         shop = self.request.user.get_shops().first()
         serializer.save(shop=shop)
 
