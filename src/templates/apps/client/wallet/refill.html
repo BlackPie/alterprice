@@ -29,10 +29,13 @@
                     </div>
                 </form>
                 <form id="robokassa-form" action="https://auth.robokassa.ru/Merchant/Index.aspx">
-                    <input type="hidden" name="MrchLogin" value="alterprice" />
+                    <input type="hidden" name="MerchantLogin" value="alterprice" />
                     <input id="robokassa-summ" type="hidden" name="OutSum" value="" />
                     <input id="robokassa-invid" type="hidden" name="InvId" value="" />
                     <input id="robokassa-signature" type="hidden" name="SignatureValue" value="" />
+                    {% if is_test_pay %}
+                    <input type="hidden" name="IsTest" value="1" />
+                    {% endif %}
                 </form>
             </div>
         </div>
