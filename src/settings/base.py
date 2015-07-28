@@ -351,6 +351,7 @@ class Base(Configuration):
     ROBOKASSA_PASS1 = os.environ.get('ROBOKASSA_PASS1')
     ROBOKASSA_PASS2 = os.environ.get('ROBOKASSA_PASS2')
     ROBOKASSA_LOGIN = os.environ.get('ROBOKASSA_LOGIN')
+    ROBOKASSA_TEST = True
     ROBOKASSA_TAX = 0.05
 
     MARKET_API_KEY = os.environ.get('MARKET_API_KEY')

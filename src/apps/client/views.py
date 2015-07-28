@@ -16,6 +16,7 @@ from catalog.models.token import EmailValidation, PasswordRecovery
 
 from client import decorators
 from client import forms
+from django.conf import settings
 from shop.models.offer import Pricelist
 from shop.models.shop import Shop
 
@@ -173,6 +174,7 @@ class ClientWalletRefillPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ClientWalletRefillPageView, self).get_context_data(**kwargs)
         context['current_app'] = 'client-wallet-refill'
+        context['is_test_pay'] = settings.ROBOKASSA_TEST
         return context
 
     @method_decorator(decorators.login_required)

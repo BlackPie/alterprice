@@ -232,9 +232,6 @@ class RobokassaCreatePaymentAPIView(CreateAPIView):
         payment.save()
         return payment
 
-    def _get_tax(self, amount):
-        urlopen()
-
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

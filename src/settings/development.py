@@ -45,3 +45,4 @@ class Development(Base):
             }
         }
     }
+    ROBOKASSA_TEST = False

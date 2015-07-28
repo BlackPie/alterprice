@@ -273,29 +273,9 @@ class StatisticShop(ListAPIView):
                       count=Count('click'))
 
 
-class StatisticPricelist(ListAPIView):
+class StatisticPricelist(StatisticShop):
     permission_classes = (IsAuthenticated, )
     serializer_class = serializers.StatisticSerializer
-
-    def  _get_period_range(self, starting_point, day_num, duration):
-        start = starting_point - timedelta(days=day_num)
-        start = self._reset_time(start)
-        end = start + timedelta(days=duration)
-        return start, end
-
-    def _reset_time(self, date):
-        return date.replace(second=0, microsecond=0, minute=0, hour=0)
-
-    def _get_period(self):
-        now = datetime.now()
-        period = self.request.query_params.get('period')
-        if period == 'month':
-            period_start, period_end = self._get_period_range(now, 30, 30)
-        elif period == 'week':
-            period_start, period_end = self._get_period_range(now, 7, 7)
-        else:
-            period_start, period_end = self._get_period_range(now, 1, 1)
-        return period_start, period_end
 
     def _get_pricelist(self):
         try:
