@@ -240,7 +240,7 @@ class RobokassaCreatePaymentAPIView(CreateAPIView):
         payment = self.perform_create(serializer)
         crc_txt = '%s::%d:%s' % (settings.ROBOKASSA_LOGIN, payment.id, settings.ROBOKASSA_PASS1, )
         response = {
-            'crc': md5(crc_txt.encode('utf-8')),
+            'crc': md5(crc_txt.encode('utf-8')).hexdigest(),
             'id': payment.id,
             'out_sum': serializer.validated_data.get('OutSum', 0) * 1.05,
         }
