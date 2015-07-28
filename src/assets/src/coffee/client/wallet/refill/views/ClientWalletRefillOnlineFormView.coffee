@@ -17,6 +17,10 @@ module.exports = class ClientWalletRefillOnlineFormView extends Marionette.ItemV
         radioWrapper: '.radio-wrapper'
         tabContainer: '.tab-content'
         quantumInput: '#quantum-input'
+        robokassaForm: '#robokassa-form'
+        robokassaSummInput: '#robokassa-summ'
+        robokassaInvIdInput: '#robokassa-invid'
+        robokassaSignatureInput: '#robokassa-signature'
 
     events:
         "keypress @ui.quantumInput": "onKeypressQuantumInput"
@@ -25,7 +29,13 @@ module.exports = class ClientWalletRefillOnlineFormView extends Marionette.ItemV
     initialize: (options) =>
         @channel = options.channel
         new Radio @$(@ui.radioWrapper)
-        new Form {form: @$(@ui.form)}
+        new Form
+            form: @$(@ui.form)
+            success: (response) =>
+                @$(@ui.robokassaSummInput).val response.out_sum
+                @$(@ui.robokassaInvIdInput).val response.id
+                @$(@ui.robokassaSignatureInput).val response.crc
+                @$(@ui.robokassaForm).submit()
 
 
     onKeypressQuantumInput: (e) =>
