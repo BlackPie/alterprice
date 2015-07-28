@@ -1,5 +1,6 @@
 import logging
 from hashlib import md5
+from urllib.request import urlopen
 
 from rest_framework import permissions
 from rest_framework import status
@@ -214,25 +215,34 @@ class RobokassaResultAPIView(APIView):
         return Response(response, status=200)
 
 
-class RobokassaCreatePaymentAPIView(APIView):
+class RobokassaCreatePaymentAPIView(CreateAPIView):
     model = Payment
     permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = serializers.RobokassaCreateSerializer
 
-    def perform_create(self):
+    def perform_create(self, serializer):
+        # payment = serializer.save()
         payment = self.model(
             client=self.request.user.client_profile,
-            # amount=serializer.validated_data.get('OutSum'),
+            amount=serializer.validated_data.get('OutSum'),
             payment_type=Payment.ONLINE,
             payment_detail=Payment.PAYMENT,
         )
         payment.save()
         return payment
 
-    def post(self, request, *args, **kwargs):
-        payment = self.perform_create()
+    def _get_tax(self, amount):
+        urlopen()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        payment = self.perform_create(serializer)
         crc_txt = '%s::%d:%s' % (settings.ROBOKASSA_LOGIN, payment.id, settings.ROBOKASSA_PASS1, )
         response = {
             'crc': md5(crc_txt.encode('utf-8')),
             'id': payment.id,
+            'out_sum': serializer.validated_data.get('OutSum', 0) * 1.05,
         }
-        return Response(response, status=201)
+        headers = self.get_success_headers(serializer.data)
+        return Response(response, status=status.HTTP_201_CREATED, headers=headers)

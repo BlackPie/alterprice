@@ -267,3 +267,7 @@ class RobokassaResultSerializer(serializers.Serializer):
         if str(crc.hexdigest()) != attrs.get('SignatureValue').lower():
             raise serializers.ValidationError(_('Контрольная сумма не совпадает'))
         return attrs
+
+
+class RobokassaCreateSerializer(serializers.Serializer):
+    OutSum = serializers.FloatField()
