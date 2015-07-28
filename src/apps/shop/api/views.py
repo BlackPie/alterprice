@@ -1,22 +1,22 @@
-from collections import OrderedDict
-from datetime import datetime, timedelta
 import logging
 
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count
 from django.http import Http404
-from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, \
-    RetrieveAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView,\
+    DestroyAPIView
 from rest_framework import status
 from rest_framework.response import Response
-# Project imports
-from apuser.models import BalanceHistory
+from catalog.models.category import Category
+
 from product.models import Offer
 from shop.api import serializers
+from shop.api.serializers import StatisticOfferSerializer, \
+    StatisticCategorySerializer
 from shop.models.offer import OfferCategories, Pricelist
 from shop.models.shop import Shop
+from .filters import StatisticOffersFilterSet, StatisticCategoriesFilterSet
 
 logger = logging.getLogger(__name__)
 
@@ -233,61 +233,25 @@ class YMLProductList(ListAPIView):
         return qs.order_by('-product__category').distinct()
 
 
-class StatisticShop(ListAPIView):
+class StatisticOffers(ListAPIView):
     permission_classes = (IsAuthenticated, )
-    serializer_class = serializers.StatisticSerializer
-
-    def  _get_period_range(self, starting_point, day_num, duration):
-        start = starting_point - timedelta(days=day_num)
-        start = self._reset_time(start)
-        end = start + timedelta(days=duration)
-        return start, end
-
-    def _reset_time(self, date):
-        return date.replace(second=0, microsecond=0, minute=0, hour=0)
-
-    def _get_period(self):
-        now = datetime.now()
-        period = self.request.query_params.get('period')
-        if period == 'month':
-            period_start, period_end = self._get_period_range(now, 30, 30)
-        elif period == 'week':
-            period_start, period_end = self._get_period_range(now, 7, 7)
-        else:
-            period_start, period_end = self._get_period_range(now, 1, 1)
-        return period_start, period_end
-
-    def _get_shop(self):
-        try:
-            return Shop.objects.get(pk=self.request.query_params.get('shop'))
-        except Shop.DoesNotExist:
-            raise Http404
+    serializer_class = StatisticOfferSerializer
+    filter_class = StatisticOffersFilterSet
 
     def get_queryset(self):
-        period_start, period_end = self._get_period()
-        return Offer.objects.filter(click__created__lt=period_end,
-                                          click__created__gte=period_start,
-                                          shop__user=self.request.user,
-                                          shop=self._get_shop()) \
-            .annotate(sum=Sum('click__balancehistory__change_value'),
-                      count=Count('click'))
+        return Offer.objects.annotate(
+            sum=Sum('click__balancehistory__change_value'),
+            count=Count('click'),
+        )
 
 
-class StatisticPricelist(StatisticShop):
+class StatisticCategories(ListAPIView):
     permission_classes = (IsAuthenticated, )
-    serializer_class = serializers.StatisticSerializer
-
-    def _get_pricelist(self):
-        try:
-            return Pricelist.objects.get(pk=self.request.query_params.get('pricelist'))
-        except Pricelist.DoesNotExist:
-            raise Http404
+    serializer_class = StatisticCategorySerializer
+    filter_class = StatisticCategoriesFilterSet
 
     def get_queryset(self):
-        period_start, period_end = self._get_period()
-        return Offer.objects.filter(click__created__lt=period_end,
-                                          click__created__gte=period_start,
-                                          shop__user=self.request.user,
-                                          pricelist=self._get_pricelist()) \
-            .annotate(sum=Sum('click__balancehistory__change_value'),
-                      count=Count('click'))
+        return Category.objects.annotate(
+            sum=Sum('product__offer__click__balancehistory__change_value'),
+            count=Count('product__offer__click'),
+        )

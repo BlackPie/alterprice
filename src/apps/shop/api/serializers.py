@@ -123,10 +123,17 @@ class YMLUpdateSerializer(serializers.ModelSerializer):
         fields = ('name', 'region')
 
 
-class StatisticSerializer(serializers.Serializer):
+class StatisticOfferSerializer(serializers.Serializer):
     sum = serializers.IntegerField()
     count = serializers.IntegerField()
     name = serializers.CharField(source='product.name')
     id = serializers.IntegerField()
     category = serializers.IntegerField(source='product.category.id')
+
+
+class StatisticCategorySerializer(serializers.Serializer):
+    sum = serializers.IntegerField()
+    count = serializers.IntegerField()
+    name = serializers.CharField()
+    id = serializers.IntegerField()
 
