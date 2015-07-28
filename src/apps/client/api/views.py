@@ -1,6 +1,7 @@
 import logging
 from hashlib import md5
 from urllib.request import urlopen
+from math import ceil
 
 from rest_framework import permissions
 from rest_framework import status
@@ -239,10 +240,11 @@ class RobokassaCreatePaymentAPIView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         payment = self.perform_create(serializer)
         crc_txt = '%s::%d:%s' % (settings.ROBOKASSA_LOGIN, payment.id, settings.ROBOKASSA_PASS1, )
+        out_sum = ceil(serializer.validated_data.get('OutSum', 0) / (1 - settings.ROBOKASSA_TAX))
         response = {
             'crc': md5(crc_txt.encode('utf-8')).hexdigest(),
             'id': payment.id,
-            'out_sum': serializer.validated_data.get('OutSum', 0) * 1.05,
+            'out_sum': out_sum,
         }
         headers = self.get_success_headers(serializer.data)
         return Response(response, status=status.HTTP_201_CREATED, headers=headers)
