@@ -64,8 +64,8 @@ class SignUpAPIView(CreateAPIView):
                 template='client/register.html',
                 email=serializer.validated_data.get('email')
             )
-            if user.operator:
-                operator_email = user.operator.user.email
+            if user.client_profile.operator:
+                operator_email = user.client_profile.operator.user.email
             else:
                 emails = [x.user.email for x in OperatorProfile.objects.all()]
                 operator_email = ','.join(emails)

@@ -73,7 +73,7 @@ def balance_change_callback(sender, instance, **kwargs):
                 context={'balance': instance.value, 'client': instance.client},
             )
         instance.client.limit_balance_email_send = True
-    if money_sum <= 0:
+    if money_sum is not None and money_sum <= 0:
         EmailDelivery.objects.make(
             template='client/balance_zero.html',
             email=instance.client.user.email,

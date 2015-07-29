@@ -43,10 +43,10 @@ class ShopCreate(CreateAPIView):
                 template='client/shop_add.html',
                 email=self.request.user.email
             )
-            if self.request.user.client.operator:
+            if self.request.user.client_profile.operator:
                 EmailDelivery.objects.make(
                     template='operator/shop_add.html',
-                    email=self.request.user.client.operator.user.email
+                    email=self.request.user.client_profile.operator.user.email
                 )
         else:
             response['status'] = 'fail'

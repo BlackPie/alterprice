@@ -194,7 +194,7 @@ class EmailDeliveryManager(models.Manager):
     def make(self, template, email, context=None):
         if not email:
             raise Exception('Email cant be blank')
-        return self.objects.create(
+        return self.create(
             template=template,
             email=email,
             context=context,

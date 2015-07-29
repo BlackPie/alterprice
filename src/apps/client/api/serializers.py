@@ -116,6 +116,8 @@ class SignUpSerializer(serializers.ModelSerializer):
         try:
             User.objects.get(email=value)
         except User.DoesNotExist:
+            pass
+        else:
             raise serializers.ValidationError(
                 messages.email_errors.get('already_exist'))
         emvs = EmailValidation.objects.get_list(email=value)

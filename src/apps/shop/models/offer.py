@@ -163,17 +163,17 @@ def pricelist_change_pre_callback(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Pricelist)
 def pricelist_change_callback(sender, instance, **kwargs):
-    if instance.shop.user.client.operator:
+    if instance.shop.user.client_profile.operator:
         if instance._status_old != instance.status:
             EmailDelivery.objects.make(
                 template='operator/pricelist_status.html',
-                email=instance.shop.user.client.operator.user.email,
+                email=instance.shop.user.client_profile.operator.user.email,
                 context={'status': instance.status},
             )
         if instance._publish_status_old != instance.publish_status:
             EmailDelivery.objects.make(
                 template='operator/pricelist_status.html',
-                email=instance.shop.user.client.operator.user.email,
+                email=instance.shop.user.client_profile.operator.user.email,
                 context={'status': instance.publish_status},
             )
 
