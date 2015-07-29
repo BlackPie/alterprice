@@ -41,7 +41,7 @@ class ShopManager(models.Manager):
             qs.update(status=Shop.DISABLED)
 
 
-class Shop(StatusModel):
+class Shop(models.Model):
     name = models.CharField(max_length=255,
                             verbose_name=_('Название'))
     user = models.ForeignKey('apuser.AlterPriceUser',

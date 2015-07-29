@@ -18,6 +18,7 @@ from apuser.models import BalanceHistory
 
 from apuser.models.payment import InvoiceRequest, Payment
 from apuser import models
+from apuser.models.profile import EmailDelivery, OperatorProfile
 from catalog.models.token import PasswordRecovery
 from client.api import serializers
 from django.conf import settings
@@ -48,16 +49,30 @@ class SignUpAPIView(CreateAPIView):
     )
 
     def perform_create(self, serializer):
-        serializer.save()
+        user = serializer.save()
+        return user
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         response = {}
         if serializer.is_valid():
-            self.perform_create(serializer)
+            user = self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             response['status'] = 'success'
             response['message'] = _('Для завершения регистрации перейдите по ссылке из письма отправленного на ваш e-mail. Если не найдете во входящих, проверьте "спам"')
+            EmailDelivery.objects.make(
+                template='client/register.html',
+                email=serializer.validated_data.get('email')
+            )
+            if user.operator:
+                operator_email = user.operator.user.email
+            else:
+                emails = [x.user.email for x in OperatorProfile.objects.all()]
+                operator_email = ','.join(emails)
+            EmailDelivery.objects.make(
+                template='operator/register.html',
+                email=operator_email
+            )
             return Response(response, status=status.HTTP_201_CREATED, headers=headers)
         else:
             response['status'] = 'fail'
@@ -77,7 +92,12 @@ class Recovery(APIView):
     def success_action(self, request, serializer):
         email = serializer.validated_data.get('email')
         user = models.AlterPriceUser.objects.get(email=email)
-        PasswordRecovery.objects.make(user=user)
+        r = PasswordRecovery.objects.make(user=user)
+        EmailDelivery.objects.make(
+            template='client/activate.html',
+            email=user.email,
+            context={'token': r.token}
+        )
 
     def success_data(self, serializer):
         response = {}
@@ -211,6 +231,17 @@ class RobokassaResultAPIView(APIView):
                 balance=payment.client.balance,
                 payment=payment,
             )
+            EmailDelivery.objects.make(
+                template='client/payment_success.html',
+                email=payment.client.user.email,
+                context={'amount': payment.amount}
+            )
+            if payment.client.operator:
+                EmailDelivery.objects.make(
+                    template='client/payment_success.html',
+                    email=payment.client.operator.user.email,
+                    context={'amount': payment.amount}
+                )
             self.success_action(request, serializer)
             response = 'OK%d' % payment_id
         return Response(response, status=200)

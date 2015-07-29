@@ -2,8 +2,11 @@ from django.db import models
 from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 # Project imports
+from django_extensions.db.fields.json import JSONField
 from .apuser import AlterPriceUser
 from apuser.models.payment import InvoiceRequest
+from django.db.models.signals import post_save, pre_save
+from django.dispatch.dispatcher import receiver
 from utils.helpers import generate_code
 from utils.abstract_models import ApprovedModel, is_choice_of
 
@@ -117,6 +120,8 @@ class ClientProfile(Profile):
     checked = models.BooleanField(default=False, verbose_name=_('Проверено'), help_text=_('Модератор проверил и одобрил'))
     is_active = models.BooleanField(default=False, verbose_name=_('Активен'), help_text=_('Неактивен если закончились деньги на балансе'))
     objects = ClientProfileManager()
+    limit_balance_email_send = models.BooleanField(default=False)
+    zero_balance_email_send = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.company or 'Client %d' % self.id
@@ -129,10 +134,24 @@ class ClientProfile(Profile):
         return InvoiceRequest.objects.filter(client=self) \
             .exclude(invoice_file='')
 
-
     class Meta:
         verbose_name = _('Клиент')
         verbose_name_plural = _('Клиенты')
+
+
+@receiver(pre_save, sender=ClientProfile)
+def client_profile_change_pre_callback(sender, instance, **kwargs):
+    instance._operator_id_old = instance.operator_id
+
+
+@receiver(post_save, sender=ClientProfile)
+def client_profile_change_callback(sender, instance, **kwargs):
+    if instance._operator_id_old != instance.operator_id and instance.operator_id:
+        EmailDelivery.objects.make(
+            template='operator/client_set.html',
+            email=instance.operator.user.email,
+            context={'client': instance},
+        )
 
 
 class ClientPaymentInfo(models.Model):
@@ -170,3 +189,32 @@ class ClientPaymentInfo(models.Model):
     class Meta:
         verbose_name = _('Платежные данные клиента')
         verbose_name_plural = _('Платежные данные клиентов')
+
+class EmailDeliveryManager(models.Manager):
+    def make(self, template, email, context=None):
+        if not email:
+            raise Exception('Email cant be blank')
+        return self.objects.create(
+            template=template,
+            email=email,
+            context=context,
+        )
+
+class EmailDelivery(models.Model):
+    NEW = 0
+    SUBMITTED = 1
+    STATUS_CHOICES = (
+        (NEW, _('Новое')),
+        (SUBMITTED, _('Отправлено')),
+    )
+    template = models.CharField(max_length=50)
+    email = models.CharField(max_length=1000)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
+    created = models.DateTimeField(auto_now=True)
+    context = JSONField()
+
+    objects = EmailDeliveryManager()
+
+    class Meta:
+        verbose_name = _('Письмо')
+        verbose_name_plural = _('Письма')

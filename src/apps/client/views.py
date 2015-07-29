@@ -6,12 +6,13 @@ from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 import json
 from django.core.servers.basehttp import FileWrapper
-from apuser.models import BalanceHistory
+from apuser.models import BalanceHistory, OperatorProfile
 from datetime import datetime
 from datetime import timedelta
 from django.db.models import Sum
 
 from apuser.models.payment import InvoiceRequest
+from apuser.models.profile import EmailDelivery
 from catalog.models.token import EmailValidation, PasswordRecovery
 
 from client import decorators
@@ -77,6 +78,11 @@ class ActivateView(RedirectView):
         if not user.is_active:
             user.is_active = True
             user.save()
+        EmailDelivery.objects.make(
+            template='client/activate.html',
+            email=user.email,
+        )
+
         return '%s?welcome' % reverse('client:login')
 
 

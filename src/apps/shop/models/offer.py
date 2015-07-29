@@ -1,13 +1,16 @@
 import urllib
+from django.dispatch import receiver
 import xmltodict
 from django.conf import settings
 from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from apuser.models.profile import EmailDelivery
 
 from catalog.models.category import Category
 from catalog.models.city import City
 from catalog.models.currency import Currency
+from django.db.models.signals import post_save, pre_save
 from utils.abstract_models import PublishModel
 from product import models as productmodels
 from .shop import Shop
@@ -152,6 +155,27 @@ class Pricelist(PublishModel):
         verbose_name = _('Прайс лист магазина')
         verbose_name_plural = _('Прайс листы магазинов')
 
+
+@receiver(pre_save, sender=Pricelist)
+def pricelist_change_pre_callback(sender, instance, **kwargs):
+    instance._status_old = instance.status
+    instance._publish_status_old = instance.publish_status
+
+@receiver(post_save, sender=Pricelist)
+def pricelist_change_callback(sender, instance, **kwargs):
+    if instance.shop.user.client.operator:
+        if instance._status_old != instance.status:
+            EmailDelivery.objects.make(
+                template='operator/pricelist_status.html',
+                email=instance.shop.user.client.operator.user.email,
+                context={'status': instance.status},
+            )
+        if instance._publish_status_old != instance.publish_status:
+            EmailDelivery.objects.make(
+                template='operator/pricelist_status.html',
+                email=instance.shop.user.client.operator.user.email,
+                context={'status': instance.publish_status},
+            )
 
 class OfferCategoriesManager(models.Manager):
     def make_from_parsed_list(self, plist, pricelist):

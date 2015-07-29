@@ -8,6 +8,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView,\
     DestroyAPIView
 from rest_framework import status
 from rest_framework.response import Response
+from apuser.models.profile import EmailDelivery
 from catalog.models.category import Category
 
 from product.models import Offer
@@ -38,6 +39,15 @@ class ShopCreate(CreateAPIView):
                 'client:shop_detail',
                 kwargs={"pk": serializer.instance.id})
             api_status = status.HTTP_201_CREATED
+            EmailDelivery.objects.make(
+                template='client/shop_add.html',
+                email=self.request.user.email
+            )
+            if self.request.user.client.operator:
+                EmailDelivery.objects.make(
+                    template='operator/shop_add.html',
+                    email=self.request.user.client.operator.user.email
+                )
         else:
             response['status'] = 'fail'
             response['errors'] = serializer.errors

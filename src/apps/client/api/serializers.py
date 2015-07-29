@@ -82,10 +82,13 @@ class SignUpSerializer(serializers.ModelSerializer):
             password=validated_data.get('password'),)
         EmailValidation.objects.make(user=user, email=email)
         code = validated_data.get('operator_code')
-        op_qs = models.OperatorProfile.objects.filter(code=code)
+        try:
+            operator = models.OperatorProfile.objects.get(code=code)
+        except models.OperatorProfile.DoesNotExist:
+            operator = None
         client = models.ClientProfile.objects.make(
             user=user,
-            operator=op_qs.first() if op_qs.exists() else None,
+            operator=operator,
             city=validated_data.get('city'),
             company=validated_data.get('company'),
             name=validated_data.get('first_name'),

@@ -1,11 +1,15 @@
+from datetime import datetime, timedelta
 from django.db import models
+from django.db.models import Sum
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from .apuser import AlterPriceUser as User
 from apuser.models import ClientProfile
 from django.db.models.signals import post_save
 from apuser.models.payment import Payment
+from apuser.models.profile import EmailDelivery
 from .click import Click
+from django.core.cache import cache
 from shop.models.shop import Shop
 
 
@@ -40,16 +44,48 @@ class Balance(models.Model):
         verbose_name = _('Баланс')
         verbose_name_plural = _('Баланс')
 
+SPENT_LAST_DAY_PREFIX = 'spent_last_day'
 
 @receiver(post_save, sender=Balance)
 def balance_change_callback(sender, instance, **kwargs):
     active = bool(instance.value > 0)
+    now = datetime.now()
+    date = now.replace(second=0, microsecond=0, minute=0, hour=0)
+    cache_key = '%s:%d:%d' % (SPENT_LAST_DAY_PREFIX, now.day, instance.client.id)
+    money_sum = cache.get(cache_key)
+    if not money_sum:
+        money_sum = BalanceHistory.objects.filter(balance__client=instance.client,
+                                  created__gte=date - timedelta(days=1),
+                                  created__lt=date).aggregate(Sum('change_value'))
+        money_sum = money_sum['change_value__sum']
+        cache.set(cache_key, money_sum)
+        cache.expire(cache_key, timeout=60*60*24)
+    if money_sum and money_sum * 3 > instance.value and money_sum > 1000:
+        EmailDelivery.objects.make(
+            template='client/balance_limit.html',
+            email=instance.client.user.email,
+            context={'balance': instance.value},
+        )
+        if instance.client.operator:
+            EmailDelivery.objects.make(
+                template='client/balance_limit.html',
+                email=instance.client.operator.user.email,
+                context={'balance': instance.value, 'client': instance.client},
+            )
+        instance.client.limit_balance_email_send = True
+    if money_sum <= 0:
+        EmailDelivery.objects.make(
+            template='client/balance_zero.html',
+            email=instance.client.user.email,
+            context={'balance': instance.value},
+        )
+        instance.client.zero_balance_email_send = True
     if (instance.client.is_active != active):
-        shops = Shop.objects.filter(user=instance.client.user)
-        status = Shop.ENABLED if active else Shop.DISABLED
-        shops.update(status=status)
+        # shops = Shop.objects.filter(user=instance.client.user)
+        # status = Shop.ENABLED if active else Shop.DISABLED
+        # shops.update(status=status)
         instance.client.is_active = active
-        instance.client.save()
+    instance.client.save()
 
 
 class BalanceHistoryManager(models.Manager):
