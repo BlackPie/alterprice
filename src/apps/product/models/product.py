@@ -50,10 +50,9 @@ class ProductManager(models.Manager):
 
     def make(self, ym_id, brand_name, name, category_id, description):
         brand = Brand.objects.get_or_create(brand_name)
-        try:
-            category = Category.objects.get_or_create(ym_id=category_id)
-        except:
-            category = None
+
+        category = Category.objects.get_or_create(ym_id=category_id)
+
         obj = self.model(
             ym_id=ym_id,
             brand=brand,

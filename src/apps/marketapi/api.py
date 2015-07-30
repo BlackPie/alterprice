@@ -43,11 +43,11 @@ class MarketAPI(object):
                 sleep(1)
                 return cls._exec(params, url, retried=retried+1)
             else:
-                raise MarketHTTPError(e.msg)
+                raise MarketHTTPError('%d %s' % (e.code,e.msg))
 
     @classmethod
     def get_offer(cls, offer_id, ip_addr=None, geo_id=None):
-        if not ip_addr and geo_id:
+        if not ip_addr and not geo_id:
             raise MarketException('Must be passed ip_addr or geo_id')
         params = {}
         cache_key = 'yapi:offer:%s' % offer_id
@@ -62,13 +62,12 @@ class MarketAPI(object):
             return cached
         url = 'https://api.content.market.yandex.ru/v1/offer/%s.json' % offer_id
         result = cls._exec(params, url)
-        # todo: check for error
         cls._set_cache(cache_key, result)
         return result
 
     @classmethod
     def get_model(cls, model_id, ip_addr=None, geo_id=None):
-        if not ip_addr and geo_id:
+        if not ip_addr and not geo_id:
             raise MarketException('Must be passed ip_addr or geo_id')
         params = {}
         cache_key = 'yapi:model:%s' % model_id
@@ -84,7 +83,6 @@ class MarketAPI(object):
         url = 'https://api.content.market.yandex.ru/v1/model/%s.json' % model_id
 
         result = cls._exec(params, url)
-        # todo: check for error
         cls._set_cache(cache_key, result)
         return result
 
@@ -97,14 +95,14 @@ class MarketAPI(object):
     @classmethod
     def get_opinions(cls, model_id):
         url = 'https://api.content.market.yandex.ru/v1/model/%s/opinion.json' % str(model_id)
-        return cls._exec({}, url)
+        return cls._exec({'geo_id': 225}, url)
 
     @classmethod
     def get_model_detail(cls, model_id):
         url = 'https://api.content.market.yandex.ru/v1/model/%s/details.json' % str(model_id)
-        return cls._exec({}, url)
+        return cls._exec({'geo_id': 225}, url)
 
     @classmethod
     def get_category(cls, category_id):
         url = 'https://api.content.market.yandex.ru/v1/category/%s.json' % str(category_id)
-        return cls._exec({}, url)
+        return cls._exec({'geo_id': 225}, url)

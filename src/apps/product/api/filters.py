@@ -12,6 +12,7 @@ EMPTY_VALUES = EMPTY_VALUES + ([''],)
 class DeliveryFilter(django_filters.CharFilter):
     def filter(self, qs, value):
         if value not in EMPTY_VALUES:
+            # TODO: update this shit
             if value == 'pickup':
                 return qs.filter(productshopdelivery__pickup=True)
             if value == 'delivery':

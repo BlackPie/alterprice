@@ -1,6 +1,7 @@
 from rest_framework import serializers
 # Project imports
 from rest_framework.exceptions import ValidationError
+from catalog.models.category import Category
 from client.tasks import process_pricelist
 from product.models import Offer
 from shop import models
@@ -113,7 +114,7 @@ class YMLProductListserializer(serializers.ModelSerializer):
 
     def get_category(self, obj):
         # or pass it trough CategorySerializer
-        return obj.product.category.name
+        return obj.product.category.name if obj.product.category else None
 
     def get_product_url(self, obj):
         return "/product/detail/%d/" % obj.id

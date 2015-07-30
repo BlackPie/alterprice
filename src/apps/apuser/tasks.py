@@ -18,9 +18,9 @@ def send_email():
         e.save()
 
 
-@periodic_task(run_every=timedelta(days=1))
-def check_user_age():
-    # e = EmailDelivery(
-    #     template='operator/x_notification.html'
-    # )
-    pass
+# @periodic_task(run_every=timedelta(days=1))
+# def check_user_age():
+#     # e = EmailDelivery(
+#     #     template='operator/x_notification.html'
+#     # )
+#     pass

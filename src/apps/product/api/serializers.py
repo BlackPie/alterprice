@@ -8,20 +8,19 @@ from catalog.api.serializers import CategorySerializer
 from brand.models import Brand
 
 
-class OfferDeliverySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.OfferDelivery
-        fields = ('delivery', 'pickup', 'price')
+# class OfferDeliverySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = models.OfferDelivery
+#         fields = ('delivery', 'pickup', 'price')
 
 
 class OfferSerializer(serializers.ModelSerializer):
     shop = ShopSerializer()
     click_url = serializers.SerializerMethodField()
-    productshopdelivery = OfferDeliverySerializer()
 
     class Meta:
         model = models.Offer
-        fields = ('shop', 'price', 'productshopdelivery', 'click_url')
+        fields = ('shop', 'price', 'click_url', 'delivery_cost', 'pickup')
 
     def get_click_url(self, obj):
         return reverse('catalog:click-offer', kwargs={'pk': obj.id})

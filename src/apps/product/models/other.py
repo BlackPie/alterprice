@@ -41,6 +41,8 @@ class Offer(models.Model):
                                       blank=True,
                                       default=None,
                                       verbose_name=_('Категория предолжения'))
+    delivery_cost = models.IntegerField(default=0)
+    pickup = models.BooleanField(default=False)
 
     objects = OfferManager()
 
@@ -50,32 +52,6 @@ class Offer(models.Model):
     class Meta:
         verbose_name = _('Магазин продукта')
         verbose_name_plural = _('магазины продуктов')
-
-
-class OfferDeliveryManager(models.Manager):
-    pass
-
-
-class OfferDelivery(models.Model):
-    productshop = models.OneToOneField(Offer,
-                                       verbose_name=_('Магазин продукта'))
-
-    pickup = models.BooleanField(default=True,
-                                 verbose_name=_('Самовывоз'))
-    delivery = models.BooleanField(default=True,
-                                   verbose_name=_('Доставка'))
-    store = models.BooleanField(default=True,
-                                verbose_name=_('Наличие'))
-    price = models.IntegerField(null=True,
-                                blank=True,
-                                default=None,
-                                verbose_name=_('Цена доставки'))
-
-    objects = OfferDeliveryManager()
-
-    class Meta:
-        verbose_name = _('Доставка продукта')
-        verbose_name_plural = _('Доставка продуктов')
 
 
 class ProductPropertyManager(models.Manager):

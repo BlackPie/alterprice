@@ -22,24 +22,26 @@ class CategoryManager(models.Manager):
 
     def get_or_create(self, ym_id):
         try:
-            self.get(ym_id=ym_id)
+            return self.get(ym_id=ym_id)
         except self.model.DoesNotExist:
-            self.fetch_make(ym_id=ym_id)
+            return self.fetch_make(ym_id=ym_id)
 
     def fetch_make(self, ym_id):
         ym_category = MarketAPI.get_category(ym_id)['category']
-        if 'parentId' in ym_category:
-            try:
-                parent = self.get(ym_id=ym_category['parentId'])
-            except self.model.DoesNotExist:
-                parent = self.fetch_make(ym_category['parentId'])
+        if 'parentId' in ym_category \
+                and ym_category['parentId'] != 0 \
+                and ym_category['parentId'] != 90401:
+            parent = self.get_or_create(ym_category['parentId'])
+            depth = parent.depth + 1
         else:
+            depth = 0
             parent=None
 
-        return self.make(
+        return self.create(
             name=ym_category['uniqName'],
             ym_id=ym_id,
             parent=parent,
+            depth=depth,
         )
 
     def make(self, name, ym_id, parent=None):
