@@ -23,7 +23,7 @@ class CategoryManager(models.Manager):
     def get_or_create(self, ym_id):
         try:
             self.get(ym_id=ym_id)
-        except self.DoesNotExist:
+        except self.model.DoesNotExist:
             self.fetch_make(ym_id=ym_id)
 
     def fetch_make(self, ym_id):
@@ -31,7 +31,7 @@ class CategoryManager(models.Manager):
         if 'parentId' in ym_category:
             try:
                 parent = self.get(ym_id=ym_category['parentId'])
-            except self.DoesNotExist:
+            except self.model.DoesNotExist:
                 parent = self.fetch_make(ym_category['parentId'])
         else:
             parent=None
@@ -50,18 +50,6 @@ class CategoryManager(models.Manager):
         obj.save()
         return obj
 
-    def make_from_yml(self, obj):
-        ym_id = obj.get('@id')
-        qs = self.filter(ym_id=ym_id)
-        if qs.exists():
-            return qs.first()
-        else:
-            name = obj.get('#text', None)
-            parent_id = obj.get('@parentId', None)
-            parent = None
-            if parent_id:
-                parent = self.filter(ym_id=parent_id).first()
-            return self.make(name=name, ym_id=ym_id, parent=parent)
 
 
 def get_photo_path(instance, filename):

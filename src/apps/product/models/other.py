@@ -10,24 +10,7 @@ from catalog.models.property import Property
 
 
 class OfferManager(models.Manager):
-    def make_from_yml(self, yml_obj, shop, product, currency,
-                      offercats, pricelist):
-        obj = self.model()
-        # check instances ( or useless method almost private)
-        obj.product = product
-        obj.shop = shop
-        obj.currency = currency
-        obj.pricelist = pricelist
-        price = yml_obj.get('price')
-
-        if '.' in price:
-            price = float(price)
-        obj.price = price
-        for oc in offercats:
-            if oc.category == product.category:
-                obj.offercategory = oc
-        obj.save()
-        return obj
+    pass
 
 
 class Offer(models.Model):
@@ -70,16 +53,7 @@ class Offer(models.Model):
 
 
 class OfferDeliveryManager(models.Manager):
-    def make_from_yml(self, productshop, yml_obj):
-        obj = self.model()
-        obj.productshop = productshop
-        delivery_price = yml_obj.get('local_delivery_cost')
-        if delivery_price:
-            obj.price = int(delivery_price)
-        obj.pickup = True if yml_obj.get('pickup') == 'true' else False
-        obj.delivery = True if yml_obj.get('delivery') == 'true' else False
-        obj.save()
-        return obj
+    pass
 
 
 class OfferDelivery(models.Model):
@@ -113,9 +87,6 @@ class ProductPropertyManager(models.Manager):
         obj.value = value
         obj.prop = Property.objects.make(codename=codename)
         return obj
-
-    def make_from_yml(self, yml_obj):
-        pass
 
 
 class ProductProperty(models.Model):

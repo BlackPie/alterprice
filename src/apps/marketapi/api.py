@@ -1,4 +1,5 @@
 from json import loads
+from time import sleep
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import urlopen, Request
@@ -26,18 +27,23 @@ class MarketAPI(object):
         cache.expire(key, timeout=cls.cache_ttl)
 
     @classmethod
-    def _exec(cls, params, url):
+    def _exec(cls, params, url, retried=0):
         req = Request(
-            url=url,
-            data=urlencode(params).encode('utf-8'),
+            url='%s?%s' % (url, urlencode(params)),
             headers={'Authorization': settings.MARKET_API_KEY},
-            method='GET',
+            # method='GET',
         )
         try:
-            with urlopen(req) as x:
-                return loads(x.read())
+            x = urlopen(req)
+            result = x.read().decode()
+            x.close()
+            return loads(result)
         except HTTPError as e:
-            raise MarketHTTPError(e.msg)
+            if e.code == 403 and retried < 20:
+                sleep(1)
+                return cls._exec(params, url, retried=retried+1)
+            else:
+                raise MarketHTTPError(e.msg)
 
     @classmethod
     def get_offer(cls, offer_id, ip_addr=None, geo_id=None):
@@ -84,7 +90,7 @@ class MarketAPI(object):
 
     @classmethod
     def search_model(cls, query, geo_id):
-        params = {'text': query, 'geo_id': geo_id,}
+        params = {'geo_id': geo_id, 'text': query.strip(),}
         url = 'https://api.content.market.yandex.ru/v1/search.json'
         return cls._exec(params, url)
 

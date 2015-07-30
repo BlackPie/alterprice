@@ -37,8 +37,9 @@ class CreateShopSerializer(serializers.ModelSerializer):
         yml_url = validated_data.get('yml_url', None)
         if yml_url:
             Pricelist.objects.make(
+                name='Прайс-лист "%s"' % shop.name,
                 shop=shop,
-                yml=yml_url,
+                yml_url=yml_url,
                 region=validated_data.get('region'),
             )
         return shop

@@ -55,63 +55,6 @@ class PricelistManager(models.Manager):
         obj.save()
         return obj
 
-    def make_old(self, shop, yml, region, name=None):
-        if not isinstance(shop, Shop):
-            raise MakeException(_('invalid shop object'))
-        # TODO: check - shop is active
-        data = None
-        try:
-            obj = self.model()
-            obj.shop = shop
-            obj.yml_url = yml
-            obj.region = region
-            if not name:
-                name = 'Прайс-лист #%d' % shop.id
-            obj.name = name
-            data = obj.parse_yml()
-
-        except:
-            raise MakeException('invalid yml url')
-
-        categories, currency, offers = self.get_data(data)
-
-        # Search currency in catalog.Currency or create it
-        if isinstance(currency, list):
-            try:
-                cur = Currency.objects.make(codename=currency[0].get('@id'))
-            except:
-                cur = Currency.objects.first()
-        else:
-            cur = Currency.objects.make(codename=currency.get('@id'))
-        obj.currency = cur
-
-        # Append catalog.Category object to every row with key 'system_cat'
-        # If it does not exists,
-        # Category.objects.make_from_yml method will create it
-        for c in categories:
-            c.update({'system_cat': Category.objects.make_from_yml(c)})
-
-        obj.save()
-        # create OfferCategories rows
-        offercats = OfferCategories.objects.make_from_parsed_list(pricelist=obj,
-                                                                  plist=categories)
-
-        for offer in offers:
-            product = productmodels.Product.objects.make_from_yml(offer)
-
-            productshop = productmodels.Offer.objects.make_from_yml(
-                pricelist=obj,
-                product=product,
-                shop=shop,
-                currency=obj.currency,
-                yml_obj=offer,
-                offercats=offercats)
-
-            productmodels.OfferDelivery.objects.make_from_yml(
-                productshop=productshop,
-                yml_obj=offer)
-        return obj
-
 
 class Pricelist(PublishModel):
     NEW = 1

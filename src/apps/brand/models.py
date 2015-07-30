@@ -8,26 +8,10 @@ class BrandManager(models.Manager):
     def get_or_create(self, name):
         try:
             brand = self.get(name__iexact=name)
-        except self.DoesNotExist:
+        except self.model.DoesNotExist:
             brand = Brand(name=name)
             brand.save()
         return brand
-
-    def make_from_yml(self, yml_obj):
-        obj = None
-        code = yml_obj.get('vendorCode')
-        if code not in EMPTY_VALUES:
-            qs = self.filter(code=code)
-            if qs.exists():
-                obj = qs.first()
-            else:
-                name = yml_obj.get('vendor')
-                if name:
-                    obj = self.model()
-                    obj.name = name
-                    obj.code = code
-                    obj.save()
-        return obj
 
 
 class Brand(models.Model):

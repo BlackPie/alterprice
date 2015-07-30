@@ -8,7 +8,7 @@ from product.models import Product, Offer
 from shop.models.offer import Pricelist
 
 
-@task(max_retries=3)
+# @task(max_retries=3)
 def process_pricelist(pricelist_id):
     pricelist = Pricelist.objects.get(id=pricelist_id)
     try:
@@ -41,13 +41,13 @@ def process_pricelist(pricelist_id):
 
         try:
             model = list(filter(lambda x: 'model' in x,
-                           results['searchResult']['results']))[0]
-            product = Product.objects.get(ym_id=model['model']['id'])
-        except IndexError:
+                           results['searchResult']['results']))[0]['model']
+            product = Product.objects.get(ym_id=model['id'])
+        except (IndexError, TypeError):
             continue
         except Product.DoesNotExist:
             product = Product.objects.make(
-                ym_id=model['ym_id'],
+                ym_id=model['id'],
                 brand_name=vendor,
                 name=name,
                 category_id=model['categoryId'],
