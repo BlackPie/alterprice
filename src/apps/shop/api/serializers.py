@@ -36,12 +36,13 @@ class CreateShopSerializer(serializers.ModelSerializer):
             entity=validated_data.get('entity'))
         yml_url = validated_data.get('yml_url', None)
         if yml_url:
-            Pricelist.objects.make(
+            pricelist = Pricelist.objects.make(
                 name='Прайс-лист "%s"' % shop.name,
                 shop=shop,
                 yml_url=yml_url,
                 region=validated_data.get('region'),
             )
+            process_pricelist.delay(pricelist_id=pricelist.id)
         return shop
 
 
@@ -64,8 +65,8 @@ class YMLCreateSerialzier(serializers.ModelSerializer):
                 name=validated_data.get('name'),
                 region=validated_data.get('region'),
             )
-            # process_pricelist.delay(pricelist_id=obj.id)
-            process_pricelist(pricelist_id=obj.id)
+            process_pricelist.delay(pricelist_id=obj.id)
+            # process_pricelist(pricelist_id=obj.id)
         except MakeException as e:
             raise ValidationError(str(e))
         return obj

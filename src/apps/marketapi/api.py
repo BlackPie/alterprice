@@ -90,7 +90,7 @@ class MarketAPI(object):
 
     @classmethod
     def search_model(cls, query, geo_id):
-        params = {'geo_id': geo_id, 'text': query.strip(),}
+        params = {'geo_id': geo_id, 'text': query,}
         url = 'https://api.content.market.yandex.ru/v1/search.json'
         return cls._exec(params, url)
 

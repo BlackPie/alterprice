@@ -129,3 +129,7 @@ class Opinion(models.Model):
     reject = models.IntegerField(verbose_name=_('Не согласно'))
     date = models.DateTimeField(verbose_name=_('Дата создания'))
 
+    class Meta:
+        verbose_name = _('Отзыв')
+        verbose_name_plural = _('Отзывы')
+

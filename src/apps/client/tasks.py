@@ -8,7 +8,7 @@ from product.models import Product, Offer
 from shop.models.offer import Pricelist
 
 
-# @task(max_retries=3)
+@task(max_retries=1)
 def process_pricelist(pricelist_id):
     pricelist = Pricelist.objects.get(id=pricelist_id)
     try:
@@ -31,11 +31,11 @@ def process_pricelist(pricelist_id):
         except IndexError:
             category = ''
         if vendor in name:
-            query = '%s %s' % ('', name,)
+            query = '%s %s' % (category, name,)
         else:
-            query = '%s %s %s' % ('', vendor, name,)
+            query = '%s %s %s' % (category, vendor, name,)
         results = MarketAPI.search_model(
-            query=query,
+            query=query.strip(),
             geo_id=225
         )
 
