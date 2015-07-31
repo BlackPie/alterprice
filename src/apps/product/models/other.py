@@ -1,4 +1,5 @@
 import os
+from urllib.request import urlopen
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -7,6 +8,8 @@ from easy_thumbnails.fields import ThumbnailerField
 # from shop.models import OfferCategories
 from catalog.models.currency import Currency
 from catalog.models.property import Property
+from django.core.files.temp import NamedTemporaryFile
+from django.core.files.base import File
 
 
 class OfferManager(models.Manager):
@@ -93,6 +96,19 @@ def get_photo_path(instance, filename):
     return os.path.join("product/", filename)
 
 
+class ProductPhotoManager(models.Manager):
+    def make_from_url(self, url, product):
+        extension = url.split('.')[-1]
+        img_temp = NamedTemporaryFile(delete=True)
+        img_temp.write(urlopen(url).read())
+        img_temp.flush()
+        obj = ProductPhoto(product=product)
+        obj.photo.save('product_%d.%s' % (product.id, extension),
+                       content=File(img_temp))
+        obj.save()
+        return obj
+
+
 class ProductPhoto(models.Model):
     product = models.ForeignKey('product.Product',
                                 verbose_name=_('Продукт'))
@@ -101,6 +117,8 @@ class ProductPhoto(models.Model):
                              default=None,
                              upload_to=get_photo_path,
                              verbose_name=_('Фото'))
+
+    objects = ProductPhotoManager()
 
     def get_preview(self):
         return self.photo['product_small'].url if self.photo else None

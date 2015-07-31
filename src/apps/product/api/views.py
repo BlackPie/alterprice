@@ -5,7 +5,7 @@ from django.db.models import Count
 from catalog.models.category import Category
 from product import models
 from product.api import serializers, filters
-from product.models import Product
+from product.models import Product, Opinion
 from utils.views import APIView
 from catalog.api.serializers import CategorySerializer
 
@@ -87,7 +87,7 @@ class SearchView(ListAPIView):
     def get_queryset(self):
         qs = self.model.objects.get_list()
         qs = qs.annotate(offers_count=Count('productshop'))
-        qs = qs.prefetch_related('productshop_set')
+        qs = qs.prefetch_related('offer_set')
         qs = qs.prefetch_related('productphoto_set')
         return qs
 
@@ -102,4 +102,10 @@ class SearchView(ListAPIView):
         response.data['categories'] = self._search_categories()
         return response
 
+class OpinionList(ListAPIView):
+    model = Opinion
+    serializer_class = serializers.OpinionSerializer
+    filter_class = filters.OpinionFilterSet
 
+    def get_queryset(self):
+        return Opinion.objects.all()

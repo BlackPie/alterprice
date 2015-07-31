@@ -1,11 +1,14 @@
+from datetime import datetime
 from urllib.error import URLError
 from urllib.request import urlopen
 from celery import shared_task
 from celery.task import task
 import xmltodict
 from client.utils import get_yml_data
+from django.core.files.temp import NamedTemporaryFile
+from django.core.files.base import File
 from marketapi.api import MarketAPI
-from product.models import Product, Offer
+from product.models import Product, Offer, ProductPhoto, Opinion
 from shop.models.offer import Pricelist
 
 
@@ -72,6 +75,31 @@ def process_pricelist(pricelist_id):
                 category_yml_id=model['categoryId'],
                 description=offer.get('description')
             )
+            pictures = offer.get('picture')
+            if pictures:
+                if type(pictures) == list:
+                    for p in pictures:
+                        ProductPhoto.objects.make_from_url(p, product)
+                else:
+                    ProductPhoto.objects.make_from_url(pictures, product)
+            opinions = MarketAPI.get_opinions(model['id'])["modelOpinions"]['opinion']
+
+            opinions_db = []
+            for opinion in opinions:
+                # logger.error(opinion)
+                opinions_db.append(Opinion(
+                    product=product,
+                    comment=opinion.get('text'),
+                    author=opinion.get('author'),
+                    contra=opinion.get('contra'),
+                    pro=opinion.get('pro'),
+                    grade=opinion.get('grade'),
+                    agree=opinion.get('agree'),
+                    reject=opinion.get('reject'),
+                    ym_id=opinion.get('id'),
+                    date=datetime.fromtimestamp(opinion.get('date')/1000),
+                ))
+            Opinion.objects.bulk_create(opinions_db)
         try:
             offer_delivery_cost = int(data.get('local_delivery_cost', -1))
         except TypeError:

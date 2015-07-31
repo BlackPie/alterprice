@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 # Project imports
 from catalog.models.category import Category
 from product import models
+from product.models import Opinion
 from shop.api.serializers import ShopSerializer
 from catalog.api.serializers import CategorySerializer
 from brand.models import Brand
@@ -64,3 +65,9 @@ class ProductCountSerializer(serializers.Serializer):
         many=True)
     price_min = serializers.CharField(allow_blank=True, allow_null=True)
     price_max = serializers.CharField(allow_blank=True, allow_null=True)
+
+
+class OpinionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Opinion
+        exclude = ('ym_id', 'product')

@@ -6,6 +6,8 @@ from django.core.validators import EMPTY_VALUES
 from catalog.models.category import Category
 from product import models
 from brand.models import Brand
+from product.models import Product, Opinion
+
 EMPTY_VALUES = EMPTY_VALUES + ([''],)
 
 
@@ -91,3 +93,18 @@ class ProductListFilter(django_filters.FilterSet):
     class Meta:
         model = models.Product
         fields = ['price_min', 'price_max', 'brand', 'category']
+
+
+class OpinionProductFilter(django_filters.ModelChoiceFilter):
+    def filter(self, qs, value):
+        if value not in EMPTY_VALUES:
+            qs = qs.filter(product=value)
+        return qs
+
+
+class OpinionFilterSet(django_filters.FilterSet):
+    product = OpinionProductFilter(queryset=Product.objects.all(), required=True)
+
+    class Meta:
+        model = Opinion
+        fields = ('product',)

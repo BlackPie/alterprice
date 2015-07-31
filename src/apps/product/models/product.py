@@ -48,12 +48,14 @@ class ProductManager(models.Manager):
         qs = self.active()
         return qs.distinct()
 
-    def make(self, ym_id, brand_name, name, category_id, description):
+    def make(self, ym_id, brand_name, name, category_yml_id, description):
         brand = Brand.objects.get_or_create(brand_name)
 
-        category = Category.objects.get_or_create(ym_id=category_id)
+        category = Category.objects.get_or_create(ym_id=category_yml_id)
+        if not category:
+            raise Exception('Cant create category with id "%d"' % category_yml_id)
 
-        obj = self.model(
+        return self.create(
             ym_id=ym_id,
             brand=brand,
             name=name,
@@ -61,8 +63,6 @@ class ProductManager(models.Manager):
             description=description,
             details=self.get_details(ym_id)
         )
-        obj.save()
-        return obj
 
     def get_details(self, ym_id):
         result = MarketAPI.get_model_detail(model_id=ym_id)
@@ -120,13 +120,14 @@ class Product(models.Model):
 class Opinion(models.Model):
     product = models.ForeignKey(Product)
     comment = models.CharField(max_length=10000, null=True, blank=True, verbose_name=_('Комментарий'))
-    contra = models.CharField(max_length=10000, null=True, blank=True, verbose_name=_('Недостатки'))
-    pro = models.CharField(max_length=10000, null=True, blank=True, verbose_name=_('Достоинства'))
+    contra = models.CharField(max_length=10000, null=True, blank=True, verbose_name=_('Достоинства'))
+    pro = models.CharField(max_length=10000, null=True, blank=True, verbose_name=_('Недостатки'))
     author = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('Имя автора'))
     grade = models.IntegerField(verbose_name=_('Оценка'))
     agree = models.IntegerField(verbose_name=_('Согласно'))
     reject = models.IntegerField(verbose_name=_('Не согласно'))
     date = models.DateTimeField(verbose_name=_('Дата создания'))
+    ym_id = models.IntegerField(verbose_name=_('Market ID'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Отзыв')

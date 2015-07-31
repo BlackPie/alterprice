@@ -20,7 +20,7 @@ class ProductDetailPageView(DetailView):
             'mid': random.randrange(1000, 2000),
         }
         context['best_offer'] = self.object.get_best_offer()
-        context['properties'] = self.object.productproperty_set.all()
+        # context['properties'] = self.object.productproperty_set.all()
         context['context'] = json.dumps({
             'productId': context['object'].pk
         })
