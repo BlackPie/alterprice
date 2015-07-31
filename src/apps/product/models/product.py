@@ -13,7 +13,7 @@ class ProductQuerySet(query.QuerySet):
 
     def active(self):
         return self.filter(
-            offer__shop__status=1,
+            offer__shop__user__client_profile__is_active=True,
             offer__pricelist__publish_status=1)
 
     def by_ymid(self, ym_id):
@@ -32,10 +32,13 @@ class ProductQuerySet(query.QuerySet):
         return self.filter(brand__in=value)
 
     def by_category(self, value):
-        if value.children.exists():
-            return self.filter(Q(category=value) | Q(category__in=value.children.all()))
-        else:
-            return self.filter(category=value)
+        return self.filter(Q(category=value) |
+                               Q(category__parent=value) |
+                               Q(category__parent__parent=value) |
+                               Q(category__parent__parent__parent=value) |
+                               Q(category__parent__parent__parent__parent=value) |
+                               Q(category__parent__parent__parent__parent__parent=value)
+                               )
 
     def search(self, value):
         return self.filter(Q(name__icontains=value) |
@@ -106,7 +109,7 @@ class Product(models.Model):
         return self.productphoto_set.all()
 
     def get_offers(self):
-        return self.offer_set.filter(shop__status=1)
+        return self.offer_set.filter(shop__user__client_profile__is_active=True)
 
     def get_best_offer(self):
         offers = self.get_offers()

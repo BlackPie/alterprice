@@ -57,11 +57,12 @@ class ShopCreate(CreateAPIView):
 
 class ShopUpdate(UpdateAPIView):
     serializer_class = serializers.UpdateShopSerializer
-    queryset = Shop.objects.all()
     permission_classes = (
         IsAuthenticated,
-        # TODO: permission that only owner ( or admin can update shop)
     )
+
+    def get_queryset(self):
+        Shop.objects.filter(user=self.request.user)
 
     def perform_update(self, serializer):
         serializer.save()

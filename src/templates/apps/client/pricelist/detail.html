@@ -50,7 +50,7 @@
             <div id="client-pricelist-detail-info-view" class="pure-u-1-4 info-wrapper">
                 <div class="pure-g">
                     <div class="pure-u-1-1">Статус:
-                        {% if object.shop.status == 1 %}
+                        {% if user.client_profile.is_active == 1 %}
                             <span class="status active">активный</span>
                         {% else %}
                             <span class="status active">неактивный</span>

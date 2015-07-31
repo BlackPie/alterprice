@@ -17,8 +17,8 @@ class ProductList(ListAPIView):
 
     def get_queryset(self):
         qs = self.model.objects.get_list()
-        qs = qs.annotate(offers_count=Count('productshop'))
-        qs = qs.prefetch_related('productshop_set')
+        qs = qs.annotate(offers_count=Count('offer'))
+        qs = qs.prefetch_related('offer_set')
         qs = qs.prefetch_related('productphoto_set')
         return qs
 

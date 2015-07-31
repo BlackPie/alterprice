@@ -11,7 +11,7 @@
                             <a href="#" id="shop-edit-btn"></a>
                             <div class="name">
                                 <span>{{ object.name }}</span>
-                                {% if object.active %}
+                                {% if user.client_profile.is_active %}
                                     <div class="status ok">
                                         <div class="tooltip">Магазин активен</div>
                                     </div>
