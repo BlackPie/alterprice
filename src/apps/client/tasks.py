@@ -14,7 +14,7 @@ from celery.utils.log import get_task_logger
 logger = get_task_logger(__name__)
 
 
-@shared_task(max_retries=1)
+@shared_task(max_retries=3)
 def process_pricelist(pricelist_id):
     pricelist = Pricelist.objects.get(id=pricelist_id)
     logger.error('Pricelist "%d" started processing' % pricelist_id)
@@ -34,35 +34,42 @@ def process_pricelist(pricelist_id):
     for offer in offers:
         name = offer.get('name')
         vendor = offer.get('vendor')
+
         logger.error('Offer for "%s" started processing' % name)
-        try:
-            category_id = offer.get('categoryId')
-            category_obj = list(filter(lambda x: x['@id'] == category_id, categories))[0]
-            category = category_obj['#text']
-        except IndexError:
-            category = ''
-        if vendor in name:
-            query = '%s %s' % (category, name,)
+        # try:
+        #     category_id = offer.get('categoryId')
+        #     category_obj = list(filter(lambda x: x['@id'] == category_id, categories))[0]
+        #     category = category_obj['#text']
+        # except IndexError:
+        #     category = ''
+        if vendor.lower() in name.lower():
+            query = '%s' % (name,)
         else:
-            query = '%s %s %s' % (category, vendor, name,)
-        results = MarketAPI.search_model(
+            query = '%s %s' % (vendor, name,)
+        results = MarketAPI.search_offer(
             query=query.strip(),
             geo_id=225
         )
 
         try:
-            model = list(filter(lambda x: 'model' in x,
-                           results['searchResult']['results']))[0]['model']
-            product = Product.objects.get(ym_id=model['id'])
-        except (IndexError, TypeError):
-            logger.error('processing skipped for "%s"' % name)
+            model = results['searchResult']['results'][0]['model']
+        except (KeyError, IndexError):
+            try:
+                search_offer = results['searchResult']['results'][0]['offer']
+                model = MarketAPI.get_model(search_offer['modelId'], geo_id=225)['model']
+            except (IndexError, TypeError, KeyError) as e:
+                logger.error('skipped for "%s", %s' % (name, str(e)))
+                continue
+        if Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id']):
             continue
+        try:
+            product = Product.objects.get(ym_id=model['id'])
         except Product.DoesNotExist:
             product = Product.objects.make(
                 ym_id=model['id'],
                 brand_name=vendor,
                 name=name,
-                category_id=model['categoryId'],
+                category_yml_id=model['categoryId'],
                 description=offer.get('description')
             )
         try:

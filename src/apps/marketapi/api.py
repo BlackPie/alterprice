@@ -40,7 +40,7 @@ class MarketAPI(object):
             return loads(result)
         except HTTPError as e:
             if e.code == 403 and retried < 20:
-                sleep(1)
+                sleep(0.5)
                 return cls._exec(params, url, retried=retried+1)
             else:
                 raise MarketHTTPError('%d %s' % (e.code,e.msg))
@@ -87,7 +87,7 @@ class MarketAPI(object):
         return result
 
     @classmethod
-    def search_model(cls, query, geo_id):
+    def search_offer(cls, query, geo_id):
         params = {'geo_id': geo_id, 'text': query,}
         url = 'https://api.content.market.yandex.ru/v1/search.json'
         return cls._exec(params, url)
