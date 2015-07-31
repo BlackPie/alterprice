@@ -1,13 +1,13 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.error import URLError
 from urllib.request import urlopen
 from celery import shared_task
-from celery.task import task
+from celery.task import task, periodic_task
 import xmltodict
 from client.utils import get_yml_data
 from django.core.files.temp import NamedTemporaryFile
 from django.core.files.base import File
-from marketapi.api import MarketAPI
+from marketapi.api import MarketAPI, MarketHTTPError
 from product.models import Product, Offer, ProductPhoto, Opinion
 from shop.models.offer import Pricelist
 
@@ -117,3 +117,38 @@ def process_pricelist(pricelist_id):
 
     pricelist.status = Pricelist.PROCESSED
     pricelist.save()
+
+@periodic_task(run_every=timedelta(days=1))
+def update_products():
+    for product in Product.objects.all():
+        try:
+            opinions = MarketAPI.get_opinions(product.ym_id)["modelOpinions"]['opinion']
+        except MarketHTTPError:
+            opinions = []
+            logger.error('error when parse opinions for '
+                         'product with id "%d"' % product.ym_id)
+        opinions_db = []
+        for opinion in opinions:
+            if Opinion.objects.get(ym_id=opinion['id']):
+                continue
+            # logger.error(opinion)
+            opinions_db.append(Opinion(
+                product=product,
+                comment=opinion.get('text'),
+                author=opinion.get('author'),
+                contra=opinion.get('contra'),
+                pro=opinion.get('pro'),
+                grade=opinion.get('grade'),
+                agree=opinion.get('agree'),
+                reject=opinion.get('reject'),
+                ym_id=opinion.get('id'),
+                date=datetime.fromtimestamp(opinion.get('date')/1000),
+            ))
+        Opinion.objects.bulk_create(opinions_db)
+        try:
+            details = MarketAPI.get_model_detail(product.ym_id)['modelDetails']
+            product.details = details
+            product.save()
+        except MarketHTTPError:
+            logger.error('error when parse details for '
+                         'product with id "%d"' % product.ym_id)
