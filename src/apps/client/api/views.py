@@ -148,8 +148,7 @@ class InvoiceListView(ListAPIView):
     permission_classes = (permissions.IsAuthenticated, )
 
     def get_queryset(self):
-        queryset = super(InvoiceListView, self).get_queryset()
-        queryset.filter(client=self.request.user.client_profile)
+        queryset = self.model.objects.filter(client=self.request.user.client_profile)
         return queryset
 
 

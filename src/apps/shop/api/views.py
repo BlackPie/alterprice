@@ -62,7 +62,7 @@ class ShopUpdate(UpdateAPIView):
     )
 
     def get_queryset(self):
-        Shop.objects.filter(user=self.request.user)
+        return Shop.objects.filter(user=self.request.user)
 
     def perform_update(self, serializer):
         serializer.save()
