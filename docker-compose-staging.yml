@@ -95,6 +95,7 @@ web:
    - POSTGRESQL_PASS=staging
   env_file:
    - ./docker/private/staging/robokassa.env
+   - ./docker/private/staging/market.env
 
 
 worker:
@@ -111,3 +112,6 @@ worker:
    - POSTGRESQL_USER=super
    - POSTGRESQL_NAME=alterprice_staging
    - POSTGRESQL_PASS=staging
+  env_file:
+   - ./docker/private/staging/robokassa.env
+   - ./docker/private/staging/market.env
