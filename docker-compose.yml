@@ -6,10 +6,10 @@ db:
    - logstash:logstash
   env_file:
    - ./docker/private/development/db.env
-
-  volumes_from:
-   - dbdata
-
+#  volumes_from:
+#   - dbdata
+  volumes:
+   - ./dbdata:/data
 
 dbdata:
   image: busybox
