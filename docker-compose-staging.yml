@@ -96,6 +96,7 @@ web:
   env_file:
    - ./docker/private/staging/robokassa.env
    - ./docker/private/staging/market.env
+   - ./docker/private/staging/sentry.env
 
 
 worker:
@@ -115,3 +116,4 @@ worker:
   env_file:
    - ./docker/private/staging/robokassa.env
    - ./docker/private/staging/market.env
+   - ./docker/private/staging/sentry.env

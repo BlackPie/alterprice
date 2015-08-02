@@ -150,6 +150,7 @@ class Base(Configuration):
         'template_email',
         'autoslug',
         'easy_thumbnails',
+        'raven.contrib.django.raven_compat',
     )
 
     INTERNAL_APPS = (
@@ -303,6 +304,10 @@ class Base(Configuration):
             },
         },
         'handlers': {
+            'sentry': {
+                'level': 'ERROR',
+                'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+            },
             'console': {
                 'level': 'INFO',
                 'filters': ['require_debug_true'],
@@ -364,4 +369,7 @@ class Base(Configuration):
                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
             }
         }
+    }
+    RAVEN_CONFIG = {
+        'dsn': os.environ.get('SENTRY_PRIVATE_DSN'),
     }
