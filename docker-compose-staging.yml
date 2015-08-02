@@ -85,7 +85,7 @@ web:
    - db:db
    - logstash:logstash
    - redis:redis
-   - rabbitmq
+   - rabbitmq:rabbit
   volumes_from:
    - mediadata
   environment:
@@ -94,6 +94,7 @@ web:
    - POSTGRESQL_USER=super
    - POSTGRESQL_NAME=alterprice_staging
    - POSTGRESQL_PASS=staging
+   - RABBIT_ENV_RABBITMQ_PASS=rmqdevelopment
   env_file:
    - ./docker/private/staging/robokassa.env
    - ./docker/private/staging/market.env
@@ -114,6 +115,7 @@ worker:
    - POSTGRESQL_USER=super
    - POSTGRESQL_NAME=alterprice_staging
    - POSTGRESQL_PASS=staging
+   - RABBIT_ENV_RABBITMQ_PASS=rmqdevelopment
   env_file:
    - ./docker/private/staging/robokassa.env
    - ./docker/private/staging/market.env
