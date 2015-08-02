@@ -85,6 +85,7 @@ web:
    - db:db
    - logstash:logstash
    - redis:redis
+   - rabbitmq
   volumes_from:
    - mediadata
   environment:
