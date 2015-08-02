@@ -1,5 +1,8 @@
 from .base import Base
+import djcelery
 
+
+djcelery.setup_loader()
 
 class Staging(Base):
     DEBUG = False

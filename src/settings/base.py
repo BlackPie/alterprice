@@ -262,7 +262,7 @@ class Base(Configuration):
 
     # Set redis as celery result backend
     # CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
-    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://%s:6379/0' % REDIS_HOST
     CELERY_REDIS_MAX_CONNECTIONS = 1
 
     # Don't use pickle as serializer, json is much safer
