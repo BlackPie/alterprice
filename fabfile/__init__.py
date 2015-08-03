@@ -159,6 +159,7 @@ def deploy():
         print('pull finished, upping')
         fig('stop')  # needed because of a bug with compose
         fig('rm web', yes=True)  # needed because of a bug with compose
+        fig('rm worker', yes=True)  # needed because of a bug with compose
         fig('up -d')
 
         migrate()
