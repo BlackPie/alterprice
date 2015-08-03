@@ -117,7 +117,10 @@ class YMLProductListserializer(serializers.ModelSerializer):
         return obj.product.category.name if obj.product.category else None
 
     def get_product_url(self, obj):
-        return "/product/detail/%d/" % obj.id
+        # TODO: hotfix
+        if obj and hasattr(obj, 'product'):
+            return "/product/detail/%d/" % obj.product.id
+        return "/"
 
 
 class YMLUpdateSerializer(serializers.ModelSerializer):
