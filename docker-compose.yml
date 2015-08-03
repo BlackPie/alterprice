@@ -1,15 +1,13 @@
 db:
-  image: createdigitalspb/postgresql94:1.2
+  image: createdigitalspb/postgresql94:1.3
   ports:
    - "49432:5432"
   links:
    - logstash:logstash
   env_file:
    - ./docker/private/development/db.env
-#  volumes_from:
-#   - dbdata
-  volumes:
-   - ./dbdata:/data
+  volumes_from:
+   - dbdata
 
 dbdata:
   image: busybox
