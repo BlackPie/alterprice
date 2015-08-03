@@ -45,6 +45,12 @@ def process_pricelist(pricelist_id):
         #     category = category_obj['#text']
         # except IndexError:
         #     category = ''
+        if not name:
+            logger.warn("No name present", extra={
+                'offer': offer
+            })
+            continue
+
         if not vendor or (vendor and vendor.lower() in name.lower()):
             query = '%s' % (name,)
         else:
