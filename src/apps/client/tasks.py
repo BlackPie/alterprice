@@ -68,6 +68,14 @@ def process_pricelist(pricelist_id):
         try:
             product = Product.objects.get(ym_id=model['id'])
         except Product.DoesNotExist:
+
+            # TODO: hotfix, empty vendor should be handled properly
+            if not vendor:
+                logger.warn("Vendor is empty", extra={
+                    'model': model
+                })
+                continue
+
             product = Product.objects.make(
                 ym_id=model['id'],
                 brand_name=vendor,
