@@ -54,8 +54,22 @@
         }
 
         .description-wrapper {
-            height: 258px;
+            //height: 258px;
             padding: 20px 0 0 0;
+            height: 260px;
+            overflow: hidden;
+            position: relative;
+
+            &:after {
+                display: block;
+                width: 100%;
+                top: 220px;
+                left: 0;
+                height: 40px;
+                content: '';
+                position: absolute;
+                #gradient.vertical(transparent, #fff, 0%; 50%);
+            }
 
             p {
                 margin: 12px 0;
