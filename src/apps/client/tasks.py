@@ -45,7 +45,7 @@ def process_pricelist(pricelist_id):
         #     category = category_obj['#text']
         # except IndexError:
         #     category = ''
-        if not vendor or vendor.lower() in name.lower():
+        if not vendor or (vendor and vendor.lower() in name.lower()):
             query = '%s' % (name,)
         else:
             query = '%s %s' % (vendor, name,)
