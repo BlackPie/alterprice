@@ -70,6 +70,13 @@ class Shop(models.Model):
                            blank=True,
                            default=None,
                            verbose_name=_('Сайт'))
+    raiting = models.IntegerField(null=True, blank=True, choices=(
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+    ), verbose_name=_('Рейтинг'))
 
     objects = ShopManager.from_queryset(ShopQuerySet)()
 
