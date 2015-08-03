@@ -18,6 +18,10 @@ ProductOffersPagerView = require 'product/views/offers/ProductOffersPagerView'
 ProductOffersFilterState = require 'product/states/ProductOffersFilterState'
 ProductOffersCollection = require 'product/collections/ProductOffersCollection'
 
+ProductOpinionsLayout = require 'product/layouts/ProductOpinionsLayout'
+ProductOpinionsCollection = require 'product/collections/ProductOpinionsCollection'
+ProductOpinionsListView = require 'product/views/opinions/ProductOpinionsListView'
+
 
 module.exports = class ProductController extends Marionette.Controller
 
@@ -40,6 +44,11 @@ module.exports = class ProductController extends Marionette.Controller
         @productOffersLayout.offersList.show(@productOffersListView)
         @productOffersPagerView = new ProductOffersPagerView {channel: @channel}
 
+        @productOpinionsLayout = new ProductOpinionsLayout {channel: @channel}
+        @productOpinionsCollection = new ProductOpinionsCollection {id: @productId}
+        @productOpinionsListView = new ProductOpinionsListView {channel: @channel, collection: @productOpinionsCollection}
+        @productOpinionsLayout.opinionsList.show(@productOpinionsListView)
+
         @productOffersCollection.on "sync", (collection) =>
             if collection.state.totalPages > 1
                 @productOffersPagerView.show()
@@ -47,6 +56,7 @@ module.exports = class ProductController extends Marionette.Controller
                 @productOffersPagerView.hide()
 
         @productOffersCollection.fetchFiltered()
+        @productOpinionsCollection.fetchFiltered({product: @productId})
 
         @channel.vent.on Events.SET_OFFERS_FILTER,  @onSetOffersFilter
         @channel.vent.on Events.OFFERS_SHOW_MORE,  @onOffersShowMore

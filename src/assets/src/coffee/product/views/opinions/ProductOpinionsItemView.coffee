@@ -1,9 +1,9 @@
 Marionette   = require 'backbone.marionette'
 
-OpinionItemTemplate = require 'templates/product/OfferItem'
+OpinionItemTemplate = require 'templates/product/OpinionItem'
 
 
-module.exports = class ProductOpinionItemView extends Marionette.ItemView
+module.exports = class ProductOpinionsItemView extends Marionette.ItemView
 
     tagName: 'div'
 
