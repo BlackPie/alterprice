@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, FormView, RedirectView
@@ -43,7 +44,12 @@ class CatalogCategoryProductListPageView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CatalogCategoryProductListPageView, self).get_context_data(**kwargs)
         context['current_app'] = 'catalog-items-list'
-        context['brands'] = Brand.objects.all()
+        context['brands'] = Brand.objects.filter(
+            Q(product__category=self.object) |
+            Q(product__category__parent=self.object) |
+            Q(product__category__parent__parent=self.object) |
+            Q(product__category__parent__parent__parent=self.object)
+        ).distinct()
         if self.object.parent:
             context['parent_category'] = self.object.parent.pk
         context['children_categories'] = self.object.get_children()
