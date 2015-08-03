@@ -1,0 +1,115 @@
+db:
+  image: createdigitalspb/postgresql94:1.2
+  expose:
+   - "5432"
+  links:
+   - logstash:logstash
+  volumes:
+   - ./dbdata:/data
+  env_file:
+   - ./docker/private/production/db.env
+
+mediadata:
+  image: busybox
+  volumes:
+   - /media
+   - /static
+
+nginx:
+  image: createspb/nginx_uwsgi:1.3
+  ports:
+   - "80:80"
+  volumes_from:
+   - mediadata
+  links:
+   - web
+
+elasticsearch:
+  image: createdigitalspb/elasticsearch:1.0
+  volumes:
+   - ./docker/config/elasticsearch:/opt/elasticsearch/config
+  volumes_from:
+   - elasticsearchdata
+
+
+elasticsearchdata:
+  image: busybox
+  volumes:
+  - /opt/elasticsearch/data
+  - /opt/elasticsearch/logs
+
+
+logstash:
+    image: createdigitalspb/logstash:1.0
+    links:
+        - elasticsearch
+    volumes:
+        - ./docker/config/logstash:/opt/conf
+        - ./docker/private/certs:/opt/certs
+    ports:
+        - "514:514"
+        - "5043:5043"
+        - "9292:9292"
+
+kibana:
+    image: createdigitalspb/kibana:1.0
+    links:
+        - elasticsearch
+    volumes:
+        - ./docker/config/kibana:/kibana/config
+    ports:
+        - "5601:5601"
+
+
+redis:
+  image: redis:2.8.19
+
+
+rabbitmq:
+  image: tutum/rabbitmq
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+  env_file:
+   - ./docker/private/production/rabbit.env
+
+web:
+  image: createdigitalspb/alterprice
+  expose:
+   - "44000"
+  ports:
+   - "8000"
+  links:
+   - db:db
+   - logstash:logstash
+   - redis:redis
+   - rabbitmq:rabbit
+  volumes_from:
+   - mediadata
+  environment:
+   - DJANGO_CONFIGURATION=Production
+   - INSTANCE_TYPE=web
+  env_file:
+   - ./docker/private/production/robokassa.env
+   - ./docker/private/production/market.env
+   - ./docker/private/production/sentry.env
+   - ./docker/private/production/db.env
+   - ./docker/private/production/rabbit.env
+
+worker:
+  image: createdigitalspb/alterprice
+  links:
+   - db:db
+   - rabbitmq:rabbit
+   - redis:redis
+  volumes_from:
+   - mediadata
+  environment:
+   - INSTANCE_TYPE=worker
+   - DJANGO_CONFIGURATION=Production
+  env_file:
+   - ./docker/private/production/robokassa.env
+   - ./docker/private/production/market.env
+   - ./docker/private/production/sentry.env
+   - ./docker/private/production/db.env
+   - ./docker/private/production/rabbit.env

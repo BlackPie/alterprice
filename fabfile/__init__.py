@@ -24,6 +24,30 @@ def staging():
     message_highlight("Configuration set", "Staging")
 
 
+def production():
+    execute(commons)
+    env.settings = 'production'
+    env.hosts = ['95.213.189.186']
+    env.user = 'alterprice'
+    env.django_exec = '/project/bin/django'
+    env.fig_file = 'docker-compose-production.yml'
+    message_highlight("Configuration set", "Production")
+
+
+def development():
+
+    os.environ['ENV_FILE'] = 'docker/private/base/docker.env'
+
+    from envious import load_env
+
+    load_env()
+
+    execute(commons)
+
+    env.settings = 'development'
+    env.login_required = False
+
+
 def message_highlight(msg, variable):
     print yellow(msg), ":", magenta(variable)
 
