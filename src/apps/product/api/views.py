@@ -30,8 +30,8 @@ class ProductListCategories(ListAPIView):
 
     def get_queryset(self):
         qs = models.Product.objects.get_list()
-        qs = qs.annotate(offers_count=Count('productshop'))
-        qs = qs.prefetch_related('productshop_set')
+        qs = qs.annotate(offers_count=Count('offer'))
+        qs = qs.prefetch_related('offer_set')
         qs = qs.prefetch_related('productphoto_set')
         f = filters.ProductListFilter(self.request.GET, queryset=qs)
         return self.model.objects.filter(product__in=f.qs).distinct()
@@ -86,7 +86,7 @@ class SearchView(ListAPIView):
 
     def get_queryset(self):
         qs = self.model.objects.get_list()
-        qs = qs.annotate(offers_count=Count('productshop'))
+        qs = qs.annotate(offers_count=Count('offer'))
         qs = qs.prefetch_related('offer_set')
         qs = qs.prefetch_related('productphoto_set')
         return qs

@@ -1,11 +1,15 @@
 {% load email %}
 
-{% subject %}Subject{% endsubject %}
+{% subject %}Активация{% endsubject %}
 
 {% body %}
-    body
+    Активация аккаунта
+    Вы успешно зарегистрированы в системе
+    {{ domain }}{{ link }}
 {% endbody %}
 
 {% bodyhtml %}
-    body
+    <h1>Активация аккаунта</h1>
+    <p>Вы успешно зарегистрированы в системе<p>
+    <p><a href="{{ domain }}{{ link }}">{{ domain }}{{ link }}</a></p>
 {% endbodyhtml %}

@@ -10,3 +10,4 @@ class Staging(Base):
     MEDIA_ROOT = '/media'
     STATIC_ROOT = '/static'
     ALLOWED_HOSTS = '*'
+    DEFAULT_HOST = 'http://alterprice.staging.corp.createdigital.me'

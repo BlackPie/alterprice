@@ -21,11 +21,11 @@ class ProductQuerySet(query.QuerySet):
         return self.filter(ym_id=ym_id)
 
     def by_min_price(self, value):
-        qs = self.annotate(price_min=Min('productshop__price'))
+        qs = self.annotate(price_min=Min('offer__price'))
         return qs.filter(price_min__gte=value)
 
     def by_max_price(self, value):
-        qs = self.annotate(price_max=Max('productshop__price'))
+        qs = self.annotate(price_max=Max('offer__price'))
         return qs.filter(price_max__lte=value)
 
     def by_brands(self, value):

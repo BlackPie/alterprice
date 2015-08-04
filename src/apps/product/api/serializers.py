@@ -18,13 +18,17 @@ from brand.models import Brand
 class OfferSerializer(serializers.ModelSerializer):
     shop = ShopSerializer()
     click_url = serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Offer
-        fields = ('shop', 'price', 'click_url', 'delivery_cost', 'pickup')
+        fields = ('shop', 'price', 'click_url', 'delivery_cost', 'pickup', 'rating')
 
     def get_click_url(self, obj):
         return reverse('catalog:click-offer', kwargs={'pk': obj.id})
+
+    def get_rating(self, obj):
+        return obj.shop.raiting
 
 
 class ProductSerializer(serializers.ModelSerializer):

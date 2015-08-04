@@ -32,7 +32,7 @@ class ShopYMLInline(admin.StackedInline):
 
 
 class ShopAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'user')
+    list_display = ('__str__', 'user', 'raiting')
     inlines = [ShopYMLInline]
     list_filter = (RegDateFilter, OperatorFilter)
 

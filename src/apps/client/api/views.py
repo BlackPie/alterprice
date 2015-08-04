@@ -62,7 +62,13 @@ class SignUpAPIView(CreateAPIView):
             response['message'] = _('Для завершения регистрации перейдите по ссылке из письма отправленного на ваш e-mail. Если не найдете во входящих, проверьте "спам"')
             EmailDelivery.objects.make(
                 template='client/register.html',
-                email=serializer.validated_data.get('email')
+                email=serializer.validated_data.get('email'),
+                context={
+                    'link': reverse('client:activate-link',
+                                    kwargs={'token': user.emailvalidation_set.all()[0].token}),
+                    'domain': settings.DEFAULT_HOST
+                }
+
             )
             if user.client_profile.operator:
                 operator_email = user.client_profile.operator.user.email
