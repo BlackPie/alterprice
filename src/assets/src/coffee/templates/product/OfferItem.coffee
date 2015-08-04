@@ -7,19 +7,31 @@ template = (locals) =>
     price = PrettyPrice.format locals.price
 
     rating = {}
+    if not locals.rating
+        locals.rating = 0
     for i in [0..5]
-        if locals.point >= i + 1
+        if locals.rating >= i + 1
             rating[i + 1] = 'yellow'
         else
             rating[i + 1] = 'grey'
 
     deliveries = []
-    for delivery of locals.productshopdelivery
-        if locals.productshopdelivery[delivery]
-            switch delivery
-                when "delivery" then deliveries.push 'Доставка'
-                when "pickup" then deliveries.push 'Самовывоз'
-    deliveries = deliveries.join(', ')
+
+    if locals.delivery_cost > 0
+        deliveries.push "Доставка: #{locals.delivery_cost}Р"
+    if locals.delivery_cost == 0
+        deliveries.push 'Доставка бесплатно'
+
+    if locals.pickup
+        deliveries.push 'Самовывоз'
+
+
+#    for delivery of locals.productshopdelivery
+#        if locals.productshopdelivery[delivery]
+#            switch delivery
+#                when "delivery" then deliveries.push 'Доставка'
+#                when "pickup" then deliveries.push 'Самовывоз'
+    deliveries = deliveries.join('/')
 
     return "<div class=\"pure-g offer-block\">
     <div class=\"pure-u-1-4\">
