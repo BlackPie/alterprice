@@ -72,4 +72,5 @@ module.exports = class ClientStatisticsItemsFilterView extends Marionette.ItemVi
             data['shop'] = @$(@ui.shopInput).val()
         if @$(@ui.pricelistInput)
             data['pricelist'] = @$(@ui.pricelistInput).val()
+        data['type'] = @$el.find('.header label.active').find('.type-switcher').val()
         return data

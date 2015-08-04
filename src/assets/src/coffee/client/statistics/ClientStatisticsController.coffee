@@ -45,9 +45,9 @@ module.exports = class ClientStatisticsController extends Marionette.Controller
 
 
     fetchItems: =>
-
         filterData = @clientStatisticsItemsFilterView.getFilterData()
         clientStatisticsItemsFilterState = ClientStatisticsItemsFilterState.fromArray filterData
+        @clientStatisticsItemsCollection.setType(filterData.type)
         options =
             pageSize: @clientStatisticsItemsCollection.state.pageSize
             currentPage: 1

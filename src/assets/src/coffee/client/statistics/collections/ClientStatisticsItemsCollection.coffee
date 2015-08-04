@@ -16,11 +16,15 @@ module.exports = class ClientStatisticsItemsCollection extends PageableCollectio
         pageSize: "page_size"
 
 
+    type: 'offers'
+
+
     url: =>
+        return "/api/shop/statistic/#{@type}/"
         if @pricelistId
-            return "/api/shop/statistic/pricelist/"
+            return "/api/shop/statistic/#{@type}/"
         else
-            return "/api/shop/statistic/shop/"
+            return "/api/shop/statistic/#{@type}/"
 
 
     stateToParams: (filterState) ->
@@ -51,3 +55,6 @@ module.exports = class ClientStatisticsItemsCollection extends PageableCollectio
 
     setShopId: (id) =>
         @pricelistId = id
+
+    setType: (type) =>
+        @type = type
