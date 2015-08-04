@@ -47,11 +47,11 @@
                             <div class="pure-u-1-3">
                                 <div class="shop">{{ best_offer.shop.name }}</div>
                                 <div class="rating">
-                                    <i class="icon-star-{% if best_offer.point >= 1 %}yellow{% else %}grey{% endif %}"></i>
-                                    <i class="icon-star-{% if best_offer.point >= 2 %}yellow{% else %}grey{% endif %}"></i>
-                                    <i class="icon-star-{% if best_offer.point >= 3 %}yellow{% else %}grey{% endif %}"></i>
-                                    <i class="icon-star-{% if best_offer.point >= 4 %}yellow{% else %}grey{% endif %}"></i>
-                                    <i class="icon-star-{% if best_offer.point >= 5 %}yellow{% else %}grey{% endif %}"></i>
+                                    <i class="icon-star-{% if best_offer.shop.raiting >= 1 %}yellow{% else %}grey{% endif %}"></i>
+                                    <i class="icon-star-{% if best_offer.shop.raiting >= 2 %}yellow{% else %}grey{% endif %}"></i>
+                                    <i class="icon-star-{% if best_offer.shop.raiting >= 3 %}yellow{% else %}grey{% endif %}"></i>
+                                    <i class="icon-star-{% if best_offer.shop.raiting >= 4 %}yellow{% else %}grey{% endif %}"></i>
+                                    <i class="icon-star-{% if best_offer.shop.raiting >= 5 %}yellow{% else %}grey{% endif %}"></i>
                                 </div>
                             </div>
                             <div class="pure-u-1-3">
