@@ -21,6 +21,7 @@ ProductOffersCollection = require 'product/collections/ProductOffersCollection'
 ProductOpinionsLayout = require 'product/layouts/ProductOpinionsLayout'
 ProductOpinionsCollection = require 'product/collections/ProductOpinionsCollection'
 ProductOpinionsListView = require 'product/views/opinions/ProductOpinionsListView'
+ProductOpinionPagerView = require 'product/views/opinions/ProductOpinionPagerView'
 
 
 module.exports = class ProductController extends Marionette.Controller
@@ -41,13 +42,14 @@ module.exports = class ProductController extends Marionette.Controller
         @productOffersCollection = new ProductOffersCollection {id: @productId}
         @productOffersFilterView = new ProductOffersFilterView {channel: @channel}
         @productOffersListView = new ProductOffersListView {channel: @channel, collection: @productOffersCollection}
-        @productOffersLayout.offersList.show(@productOffersListView)
+        @productOffersLayout.offersList.show @productOffersListView
         @productOffersPagerView = new ProductOffersPagerView {channel: @channel}
 
         @productOpinionsLayout = new ProductOpinionsLayout {channel: @channel}
         @productOpinionsCollection = new ProductOpinionsCollection {id: @productId}
         @productOpinionsListView = new ProductOpinionsListView {channel: @channel, collection: @productOpinionsCollection}
-        @productOpinionsLayout.opinionsList.show(@productOpinionsListView)
+        @productOpinionsLayout.opinionsList.show @productOpinionsListView
+        @productOpinionPagerView = new ProductOpinionPagerView {channel: @channel}
 
         @productOffersCollection.on "sync", (collection) =>
             if collection.state.totalPages > 1
@@ -55,15 +57,25 @@ module.exports = class ProductController extends Marionette.Controller
             else
                 @productOffersPagerView.hide()
 
+        @productOpinionsCollection.on "sync", (collection) =>
+            if collection.state.totalPages > 1
+                @productOpinionPagerView.show()
+            else
+                @productOpinionPagerView.hide()
+            if collection.state.totalRecords
+                $('.tab-link[data-tab="reviews"]').find('span').text "(#{collection.state.totalRecords})"
+
         @productOffersCollection.fetchFiltered()
-        @productOpinionsCollection.fetchFiltered({product: @productId})
+        @productOpinionsCollection.fetchFiltered {product: @productId}
 
         @channel.vent.on Events.SET_OFFERS_FILTER,  @onSetOffersFilter
         @channel.vent.on Events.OFFERS_SHOW_MORE,  @onOffersShowMore
 
         @channel.vent.on Events.OPEN_OFFERS_TAB,  @openOffersTab
         @channel.vent.on Events.OPEN_PROPS_TAB,  @openPropsTab
+
         @channel.vent.on Events.OPEN_REVIEWS_TAB,  @openReviewsTab
+        @channel.vent.on Events.OPINIONS_SHOW_MORE,  @onReviewsShowMore
 
 
     index: =>
@@ -100,3 +112,8 @@ module.exports = class ProductController extends Marionette.Controller
         productOffersFilterState = ProductOffersFilterState.fromArray filterData
         @productOffersCollection.state.pageSize = @productOffersCollection.state.pageSize + @productOffersCollection.showMoreSize
         @productOffersCollection.fetchFiltered productOffersFilterState
+
+
+    onReviewsShowMore: =>
+        @productOpinionsCollection.state.pageSize = @productOpinionsCollection.state.pageSize + @productOpinionsCollection.showMoreSize
+        @productOpinionsCollection.fetchFiltered {product: @productId}

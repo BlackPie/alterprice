@@ -6,7 +6,7 @@ module.exports = class ProductOpinionsLayout extends Marionette.LayoutView
     el: $("#comments-wrapper-view")
 
     regions:
-        opinionsList: ".comments-wrapper"
+        opinionsList: "#opinion-list-view"
 
 
     #initialize: (options) =>

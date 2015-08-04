@@ -10,15 +10,15 @@ module.exports = class ProductOpinionsCollection extends PageableCollection
     state:
         firstPage: 1
         currentPage: 1
-        pageSize: 1000
+        pageSize: 2
 
     queryParams:
         currentPage: "page"
         pageSize: "page_size"
 
 
-    startPageSize: 3
-    showMoreSize: 10
+    startPageSize: 2
+    showMoreSize: 1
 
 
     initialize: (options) =>
