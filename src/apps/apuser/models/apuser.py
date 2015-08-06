@@ -52,6 +52,9 @@ class AlterPriceUserManager(models.Manager):
         obj.save()
         return obj
 
+    def create_superuser(self, email, password, **kwargs):
+        return self.make_admin(email, password)
+
 
 class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
 
