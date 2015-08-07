@@ -59,7 +59,8 @@ class ClientAdmin(admin.ModelAdmin):
     # readonly_fields = ('user', )
     list_filter = (RegDateFilter, OperatorFilter)
     search_fields = ['user__email', 'phone']
-    fields = ('user', 'name', 'last_name', 'phone', 'checked', 'is_active')
+    fields = ('user', 'name', 'last_name', 'phone', 'checked', 'is_active',
+              'ownership_type', 'company', 'operator', 'city')
     inlines = [PaymentInfoInline, BalanceInline]
 
     def queryset(self, request):

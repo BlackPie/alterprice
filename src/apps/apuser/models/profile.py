@@ -53,14 +53,15 @@ class OperatorProfile(Profile):
                             verbose_name=_('Код'))
 
     def __str__(self):
-        return self.user.email
+        return '%s  %s' % (self.last_name, self.name)
 
     def __unicode__(self):
-        return self.user.email
+        return '%s  %s' % (self.last_name, self.name)
 
     class Meta:
         verbose_name = _('Оператор')
         verbose_name_plural = _('Операторы')
+        ordering = ('name',)
 
 
 class ClientProfileManager(models.Manager):
@@ -111,7 +112,7 @@ class ClientProfile(Profile):
                                blank=True,
                                null=True,
                                verbose_name=_('Название компании'))
-    operator = models.ForeignKey(AlterPriceUser,
+    operator = models.ForeignKey(OperatorProfile,
                                  null=True,
                                  blank=True,
                                  default=None,
