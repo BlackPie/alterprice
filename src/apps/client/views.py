@@ -43,6 +43,14 @@ class ClientAgreementsPageView(TemplateView):
         return context
 
 
+class ClientContactsPageView(TemplateView):
+    template_name = "apps/client/contacts.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientContactsPageView, self).get_context_data(**kwargs)
+        return context
+
+
 class ClientSignInPageView(TemplateView):
     template_name = "apps/client/login.html"
 

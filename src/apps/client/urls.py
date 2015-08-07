@@ -8,6 +8,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.ClientIndexPageView.as_view(), name='index'),
     url(r'^agreements/$', views.ClientAgreementsPageView.as_view(), name='agreements'),
+    url(r'^contacts/$', views.ClientContactsPageView.as_view(), name='contacts'),
     # auth urls
     url(r'^login/$', views.ClientSignInPageView.as_view(), name='login'),
     url(r'^signout/$',
