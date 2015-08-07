@@ -112,7 +112,7 @@ class ClientProfile(Profile):
                                blank=True,
                                null=True,
                                verbose_name=_('Название компании'))
-    operator = models.ForeignKey(OperatorProfile,
+    operator = models.ForeignKey(AlterPriceUser,
                                  null=True,
                                  blank=True,
                                  default=None,

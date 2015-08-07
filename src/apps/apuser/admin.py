@@ -19,12 +19,26 @@ class OperatorFilter(admin.SimpleListFilter):
         )
 
     def queryset(self, request, queryset):
+
         if self.value() == 'no_operator':
             return queryset.filter(operator__isnull=True)
         if self.value() == 'attached_to_me':
             return queryset.filter(operator=request.user)
         return queryset
 
+class PaymentFilter(admin.SimpleListFilter):
+    title = _("Платежи")
+    parameter_name = 'payments'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('from_my_clients', _('Моих клиентов')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'from_my_clients':
+            return queryset.filter(client__operator=request.user)
+        return queryset
 
 class BalanceInline(admin.TabularInline):
     model = models.Balance
@@ -99,6 +113,7 @@ class AdminProfileAdmin(admin.ModelAdmin):
 class PaymentAdmin(admin.ModelAdmin):
     exclude = ('payment_type', 'robokassa_success')
     list_display = ('client', 'amount', 'created', 'currency', 'payment_status')
+    list_filter = (PaymentFilter,)
 
     def save_model(self, request, obj, form, change):
         obj.save()
