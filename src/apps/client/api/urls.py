@@ -5,6 +5,7 @@ from client.api import views
 urlpatterns = patterns(
     '',
     url(r'^signin/$', views.SignInAPIView.as_view(), name='signin'),
+    url(r'^signin/welcome/$', views.SignInAPIView.as_view(), name='signin_welcome'),
     url(r'^signup/$', views.SignUpAPIView.as_view(), name='signup'),
     url(r'^profile/$', views.Profile.as_view(), name='profile'),
     url(r'^profile/password/$', views.ProfilePassword.as_view(), name='profile-password'),

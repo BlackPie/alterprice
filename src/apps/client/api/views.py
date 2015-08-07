@@ -14,8 +14,9 @@ from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
-from apuser.models import BalanceHistory
+from django.core.urlresolvers import resolve
 
+from apuser.models import BalanceHistory
 from apuser.models.payment import InvoiceRequest, Payment
 from apuser import models
 from apuser.models.profile import EmailDelivery, OperatorProfile
@@ -38,7 +39,12 @@ class SignInAPIView(APIView):
 
     def success_data(self, serializer):
         response = {}
-        response['redirect_to'] = reverse_lazy('client:profile')
+
+        if resolve(self.request.path_info).url_name is 'signin_welcome':
+            response['redirect_to'] = reverse_lazy('client:shop_add')
+        else:
+            response['redirect_to'] = reverse_lazy('client:profile')
+
         return response
 
 

@@ -8,7 +8,11 @@
             <p class="welcome">Поздравляем с успешной регистрацией! Авторизируйтесь для дальнейшей работы.</p>
         {% endif %}
         <div id="client-login-form-view">
-            <form action="{% url 'client-api:signin' %}" method="POST" id="login-form" class="form-block">
+            {% if welcome %}
+                <form action="{% url 'client-api:signin_welcome' %}" method="POST" id="login-form" class="form-block">
+            {% else %}
+                <form action="{% url 'client-api:signin' %}" method="POST" id="login-form" class="form-block">
+            {% endif %}
                 <label class="pure-g field-wrapper vertical-field">
                     <div class="pure-u-1-1 field-name">Email</div>
                     <div class="pure-u-1-1 field-value">
