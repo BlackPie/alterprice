@@ -97,12 +97,13 @@ class AdminProfileAdmin(admin.ModelAdmin):
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('client', 'amount', 'payment_type', 'created')
+    exclude = ('payment_type', 'robokassa_success')
+    list_display = ('client', 'amount', 'created', 'currency', 'payment_status')
 
     def save_model(self, request, obj, form, change):
         obj.save()
         try:
-            balance = obj.user.balance
+            balance = obj.client.balance
         except AttributeError:
             balance = models.Balance.objects.make(client=obj.user.client_profile)
         if obj.is_payment():
