@@ -7,6 +7,7 @@ from client import views
 urlpatterns = patterns(
     '',
     url(r'^$', views.ClientIndexPageView.as_view(), name='index'),
+    url(r'^agreements/$', views.ClientAgreementsPageView.as_view(), name='agreements'),
     # auth urls
     url(r'^login/$', views.ClientSignInPageView.as_view(), name='login'),
     url(r'^signout/$',

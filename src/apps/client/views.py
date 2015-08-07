@@ -35,6 +35,14 @@ class ClientIndexPageView(TemplateView):
         return super(ClientIndexPageView, self).dispatch(request, *args, **kwargs)
 
 
+class ClientAgreementsPageView(TemplateView):
+    template_name = "apps/client/agreements.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientAgreementsPageView, self).get_context_data(**kwargs)
+        return context
+
+
 class ClientSignInPageView(TemplateView):
     template_name = "apps/client/login.html"
 
