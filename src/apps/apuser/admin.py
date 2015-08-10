@@ -56,6 +56,7 @@ class BalanceInline(admin.TabularInline):
 class UserAdmin(admin.ModelAdmin):
     list_filter = ('user_type', CreatedFilter)
     fields = ('email', 'user_type', 'password')
+    search_fields = ["email"]
     # inlines = [BalanceInline, ]
 
     def get_queryset(self, request):
@@ -79,7 +80,7 @@ class ClientAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'checked', 'is_active')
     # readonly_fields = ('user', )
     list_filter = (CreatedFilter, OperatorFilter)
-    search_fields = ['user__email', 'phone']
+    search_fields = ['user__email', 'phone', 'company']
     fields = ('user', 'name', 'last_name', 'phone', 'checked', 'is_active',
               'ownership_type', 'company', 'operator', 'city')
     inlines = [PaymentInfoInline, BalanceInline]
@@ -103,6 +104,7 @@ class OperatorAdmin(AdminPermissionMixin, admin.ModelAdmin):
     readonly_fields = ('code', )
     list_display = ('__str__', 'name', 'last_name')
     list_filter = (CreatedFilter, )
+    search_fields = ['user__email', 'phone']
 
     def render_change_form(self, request, context, *args, **kwargs):
         user_qs = models.AlterPriceUser.objects.get_list(operator=True)
@@ -111,6 +113,8 @@ class OperatorAdmin(AdminPermissionMixin, admin.ModelAdmin):
 
 
 class AdminProfileAdmin(AdminPermissionMixin, admin.ModelAdmin):
+    search_fields = ['user__email', 'phone']
+
     def render_change_form(self, request, context, *args, **kwargs):
         user_qs = models.AlterPriceUser.objects.get_list(admin=True)
         context['adminform'].form.fields['user'].queryset = user_qs

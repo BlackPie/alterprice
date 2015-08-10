@@ -52,6 +52,7 @@ class ShopAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'user', 'raiting')
     inlines = [ShopYMLInline]
     list_filter = (CreatedFilter, OperatorFilter)
+    search_fields = ['name', 'user__email', 'user__client_profile__phone']
 
     def render_change_form(self, request, context, *args, **kwargs):
         user_qs = User.objects.get_list(client=True)
