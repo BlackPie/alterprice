@@ -24,18 +24,15 @@ class StrictSearchMixin(object):
         def construct_search(field_name):
             if field_name.startswith('^'):
                 return "%s__istartswith" % field_name[1:]
-            elif field_name.startswith('='):
-                return "%s__iexact" % field_name[1:]
             elif field_name.startswith('@'):
                 return "%s__search" % field_name[1:]
             else:
-                return "%s__icontains" % field_name
+                return "%s__iexact" % field_name
 
         use_distinct = False
         search_fields = self.get_search_fields(request)
         if search_fields and search_term:
-            orm_lookups = ['__'.join(construct_search(str(search_field)).split('__')[:-1])
-                           for search_field in search_fields]
+            orm_lookups = [construct_search(str(search_field)) for search_field in search_fields]
 
             for bit in search_term.split():
                 or_queries = [Q(**{orm_lookup: bit})
