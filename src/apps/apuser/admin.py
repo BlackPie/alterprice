@@ -1,8 +1,12 @@
+import operator
+from functools import reduce
+
 from django.db.models import Q
 from django.utils import timezone
 from datetime import datetime, timedelta
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.admin.utils import lookup_needs_distinct
 from apuser import models
 from apuser.models.payment import Payment
 from utils.admin_filters import CreatedFilter
@@ -13,6 +17,38 @@ class AdminPermissionMixin(object):
         if request.user.user_type != models.AlterPriceUser.ADMIN:
             return {}
         return super(AdminPermissionMixin, self).get_model_perms(request)
+
+
+class StrictSearchMixin(object):
+    def get_search_results(self, request, queryset, search_term):
+        def construct_search(field_name):
+            if field_name.startswith('^'):
+                return "%s__istartswith" % field_name[1:]
+            elif field_name.startswith('='):
+                return "%s__iexact" % field_name[1:]
+            elif field_name.startswith('@'):
+                return "%s__search" % field_name[1:]
+            else:
+                return "%s__icontains" % field_name
+
+        use_distinct = False
+        search_fields = self.get_search_fields(request)
+        if search_fields and search_term:
+            orm_lookups = ['__'.join(construct_search(str(search_field)).split('__')[:-1])
+                           for search_field in search_fields]
+
+            for bit in search_term.split():
+                or_queries = [Q(**{orm_lookup: bit})
+                              for orm_lookup in orm_lookups]
+                queryset = queryset.filter(reduce(operator.or_, or_queries))
+
+            if not use_distinct:
+                for search_spec in orm_lookups:
+                    if lookup_needs_distinct(self.opts, search_spec):
+                        use_distinct = True
+                        break
+
+        return queryset, use_distinct
 
 
 class OperatorFilter(admin.SimpleListFilter):
@@ -53,7 +89,7 @@ class BalanceInline(admin.TabularInline):
     model = models.Balance
 
 
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(StrictSearchMixin, admin.ModelAdmin):
     list_filter = ('user_type', CreatedFilter)
     fields = ('email', 'user_type', 'password')
     search_fields = ["email"]
@@ -75,7 +111,7 @@ class PaymentInfoInline(admin.StackedInline):
     model = models.ClientPaymentInfo
 
 
-class ClientAdmin(admin.ModelAdmin):
+class ClientAdmin(StrictSearchMixin, admin.ModelAdmin):
     # list_display = ('__str__', 'operator', 'approved')
     list_display = ('__str__', 'checked', 'is_active')
     # readonly_fields = ('user', )
@@ -100,7 +136,7 @@ class ClientAdmin(admin.ModelAdmin):
         return super(ClientAdmin, self).render_change_form(request, context, args, kwargs)
 
 
-class OperatorAdmin(AdminPermissionMixin, admin.ModelAdmin):
+class OperatorAdmin(StrictSearchMixin, AdminPermissionMixin, admin.ModelAdmin):
     readonly_fields = ('code', )
     list_display = ('__str__', 'name', 'last_name')
     list_filter = (CreatedFilter, )
@@ -112,7 +148,7 @@ class OperatorAdmin(AdminPermissionMixin, admin.ModelAdmin):
         return super(OperatorAdmin, self).render_change_form(request, context, args, kwargs)
 
 
-class AdminProfileAdmin(AdminPermissionMixin, admin.ModelAdmin):
+class AdminProfileAdmin(StrictSearchMixin, AdminPermissionMixin, admin.ModelAdmin):
     search_fields = ['user__email', 'phone']
 
     def render_change_form(self, request, context, *args, **kwargs):
