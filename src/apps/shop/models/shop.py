@@ -77,6 +77,7 @@ class Shop(models.Model):
         (4, 4),
         (5, 5),
     ), verbose_name=_('Рейтинг'))
+    created = models.DateTimeField(auto_now_add=True)
 
     objects = ShopManager.from_queryset(ShopQuerySet)()
 

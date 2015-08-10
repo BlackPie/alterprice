@@ -82,6 +82,7 @@ class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
     user_type = models.PositiveSmallIntegerField(verbose_name=_(u'Статус'),
                                                  default=CLIENT,
                                                  choices=USER_TYPE_CHOICES)
+    created = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
 

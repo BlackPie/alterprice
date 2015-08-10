@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from apuser import models
 from apuser.models.payment import Payment
-from utils.admin_filters import RegDateFilter
+from utils.admin_filters import CreatedFilter
 
 
 class AdminPermissionMixin(object):
@@ -54,7 +54,7 @@ class BalanceInline(admin.TabularInline):
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_filter = ('user_type', RegDateFilter)
+    list_filter = ('user_type', CreatedFilter)
     fields = ('email', 'user_type', 'password')
     # inlines = [BalanceInline, ]
 
@@ -78,7 +78,7 @@ class ClientAdmin(admin.ModelAdmin):
     # list_display = ('__str__', 'operator', 'approved')
     list_display = ('__str__', 'checked', 'is_active')
     # readonly_fields = ('user', )
-    list_filter = (RegDateFilter, OperatorFilter)
+    list_filter = (CreatedFilter, OperatorFilter)
     search_fields = ['user__email', 'phone']
     fields = ('user', 'name', 'last_name', 'phone', 'checked', 'is_active',
               'ownership_type', 'company', 'operator', 'city')
@@ -102,7 +102,7 @@ class ClientAdmin(admin.ModelAdmin):
 class OperatorAdmin(AdminPermissionMixin, admin.ModelAdmin):
     readonly_fields = ('code', )
     list_display = ('__str__', 'name', 'last_name')
-    list_filter = (RegDateFilter, )
+    list_filter = (CreatedFilter, )
 
     def render_change_form(self, request, context, *args, **kwargs):
         user_qs = models.AlterPriceUser.objects.get_list(operator=True)

@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from shop import models
 from shop.models.offer import Pricelist
 from shop.models.shop import Shop
-from utils.admin_filters import RegDateFilter
+from utils.admin_filters import CreatedFilter
 from apuser.models import profile
 User = get_user_model()
 
@@ -51,7 +51,7 @@ class ShopYMLInline(admin.StackedInline):
 class ShopAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'user', 'raiting')
     inlines = [ShopYMLInline]
-    list_filter = (RegDateFilter, OperatorFilter)
+    list_filter = (CreatedFilter, OperatorFilter)
 
     def render_change_form(self, request, context, *args, **kwargs):
         user_qs = User.objects.get_list(client=True)
