@@ -7,6 +7,7 @@ from shop import models
 from shop.models.offer import Pricelist
 from shop.models.shop import Shop
 from utils.admin_filters import RegDateFilter
+from apuser.models import profile
 User = get_user_model()
 
 
@@ -16,14 +17,30 @@ class OperatorFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         operators = User.objects.filter(user_type=User.OPERATOR)
-        lkps = list()
-        lkps.append(('asd', 'asd'))
+        operator_list = list()
+        operator_list.append(('me', 'Мои'))
         if operators.exists():
             for o in operators:
-                lkps.append((o.id, o.email))
-        return lkps
+                operator_list.append((o.id, o.email))
+        return operator_list
 
     def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'me':
+                operator = request.user
+            elif self.value().isdigit():
+                operator = self.value()
+            else:
+                return queryset
+
+            client_list = list(profile.ClientProfile.objects.filter(operator=operator))
+            user_id_list = [x.user.id for x in client_list]
+
+            if user_id_list:
+                queryset = queryset.filter(user__in=user_id_list)
+            else:
+                queryset = Shop.objects.none()
+
         return queryset
 
 
