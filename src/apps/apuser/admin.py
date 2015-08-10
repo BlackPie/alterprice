@@ -8,6 +8,13 @@ from apuser.models.payment import Payment
 from utils.admin_filters import RegDateFilter
 
 
+class AdminPermissionMixin(object):
+    def get_model_perms(self, request):
+        if request.user.user_type != models.AlterPriceUser.ADMIN:
+            return {}
+        return super(AdminPermissionMixin, self).get_model_perms(request)
+
+
 class OperatorFilter(admin.SimpleListFilter):
     title = _('По личному оператору')
     parameter_name = 'personal_operator'
@@ -26,6 +33,7 @@ class OperatorFilter(admin.SimpleListFilter):
             return queryset.filter(operator=request.user)
         return queryset
 
+
 class PaymentFilter(admin.SimpleListFilter):
     title = _("Платежи")
     parameter_name = 'payments'
@@ -40,6 +48,7 @@ class PaymentFilter(admin.SimpleListFilter):
             return queryset.filter(client__operator=request.user)
         return queryset
 
+
 class BalanceInline(admin.TabularInline):
     model = models.Balance
 
@@ -49,13 +58,11 @@ class UserAdmin(admin.ModelAdmin):
     fields = ('email', 'user_type', 'password')
     # inlines = [BalanceInline, ]
 
-    def queryset(self, request):
-        qs = super(UserAdmin, self).queryset(request)
-        if not request.is_admin():
+    def get_queryset(self, request):
+        qs = super(UserAdmin, self).get_queryset(request)
+        if not request.user.is_admin():
             qs = qs.filter(user_type=models.AlterPriceUser.CLIENT)
-            qs = qs.filter(Q(clientprofile__operator__isnull=True) | Q(clientprofile__operator=request.user))
-        else:
-            qs = qs.exclude(is_superuser=True)
+            qs = qs.filter(Q(client_profile__operator__isnull=True) | Q(client_profile__operator=request.user))
         return qs
 
 
@@ -92,7 +99,7 @@ class ClientAdmin(admin.ModelAdmin):
         return super(ClientAdmin, self).render_change_form(request, context, args, kwargs)
 
 
-class OperatorAdmin(admin.ModelAdmin):
+class OperatorAdmin(AdminPermissionMixin, admin.ModelAdmin):
     readonly_fields = ('code', )
     list_display = ('__str__', 'name', 'last_name')
     list_filter = (RegDateFilter, )
@@ -103,11 +110,11 @@ class OperatorAdmin(admin.ModelAdmin):
         return super(OperatorAdmin, self).render_change_form(request, context, args, kwargs)
 
 
-class AdminProfileAdmin(admin.ModelAdmin):
+class AdminProfileAdmin(AdminPermissionMixin, admin.ModelAdmin):
     def render_change_form(self, request, context, *args, **kwargs):
         user_qs = models.AlterPriceUser.objects.get_list(admin=True)
         context['adminform'].form.fields['user'].queryset = user_qs
-        return super(AdminProfileAdmin, self).render_change_form(request, context, args, kwargs)        
+        return super(AdminProfileAdmin, self).render_change_form(request, context, args, kwargs)
 
 
 class PaymentAdmin(admin.ModelAdmin):
