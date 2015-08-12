@@ -96,6 +96,7 @@ class Product(models.Model):
                                    default=None,
                                    verbose_name=_('Описание'))
     details = JSONField(null=True, blank=True, verbose_name=_('Характеристики'))
+    loaded = models.BooleanField(default=True)
 
     objects = ProductManager.from_queryset(ProductQuerySet)()
 

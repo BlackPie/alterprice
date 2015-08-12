@@ -10,17 +10,37 @@ from django.core.files.base import File
 from marketapi.api import MarketAPI, MarketHTTPError
 from product.models import Product, Offer, ProductPhoto, Opinion
 from shop.models.offer import Pricelist
-
-
 from celery.utils.log import get_task_logger
+
 
 logger = get_task_logger(__name__)
 
 
-@shared_task(max_retries=3)
+def load_pictures(pictures, product):
+    all_pictures_loaded = True
+
+    if type(pictures) == list:
+        for p in pictures:
+            try:
+                ProductPhoto.objects.make_from_url(p, product)
+            except (HTTPError, URLError) as e:
+                logger.warn("Cant fetch image: %s" % str(e))
+                all_pictures_loaded = False
+                continue
+    else:
+        try:
+            ProductPhoto.objects.make_from_url(pictures, product)
+        except (HTTPError, URLError) as e:
+            all_pictures_loaded = False
+            logger.warn("Cant fetch image: %s" % str(e))
+
+    return all_pictures_loaded
+
+
 def process_pricelist(pricelist_id):
     pricelist = Pricelist.objects.get(id=pricelist_id)
     logger.error('Pricelist "%d" started processing' % pricelist_id)
+
     try:
         with urlopen(pricelist.yml_url) as f:
             content = f.read()
@@ -28,12 +48,15 @@ def process_pricelist(pricelist_id):
         pricelist.status = Pricelist.CANT_PROCESS
         pricelist.save()
         return
+
     data = xmltodict.parse(content)
     categories, currency, offers = get_yml_data(data)
+
     try:
         delivery_cost = int(data.get('local_delivery_cost', -1))
     except TypeError:
         delivery_cost = -1
+
     for offer in offers:
         name = offer.get('name')
         vendor = offer.get('vendor')
@@ -75,7 +98,16 @@ def process_pricelist(pricelist_id):
                 logger.error('skipped for "%s", %s' % (name, str(e)))
                 continue
 
-        if Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id']):
+        existing_offers = Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id'])
+
+        offer_updated = False
+        for offer in existing_offers:
+            if offer.price != float(offer.get('price')) or \
+                            offer.delivery_cost != delivery_cost:
+                offer_updated = True
+
+        if Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id']) and \
+                not offer_updated:
             continue
 
         try:
@@ -103,18 +135,9 @@ def process_pricelist(pricelist_id):
             pictures = offer.get('picture')
 
             if pictures:
-                if type(pictures) == list:
-                    for p in pictures:
-                        try:
-                            ProductPhoto.objects.make_from_url(p, product)
-                        except (HTTPError, URLError) as e:
-                            logger.warn("Cant fetch image: %s" % str(e))
-                            continue
-                else:
-                    try:
-                        ProductPhoto.objects.make_from_url(pictures, product)
-                    except (HTTPError, URLError) as e:
-                        logger.warn("Cant fetch image: %s" % str(e))
+                if not load_pictures(pictures, product):
+                    product.loaded = False
+                    product.save()
 
             try:
                 opinions = MarketAPI.get_opinions(model['id'])["modelOpinions"]['opinion']
@@ -157,6 +180,19 @@ def process_pricelist(pricelist_id):
 
     pricelist.status = Pricelist.PROCESSED
     pricelist.save()
+
+
+@shared_task(max_retries=3)
+def process_pricelist_task(pricelist_id):
+    process_pricelist(pricelist_id)
+
+
+@periodic_task(run_every=timedelta(days=1))
+def refresh_pricelists():
+    pricelist_list = Pricelist.objects.all()
+    for pricelist in pricelist_list:
+        process_pricelist(pricelist.id)
+
 
 @periodic_task(run_every=timedelta(days=1))
 def update_products():

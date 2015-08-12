@@ -33,6 +33,7 @@ class MarketAPI(object):
             headers={'Authorization': settings.MARKET_API_KEY},
             # method='GET',
         )
+
         try:
             x = urlopen(req)
             result = x.read().decode()

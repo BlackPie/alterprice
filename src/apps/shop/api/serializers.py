@@ -2,7 +2,7 @@ from rest_framework import serializers
 # Project imports
 from rest_framework.exceptions import ValidationError
 from catalog.models.category import Category
-from client.tasks import process_pricelist
+from client.tasks import process_pricelist_task
 from product.models import Offer
 from shop import models
 from product import models as productmodels
@@ -43,7 +43,7 @@ class CreateShopSerializer(serializers.ModelSerializer):
                 yml_url=yml_url,
                 region=validated_data.get('region'),
             )
-            process_pricelist.delay(pricelist_id=pricelist.id)
+            process_pricelist_task.delay(pricelist_id=pricelist.id)
         return shop
 
 
@@ -66,8 +66,8 @@ class YMLCreateSerialzier(serializers.ModelSerializer):
                 name=validated_data.get('name'),
                 region=validated_data.get('region'),
             )
-            process_pricelist.delay(pricelist_id=obj.id)
-            # process_pricelist(pricelist_id=obj.id)
+            process_pricelist_task.delay(pricelist_id=obj.id)
+            # process_pricelist_task(pricelist_id=obj.id)
         except MakeException as e:
             raise ValidationError(str(e))
         return obj
