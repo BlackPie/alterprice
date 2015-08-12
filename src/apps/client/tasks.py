@@ -101,9 +101,9 @@ def process_pricelist(pricelist_id):
         existing_offers = Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id'])
 
         offer_updated = False
-        for offer in existing_offers:
-            if offer.price != float(offer.get('price')) or \
-                            offer.delivery_cost != delivery_cost:
+        for ex_offer in existing_offers:
+            if float(ex_offer.price) != float(offer.get('price')) or \
+                            ex_offer.delivery_cost != delivery_cost:
                 offer_updated = True
 
         if Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id']) and \

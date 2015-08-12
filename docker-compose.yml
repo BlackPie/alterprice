@@ -81,6 +81,7 @@ web:
   env_file:
    - ./docker/private/development/db.env
    - ./docker/private/development/robokassa.env
+   - ./docker/private/development/market.env
   environment:
    - DJANGO_CONFIGURATION=Development
    - INSTANCE_TYPE=web
@@ -97,6 +98,7 @@ worker:
    - ./src:/project/src
   env_file:
    - ./docker/private/development/db.env
+   - ./docker/private/development/market.env
   environment:
    - INSTANCE_TYPE=worker
    - DJANGO_CONFIGURATION=Development
