@@ -43,7 +43,9 @@ class MarketAPI(object):
                 sleep(0.5)
                 return cls._exec(params, url, retried=retried+1)
             else:
-                raise MarketHTTPError('%d %s' % (e.code,e.msg))
+                raise MarketHTTPError('%d %s' % (e.code, e.msg))
+        except Exception as e:
+            raise MarketHTTPError('%s' % str(e))
 
     @classmethod
     def get_offer(cls, offer_id, ip_addr=None, geo_id=None):

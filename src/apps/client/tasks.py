@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from urllib.error import URLError
+from urllib.error import URLError, HTTPError
 from urllib.request import urlopen
 from celery import shared_task
 from celery.task import task, periodic_task
@@ -55,10 +55,15 @@ def process_pricelist(pricelist_id):
             query = '%s' % (name,)
         else:
             query = '%s %s' % (vendor, name,)
-        results = MarketAPI.search_offer(
-            query=query.strip(),
-            geo_id=225
-        )
+
+        try:
+            results = MarketAPI.search_offer(
+                query=query.strip(),
+                geo_id=225
+            )
+        except MarketHTTPError:
+            logger.warn("Cant fetch results of MarketAPI.search_offer()")
+            continue
 
         try:
             model = results['searchResult']['results'][0]['model']
@@ -66,15 +71,16 @@ def process_pricelist(pricelist_id):
             try:
                 search_offer = results['searchResult']['results'][0]['offer']
                 model = MarketAPI.get_model(search_offer['modelId'], geo_id=225)['model']
-            except (IndexError, TypeError, KeyError) as e:
+            except (IndexError, TypeError, KeyError, URLError, MarketHTTPError) as e:
                 logger.error('skipped for "%s", %s' % (name, str(e)))
                 continue
+
         if Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id']):
             continue
+
         try:
             product = Product.objects.get(ym_id=model['id'])
         except Product.DoesNotExist:
-
             # TODO: hotfix, empty vendor should be handled properly
             if not vendor:
                 logger.warn("Vendor is empty", extra={
@@ -82,21 +88,39 @@ def process_pricelist(pricelist_id):
                 })
                 continue
 
-            product = Product.objects.make(
-                ym_id=model['id'],
-                brand_name=vendor,
-                name=name,
-                category_yml_id=model['categoryId'],
-                description=offer.get('description')
-            )
+            try:
+                product = Product.objects.make(
+                    ym_id=model['id'],
+                    brand_name=vendor,
+                    name=name,
+                    category_yml_id=model['categoryId'],
+                    description=offer.get('description')
+                )
+            except MarketHTTPError as e:
+                logger.warn("Cant make Product instance: %s" % str(e))
+                continue
+
             pictures = offer.get('picture')
+
             if pictures:
                 if type(pictures) == list:
                     for p in pictures:
-                        ProductPhoto.objects.make_from_url(p, product)
+                        try:
+                            ProductPhoto.objects.make_from_url(p, product)
+                        except (HTTPError, URLError) as e:
+                            logger.warn("Cant fetch image: %s" % str(e))
+                            continue
                 else:
-                    ProductPhoto.objects.make_from_url(pictures, product)
-            opinions = MarketAPI.get_opinions(model['id'])["modelOpinions"]['opinion']
+                    try:
+                        ProductPhoto.objects.make_from_url(pictures, product)
+                    except (HTTPError, URLError) as e:
+                        logger.warn("Cant fetch image: %s" % str(e))
+
+            try:
+                opinions = MarketAPI.get_opinions(model['id'])["modelOpinions"]['opinion']
+            except MarketHTTPError as e:
+                logger.warn("Cant fetch opinions: %s" % str(e))
+                continue
 
             opinions_db = []
             for opinion in opinions:
@@ -114,10 +138,12 @@ def process_pricelist(pricelist_id):
                     date=datetime.fromtimestamp(opinion.get('date')/1000),
                 ))
             Opinion.objects.bulk_create(opinions_db)
+
         try:
             offer_delivery_cost = int(data.get('local_delivery_cost', -1))
         except TypeError:
             offer_delivery_cost = -1
+
         offer = Offer.objects.create(
             pricelist=pricelist,
             shop=pricelist.shop,
