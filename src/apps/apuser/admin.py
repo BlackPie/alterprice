@@ -161,18 +161,21 @@ class PaymentAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.save()
+
         try:
             balance = obj.client.balance
         except AttributeError:
-            balance = models.Balance.objects.make(client=obj.user.client_profile)
-        if obj.is_payment():
-            models.BalanceHistory.objects.increase(
-                payment=obj,
-                balance=balance)
-        if obj.is_recovery():
-            models.BalanceHistory.objects.recover(
-                balance=balance,
-                payment=obj)
+            balance = models.Balance.objects.make(client=obj.client)
+
+        if obj.payment_status == obj.PAID:
+            if obj.is_payment():
+                models.BalanceHistory.objects.increase(
+                    payment=obj,
+                    balance=balance)
+            if obj.is_recovery():
+                models.BalanceHistory.objects.recover(
+                    balance=balance,
+                    payment=obj)
 
 
 class BalanceHistoryAdmin(admin.ModelAdmin):
