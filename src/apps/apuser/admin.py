@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin.utils import lookup_needs_distinct
 from apuser import models
 from apuser.models.payment import Payment
-from utils.admin_filters import CreatedFilter
+from utils.admin_filters import CreatedFilter, ProfileCreatedFilter
 
 
 class AdminPermissionMixin(object):
@@ -112,7 +112,7 @@ class ClientAdmin(StrictSearchMixin, admin.ModelAdmin):
     # list_display = ('__str__', 'operator', 'approved')
     list_display = ('__str__', 'checked', 'is_active')
     # readonly_fields = ('user', )
-    list_filter = (CreatedFilter, OperatorFilter)
+    list_filter = (ProfileCreatedFilter, OperatorFilter)
     search_fields = ['user__email', 'phone', 'company']
     fields = ('user', 'name', 'last_name', 'phone', 'checked', 'is_active',
               'ownership_type', 'company', 'operator', 'city')
@@ -136,7 +136,7 @@ class ClientAdmin(StrictSearchMixin, admin.ModelAdmin):
 class OperatorAdmin(StrictSearchMixin, AdminPermissionMixin, admin.ModelAdmin):
     readonly_fields = ('code', )
     list_display = ('__str__', 'name', 'last_name')
-    list_filter = (CreatedFilter, )
+    list_filter = (ProfileCreatedFilter, )
     search_fields = ['user__email', 'phone']
 
     def render_change_form(self, request, context, *args, **kwargs):
@@ -147,6 +147,7 @@ class OperatorAdmin(StrictSearchMixin, AdminPermissionMixin, admin.ModelAdmin):
 
 class AdminProfileAdmin(StrictSearchMixin, AdminPermissionMixin, admin.ModelAdmin):
     search_fields = ['user__email', 'phone']
+    list_filter = (ProfileCreatedFilter, )
 
     def render_change_form(self, request, context, *args, **kwargs):
         user_qs = models.AlterPriceUser.objects.get_list(admin=True)
