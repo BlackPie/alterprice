@@ -41,6 +41,10 @@ class AlterPriceUserManager(models.Manager):
         obj = self.make(email, password)
         obj.user_type = self.model.OPERATOR
         obj.is_staff = True
+
+        # TODO: или блокировать по model.OPERATOR где ограничить доступ
+        #       или назначать права выборочно
+        obj.is_superuser = True
         obj.save()
         return obj
 
