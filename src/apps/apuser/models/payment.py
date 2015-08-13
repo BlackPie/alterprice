@@ -18,7 +18,7 @@ class LimitedFileField(FileField):
         file = data.file
 
         if self.max_upload_size:
-            if file._size > self.max_upload_size:
+            if file.size > self.max_upload_size:
                 raise forms.ValidationError(_('Максимальный размер файла: %s. Размер загруженного файла %s') % (filesizeformat(self.max_upload_size), filesizeformat(file._size)))
 
         return data
