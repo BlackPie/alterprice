@@ -88,7 +88,7 @@ class BalanceInline(admin.TabularInline):
 
 class UserAdmin(StrictSearchMixin, admin.ModelAdmin):
     list_filter = ('user_type', CreatedFilter)
-    fields = ('email', 'user_type', 'password')
+    fields = ('email', 'user_type', 'password', 'verified')
     search_fields = ["email"]
     # inlines = [BalanceInline, ]
 
@@ -98,6 +98,11 @@ class UserAdmin(StrictSearchMixin, admin.ModelAdmin):
             qs = qs.filter(user_type=models.AlterPriceUser.CLIENT)
             qs = qs.filter(Q(client_profile__operator__isnull=True) | Q(client_profile__operator=request.user))
         return qs
+
+    def save_model(self, request, obj, form, change):
+        models.AlterPriceUser.objects.make_user(email=form.cleaned_data['email'],
+                                                password=form.cleaned_data['password'],
+                                                user_type=form.cleaned_data['user_type'])
 
 
 class UserInline(admin.TabularInline):

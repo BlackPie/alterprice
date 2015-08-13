@@ -52,8 +52,19 @@ class AlterPriceUserManager(models.Manager):
         obj.save()
         return obj
 
+    def make_user(self, email, password, user_type):
+        if user_type == self.model.ADMIN:
+            self.make_admin(email, password)
+        elif user_type == self.model.OPERATOR:
+            self.make_operator(email, password)
+        elif user_type == self.model.CLIENT:
+            self.make_client(email, password)
+
     def create_superuser(self, email, password, **kwargs):
         return self.make_admin(email, password)
+
+    def create_user(self, email, password, **kwargs):
+        return self.make_client(email, password)
 
 
 class AlterPriceUser(AbstractBaseUser, PermissionsMixin):
