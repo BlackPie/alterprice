@@ -88,32 +88,24 @@ class ClickOffer(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         offer_id = kwargs.get('pk', None)
-        psqs = Offer.objects.filter(id=offer_id)
-        if not psqs.exists():
-            raise Http404
-        ps = psqs.first()
-
-        click = Click.objects.make(
-            offer=ps,
-            user_ip=self.request.META.get('REMOTE_ADDR'))
-        user = ps.shop.user
 
         try:
-            balance = user.user.client_profile
+            offer = Offer.objects.get(id=offer_id)
+        except Offer.DoesNotExist:
+            raise Http404
+
+        click = Click.objects.make(offer=offer,
+                                   user_ip=self.request.META.get('REMOTE_ADDR'))
+        user = offer.shop.user
+
+        try:
+            balance = user.client_profile.balance
         except:
             balance = Balance.objects.make(client=user.client_profile)
+
         BalanceHistory.objects.decrease(
             balance=balance,
             click=click,
-            value=ps.click_price)
-        return ps.url
+            value=offer.click_price)
 
-    # def get(self, request, *args, **kwargs):
-    #     url = self.get_redirect_url(*args, **kwargs)
-    #     if url:
-    #         if self.permanent:
-    #             return http.HttpResponsePermanentRedirect(url)
-    #         else:
-    #             return http.HttpResponseRedirect(url)
-    #     else:
-    #         return http.HttpResponseGone()
+        return offer.url
