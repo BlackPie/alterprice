@@ -2,9 +2,9 @@ template = (locals) =>
     return "<table>
     <thead>
         <tr>
-            <th>Наименование</th>
-            <th>Дата</th>
-            <th width=\"120px\">Действия</th>
+            <th><br />Наименование</th>
+            <th><br />Дата</th>
+            <th width=\"120px\"><br />Действия</th>
         </tr>
     </thead>
     <tbody>
