@@ -6,11 +6,9 @@ template = (locals) =>
         file = "В обработке"
     else
         file = "
-            <a href=\"#\" class=\"view\"><i class=\"icon-eye-grey\"></i></a>
-            <a href=\"#\" class=\"download\"><i class=\"icon-download-grey\"></i></a>
+            <!--<a href=\"#\" class=\"view\"><i class=\"icon-eye-grey\"></i></a>-->
+            <a href=\"#{locals.invoice_file}\" target=\"_blank\" class=\"download\"><i class=\"icon-download-grey\"></i></a>
         "
-
-
 
     return "
         <td>Счет №#{locals.id}</td>
