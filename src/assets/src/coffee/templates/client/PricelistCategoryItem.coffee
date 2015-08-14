@@ -8,14 +8,14 @@ template = (locals) =>
 
     return "
         <td>#{name}</td>
-        <td class=\"text-center\">#{locals.lead_price}</td>
         <td class=\"text-center\">
             <div class=\"number-input-wrapper\">
                 <button type=\"button\" class=\"increment-btn btn\"></button>
                 <input type=\"text\" class=\"number-input\" value=\"#{locals.price}\" data-id=\"#{locals.id}\" />
                 <button type=\"button\" class=\"decrement-btn btn\"></button>
             </div>
-        </td>"
+        </td>
+        <td class=\"text-center\">#{locals.lead_price}</td>"
 
 
 module.exports = template
