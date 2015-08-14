@@ -75,7 +75,7 @@
                     <header>Управление ставками</header>
                     <div id="client-pricelist-detail-categories-view"></div>
                     <footer>
-                        <a href="#" class="statistic-link">Посмотреть статистику</a>
+                        <a href="{% url 'client:statistics_pricelist' object.pk %}" class="statistic-link">Посмотреть статистику</a>
                     </footer>
                 </div>
             </div>
