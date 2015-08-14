@@ -257,7 +257,7 @@ class InvoiceRequestListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InvoiceRequest
-        fields = ('id', 'created', 'file_attached')
+        fields = ('id', 'created', 'file_attached', 'invoice_file')
 
 
 class RobokassaResultSerializer(serializers.Serializer):
