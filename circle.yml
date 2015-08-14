@@ -16,6 +16,7 @@ dependencies:
     - if [[ ! -e ~/docker/docker-baseimage.tar ]]; then mkdir -p ~/docker && ls ~/ && docker pull createdigitalspb/docker-baseimage && docker save createdigitalspb/docker-baseimage > ~/docker/docker-baseimage.tar; fi
 
     - if [[ -e ~/docker/alterprice.tar ]]; then docker load -i ~/docker/alterprice.tar; fi
+    - ./bin/fab circleci build_client
     - ./bin/fab circleci build_container
     - mkdir -p ~/docker; docker save createdigitalspb/alterprice > ~/docker/alterprice.tar
 
