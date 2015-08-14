@@ -83,9 +83,7 @@ class YMLCategoryListSerializer(serializers.ModelSerializer):
 
     def get_lead_price(self, obj):
         try:
-            max_price = OfferCategories.objects.filter(category=obj.category,
-                              pricelist__shop__status=Shop.ENABLED) \
-                .order_by('price')[0]
+            max_price = OfferCategories.objects.filter(category=obj.category).order_by('price')[0]
             return max_price.price
         except IndexError:
             return 0
