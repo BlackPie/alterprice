@@ -27,7 +27,10 @@
     padding: 0 20px;
     background: #fff;
     transition: all .1s ease-out 0s;
-
+    &[disabled] {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
     &.focus_grey {
         &:focus {
             background: #E6E6E6;
