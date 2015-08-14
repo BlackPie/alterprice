@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
-Wreqr = require 'Backbone.Wreqr'
+Wreqr = require 'backbone.wreqr'
 
 
 module.exports = class BaseApp extends Marionette.Application

@@ -75,4 +75,6 @@ dump.rdb
 docker/private/*
 
 /src/assets/media
+/src/dist/css
+/src/dist/js
 *.txt
