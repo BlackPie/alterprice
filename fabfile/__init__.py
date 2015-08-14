@@ -126,6 +126,11 @@ def push_container(tag=None):
     return docker_local('push {}'.format(tag))
 
 
+def build_client():
+    local('npm install')
+    local('./bin/gulp build')
+
+
 def build_container(login="True"):
     if bool(eval(login)):
         docker_login(loc=True)

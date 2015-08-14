@@ -1,0 +1,19 @@
+{
+  "name": "alterprice",
+  "version": "0.1.0",
+  "homepage": "",
+  "authors": [
+    ""
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
