@@ -1,25 +1,11 @@
 @i: '../../src/images/';
 
 .icon(@image: undefined) {
-  //@icon2x: "@{image}_2x";
-  //@media only screen and (min-width: 320px) {
   .sprite(@@image);
-  //}
-//  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-//    //@icon2x_width: "@{image}-width";
-//    //@icon2x_height: "@{image}-height";
-//    //@icon2x_x: "@{image}-x";
-//    //@icon2x_y: "@{image}-y";
-//    //.sprite(@@icon2x);
-//    //width: @@icon2x_width;
-//    //height: @@icon2x_height;
-//    //background-position: @@icon2x_x -@@icon2x_y;
-//    // костыли, изначальный вариант почему-то глючит.
-//    background-image: url('@{i}sprite_2x.png');
-//    background-size: @@sprite_2x_width @@sprite_2x_height;
-//    @sprite_2x_width: "@{image}-total-width";
-//    @sprite_2x_height: "@{image}-total-height";
-//  }
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    background-image: url('@{i}sprite_2x.png');
+    background-size: @spritesheet-width @spritesheet-height;
+  }
 }
 .clearfix() {
   &:after {
