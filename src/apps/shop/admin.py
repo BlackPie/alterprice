@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from shop import models
-from shop.models.offer import Pricelist
+from shop.models.offer import Pricelist, OfferCategories
 from shop.models.shop import Shop
 from utils.admin_filters import CreatedFilter
 from apuser.models import profile
@@ -71,3 +71,4 @@ class ShopAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Shop, ShopAdmin)
+admin.site.register(OfferCategories)

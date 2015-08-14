@@ -123,14 +123,25 @@ def pricelist_change_callback(sender, instance, **kwargs):
 class OfferCategoriesManager(models.Manager):
     def make_from_parsed_list(self, plist, pricelist):
         offercats = list()
+
         for cats in plist:
             offercats.append(
                 self.model(category=cats.get('system_cat'), pricelist=pricelist))
+
         if len(offercats) > 0:
             self.bulk_create(offercats)
             return self.filter(pricelist=pricelist)
         else:
             return None
+
+    def get_or_create(self, pricelist, category):
+        try:
+            offer_category = self.model.objects.get(category=category,
+                                                    pricelist=pricelist)
+        except OfferCategories.DoesNotExist:
+            offer_category = self.model.objects.create(category=category,
+                                                       pricelist=pricelist)
+        return offer_category
 
 
 class OfferCategories(models.Model):

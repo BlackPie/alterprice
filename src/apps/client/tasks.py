@@ -9,7 +9,7 @@ from django.core.files.temp import NamedTemporaryFile
 from django.core.files.base import File
 from marketapi.api import MarketAPI, MarketHTTPError
 from product.models import Product, Offer, ProductPhoto, Opinion
-from shop.models.offer import Pricelist
+from shop.models.offer import Pricelist, OfferCategories
 from celery.utils.log import get_task_logger
 
 
@@ -167,6 +167,9 @@ def process_pricelist(pricelist_id):
         except TypeError:
             offer_delivery_cost = -1
 
+        offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
+                                                               category=product.category)
+
         offer = Offer.objects.create(
             pricelist=pricelist,
             shop=pricelist.shop,
@@ -174,7 +177,8 @@ def process_pricelist(pricelist_id):
             price=float(offer.get('price')),
             product=product,
             delivery_cost=offer_delivery_cost if offer_delivery_cost else delivery_cost,
-            pickup=bool(offer.get('pickup'))
+            pickup=bool(offer.get('pickup')),
+            offercategory=offer_category
         )
         logger.error('processing success for "%s"' % name)
 
