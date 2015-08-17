@@ -44,7 +44,11 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_min_price(self, obj):
         ps = obj.get_offers().order_by('price').first()
-        return ps.price
+
+        if ps:
+            return ps.price
+        else:
+            return 0
 
     def get_offers_count(self, obj):
         return obj.offers_count

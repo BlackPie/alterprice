@@ -1,6 +1,6 @@
 from django.core.validators import EMPTY_VALUES
 from rest_framework.generics import ListAPIView
-from django.db.models import Count
+from django.db.models import Count, Q
 # Project imports
 from catalog.models.category import Category
 from product import models
@@ -93,7 +93,9 @@ class SearchView(ListAPIView):
 
     def _search_categories(self):
         search = self.request.query_params.get('search', '')
-        queryset = Category.objects.filter(name__icontains=search)
+        queryset = Category.objects.filter(Q(name__icontains=search)|
+                                           Q(product__brand__name__icontains=search)|
+                                           Q(product__name__icontains=search))
         serializer = CategorySerializer(queryset, many=True)
         return serializer.data
 
@@ -101,6 +103,7 @@ class SearchView(ListAPIView):
         response = super(SearchView, self).get(*args, **kwargs)
         response.data['categories'] = self._search_categories()
         return response
+
 
 class OpinionList(ListAPIView):
     model = Opinion
