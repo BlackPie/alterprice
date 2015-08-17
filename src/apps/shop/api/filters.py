@@ -22,7 +22,7 @@ class ShopCategoryFilter(django_filters.ModelChoiceFilter):
 
 
 class PeriodClickFilter(django_filters.ChoiceFilter):
-    def  _get_period_range(self, starting_point, day_num, duration):
+    def _get_period_range(self, starting_point, day_num, duration):
         start = starting_point - timedelta(days=day_num)
         start = self._reset_time(start)
         end = start + timedelta(days=duration)
@@ -75,7 +75,7 @@ class StatisticOffersFilterSet(django_filters.FilterSet):
 
 
 class StatisticCategoriesFilterSet(django_filters.FilterSet):
-    period = PeriodClickFilter(choices=PERIOD_CHOICES, required=True)
+    period = PeriodClickCategoryFilter(choices=PERIOD_CHOICES, required=True)
     pricelist = PricelistCategoryFilter(queryset=Pricelist.objects.all())
     shop = ShopCategoryFilter(queryset=Shop.objects.all())
 
