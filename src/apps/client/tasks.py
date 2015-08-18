@@ -7,10 +7,13 @@ import xmltodict
 from client.utils import get_yml_data
 from django.core.files.temp import NamedTemporaryFile
 from django.core.files.base import File
+from django.db.models import Count
 from marketapi.api import MarketAPI, MarketHTTPError
 from product.models import Product, Offer, ProductPhoto, Opinion
 from shop.models.offer import Pricelist, OfferCategories
 from celery.utils.log import get_task_logger
+from catalog.models.category import Category
+from catalog.models.statistics import CategoryStatistics
 
 
 logger = get_task_logger(__name__)
@@ -232,3 +235,20 @@ def update_products():
         except MarketHTTPError:
             logger.error('error when parse details for '
                          'product with id "%d"' % product.ym_id)
+
+@periodic_task(run_every=timedelta(days=1))
+def collect_statistics():
+    category_list = Category.objects.all()
+
+    for category in category_list:
+        click_count = category.product_set.all().aggregate(click_count=Count('offer__click'))['click_count']
+        shop_count = category.product_set.all().aggregate(shop_count=Count('offer__shop', distinct=True))['shop_count']
+        product_count = category.product_set.count()
+
+        CategoryStatistics.objects.create(
+            created=datetime.now().date(),
+            click_count=click_count,
+            shop_count=shop_count,
+            product_count=product_count,
+            category=category
+        )
