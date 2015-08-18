@@ -1,5 +1,5 @@
 from django.contrib import admin
-from catalog.models import category, city, token
+from catalog.models import category, city, token, statistics
 
 
 class PasswordRecoveryAdmin(admin.ModelAdmin):
@@ -14,3 +14,4 @@ admin.site.register(city.City)
 admin.site.register(category.Category)
 admin.site.register(token.PasswordRecovery, PasswordRecoveryAdmin)
 admin.site.register(token.EmailValidation, EmailValidationAdmin)
+admin.site.register(statistics.CategoryStatistics)
