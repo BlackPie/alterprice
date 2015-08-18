@@ -1,0 +1,27 @@
+<form action="{% url 'catalog:statistics' %}" method="get">
+    <input type="text" name="search"><br>
+    С <input type="text" name="date_from"><br>
+    По <input type="text" name="date_to"><br>
+    <input type="submit" value="Поиск"><br>
+</form>
+
+<br><br>
+
+<table border="1">
+    <tr>
+        <td>Название</td>
+        <td>Уровень</td>
+        <td>Клики</td>
+        <td>Продукты</td>
+        <td>Магазины</td>
+    </tr>
+    {% for object in object_list %}
+        <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.level }}</td>
+            <td>{{ object.click_count }}</td>
+            <td>{{ object.product_count }}</td>
+            <td>{{ object.shop_count }}</td>
+        </tr>
+    {% endfor %}
+</table>
