@@ -2,6 +2,7 @@ import logging
 
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count
+from django.shortcuts import get_object_or_404
 from django.http import Http404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView,\
@@ -97,8 +98,7 @@ class AddYML(CreateAPIView):
     permission_classes = (IsAuthenticated, )
 
     def perform_create(self, serializer):
-        # TODO shop from kwargs
-        shop = self.request.user.get_shops().first()
+        shop = get_object_or_404(self.request.user.get_shops(), pk=self.kwargs['pk'])
         serializer.save(shop=shop)
 
     def create(self, request, *args, **kwargs):
