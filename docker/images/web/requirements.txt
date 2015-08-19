@@ -5,3 +5,5 @@ pytz==2014.10
 pytils==0.3
 pyjade==3.0.0
 PyContracts==1.7.1
+git+https://github.com/futurecolors/django-geoip.git
+django-ipware==1.1.0
