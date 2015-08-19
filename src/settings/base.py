@@ -193,7 +193,7 @@ class Base(Configuration):
     # INternal apps settings
     MAX_FILE_UPLOAD_SIZE = 8*1024*1024
 
-    DEFAULT_CLICK_PRICE = 2
+    DEFAULT_CLICK_PRICE = 3
 
     EMAIL_TOKEN_LENGHT = 32
     EMAIL_TOKEN_PATTERN = '[0-9a-z]{%d}' % EMAIL_TOKEN_LENGHT
