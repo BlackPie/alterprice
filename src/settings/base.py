@@ -151,6 +151,7 @@ class Base(Configuration):
         'autoslug',
         'easy_thumbnails',
         'raven.contrib.django.raven_compat',
+        'django_geoip',
     )
 
     INTERNAL_APPS = (
