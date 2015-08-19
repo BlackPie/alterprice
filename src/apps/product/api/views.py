@@ -74,8 +74,13 @@ class ProductOffers(ListAPIView):
     filter_class = filters.OfferFilter
 
     def get_queryset(self):
+        city_id = self.request.query_params.get('city', None)
         product_id = self.kwargs.get('pk', None)
         qs = self.model.objects.filter(product_id=product_id)
+
+        if city_id:
+            qs = qs.filter(pricelist__reqion=city_id)
+
         return qs
 
 

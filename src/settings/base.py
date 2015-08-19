@@ -117,7 +117,8 @@ class Base(Configuration):
         'alterprice.processors.current_url',
         'alterprice.processors.cities',
         'alterprice.processors.current_city',
-        'client.processors.shop_processor'
+        'client.processors.shop_processor',
+        'django.core.context_processors.request',
     )
 
     MIDDLEWARE_CLASSES = (
