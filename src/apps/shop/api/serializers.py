@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.conf import settings
 # Project imports
 from rest_framework.exceptions import ValidationError
 from catalog.models.category import Category
@@ -94,6 +95,10 @@ class YMLCategoryUpdateSerializer(serializers.ModelSerializer):
         model = OfferCategories
         fields = ('price',)
 
+    def validate_price(self, value):
+        if value < settings.DEFAULT_CLICK_PRICE:
+            raise serializers.ValidationError("Price click must be greater than %s" % settings.DEFAULT_CLICK_PRICE)
+        return value
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:

@@ -14,6 +14,7 @@ from django.db.models.signals import post_save, pre_save
 from utils.abstract_models import PublishModel
 from product import models as productmodels
 from .shop import Shop
+from product.models.other import Offer
 
 
 class MakeException(Exception):
@@ -161,6 +162,15 @@ class OfferCategories(models.Model):
 
     def __unicode__(self):
         return "%d %s" % (self.pk, self.category.name)
+
+    def save(self, *args, **kwargs):
+        offer_list = Offer.objects.filter(offercategory=self)
+
+        for offer in offer_list:
+            offer.click_price = self.price
+            offer.save()
+
+        super(OfferCategories, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('Категории предложения')
