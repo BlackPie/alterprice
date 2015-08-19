@@ -23,5 +23,12 @@
             <td>{{ object.product_count }}</td>
             <td>{{ object.shop_count }}</td>
         </tr>
+        {% for shop in object.shop_list %}
+            <tr>
+                <td>
+                    <a href="{% url 'admin:shop_shop_change' shop.id%}">{{ shop.name }}</a>
+                </td>
+            </tr>
+        {% endfor %}
     {% endfor %}
 </table>

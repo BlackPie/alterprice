@@ -12,6 +12,7 @@ from catalog.models.city import City
 from product.models import Offer
 from apuser.models import Click, Balance, BalanceHistory
 from catalog.models.statistics import CategoryStatistics
+from shop.models.shop import Shop
 
 
 class CatalogAllCategoriesPageView(TemplateView):
@@ -152,12 +153,15 @@ class CategoryStatisticsView(TemplateView):
             except CategoryStatistics.DoesNotExist:
                 continue
 
+            shop_list = Shop.objects.filter(offer__product__category=category).distinct()
+
             object_list.append({
                 "name": start_statistics.category.name,
                 "level": start_statistics.category.depth,
                 "click_count": end_statistics.click_count - start_statistics.click_count,
                 "product_count": end_statistics.product_count - start_statistics.product_count,
                 "shop_count": end_statistics.shop_count - start_statistics.shop_count,
+                "shop_list": shop_list
             })
 
         context["object_list"] = object_list
