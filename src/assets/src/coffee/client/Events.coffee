@@ -7,3 +7,4 @@ module.exports = class ClientEvents
     @PROFILE_CHANGE_EMAIL: "client:profile:change:email"
     @STATISTICS_ITEMS_PAGER: "client:statistics:items:pager"
     @STATISTICS_ITEMS_FILTERED: "client:statistics:items:filtered"
+    @SHOP_DETAIL_UPDATE_HEIGHT: "client:shop:detail:updateheight"
