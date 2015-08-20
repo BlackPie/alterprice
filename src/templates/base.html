@@ -9,9 +9,6 @@
     <![endif]-->
 </head>
 <body>
-<div id="user_city_id" style="display: none;">
-{{request.session.city_id}}
-    </div>
     <div id="container">
         <div id="left-column-block">
             <a href="/" class="home"><img src="/static/dist/images/logo.svg" /></a>
@@ -27,6 +24,11 @@
     {% if context %}
         <script>
             window.context = '{{ context|safe }}';
+        </script>
+    {% endif %}
+    {% if request.session.city_id %}
+        <script>
+            city_id = '{{ request.session.city_id|safe }}';
         </script>
     {% endif %}
     <script src="{{ STATIC_URL }}dist/js/main.js" {% if current_app %}data-main="{{ current_app }}"{% endif %}></script>
