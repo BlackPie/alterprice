@@ -31,12 +31,13 @@ module.exports = class ClientStatisticsController extends Marionette.Controller
         @clientStatisticsItemsCollectionView = new ClientStatisticsItemsCollectionView
             channel: @channel
             collection: @clientStatisticsItemsCollection
+            type: 'offers'
         @clientStatisticsLayout.itemsList.show @clientStatisticsItemsCollectionView
         @clientStatisticsItemsFilterView = new ClientStatisticsItemsFilterView {channel: @channel}
         @clientStatisticsItemsPagerView = new ClientStatisticsItemsPagerView {channel: @channel}
         @fetchItems()
 
-        @channel.vent.on Events.STATISTICS_ITEMS_PAGER,  @onChangeItemsPage
+        @channel.vent.on Events.STATISTICS_ITEMS_PAGER, @onChangeItemsPage
         @channel.vent.on Events.STATISTICS_ITEMS_FILTERED,  @fetchItems
 
 
@@ -48,6 +49,7 @@ module.exports = class ClientStatisticsController extends Marionette.Controller
         filterData = @clientStatisticsItemsFilterView.getFilterData()
         clientStatisticsItemsFilterState = ClientStatisticsItemsFilterState.fromArray filterData
         @clientStatisticsItemsCollection.setType(filterData.type)
+        @clientStatisticsItemsCollectionView.setType(filterData.type)
         options =
             pageSize: @clientStatisticsItemsCollection.state.pageSize
             currentPage: 1
