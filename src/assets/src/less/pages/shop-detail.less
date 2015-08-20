@@ -17,9 +17,12 @@
     #edit-profile-form {
         position: relative;
 
+        .field-wrapper:last-of-type {margin-bottom: 0;}
+
         footer {
             display: none;
             text-align: right;
+            margin: 10px 0 0 0;
         }
 
         .name {
@@ -96,6 +99,8 @@
             .typo_s;
             margin: 20px 0;
             line-height: 22px;
+            &:first-child {margin-top: 0;}
+            &:last-child  {margin-bottom: 0;}
         }
 
         .contacts {
