@@ -6,17 +6,23 @@ StatisticsItemsTemplate = require 'templates/client/StatisticsItems'
 
 
 module.exports = class ClientStatisticsItemsCollectionView extends Marionette.CompositeView
-    template: false
 
     childViewContainer: 'tbody'
 
-    template: StatisticsItemsTemplate
+    template: () =>
+        StatisticsItemsTemplate
+            type: @type
 
     initialize: (options) =>
         @channel = options.channel
+        @type = options.type
 
     getChildView: (model) =>
         return ClientStatisticsItemView
 
     childViewOptions: (model, index) =>
-        return {channel: @channel}
+        channel: @channel
+
+    setType: (type) =>
+        @type = type
+        @render()
