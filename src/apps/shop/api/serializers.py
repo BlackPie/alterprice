@@ -1,3 +1,4 @@
+import copy
 from rest_framework import serializers
 from django.conf import settings
 # Project imports
@@ -138,6 +139,10 @@ class StatisticOfferSerializer(serializers.Serializer):
     name = serializers.CharField(source='product.name')
     id = serializers.IntegerField()
     category = serializers.IntegerField(source='product.category.id')
+    type = serializers.SerializerMethodField()
+
+    def get_type(self, obj):
+        return "offer"
 
 
 class StatisticCategorySerializer(serializers.Serializer):
@@ -145,4 +150,7 @@ class StatisticCategorySerializer(serializers.Serializer):
     count = serializers.IntegerField()
     name = serializers.CharField()
     id = serializers.IntegerField()
+    type = serializers.SerializerMethodField()
 
+    def get_type(self, obj):
+        return "category"
