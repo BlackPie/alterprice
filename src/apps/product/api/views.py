@@ -100,7 +100,7 @@ class SearchView(ListAPIView):
         search = self.request.query_params.get('search', '')
         queryset = Category.objects.filter(Q(name__icontains=search)|
                                            Q(product__brand__name__icontains=search)|
-                                           Q(product__name__icontains=search))
+                                           Q(product__name__icontains=search)).distinct()
         serializer = CategorySerializer(queryset, many=True)
         return serializer.data
 
