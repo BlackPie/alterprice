@@ -22,6 +22,11 @@ from shop.models.offer import Pricelist
 from shop.models.shop import Shop
 
 
+PRICELIST = "price"
+SHOP = "shop"
+WEEK = 7
+
+
 class ClientIndexPageView(TemplateView):
     template_name = "apps/client/index.html"
 
@@ -246,10 +251,7 @@ class ClientPricelistAddPageView(TemplateView):
         return context
 
 
-class ClientStatisticShopView(TemplateView):
-    template_name = "apps/client/statistics/shop.html"
-    model = Shop
-
+class BaseStatisticsView(TemplateView):
     def _get_period_range(self, starting_point, day_num, duration):
         start = starting_point - timedelta(days=day_num)
         start = self._reset_time(start)
@@ -276,17 +278,25 @@ class ClientStatisticShopView(TemplateView):
         except self.model.DoesNotExist:
             raise Http404
 
-    def _get_statistic_by_date(self):
-        shop = self._get_obj()
+    def _get_statistic_by_date(self, statistics_type):
+        obj = self._get_obj()
         now = datetime.now()
         result = []
-        for x in range(7):
+
+        for x in range(WEEK):
             start, end = self._get_period_range(now, x, 1)
-            query = BalanceHistory.objects.filter(created__gte=start,
-                                                  created__lt=end,
-                                                  reason=BalanceHistory.CLICK,
-                                                  click__offer__shop=shop,
-                                                  balance__client__user=self.request.user)
+
+            if statistics_type == SHOP:
+                query = BalanceHistory.objects.filter(created__gte=start,
+                                                      created__lt=end,
+                                                      reason=BalanceHistory.CLICK,
+                                                      click__offer__shop=obj)
+            elif statistics_type == PRICELIST:
+                query = BalanceHistory.objects.filter(created__gte=start,
+                                                      created__lt=end,
+                                                      reason=BalanceHistory.CLICK,
+                                                      click__offer__pricelist=obj)
+
             clicks_count = query.count()
             money_sum = query.aggregate(Sum('change_value'))
             result.append({
@@ -294,48 +304,33 @@ class ClientStatisticShopView(TemplateView):
                 'clicks_count': clicks_count,
                 'money_sum': money_sum['change_value__sum'],
             })
+
         result.reverse()
         return result
+
+
+class ClientStatisticShopView(BaseStatisticsView):
+    template_name = "apps/client/statistics/shop.html"
+    model = Shop
 
     def get_context_data(self, **kwargs):
         context = super(ClientStatisticShopView, self).get_context_data(**kwargs)
-        context['context'] = json.dumps({'shopId': self.request.session['shop_id'], 'pricelistId': False})
+        context['context'] = json.dumps({'shopId': self.request.session.get("shop_id", None), 'pricelistId': False})
         context['current_app'] = 'client-statistics'
-        context['by_date'] = self._get_statistic_by_date()
+        context['by_date'] = self._get_statistic_by_date(statistics_type=SHOP)
         return context
 
 
-class ClientStatisticPricelistView(ClientStatisticShopView):
+class ClientStatisticPricelistView(BaseStatisticsView):
     model = Pricelist
     template_name = "apps/client/statistics/pricelist.html"
-
-    def _get_statistic_by_date(self):
-        pricelist = self._get_obj()
-        now = datetime.now()
-        result = []
-        for x in range(7):
-            start, end = self._get_period_range(now, x, 1)
-            query = BalanceHistory.objects.filter(created__gte=start,
-                                                  created__lt=end,
-                                                  reason=BalanceHistory.CLICK,
-                                                  click__offer__pricelist=pricelist,
-                                                  balance__client__user=self.request.user)
-            clicks_count = query.count()
-            money_sum = query.aggregate(Sum('change_value'))
-            result.append({
-                'date': start.strftime('%d.%m.%y'),
-                'clicks_count': clicks_count,
-                'money_sum': money_sum['change_value__sum'],
-            })
-        result.reverse()
-        return result
 
     def get_context_data(self, **kwargs):
         context = super(ClientStatisticPricelistView, self).get_context_data(**kwargs)
         context['object'] = self._get_obj()
         context['context'] = json.dumps({'shopId': False, 'pricelistId': context['object'].pk})
         context['current_app'] = 'client-statistics'
-        context['by_date'] = self._get_statistic_by_date()
+        context['by_date'] = self._get_statistic_by_date(statistics_type=PRICELIST)
         return context
 
 
