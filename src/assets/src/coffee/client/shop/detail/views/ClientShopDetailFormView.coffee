@@ -2,6 +2,7 @@ $ = require 'jquery'
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
 
+Events = require 'client/Events'
 Form = require 'base/utils/Form'
 Select = require 'base/utils/Select'
 require 'jquery-maskedinput'
@@ -41,13 +42,14 @@ module.exports = class ClientShopDetailFormView extends Marionette.ItemView
                 inputs.attr 'disabled', 'disabled'
                 form.removeClass 'edit'
                 selectWrapper.addClass 'disabled'
-
+                @channel.vent.trigger Events.SHOP_DETAIL_UPDATE_HEIGHT
 
     onClickEditBtn: (e) =>
         e.preventDefault()
         @$(@ui.inputs).removeAttr 'disabled'
         @$(@ui.form).addClass 'edit'
         @$(@ui.selectWrapper).removeClass 'disabled'
+        @channel.vent.trigger Events.SHOP_DETAIL_UPDATE_HEIGHT
 
 
     onMouseenterStatus: (e) =>

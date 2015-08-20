@@ -7,6 +7,7 @@ LeftMenuView = require 'base/views/LeftMenuView'
 CitySelectorView = require 'base/views/CitySelectorView'
 
 Events = require 'product/Events'
+ProductDetailView = require 'product/views/ProductDetailView'
 ProductGalleryView = require 'product/views/ProductGalleryView'
 ProductTabsNavigtionView = require 'product/views/tabs/ProductTabsNavigtionView'
 ProductOffersLayout = require 'product/layouts/ProductOffersLayout'
@@ -33,6 +34,7 @@ module.exports = class ProductController extends Marionette.Controller
         @leftMenuView = new LeftMenuView {channel: @channel}
         @citySelectorView = new CitySelectorView {channel: @channel}
 
+        @productDetailView = new ProductDetailView {channel: @channel}
         @productGalleryView = new ProductGalleryView {channel: @channel}
         @productTabsNavigtionView = new ProductTabsNavigtionView {channel: @channel}
         @productTabsPropsView = new ProductTabsPropsView {channel: @channel}
