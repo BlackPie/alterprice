@@ -7,7 +7,7 @@ Events = require 'catalog/Events'
 LeftMenuView = require 'base/views/LeftMenuView'
 CitySelectorView = require 'base/views/CitySelectorView'
 CatalogItemsListFilterView = require 'catalog/items_list/views/CatalogItemsListFilterView'
-CatalogProductsCollection = require 'catalog/items_list/collections/CatalogProductsCollection'
+CatalogSearchProductsCollection = require 'catalog/search/collections/CatalogSearchProductsCollection'
 CatalogProductsListView = require 'catalog/items_list/views/CatalogProductsListView'
 CatalogProductsPagerView = require 'catalog/items_list/views/CatalogProductsPagerView'
 CatalogSearchLayout = require 'catalog/search/layouts/CatalogSearchLayout'
@@ -28,15 +28,15 @@ module.exports = class CatalogSearchController extends Marionette.Controller
         @catalogSearchLayout = new CatalogSearchLayout {channel: @channel}
         @catalogProductsPagerView = new CatalogProductsPagerView {channel: @channel}
 
-        @catalogProductsCollection = new CatalogProductsCollection()
-        @catalogProductsListView = new CatalogProductsListView {channel: @channel, collection: @catalogProductsCollection}
+        @catalogSearchProductsCollection = new CatalogSearchProductsCollection()
+        @catalogProductsListView = new CatalogProductsListView {channel: @channel, collection: @catalogSearchProductsCollection}
         @catalogSearchLayout.productsList.show @catalogProductsListView
 
         @catalogSearchCategoryLinksCollection = new CatalogSearchCategoryLinksCollection()
         @catalogSearchCategoriesListView = new CatalogSearchCategoriesListView {channel: @channel, collection: @catalogSearchCategoryLinksCollection}
         @catalogSearchLayout.categoriesList.show @catalogSearchCategoriesListView
 
-        @catalogProductsCollection.on "sync", (collection) =>
+        @catalogSearchProductsCollection.on "sync", (collection) =>
             if collection.state.totalPages > 1
                 @catalogProductsPagerView.show()
             else
@@ -63,15 +63,15 @@ module.exports = class CatalogSearchController extends Marionette.Controller
     onSetFilter: =>
         filterData = @catalogItemsListFilterView.getFilterData()
         catalogProductsFilterState = CatalogProductsFilterState.fromArray filterData
-        @catalogProductsCollection.state.pageSize = @catalogProductsCollection.startPageSize
-        @catalogProductsCollection.fetchFiltered catalogProductsFilterState
+        @catalogSearchProductsCollection.state.pageSize = @catalogSearchProductsCollection.startPageSize
+        @catalogSearchProductsCollection.fetchFiltered catalogProductsFilterState
 
 
     onShowMore: =>
         filterData = @catalogItemsListFilterView.getFilterData()
         catalogProductsFilterState = CatalogProductsFilterState.fromArray filterData
-        @catalogProductsCollection.state.pageSize = @catalogProductsCollection.state.pageSize + @catalogProductsCollection.showMoreSize
-        @catalogProductsCollection.fetchFiltered catalogProductsFilterState
+        @catalogSearchProductsCollection.state.pageSize = @catalogSearchProductsCollection.state.pageSize + @catalogSearchProductsCollection.showMoreSize
+        @catalogSearchProductsCollection.fetchFiltered catalogProductsFilterState
 
 
     onSetCategory: (categoryId) =>
