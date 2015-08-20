@@ -34,13 +34,16 @@
                     <div class="price-wrapper">
                         <span>Средняя цена</span>
                         <div class="middle-price"><span>{{ price.mid|intcomma }}</span> руб</div>
+                        {% if price.min != price.max %}
                         <div class="price-range">
                             {{ price.min|intcomma }} - {{ price.max|intcomma }} руб
                         </div>
+                        {% endif %}
                     </div>
                     <div class="description-wrapper">
                         {% autoescape off %}{{ object.description }}{% endautoescape %}
                     </div>
+                    <div class="description-wrapper-toggle">Смотреть полностью</div>
                     {% if best_offer %}
                     <div class="offer-wrapper">
                         <div class="pure-g">
@@ -156,4 +159,3 @@
         </div>
     </div>
 {% endblock content %}
-
