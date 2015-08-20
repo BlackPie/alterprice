@@ -1,6 +1,6 @@
 PageableCollection = require "backbone.paginator"
 
-CatalogProductModel = require '../models/CatalogProductModel'
+CatalogProductModel = require 'catalog/items_list/models/CatalogProductModel'
 
 
 module.exports = class CatalogProductsCollection extends PageableCollection
