@@ -84,18 +84,49 @@ class Category(NameModel, YMkey):
     objects = CategoryManager.from_queryset(CategoryQuerySet)()
 
     def get_preview(self):
+        '''
+        Возвращает изображение категории или изображение
+        рандомного товара одной из подкатегорий
+        '''
+
         if self.depth == self.MAX_DEPTH_LEVEL:
             return None
 
         if self.photo:
             url = self.photo['category'].url
         else:
+            category = self
+            parents = [self]
+            depth = self.depth
+
+            # если у текущей категории нет продуктов, проходимся по подкатегориям
+            # пока не найдем категорию у которой есть продукты или не упрёмся
+            # в самую нижнюю категорию
+            while depth <= self.MAX_DEPTH_LEVEL:
+                nonempty_category = Category.objects.filter(parent__in=parents)\
+                                                    .filter(product__isnull=False)\
+                                                    .order_by('?').first()
+                if nonempty_category:
+                    category = nonempty_category
+                    break
+
+                parents = Category.objects.filter(parent__in=parents)
+                depth += 1
+            else:
+                return None
+
             try:
-                url = self.product_set.order_by('?').first()\
-                          .productphoto_set.order_by('?').first().photo.url
+                # проходим по всем фото всех категорий пока не получим урл фото
+                for product in category.product_set.order_by('?'):
+                    if product.productphoto_set.all():
+                        for photo in product.productphoto_set.order_by('?'):
+                            if photo.photo.url:
+                                url = photo.photo.url
+                    else:
+                        continue
             except AttributeError:
                 return None
-            
+
         return url
 
 
