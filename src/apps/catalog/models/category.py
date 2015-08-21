@@ -5,7 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from marketapi.api import MarketAPI
 from utils.abstract_models import NameModel, YMkey
 from easy_thumbnails.fields import ThumbnailerField
-# from apps.product.models.product import Product
 
 
 class CategoryQuerySet(query.QuerySet):
@@ -80,6 +79,11 @@ class Category(NameModel, YMkey):
                              upload_to=get_photo_path,
                              verbose_name=_('Фото'))
     full_path = models.CharField(max_length=200, blank=True, null=True)
+    cached_product_photo = models.CharField(blank=True,
+                                            null=True,
+                                            default=None,
+                                            max_length=255,
+                                            verbose_name=_('Временное фото'))
 
     objects = CategoryManager.from_queryset(CategoryQuerySet)()
 
@@ -93,11 +97,14 @@ class Category(NameModel, YMkey):
             return None
 
         if self.photo:
-            url = self.photo['category'].url
+            url = self.photo.photo.url
+        elif self.cached_product_photo:
+            url = self.cached_product_photo
         else:
             category = self
             parents = [self]
             depth = self.depth
+            url = None
 
             # если у текущей категории нет продуктов, проходимся по подкатегориям
             # пока не найдем категорию у которой есть продукты или не упрёмся
@@ -112,8 +119,6 @@ class Category(NameModel, YMkey):
 
                 parents = Category.objects.filter(parent__in=parents)
                 depth += 1
-            else:
-                return None
 
             try:
                 # проходим по всем фото всех категорий пока не получим урл фото
@@ -122,10 +127,13 @@ class Category(NameModel, YMkey):
                         for photo in product.productphoto_set.order_by('?'):
                             if photo.photo.url:
                                 url = photo.photo.url
+                                self.cached_product_photo = url
+                                self.save()
                     else:
                         continue
+
             except AttributeError:
-                return None
+                pass
 
         return url
 
