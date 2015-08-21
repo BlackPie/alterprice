@@ -5,7 +5,7 @@ CatalogSearchCategoryLink = require '../models/CatalogSearchCategoryLink'
 
 module.exports = class CatalogSearchCategoryLinksCollection extends PageableCollection
     model: CatalogSearchCategoryLink
-    url: "/api/product/list/categories/"
+    url: "/api/product/search/"
 
     state:
         firstPage: 1
@@ -36,7 +36,7 @@ module.exports = class CatalogSearchCategoryLinksCollection extends PageableColl
 
 
     parseRecords: (response) ->
-        response.results
+        response.categories
 
 
     parseState: (response, queryParams, state, options) =>
