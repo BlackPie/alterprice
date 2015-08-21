@@ -28,6 +28,7 @@ class CategoryManager(models.Manager):
 
     def fetch_make(self, ym_id):
         ym_category = MarketAPI.get_category(ym_id)['category']
+
         if 'parentId' in ym_category \
                 and ym_category['parentId'] != 0 \
                 and ym_category['parentId'] != 90401:
@@ -35,7 +36,7 @@ class CategoryManager(models.Manager):
             depth = parent.depth + 1
         else:
             depth = 0
-            parent=None
+            parent = None
 
         return self.create(
             name=ym_category['uniqName'],

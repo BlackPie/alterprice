@@ -68,8 +68,12 @@ class ProductManager(models.Manager):
         )
 
     def get_details(self, ym_id):
-        result = MarketAPI.get_model_detail(model_id=ym_id)
-        return result['modelDetails']
+        try:
+            result = MarketAPI.get_model_detail(model_id=ym_id)['modelDetails']
+        except:
+            result = None
+
+        return result
 
 
 class Product(models.Model):

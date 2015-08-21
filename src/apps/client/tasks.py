@@ -64,13 +64,11 @@ def process_pricelist(pricelist_id):
         name = offer.get('name')
         vendor = offer.get('vendor')
 
+        if not name:
+            name = offer.get('model')
+
         logger.error('Offer for "%s" started processing' % name)
-        # try:
-        #     category_id = offer.get('categoryId')
-        #     category_obj = list(filter(lambda x: x['@id'] == category_id, categories))[0]
-        #     category = category_obj['#text']
-        # except IndexError:
-        #     category = ''
+
         if not name:
             logger.warn("No name present", extra={
                 'offer': offer
@@ -95,23 +93,14 @@ def process_pricelist(pricelist_id):
             model = results['searchResult']['results'][0]['model']
         except (KeyError, IndexError):
             try:
-                search_offer = results['searchResult']['results'][0]['offer']
-                model = MarketAPI.get_model(search_offer['modelId'], geo_id=225)['model']
-            except (IndexError, TypeError, KeyError, URLError, MarketHTTPError) as e:
-                logger.error('skipped for "%s", %s' % (name, str(e)))
+                model = results['searchResult']['results'][0]['offer']
+                model.update({
+                    "id": results['searchResult']['results'][0]['offer']['modelId']
+                })
+            except (KeyError, IndexError):
                 continue
 
-        existing_offers = Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id'])
-
-        offer_updated = False
-        for ex_offer in existing_offers:
-            if float(ex_offer.price) != float(offer.get('price')) or \
-                            ex_offer.delivery_cost != delivery_cost:
-                offer_updated = True
-
-        if Offer.objects.filter(pricelist_id=pricelist_id, product__ym_id=model['id']) and \
-                not offer_updated:
-            continue
+        description = model['description']
 
         try:
             product = Product.objects.get(ym_id=model['id'])
@@ -129,7 +118,7 @@ def process_pricelist(pricelist_id):
                     brand_name=vendor,
                     name=name,
                     category_yml_id=model['categoryId'],
-                    description=offer.get('description')
+                    description=description
                 )
             except MarketHTTPError as e:
                 logger.warn("Cant make Product instance: %s" % str(e))
@@ -146,24 +135,24 @@ def process_pricelist(pricelist_id):
                 opinions = MarketAPI.get_opinions(model['id'])["modelOpinions"]['opinion']
             except MarketHTTPError as e:
                 logger.warn("Cant fetch opinions: %s" % str(e))
-                continue
+                opinions = None
 
-            opinions_db = []
-            for opinion in opinions:
-                # logger.error(opinion)
-                opinions_db.append(Opinion(
-                    product=product,
-                    comment=opinion.get('text'),
-                    author=opinion.get('author'),
-                    contra=opinion.get('contra'),
-                    pro=opinion.get('pro'),
-                    grade=opinion.get('grade'),
-                    agree=opinion.get('agree'),
-                    reject=opinion.get('reject'),
-                    ym_id=opinion.get('id'),
-                    date=datetime.fromtimestamp(opinion.get('date')/1000),
-                ))
-            Opinion.objects.bulk_create(opinions_db)
+            if opinions:
+                opinions_db = []
+                for opinion in opinions:
+                    opinions_db.append(Opinion(
+                        product=product,
+                        comment=opinion.get('text'),
+                        author=opinion.get('author'),
+                        contra=opinion.get('contra'),
+                        pro=opinion.get('pro'),
+                        grade=opinion.get('grade'),
+                        agree=opinion.get('agree'),
+                        reject=opinion.get('reject'),
+                        ym_id=opinion.get('id'),
+                        date=datetime.fromtimestamp(opinion.get('date')/1000),
+                    ))
+                Opinion.objects.bulk_create(opinions_db)
 
         try:
             offer_delivery_cost = int(data.get('local_delivery_cost', -1))
@@ -172,6 +161,17 @@ def process_pricelist(pricelist_id):
 
         offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
                                                                category=product.category)
+
+        same_offers = Offer.objects.filter(
+            shop=pricelist.shop,
+            product=product,
+        ).order_by('price')
+
+        if same_offers:
+            if same_offers[0].price >= float(offer.get('price')):
+                continue
+            else:
+                same_offers.delete()
 
         offer = Offer.objects.create(
             pricelist=pricelist,
