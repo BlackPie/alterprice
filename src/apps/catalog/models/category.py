@@ -87,6 +87,16 @@ class Category(NameModel, YMkey):
 
     objects = CategoryManager.from_queryset(CategoryQuerySet)()
 
+    def _get_thumbnail(self):
+        if self.photo:
+            try:
+                return self.photo.url
+            except AttributeError:
+                pass
+
+        return None
+
+
     def get_preview(self):
         '''
         Возвращает изображение категории или изображение
@@ -96,13 +106,10 @@ class Category(NameModel, YMkey):
         if self.depth == self.MAX_DEPTH_LEVEL:
             return None
 
-        try:
-            thumbnail_image = self.photo.photo.url
-        except AttributeError:
-            thumbnail_image = None
+        thumbnail = self._get_thumbnail()
 
-        if thumbnail_image:
-            url = self.photo.photo.url
+        if thumbnail:
+            url = thumbnail
         elif self.cached_product_photo:
             url = self.cached_product_photo
         else:
