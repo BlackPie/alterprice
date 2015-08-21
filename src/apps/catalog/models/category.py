@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from marketapi.api import MarketAPI
 from utils.abstract_models import NameModel, YMkey
 from easy_thumbnails.fields import ThumbnailerField
+# from apps.product.models.product import Product
 
 
 class CategoryQuerySet(query.QuerySet):
@@ -59,6 +60,8 @@ def get_photo_path(instance, filename):
 
 
 class Category(NameModel, YMkey):
+    MAX_DEPTH_LEVEL = 4
+
     parent = models.ForeignKey("self",
                                blank=True,
                                null=True,
@@ -81,7 +84,20 @@ class Category(NameModel, YMkey):
     objects = CategoryManager.from_queryset(CategoryQuerySet)()
 
     def get_preview(self):
-        return self.photo['category'].url if self.photo else None
+        if self.depth == self.MAX_DEPTH_LEVEL:
+            return None
+
+        if self.photo:
+            url = self.photo['category'].url
+        else:
+            try:
+                url = self.product_set.order_by('?').first()\
+                          .productphoto_set.order_by('?').first().photo.url
+            except AttributeError:
+                return None
+            
+        return url
+
 
     def get_children(self):
         return Category.objects.filter(parent=self.pk)
