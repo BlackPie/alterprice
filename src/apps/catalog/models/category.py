@@ -96,7 +96,12 @@ class Category(NameModel, YMkey):
         if self.depth == self.MAX_DEPTH_LEVEL:
             return None
 
-        if self.photo:
+        try:
+            thumbnail_image = self.photo.photo.url
+        except AttributeError:
+            thumbnail_image = None
+
+        if thumbnail_image:
             url = self.photo.photo.url
         elif self.cached_product_photo:
             url = self.cached_product_photo
