@@ -28,6 +28,7 @@ class CategoryManager(models.Manager):
 
     def fetch_make(self, ym_id):
         ym_category = MarketAPI.get_category(ym_id)['category']
+
         if 'parentId' in ym_category \
                 and ym_category['parentId'] != 0 \
                 and ym_category['parentId'] != 90401:
@@ -35,7 +36,7 @@ class CategoryManager(models.Manager):
             depth = parent.depth + 1
         else:
             depth = 0
-            parent=None
+            parent = None
 
         return self.create(
             name=ym_category['uniqName'],
@@ -87,6 +88,16 @@ class Category(NameModel, YMkey):
 
     objects = CategoryManager.from_queryset(CategoryQuerySet)()
 
+    def _get_thumbnail(self):
+        if self.photo:
+            try:
+                return self.photo.url
+            except AttributeError:
+                pass
+
+        return None
+
+
     def get_preview(self):
         '''
         Возвращает изображение категории или изображение
@@ -96,13 +107,10 @@ class Category(NameModel, YMkey):
         if self.depth == self.MAX_DEPTH_LEVEL:
             return None
 
-        try:
-            thumbnail_image = self.photo.photo.url
-        except AttributeError:
-            thumbnail_image = None
+        thumbnail = self._get_thumbnail()
 
-        if thumbnail_image:
-            url = self.photo.photo.url
+        if thumbnail:
+            url = thumbnail
         elif self.cached_product_photo:
             url = self.cached_product_photo
         else:
