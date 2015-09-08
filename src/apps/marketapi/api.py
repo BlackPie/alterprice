@@ -38,6 +38,7 @@ class MarketAPI(object):
             x = urlopen(req)
             result = x.read().decode()
             x.close()
+            sleep(0.2)
             return loads(result)
         except HTTPError as e:
             if e.code == 403 and retried < 20:
@@ -108,4 +109,13 @@ class MarketAPI(object):
     @classmethod
     def get_category(cls, category_id):
         url = 'https://api.content.market.yandex.ru/v1/category/%s.json' % str(category_id)
+        return cls._exec({'geo_id': 225}, url)
+
+    @classmethod
+    def get_top_categories(cls):
+        return cls._exec({'geo_id': 225}, 'https://api.content.market.yandex.ru/v1/category.json')
+
+    @classmethod
+    def get_subcategies(cls, category_id):
+        url = 'https://api.content.market.yandex.ru/category/%s/children.json' % str(category_id)
         return cls._exec({'geo_id': 225}, url)

@@ -19,6 +19,39 @@ from catalog.models.statistics import CategoryStatistics
 logger = get_task_logger(__name__)
 
 
+def update_categories():
+    '''
+    Загружает всё дерево категорий из яндекс маркета
+    и сохраняет те, которых еще нет в бд
+    '''
+
+    def get_subcategories(category_id):
+        try:
+            first_level = MarketAPI.get_subcategies(category_id)['categories']['items']
+            second_level = list()
+
+            for category in first_level:
+                second_level += MarketAPI.get_subcategies(category['id'])['categories']['items']
+
+            return first_level + second_level
+        except MarketHTTPError as e:
+            logger.warn('Cant fetch subcategories: %s' % str(e))
+            return list()
+
+    try:
+        top_categories = MarketAPI.get_top_categories()['categories']['items']
+    except MarketHTTPError as e:
+        logger.warn("Cant update categories: %s" % str(e))
+        return None
+
+    all_categories = list()
+    for category in top_categories:
+        all_categories.extend(get_subcategories(category['id']))
+
+    for category in all_categories:
+        Category.objects.get_or_create(category['id'])
+
+
 def load_pictures(pictures, product):
     all_pictures_loaded = True
 
@@ -100,7 +133,7 @@ def process_pricelist(pricelist_id):
             except (KeyError, IndexError):
                 continue
 
-        description = model['description']
+        description = model.get('description', None)
 
         try:
             product = Product.objects.get(ym_id=model['id'])
