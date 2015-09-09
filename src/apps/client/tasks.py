@@ -19,6 +19,39 @@ from catalog.models.statistics import CategoryStatistics
 logger = get_task_logger(__name__)
 
 
+def update_opinions():
+    model_list = Product.objects.all()
+
+    for model in model_list:
+        try:
+            opinions = MarketAPI.get_opinions(model.ym_id)["modelOpinions"]['opinion']
+        except MarketHTTPError:
+            continue
+
+        if opinions:
+            opinion_list = list()
+
+            for opinion in opinions:
+                try:
+                    Opinion.objects.get(ym_id=opinion.get('id'))
+                except Opinion.DoesNotExist:
+                    opinion_list.append(Opinion(
+                        product=model,
+                        comment=opinion.get('text'),
+                        author=opinion.get('author'),
+                        contra=opinion.get('contra'),
+                        pro=opinion.get('pro'),
+                        grade=opinion.get('grade'),
+                        agree=opinion.get('agree'),
+                        reject=opinion.get('reject'),
+                        ym_id=opinion.get('id'),
+                        date=datetime.fromtimestamp(opinion.get('date')/1000),
+                    ))
+
+            if opinion_list:
+                Opinion.objects.bulk_create(opinion_list)
+
+
 def update_models():
     def get_all_models(category_id):
         result = list()
