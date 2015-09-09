@@ -18,6 +18,11 @@ from catalog.models.statistics import CategoryStatistics
 
 logger = get_task_logger(__name__)
 
+@periodic_task(run_every=timedelta(days=30))
+def update_all():
+    update_categories()
+    update_models()
+    update_opinions()
 
 def update_opinions():
     model_list = Product.objects.all()
