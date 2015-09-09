@@ -80,12 +80,15 @@ def update_models():
         models_list = get_all_models(category.ym_id)
 
         for model in models_list:
-            Product.objects.get_or_create(ym_id=model['id'],
-                                          brand_name=model['vendor'],
-                                          name=model['name'],
-                                          category_yml_id=model['categoryId'],
-                                          description=model['description'])
-
+            try:
+                if model['offersCount']:
+                    Product.objects.get_or_create(ym_id=model['id'],
+                                                  brand_name=model['vendor'],
+                                                  name=model['name'],
+                                                  category_yml_id=model['categoryId'],
+                                                  description=model['description'])
+            except KeyError:
+                continue
 
 def update_categories():
     '''
