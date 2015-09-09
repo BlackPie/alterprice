@@ -119,3 +119,8 @@ class MarketAPI(object):
     def get_subcategies(cls, category_id):
         url = 'https://api.content.market.yandex.ru/category/%s/children.json' % str(category_id)
         return cls._exec({'geo_id': 225}, url)
+
+    @classmethod
+    def get_category_models(cls, category_id, page=1):
+        url = 'https://api.content.market.yandex.ru/v1/category/%s/models.json' % str(category_id)
+        return cls._exec({'geo_id': 225, 'page': page, 'count': 30}, url)

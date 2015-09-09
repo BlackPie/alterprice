@@ -51,6 +51,16 @@ class ProductManager(models.Manager):
         qs = self.active()
         return qs.distinct()
 
+    def get_or_create(self, ym_id, brand_name, name, category_yml_id, description):
+        try:
+            return self.get(ym_id=ym_id)
+        except self.model.DoesNotExist:
+            return self.make(ym_id=ym_id,
+                             brand_name=brand_name,
+                             name=name,
+                             category_yml_id=category_yml_id,
+                             description=description)
+
     def make(self, ym_id, brand_name, name, category_yml_id, description):
         brand = Brand.objects.get_or_create(brand_name)
 

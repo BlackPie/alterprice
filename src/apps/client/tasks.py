@@ -19,6 +19,36 @@ from catalog.models.statistics import CategoryStatistics
 logger = get_task_logger(__name__)
 
 
+def update_models():
+    def get_all_models(category_id):
+        result = list()
+        page = 1
+
+        while True:
+            try:
+                models = MarketAPI.get_category_models(category.ym_id, page)
+                result.extend(models['models']['items'])
+                page += 1
+
+                if not models['models']['items']:
+                    return result
+
+            except (KeyError, MarketHTTPError):
+                return result
+
+    category_list = Category.objects.filter(children=None)
+
+    for category in category_list:
+        models_list = get_all_models(category.ym_id)
+
+        for model in models_list:
+            Product.objects.get_or_create(ym_id=model['id'],
+                                          brand_name=model['vendor'],
+                                          name=model['name'],
+                                          category_yml_id=model['categoryId'],
+                                          description=model['description'])
+
+
 def update_categories():
     '''
     Загружает всё дерево категорий из яндекс маркета
@@ -26,14 +56,33 @@ def update_categories():
     '''
 
     def get_subcategories(category_id):
+        # TODO: переписать рекурсивно
         try:
             first_level = MarketAPI.get_subcategies(category_id)['categories']['items']
             second_level = list()
+            third_level = list()
+            fourth_level = list()
+            fifth_level = list()
 
             for category in first_level:
-                second_level += MarketAPI.get_subcategies(category['id'])['categories']['items']
+                second_level_categories = MarketAPI.get_subcategies(category['id'])['categories']['items']
+                second_level += second_level_categories
 
-            return first_level + second_level
+                if len(second_level_categories):
+                    for category in second_level_categories:
+                        third_level_categories = MarketAPI.get_subcategies(category['id'])['categories']['items']
+                        third_level += third_level_categories
+
+                        if len(third_level_categories):
+                            for category in third_level_categories:
+                                fourth_level_categories = MarketAPI.get_subcategies(category['id'])['categories']['items']
+                                fourth_level += fourth_level_categories
+
+                                if len(fourth_level_categories):
+                                    for category in fourth_level:
+                                        fifth_level += MarketAPI.get_subcategies(category['id'])['categories']['items']
+
+            return first_level + second_level + third_level + fourth_level + fifth_level
         except MarketHTTPError as e:
             logger.warn('Cant fetch subcategories: %s' % str(e))
             return list()
