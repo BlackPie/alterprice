@@ -80,15 +80,13 @@ def update_models():
         models_list = get_all_models(category.ym_id)
 
         for model in models_list:
-            try:
-                if model['offersCount']:
-                    Product.objects.get_or_create(ym_id=model['id'],
-                                                  brand_name=model['vendor'],
-                                                  name=model['name'],
-                                                  category_yml_id=model['categoryId'],
-                                                  description=model['description'])
-            except KeyError:
-                continue
+            if model['offersCount']:
+                Product.objects.get_or_create(ym_id=model.get('id', None),
+                                              brand_name=model.get('vendor', None),
+                                              name=model.get('name', None),
+                                              category_yml_id=model.get('categoryId', None),
+                                              description=model.get('description', None))
+
 
 def update_categories():
     '''
@@ -184,11 +182,11 @@ def process_pricelist(pricelist_id):
         delivery_cost = -1
 
     for offer in offers:
-        name = offer.get('name')
-        vendor = offer.get('vendor')
+        name = offer.get('name', None)
+        vendor = offer.get('vendor', None)
 
         if not name:
-            name = offer.get('model')
+            name = offer.get('model', None)
 
         logger.error('Offer for "%s" started processing' % name)
 
@@ -228,19 +226,12 @@ def process_pricelist(pricelist_id):
         try:
             product = Product.objects.get(ym_id=model['id'])
         except Product.DoesNotExist:
-            # TODO: hotfix, empty vendor should be handled properly
-            if not vendor:
-                logger.warn("Vendor is empty", extra={
-                    'model': model
-                })
-                continue
-
             try:
                 product = Product.objects.make(
-                    ym_id=model['id'],
+                    ym_id=model.get('id', None),
                     brand_name=vendor,
                     name=name,
-                    category_yml_id=model['categoryId'],
+                    category_yml_id=model.get('categoryId', None),
                     description=description
                 )
             except MarketHTTPError as e:
@@ -252,6 +243,7 @@ def process_pricelist(pricelist_id):
             if pictures:
                 if not load_pictures(pictures, product):
                     product.loaded = False
+                    product.unfinished = False
                     product.save()
 
             try:

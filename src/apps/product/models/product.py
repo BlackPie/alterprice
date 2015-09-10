@@ -63,8 +63,13 @@ class ProductManager(models.Manager):
 
     def make(self, ym_id, brand_name, name, category_yml_id, description):
         brand = Brand.objects.get_or_create(brand_name)
-
         category = Category.objects.get_or_create(ym_id=category_yml_id)
+
+        if all((ym_id, brand_name, name, category_yml_id, description)):
+            unfinished = False
+        else:
+            unfinished = True
+
         if not category:
             raise Exception('Cant create category with id "%d"' % category_yml_id)
 
@@ -74,7 +79,8 @@ class ProductManager(models.Manager):
             name=name,
             category=category,
             description=description,
-            details=self.get_details(ym_id)
+            details=self.get_details(ym_id),
+            unfinished=unfinished
         )
 
     def get_details(self, ym_id):
@@ -111,6 +117,8 @@ class Product(models.Model):
                                    verbose_name=_('Описание'))
     details = JSONField(null=True, blank=True, verbose_name=_('Характеристики'))
     loaded = models.BooleanField(default=True)
+    unfinished = models.BooleanField(default=False,
+                                     verbose_name='Нераспределённый товар')
 
     objects = ProductManager.from_queryset(ProductQuerySet)()
 
