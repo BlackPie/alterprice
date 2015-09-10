@@ -98,7 +98,7 @@ class AddYML(CreateAPIView):
     permission_classes = (IsAuthenticated, )
 
     def perform_create(self, serializer):
-        shop = get_object_or_404(self.request.user.get_shops(), pk=self.kwargs['pk'])
+        shop = Shop.objects.get(pk=self.kwargs['pk'])
         serializer.save(shop=shop)
 
     def create(self, request, *args, **kwargs):
