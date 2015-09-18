@@ -243,7 +243,10 @@ def process_pricelist(pricelist_id):
 
         if unchained_offer:
             if model:
-                offer_name = model['name']
+                if 'name' in model and model['name']:
+                    offer_name = model['name']
+                else:
+                    offer_name = name
                 try:
                     category = Category.objects.get(ym_id=model['categoryId'])
                     offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,

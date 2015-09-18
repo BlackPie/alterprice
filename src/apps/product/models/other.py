@@ -56,7 +56,11 @@ class Offer(models.Model):
     objects = OfferManager()
 
     def __str__(self):
-        return "%s: %s" % (self.shop.name, self.product.name)
+        if self.product:
+            name = "%s: %s" % (self.shop.name, self.product.name)
+        else:
+            name = "%s: %s" % (self.shop.name, self.name)
+        return name
 
     class Meta:
         verbose_name = _('Магазин продукта')
