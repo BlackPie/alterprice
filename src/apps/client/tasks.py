@@ -147,7 +147,7 @@ def load_pictures(pictures, product):
         for p in pictures:
             try:
                 ProductPhoto.objects.make_from_url(p, product)
-            except (HTTPError, URLError) as e:
+            except (HTTPError, URLError, UnicodeDecodeError) as e:
                 logger.warn("Cant fetch image: %s" % str(e))
                 all_pictures_loaded = False
                 continue
@@ -161,7 +161,8 @@ def load_pictures(pictures, product):
     return all_pictures_loaded
 
 
-def process_pricelist(pricelist_id):
+def process_pricelist(pricelist_id, start_from=0):
+    import pdb; pdb.set_trace()
     pricelist = Pricelist.objects.get(id=pricelist_id)
     logger.error('Pricelist "%d" started processing' % pricelist_id)
 
@@ -181,9 +182,20 @@ def process_pricelist(pricelist_id):
     except TypeError:
         delivery_cost = -1
 
-    for offer in offers:
+    ##### TEMP
+    length = len(offers)
+    total = 0
+    market_error = 0
+    skipped_ok = 0
+    offers = offers[start_from:]
+    #####
+
+    for i, offer in enumerate(offers):
+        print(i, '/', length)
+
+        unchained_offer = False
         name = offer.get('name', None)
-        vendor = offer.get('vendor', None)
+        vendor = offer.get('vendor', '')
 
         if not name:
             name = offer.get('model', None)
@@ -194,6 +206,7 @@ def process_pricelist(pricelist_id):
             logger.warn("No name present", extra={
                 'offer': offer
             })
+            import pdb; pdb.set_trace()
             continue
 
         if not vendor or (vendor and vendor.lower() in name.lower()):
@@ -208,101 +221,171 @@ def process_pricelist(pricelist_id):
             )
         except MarketHTTPError:
             logger.warn("Cant fetch results of MarketAPI.search_offer()")
+            market_error += 1
             continue
 
         try:
             model = results['searchResult']['results'][0]['model']
         except (KeyError, IndexError):
             try:
-                model = results['searchResult']['results'][0]['offer']
-                model.update({
-                    "id": results['searchResult']['results'][0]['offer']['modelId']
-                })
+                if results['searchResult']['count']:
+                    model = results['searchResult']['results'][0]['offer']
+
+                    if 'modelId' in results['searchResult']['results'][0]['offer']:
+                        model.update({
+                            "id": results['searchResult']['results'][0]['offer']['modelId']
+                        })
+                        unchained_offer = True
+                else:
+                    offer_name = results['searchResult']['requestParams']['text']
+                    unchained_offer = True
+                    model = None
             except (KeyError, IndexError):
-                continue
+                model = None
+                unchained_offer = True
 
-        description = model.get('description', None)
+        if model:
+            description = model.get('description', None)
 
-        try:
-            product = Product.objects.get(ym_id=model['id'])
-        except Product.DoesNotExist:
+            if isinstance(model['id'], str):
+                print('--------- STRING!!!!')
+                if not model['id'].isdigit():
+                    print('-------------- FIXED!!!!')
+                    unchained_offer = True
+                else:
+                    import pdb; pdb.set_trace()
+        else:
+            offer_category = None
+
+        if unchained_offer:
+            if model:
+                offer_name = model['name']
+                try:
+                    category = Category.objects.get(ym_id=model['categoryId'])
+                    offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
+                                                                           category=category)
+                except (Category.DoesNotExist, OfferCategories.DoesNotExist):
+                    # skipped_ok += 1
+                    # continue
+                    offer_category = None
+
+                try:
+                    offer_delivery_cost = int(data.get('local_delivery_cost', -1))
+                except TypeError:
+                    offer_delivery_cost = -1
+
+
+            same_offers = Offer.objects.filter(
+                shop=pricelist.shop,
+                name=offer_name,
+            ).order_by('price')
+
+            if same_offers:
+                if same_offers[0].price >= float(offer.get('price')):
+                    skipped_ok += 1
+                    continue
+                else:
+                    same_offers.delete()
+
+            offer = Offer.objects.create(
+                pricelist=pricelist,
+                shop=pricelist.shop,
+                url=offer.get('url'),
+                price=float(offer.get('price')),
+                delivery_cost=offer_delivery_cost if offer_delivery_cost else delivery_cost,
+                pickup=bool(offer.get('pickup')),
+                offercategory=offer_category,
+                name=offer_name
+            )
+            print('====================================================')
+            print('====================================================')
+        else:
             try:
-                product = Product.objects.make(
-                    ym_id=model.get('id', None),
-                    brand_name=vendor,
-                    name=name,
-                    category_yml_id=model.get('categoryId', None),
-                    description=description
-                )
-            except MarketHTTPError as e:
-                logger.warn("Cant make Product instance: %s" % str(e))
-                continue
+                product = Product.objects.get(ym_id=model['id'])
+            except Product.DoesNotExist:
+                try:
+                    product = Product.objects.make(
+                        ym_id=model.get('id', None),
+                        brand_name=vendor,
+                        name=name,
+                        category_yml_id=model.get('categoryId', None),
+                        description=description
+                    )
+                except MarketHTTPError as e:
+                    logger.warn("Cant make Product instance: %s" % str(e))
+                    import pdb; pdb.set_trace()
+                    continue
 
-            pictures = offer.get('picture')
+                pictures = offer.get('picture')
 
-            if pictures:
-                if not load_pictures(pictures, product):
-                    product.loaded = False
-                    product.unfinished = False
-                    product.save()
+                if pictures:
+                    if not load_pictures(pictures, product):
+                        product.loaded = False
+                        product.unfinished = False
+                        product.save()
+
+                try:
+                    opinions = MarketAPI.get_opinions(model['id'])["modelOpinions"]['opinion']
+                except MarketHTTPError as e:
+                    logger.warn("Cant fetch opinions: %s" % str(e))
+                    opinions = None
+
+                if opinions:
+                    opinions_db = []
+                    for opinion in opinions:
+                        opinions_db.append(Opinion(
+                            product=product,
+                            comment=opinion.get('text'),
+                            author=opinion.get('author'),
+                            contra=opinion.get('contra'),
+                            pro=opinion.get('pro'),
+                            grade=opinion.get('grade'),
+                            agree=opinion.get('agree'),
+                            reject=opinion.get('reject'),
+                            ym_id=opinion.get('id'),
+                            date=datetime.fromtimestamp(opinion.get('date')/1000),
+                        ))
+                    Opinion.objects.bulk_create(opinions_db)
 
             try:
-                opinions = MarketAPI.get_opinions(model['id'])["modelOpinions"]['opinion']
-            except MarketHTTPError as e:
-                logger.warn("Cant fetch opinions: %s" % str(e))
-                opinions = None
+                offer_delivery_cost = int(data.get('local_delivery_cost', -1))
+            except TypeError:
+                offer_delivery_cost = -1
 
-            if opinions:
-                opinions_db = []
-                for opinion in opinions:
-                    opinions_db.append(Opinion(
-                        product=product,
-                        comment=opinion.get('text'),
-                        author=opinion.get('author'),
-                        contra=opinion.get('contra'),
-                        pro=opinion.get('pro'),
-                        grade=opinion.get('grade'),
-                        agree=opinion.get('agree'),
-                        reject=opinion.get('reject'),
-                        ym_id=opinion.get('id'),
-                        date=datetime.fromtimestamp(opinion.get('date')/1000),
-                    ))
-                Opinion.objects.bulk_create(opinions_db)
+            offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
+                                                                   category=product.category)
 
-        try:
-            offer_delivery_cost = int(data.get('local_delivery_cost', -1))
-        except TypeError:
-            offer_delivery_cost = -1
+            same_offers = Offer.objects.filter(
+                shop=pricelist.shop,
+                product=product,
+            ).order_by('price')
 
-        offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
-                                                               category=product.category)
+            if same_offers:
+                if same_offers[0].price >= float(offer.get('price')):
+                    skipped_ok += 1
+                    continue
+                else:
+                    same_offers.delete()
 
-        same_offers = Offer.objects.filter(
-            shop=pricelist.shop,
-            product=product,
-        ).order_by('price')
-
-        if same_offers:
-            if same_offers[0].price >= float(offer.get('price')):
-                continue
-            else:
-                same_offers.delete()
-
-        offer = Offer.objects.create(
-            pricelist=pricelist,
-            shop=pricelist.shop,
-            url=offer.get('url'),
-            price=float(offer.get('price')),
-            product=product,
-            delivery_cost=offer_delivery_cost if offer_delivery_cost else delivery_cost,
-            pickup=bool(offer.get('pickup')),
-            offercategory=offer_category
-        )
+            offer = Offer.objects.create(
+                pricelist=pricelist,
+                shop=pricelist.shop,
+                url=offer.get('url'),
+                price=float(offer.get('price')),
+                product=product,
+                delivery_cost=offer_delivery_cost if offer_delivery_cost else delivery_cost,
+                pickup=bool(offer.get('pickup')),
+                offercategory=offer_category
+            )
         logger.error('processing success for "%s"' % name)
+        total += 1
+
+    print("DONE:", total, '/', length)
+    print('Market error:', market_error)
+    print("Skipped OK:", skipped_ok)
 
     pricelist.status = Pricelist.PROCESSED
     pricelist.save()
-
 
 @shared_task(max_retries=3)
 def process_pricelist_task(pricelist_id):
