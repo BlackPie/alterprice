@@ -18,7 +18,9 @@ class OfferManager(models.Manager):
 
 class Offer(models.Model):
     product = models.ForeignKey('product.Product',
-                                verbose_name=_('Продукт'))
+                                verbose_name=_('Продукт'),
+                                blank=True,
+                                null=True)
     shop = models.ForeignKey('shop.Shop',
                              verbose_name=_('Магазин'))
     pricelist = models.ForeignKey('shop.Pricelist',
@@ -46,6 +48,10 @@ class Offer(models.Model):
                                       verbose_name=_('Категория предолжения'))
     delivery_cost = models.IntegerField(default=0)
     pickup = models.BooleanField(default=False)
+    name = models.CharField(max_length=255,
+                            null=True,
+                            blank=True,
+                            verbose_name=_('Название'))
 
     objects = OfferManager()
 
