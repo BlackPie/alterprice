@@ -182,17 +182,7 @@ def process_pricelist(pricelist_id, start_from=0):
     except TypeError:
         delivery_cost = -1
 
-    ##### TEMP
-    length = len(offers)
-    total = 0
-    market_error = 0
-    skipped_ok = 0
-    offers = offers[start_from:]
-    #####
-
-    for i, offer in enumerate(offers):
-        print(i, '/', length)
-
+    for offer in offers:
         unchained_offer = False
         name = offer.get('name', None)
         vendor = offer.get('vendor', '')
@@ -248,25 +238,23 @@ def process_pricelist(pricelist_id, start_from=0):
             description = model.get('description', None)
 
             if isinstance(model['id'], str):
-                print('--------- STRING!!!!')
                 if not model['id'].isdigit():
-                    print('-------------- FIXED!!!!')
                     unchained_offer = True
-                else:
-                    import pdb; pdb.set_trace()
+
         else:
             offer_category = None
 
         if unchained_offer:
             if model:
-                offer_name = model['name']
+                if 'name' in model and model['name']:
+                    offer_name = model['name']
+                else:
+                    offer_name = name
                 try:
                     category = Category.objects.get(ym_id=model['categoryId'])
                     offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
                                                                            category=category)
                 except (Category.DoesNotExist, OfferCategories.DoesNotExist):
-                    # skipped_ok += 1
-                    # continue
                     offer_category = None
 
                 try:
@@ -282,7 +270,6 @@ def process_pricelist(pricelist_id, start_from=0):
 
             if same_offers:
                 if same_offers[0].price >= float(offer.get('price')):
-                    skipped_ok += 1
                     continue
                 else:
                     same_offers.delete()
@@ -297,8 +284,6 @@ def process_pricelist(pricelist_id, start_from=0):
                 offercategory=offer_category,
                 name=offer_name
             )
-            print('====================================================')
-            print('====================================================')
         else:
             try:
                 product = Product.objects.get(ym_id=model['id'])
@@ -313,7 +298,6 @@ def process_pricelist(pricelist_id, start_from=0):
                     )
                 except MarketHTTPError as e:
                     logger.warn("Cant make Product instance: %s" % str(e))
-                    import pdb; pdb.set_trace()
                     continue
 
                 pictures = offer.get('picture')
@@ -362,7 +346,6 @@ def process_pricelist(pricelist_id, start_from=0):
 
             if same_offers:
                 if same_offers[0].price >= float(offer.get('price')):
-                    skipped_ok += 1
                     continue
                 else:
                     same_offers.delete()

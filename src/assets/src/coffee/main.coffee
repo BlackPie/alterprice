@@ -3,7 +3,12 @@ Backbone = require 'backbone'
 Backbone.$ = $
 logger = require 'loglevel'
 csrfHandler = require './base/utils/csrfHandler'
+LogoFooterMagic = require 'logo_footer_magic'
 
+logoFooterMagic = new LogoFooterMagic
+  elem: 'footer-copy'
+  color: '#a5a5a5'
+  prefix: 'w-'
 
 $.ajaxSetup
     beforeSend: csrfHandler

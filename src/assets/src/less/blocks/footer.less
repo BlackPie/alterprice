@@ -1,29 +1,45 @@
 #footer-block {
-    height: 52px;
+    height: 84px;
     padding: 0 0 0 20px;
     position: absolute;
     bottom: 0;
     width: 975px;
 
     ul {
-        padding: 20px 0 0 0;
+        padding: 20px 0;
         display: block;
         border-top: 1px solid #C8C8C8;
     }
 
     li {
         display: inline-block;
-        border-left: 2px solid #979797;
-        height: 12px;
+        height: 43px;
         padding: 0 20px;
-
+        position: relative;
+        line-height: 50px;
+        &:before {
+          height: 12px;
+          width: 2px;
+          display: block;
+          content: ' ';
+          background: #979797;
+          position: absolute;
+          left: 0;
+          top: 16px;
+        }
         &:first-child {
             padding-left: 0;
             border-left: none;
+            &:before {display: none;}
+        }
+        &#footer-copy {
+          padding: 0;
+          float: right;
+          &:before {display: none;}
         }
     }
 
-    a {
+    li > a {
         position: relative;
         top: -3px;
         .typo_ss;

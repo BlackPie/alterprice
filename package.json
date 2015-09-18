@@ -76,7 +76,8 @@
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.1.0",
     "gulp.spritesmith": "2.5.0",
-    "gulp-bower": "*"
+    "gulp-bower": "*",
+    "logo_footer_magic": "*"
   },
   "scripts": {
     "start": "nodemon src/server.coffee",
