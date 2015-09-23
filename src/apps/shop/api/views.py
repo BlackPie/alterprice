@@ -7,6 +7,7 @@ from django.http import Http404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView,\
     DestroyAPIView
+from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from apuser.models.profile import EmailDelivery
@@ -267,3 +268,15 @@ class StatisticCategories(ListAPIView):
             sum=Sum('product__offer__click__balancehistory__change_value'),
             count=Count('product__offer__click'),
         )
+
+
+class YMLInfo(APIView):
+    def get(self, *args, **kwargs):
+        pricelist = Pricelist.objects.get(id=kwargs['pk'])
+        product_offers = Offer.objects.filter(pricelist=pricelist).filter(product__isnull=False).distinct().count()
+        unassigned_offers = Offer.objects.filter(pricelist=pricelist).filter(product__isnull=True).distinct().count()
+
+        return Response({
+            'product_offers': product_offers,
+            'unassigned_offers': unassigned_offers
+        })
