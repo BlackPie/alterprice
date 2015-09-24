@@ -28,7 +28,7 @@
     {% endif %}
     {% if request.session.city_id %}
         <script>
-            city_id = '{{ request.session.city_id|safe }}';
+            window.city_id = '{{ request.session.city_id|safe }}';
         </script>
     {% endif %}
     <script src="{{ STATIC_URL }}dist/js/main.js" {% if current_app %}data-main="{{ current_app }}"{% endif %}></script>

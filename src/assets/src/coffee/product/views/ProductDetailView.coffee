@@ -11,6 +11,7 @@ module.exports = class ProductDetailView extends Marionette.ItemView
         rightBox: $('.gallery-wrapper')
         descriptionWrapper: $('.description-wrapper')
         descriptionWrapperToggle: '.description-wrapper-toggle'
+        opinionsTabLabel: '.tab-link[data-tab="reviews"]'
 
     events:
         "click @ui.descriptionWrapperToggle": "onClickToggle"
@@ -20,6 +21,9 @@ module.exports = class ProductDetailView extends Marionette.ItemView
         @fixedHeight = 200
         @descriptionToggler()
         @updateHeight()
+
+    hideReviews: () =>
+        @$(@ui.opinionsTabLabel).hide()
 
     updateHeight: () =>
         @unsetHeight()

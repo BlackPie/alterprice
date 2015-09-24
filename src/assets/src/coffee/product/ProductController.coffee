@@ -48,7 +48,7 @@ module.exports = class ProductController extends Marionette.Controller
         @productOffersPagerView = new ProductOffersPagerView {channel: @channel}
 
         @productOpinionsLayout = new ProductOpinionsLayout {channel: @channel}
-        @productOpinionsCollection = new ProductOpinionsCollection {id: @productId}
+        @productOpinionsCollection = new ProductOpinionsCollection {channel: @channel, id: @productId}
         @productOpinionsListView = new ProductOpinionsListView {channel: @channel, collection: @productOpinionsCollection}
         @productOpinionsLayout.opinionsList.show @productOpinionsListView
         @productOpinionPagerView = new ProductOpinionPagerView {channel: @channel}
@@ -79,10 +79,13 @@ module.exports = class ProductController extends Marionette.Controller
         @channel.vent.on Events.OPEN_REVIEWS_TAB,  @openReviewsTab
         @channel.vent.on Events.OPINIONS_SHOW_MORE,  @onReviewsShowMore
 
+        @channel.vent.on Events.OPINIONS_NULL, @onNullOpinions
 
     index: =>
         console.log 'index'
 
+    onNullOpinions: =>
+        @productDetailView.hideReviews()
 
     openOffersTab: =>
         @productOffersLayout.show()
