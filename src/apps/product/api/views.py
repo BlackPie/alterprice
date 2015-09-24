@@ -124,3 +124,13 @@ class OpinionList(ListAPIView):
 
     def get_queryset(self):
         return Opinion.objects.all()
+
+
+class OfferSearchView(ListAPIView):
+    model = Offer
+    serializer_class = serializers.OfferSerializer
+
+    def get_queryset(self):
+        search = self.request.query_params.get('search', '')
+        qs = self.model.objects.filter(name__icontains=search)
+        return qs
