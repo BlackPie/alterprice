@@ -77,7 +77,7 @@
     "watchify": "3.1.0",
     "gulp.spritesmith": "2.5.0",
     "gulp-bower": "*",
-    "logo_footer_magic": "*"
+    "logo_footer_magic": "0.0.3"
   },
   "scripts": {
     "start": "nodemon src/server.coffee",
