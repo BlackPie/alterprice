@@ -1,6 +1,7 @@
 template = (locals) =>
     return "<div class=\"counter-wrapper\">
-        <div class=\"all-counter\"><div class=\"value\">0</div><span>Товаров в&nbsp;прайс-листе</span></div>
+        <div class=\"all-counter with-card\"><div class=\"value\">0</div><span>Товаров с карточкой</span></div>
+        <div class=\"all-counter without-card\"><div class=\"value\">0</div><span>Товаров без карточки</span></div>
     </div>
     <table>
     <thead>
