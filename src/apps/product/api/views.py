@@ -104,16 +104,9 @@ class SearchView(ListAPIView):
         serializer = CategorySerializer(queryset, many=True)
         return serializer.data
 
-    def _search_offers(self):
-        search = self.request.query_params.get('search', '')
-        queryset = Offer.objects.filter(product__isnull=True).filter(name__icontains=search)
-        serializer = serializers.OfferSerializer(queryset, many=True)
-        return serializer.data
-
     def get(self, *args, **kwargs):
         response = super(SearchView, self).get(*args, **kwargs)
         response.data['categories'] = self._search_categories()
-        response.data['offers'] = self._search_offers()
         return response
 
 
@@ -132,5 +125,5 @@ class OfferSearchView(ListAPIView):
 
     def get_queryset(self):
         search = self.request.query_params.get('search', '')
-        qs = self.model.objects.filter(name__icontains=search)
+        qs = self.model.objects.filter(product__isnull=True).filter(name__icontains=search)
         return qs
