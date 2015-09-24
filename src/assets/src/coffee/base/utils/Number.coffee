@@ -3,12 +3,13 @@ $ = require 'jquery'
 
 module.exports = class Number
 
-    constructor: (el) ->
+    constructor: (el, min) ->
         @el = $(el)
         @input = @el.find 'input[type="text"]'
         @increment = @el.find '.increment-btn'
         @decrement = @el.find '.decrement-btn'
         @value = parseInt @input.val()
+        @min = min
         _ = @
 
 
@@ -21,7 +22,7 @@ module.exports = class Number
 
         @decrement.on 'click', (e) =>
             e.preventDefault()
-            if _.value > 0
+            if _.value > @min
                 _.value = _.value - 1
                 _.input.val _.value
                 @input.change()
@@ -45,9 +46,9 @@ module.exports = class Number
                 _.value = parseInt(_.input.val())
 
 
-    @init: (elements) =>
+    @init: (elements, min = 0) =>
         elements.each (i, el) =>
-            new Number el
+            new Number el, min
 
 
     @getChar: (event) =>
