@@ -6,14 +6,15 @@ Backbone = require 'backbone'
 Events = require 'catalog/Events'
 LeftMenuView = require 'base/views/LeftMenuView'
 CitySelectorView = require 'base/views/CitySelectorView'
+
 CatalogItemsListFilterView = require 'catalog/items_list/views/CatalogItemsListFilterView'
-CatalogSearchProductsCollection = require 'catalog/search/collections/CatalogSearchProductsCollection'
 CatalogProductsListView = require 'catalog/items_list/views/CatalogProductsListView'
 CatalogProductsPagerView = require 'catalog/items_list/views/CatalogProductsPagerView'
-CatalogSearchLayout = require 'catalog/search/layouts/CatalogSearchLayout'
 CatalogProductsFilterState = require 'catalog/items_list/states/CatalogProductsFilterState'
-CatalogSearchCategoriesListView = require 'catalog/search/views/CatalogSearchCategoriesListView'
 
+CatalogSearchProductsCollection = require 'catalog/search/collections/CatalogSearchProductsCollection'
+CatalogSearchLayout = require 'catalog/search/layouts/CatalogSearchLayout'
+CatalogSearchCategoriesListView = require 'catalog/search/views/CatalogSearchCategoriesListView'
 CatalogSearchCategoryLinksCollection = require 'catalog/search/collections/CatalogSearchCategoryLinksCollection'
 
 

@@ -1,5 +1,5 @@
 PageableCollection = require "backbone.paginator"
-
+Events = require 'product/Events'
 ProductOpinionModel = require '../models/ProductOpinionModel'
 
 
@@ -23,6 +23,7 @@ module.exports = class ProductOpinionsCollection extends PageableCollection
 
     initialize: (options) =>
         @url = "/api/product/opinions/"
+        @channel = options.channel
 
 
     stateToParams: (filterState) ->
@@ -40,6 +41,8 @@ module.exports = class ProductOpinionsCollection extends PageableCollection
 
 
     parseState: (response, queryParams, state, options) =>
+        if response.count < 1
+            @channel.vent.trigger Events.OPINIONS_NULL
         return {totalRecords: response.count}
 
 

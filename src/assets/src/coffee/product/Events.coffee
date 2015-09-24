@@ -6,3 +6,4 @@ module.exports = class ProductEvents
     @SET_OFFERS_FILTER: "product:set:offers:filter"
     @OFFERS_SHOW_MORE: "product:offers:show:more"
     @OPINIONS_SHOW_MORE: "product:opinions:show:more"
+    @OPINIONS_NULL: "product:opinions:null"
