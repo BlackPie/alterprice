@@ -27,7 +27,7 @@ module.exports = class ClientPricelistDetailCategoriesItemView extends Marionett
 
 
     onRender: =>
-        Number.init @$(@ui.numberEl)
+        Number.init @$(@ui.numberEl), 3
 
 
     template: (object) ->
