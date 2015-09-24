@@ -45,6 +45,7 @@ module.exports = class ClientPricelistDetailController extends Marionette.Contro
         @clientPricelistProductsCollection.setPricelistId @pricelistId
         @clientPricelistDetailProductsCollectionView = new ClientPricelistDetailProductsCollectionView
             channel: @channel
+            id: @pricelistId
             collection: @clientPricelistProductsCollection
         @clientPricelistDetailLayout.productsList.show @clientPricelistDetailProductsCollectionView
         @fetchProducts()

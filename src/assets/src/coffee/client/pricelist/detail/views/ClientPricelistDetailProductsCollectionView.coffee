@@ -11,12 +11,13 @@ module.exports = class ClientPricelistDetailProductsCollectionView extends Mario
     template: PricelistProductsTemplate
 
     ui:
-        'countInformer': '.all-counter'
+        'countInformer': '.counter-wrapper'
 
     collectionEvents:
         sync: 'onSync'
 
     initialize: (options) =>
+        @id = options.id
         @channel = options.channel
 
     getChildView: (model) =>
@@ -26,4 +27,9 @@ module.exports = class ClientPricelistDetailProductsCollectionView extends Mario
         return {channel: @channel}
 
     onSync: (options) =>
-        @$(@ui.countInformer).find('div.value').text options.state.totalRecords
+        $.ajax
+          type: 'GET'
+          url: "/api/shop/yml/#{@id}/info/"
+          success: (data) =>
+            @$(@ui.countInformer).find('.with-card div.value').text data.product_offers
+            @$(@ui.countInformer).find('.without-card div.value').text data.unassigned_offers
