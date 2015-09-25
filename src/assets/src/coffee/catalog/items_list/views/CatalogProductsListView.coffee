@@ -19,5 +19,3 @@ module.exports = class CatalogProductsListView extends Marionette.CollectionView
         else
             $('.items-list-page-wrapper').removeClass('empty')
         return CatalogProductView
-
-
