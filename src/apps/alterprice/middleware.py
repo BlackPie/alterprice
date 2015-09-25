@@ -9,7 +9,9 @@ SP = 'Санкт-Петербург'
 
 class CityMiddleware(object):
     def process_request(self, request):
-        if 'city_id' not in request.session.keys():
+        city_id = request.session.get('city_id', None)
+
+        if not city_id:
             ip = get_ip(request)
 
             try:
