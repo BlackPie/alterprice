@@ -17,6 +17,8 @@ CatalogSearchLayout = require 'catalog/search/layouts/CatalogSearchLayout'
 CatalogSearchCategoriesListView = require 'catalog/search/views/CatalogSearchCategoriesListView'
 CatalogSearchCategoryLinksCollection = require 'catalog/search/collections/CatalogSearchCategoryLinksCollection'
 
+CatalogSearchOffersCollection = require 'catalog/search/collections/CatalogSearchOffersCollection'
+CatalogSearchOffersListView = require 'catalog/search/views/CatalogSearchOffersListView'
 
 module.exports = class CatalogSearchController extends Marionette.Controller
 
@@ -29,6 +31,11 @@ module.exports = class CatalogSearchController extends Marionette.Controller
         @catalogSearchLayout = new CatalogSearchLayout {channel: @channel}
         @catalogProductsPagerView = new CatalogProductsPagerView {channel: @channel}
 
+        @catalogSearchOffersCollection = new CatalogSearchOffersCollection()
+        @catalogSearchOffersListView = new CatalogSearchOffersListView {channel: @channel, collection: @catalogSearchOffersCollection}
+        @catalogSearchLayout.offersList.show @catalogSearchOffersListView
+
+
         @catalogSearchProductsCollection = new CatalogSearchProductsCollection()
         @catalogProductsListView = new CatalogProductsListView {channel: @channel, collection: @catalogSearchProductsCollection}
         @catalogSearchLayout.productsList.show @catalogProductsListView
@@ -37,11 +44,14 @@ module.exports = class CatalogSearchController extends Marionette.Controller
         @catalogSearchCategoriesListView = new CatalogSearchCategoriesListView {channel: @channel, collection: @catalogSearchCategoryLinksCollection}
         @catalogSearchLayout.categoriesList.show @catalogSearchCategoriesListView
 
+
         @catalogSearchProductsCollection.on "sync", (collection) =>
             if collection.state.totalPages > 1
                 @catalogProductsPagerView.show()
             else
                 @catalogProductsPagerView.hide()
+                $('#catalog-search-offers').css
+                  display: 'block'
 
         @onSetFilter()
 
@@ -66,6 +76,7 @@ module.exports = class CatalogSearchController extends Marionette.Controller
         catalogProductsFilterState = CatalogProductsFilterState.fromArray filterData
         @catalogSearchProductsCollection.state.pageSize = @catalogSearchProductsCollection.startPageSize
         @catalogSearchProductsCollection.fetchFiltered catalogProductsFilterState
+        @catalogSearchOffersCollection.fetchFiltered catalogProductsFilterState
 
 
     onShowMore: =>

@@ -9,7 +9,7 @@ module.exports = class CatalogSearchLayout extends Marionette.LayoutView
         offersFilter:  "#product-offers-filter-view"
         productsList: "#catalog-products-list-view"
         categoriesList: "#catalog-search-categories-list-view-wrapper"
-
+        offersList: "#catalog-offers-layout"
 
     hide: =>
         $(@el).hide()
