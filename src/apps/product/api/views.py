@@ -94,8 +94,6 @@ class SearchView(ListAPIView):
         qs = qs.annotate(offers_count=Count('offer'))
         qs = qs.prefetch_related('offer_set')
         qs = qs.prefetch_related('productphoto_set')
-        # import ipdb; ipdb.set_trace()
-
         return qs
 
     def _search_categories(self):

@@ -162,7 +162,6 @@ def load_pictures(pictures, product):
 
 
 def process_pricelist(pricelist_id, start_from=0):
-    import pdb; pdb.set_trace()
     pricelist = Pricelist.objects.get(id=pricelist_id)
     logger.error('Pricelist "%d" started processing' % pricelist_id)
 
@@ -196,7 +195,6 @@ def process_pricelist(pricelist_id, start_from=0):
             logger.warn("No name present", extra={
                 'offer': offer
             })
-            import pdb; pdb.set_trace()
             continue
 
         if not vendor or (vendor and vendor.lower() in name.lower()):
@@ -211,7 +209,6 @@ def process_pricelist(pricelist_id, start_from=0):
             )
         except MarketHTTPError:
             logger.warn("Cant fetch results of MarketAPI.search_offer()")
-            market_error += 1
             continue
 
         try:
@@ -361,11 +358,6 @@ def process_pricelist(pricelist_id, start_from=0):
                 offercategory=offer_category
             )
         logger.error('processing success for "%s"' % name)
-        total += 1
-
-    print("DONE:", total, '/', length)
-    print('Market error:', market_error)
-    print("Skipped OK:", skipped_ok)
 
     pricelist.status = Pricelist.PROCESSED
     pricelist.save()
