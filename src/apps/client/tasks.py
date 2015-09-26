@@ -237,9 +237,9 @@ def process_pricelist(pricelist_id, start_from=0):
             if isinstance(model['id'], str):
                 if not model['id'].isdigit():
                     unchained_offer = True
-
         else:
             offer_category = None
+            description = None
 
         if unchained_offer:
             if model:
@@ -247,29 +247,31 @@ def process_pricelist(pricelist_id, start_from=0):
                     offer_name = model['name']
                 else:
                     offer_name = name
-                try:
-                    category = Category.objects.get(ym_id=model['categoryId'])
-                    offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
-                                                                           category=category)
-                except (Category.DoesNotExist, OfferCategories.DoesNotExist):
-                    offer_category = None
+            else:
+                offer_name = name
+            try:
+                category = Category.objects.get(ym_id=model['categoryId'])
+                offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
+                                                                       category=category)
+            except (Category.DoesNotExist, OfferCategories.DoesNotExist):
+                offer_category = None
 
-                try:
-                    offer_delivery_cost = int(data.get('local_delivery_cost', -1))
-                except TypeError:
-                    offer_delivery_cost = -1
+            try:
+                offer_delivery_cost = int(data.get('local_delivery_cost', -1))
+            except TypeError:
+                offer_delivery_cost = -1
 
 
-            same_offers = Offer.objects.filter(
-                shop=pricelist.shop,
-                name=offer_name,
-            ).order_by('price')
-
-            if same_offers:
-                if same_offers[0].price >= float(offer.get('price')):
-                    continue
-                else:
-                    same_offers.delete()
+            # same_offers = Offer.objects.filter(
+            #     shop=pricelist.shop,
+            #     name=offer_name,
+            # ).order_by('price')
+            #
+            # if same_offers:
+            #     if same_offers[0].price >= float(offer.get('price')):
+            #         continue
+            #     else:
+            #         same_offers.delete()
 
             offer = Offer.objects.create(
                 pricelist=pricelist,
@@ -336,16 +338,16 @@ def process_pricelist(pricelist_id, start_from=0):
             offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
                                                                    category=product.category)
 
-            same_offers = Offer.objects.filter(
-                shop=pricelist.shop,
-                product=product,
-            ).order_by('price')
-
-            if same_offers:
-                if same_offers[0].price >= float(offer.get('price')):
-                    continue
-                else:
-                    same_offers.delete()
+            # same_offers = Offer.objects.filter(
+            #     shop=pricelist.shop,
+            #     product=product,
+            # ).order_by('price')
+            #
+            # if same_offers:
+            #     if same_offers[0].price >= float(offer.get('price')):
+            #         continue
+            #     else:
+            #         same_offers.delete()
 
             offer = Offer.objects.create(
                 pricelist=pricelist,
