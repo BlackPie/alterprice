@@ -240,7 +240,7 @@ class YMLProductList(ListAPIView):
 
     def get_queryset(self):
         yml_id = self.kwargs.get('pk')
-        qs = self.model.objects.filter(pricelist_id=yml_id)
+        qs = self.model.objects.filter(pricelist_id=yml_id).filter(product__isnull=False)
         # qs = qs.select_related('category')
         # qs = qs.prefetch_related('productshop_set')
         return qs.order_by('-product__category').distinct()
