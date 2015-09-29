@@ -181,6 +181,7 @@ def process_pricelist(pricelist_id, start_from=0):
     except TypeError:
         delivery_cost = -1
 
+    offers = offers[start_from:]
     for offer in offers:
         unchained_offer = False
         name = offer.get('name', None)
@@ -247,20 +248,20 @@ def process_pricelist(pricelist_id, start_from=0):
                     offer_name = model['name']
                 else:
                     offer_name = name
+                try:
+                    category = Category.objects.get(ym_id=model['categoryId'])
+                    offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
+                                                                           category=category)
+                except (Category.DoesNotExist, OfferCategories.DoesNotExist):
+                    offer_category = None
             else:
                 offer_name = name
-            try:
-                category = Category.objects.get(ym_id=model['categoryId'])
-                offer_category = OfferCategories.objects.get_or_create(pricelist=pricelist,
-                                                                       category=category)
-            except (Category.DoesNotExist, OfferCategories.DoesNotExist):
                 offer_category = None
 
             try:
                 offer_delivery_cost = int(data.get('local_delivery_cost', -1))
             except TypeError:
                 offer_delivery_cost = -1
-
 
             # same_offers = Offer.objects.filter(
             #     shop=pricelist.shop,
